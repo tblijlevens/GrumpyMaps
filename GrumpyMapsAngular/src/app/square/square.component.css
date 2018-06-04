@@ -1,0 +1,15 @@
+/*:host{
+    border-width: 2px;
+    border-style: solid;
+    width:100px;
+    height: 100px;
+}*/
+
+.square{
+    border-width: 2px;
+    border-style: solid;
+    width:100px;
+    height: 100px;
+    display: inline-block;
+    text-align: center;
+}

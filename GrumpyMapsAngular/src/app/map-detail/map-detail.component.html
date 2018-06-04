@@ -11,3 +11,14 @@
 <p>JSON uitvoer: {{ mapForm.value | json }}</p>
 <p>Street value: {{ mapForm.get('heightwidth').value}}</p>
 <p>Street value: {{ mapForm.get('feet').value}}</p>
+<p>
+<br />
+
+
+<br>
+<div class="mapcontainer">
+    <div class="square" id="square" [(ngStyle)]="squareStyles">
+        <app-square *ngFor="let square of allSquares" [squareScale]=square.squareScale [squareId]=square.id></app-square>
+    </div>
+
+</div>
