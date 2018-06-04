@@ -1,0 +1,11 @@
+<form [formGroup]="mapForm">
+  <div class="form-group">
+    <label class="center-block">Height/Width:
+      <input class="form-control" formControlName="heightwidth">
+    </label>
+    <label class="center-block">In-game square size (ft):
+      <input class="form-control" formControlName="feet">
+    </label>
+  </div>
+</form>
+<p>JSON uitvoer: {{ mapForm.value | json }}</p>
