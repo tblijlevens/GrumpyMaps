@@ -11,5 +11,10 @@ export class MapDetailComponent implements OnInit {
      heightwidth: new FormControl(),
      feet: new FormControl()
    });
-  constructor() { }
+  constructor() {}
+
+  OnInit() {
+
+  }
+
 }
