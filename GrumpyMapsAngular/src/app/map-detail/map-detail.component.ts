@@ -5,11 +5,16 @@ import {DnDMapService} from '../dn-dmap.service'
 import {DnDMap} from '../domain/dn-dmap'
 import {Square} from '../domain/square'
 
+import {SquareDetailShareService} from '../square-detail-share.service';
+import {SquareComponent} from '../square/square.component';
+import {SquareDetailComponent} from '../square-detail/square-detail.component';
+
+
 @Component({
   selector: 'app-map-detail',
   templateUrl: './map-detail.component.html',
   styleUrls: ['./map-detail.component.css'],
-  providers:  [DnDMapService]
+  providers:  [DnDMapService, SquareDetailShareService]
 })
 
 export class MapDetailComponent implements OnInit {

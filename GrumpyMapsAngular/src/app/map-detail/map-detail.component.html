@@ -2,7 +2,7 @@
 <br />
 <div class="mapcontainer">
     <div class="square" id="square" [(ngStyle)]="squareStyles">
-        <app-square *ngFor="let square of allSquares" [squareScale]=square.squareScale [squareId]=square.id></app-square>
+        <app-square *ngFor="let square of allSquares" [squareScale]=square.squareScale [square]=square></app-square>
     </div>
 
 </div>
