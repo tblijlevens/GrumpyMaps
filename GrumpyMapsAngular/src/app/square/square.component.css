@@ -7,7 +7,7 @@
 
 .square{
     border-width: 1px;
-    border-style:dashed;
+    border-style:dotted;
     border-color: #a2a2a2;
     width:100px;
     height: 100px;

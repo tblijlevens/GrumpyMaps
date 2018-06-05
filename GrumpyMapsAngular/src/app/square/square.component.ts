@@ -25,4 +25,9 @@ export class SquareComponent implements OnInit {
       }
   }
 
+  selectSquare(){
+      console.log(this.squareId);
+
+  }
+
 }
