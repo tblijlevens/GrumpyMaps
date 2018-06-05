@@ -1,3 +1,12 @@
+
+<br>
+<div class="mapcontainer">
+    <div class="square" id="square" [(ngStyle)]="squareStyles">
+        <app-square *ngFor="let square of allSquares" [squareScale]=square.squareScale [squareId]=square.id></app-square>
+    </div>
+
+</div>
+
 <form [formGroup]="mapForm">
   <div class="form-group">
     <label class="center-block">Height/Width:
@@ -9,13 +18,3 @@
 <button (click)="setMapScale()" class="btn btn-success">Submit</button>
   </div>
 </form>
-
-<p>
-
-<br>
-<div class="mapcontainer">
-    <div class="square" id="square" [(ngStyle)]="squareStyles">
-        <app-square *ngFor="let square of allSquares" [squareScale]=square.squareScale [squareId]=square.id></app-square>
-    </div>
-
-</div>

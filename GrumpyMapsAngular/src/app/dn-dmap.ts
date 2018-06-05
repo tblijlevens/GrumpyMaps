@@ -8,7 +8,7 @@ export class DnDMap {
     constructor(heightWidth:number, amountSquares:number, squareScale:string) {
       this.heightWidth = heightWidth;
       for (var i = 0 ; i<amountSquares ; i++){
-          this.squares.push(new Square(i, squareScale));
+          this.squares.push(new Square(i+1, squareScale));
       }
     }
 
