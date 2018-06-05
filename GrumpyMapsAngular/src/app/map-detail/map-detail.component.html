@@ -1,5 +1,5 @@
 
-<br>
+<br />
 <div class="mapcontainer">
     <div class="square" id="square" [(ngStyle)]="squareStyles">
         <app-square *ngFor="let square of allSquares" [squareScale]=square.squareScale [squareId]=square.id></app-square>
@@ -18,3 +18,7 @@
 <button (click)="setMapScale()" class="btn btn-success">Submit</button>
   </div>
 </form>
+
+<div class="squaredetailcontainer">
+    <app-square-detail></app-square-detail>
+</div>

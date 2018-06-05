@@ -18,7 +18,6 @@ export class MapDetailComponent implements OnInit {
      feet: new FormControl()
    });
 
-   squareScale:string;
    allSquares:Square[];
    dndMap:DnDMap;
 
@@ -26,24 +25,26 @@ export class MapDetailComponent implements OnInit {
 
 
   ngOnInit() {
+      //TODO dndmap should be created with a unique number as an id (first parameter): Get last map id from database, add 1.
+      this.dndMap=new DnDMap(2, 10, 5);
+      this.allSquares = this.dndMap.getSquares();
 
   }
+
   public setMapScale(){
       var heightWidth = +this.mapForm.get('heightwidth').value;
       if (heightWidth >25){
           heightWidth = 25;
           alert("Map gridsize can't be bigger than 25x25. Therefore gridsize is set to 25x25.");
       }
-      const squareSize = +this.mapForm.get('feet').value;
-      const numberOfSquares = heightWidth*heightWidth;
-      this.squareScale = 100/heightWidth+'%';
-      console.log('heightwidth: ' + heightWidth + '\n' +
-                    'Scale = ' + this.squareScale);
+      var squareSize = +this.mapForm.get('feet').value;
+      if (!squareSize){
+          squareSize=5;
+          alert("Square size wasn't set and is now defaulted to 5.");
+      }
 
-      this.dndMap =  new DnDMap(heightWidth, squareSize, numberOfSquares, this.squareScale);
+      this.dndMap.setHeightWidth(heightWidth, squareSize);
       this.allSquares = this.dndMap.getSquares();
-
-
 
 //        this.dndMapService.setMapScale(dndMap).subscribe();
   }
