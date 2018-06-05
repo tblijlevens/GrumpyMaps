@@ -18,7 +18,7 @@ export class MapDetailComponent implements OnInit {
      feet: new FormControl()
    });
 
-     squareScale:string = '5%';
+   squareScale:string;
    allSquares:Square[];
    dndMap:DnDMap;
 

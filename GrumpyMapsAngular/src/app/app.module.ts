@@ -7,12 +7,14 @@ import { MapDetailComponent } from './map-detail/map-detail.component';
 
 import {HttpClientModule} from '@angular/common/http';
 import { SquareComponent } from './square/square.component';
+import { SquareDetailComponent } from './square-detail/square-detail.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MapDetailComponent,
-    SquareComponent
+    SquareComponent,
+    SquareDetailComponent
   ],
   imports: [
     BrowserModule,
