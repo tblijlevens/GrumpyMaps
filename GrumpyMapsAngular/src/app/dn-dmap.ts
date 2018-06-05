@@ -5,10 +5,10 @@ export class DnDMap {
     heightWidth:number = 0;
     squares:Square[]= new Array();
 
-    constructor(heightWidth:number, amountSquares:number, squareScale:string) {
+    constructor(heightWidth:number, squareSize:number, amountSquares:number, squareScale:string) {
       this.heightWidth = heightWidth;
       for (var i = 0 ; i<amountSquares ; i++){
-          this.squares.push(new Square(i+1, squareScale));
+          this.squares.push(new Square(i+1, squareSize, squareScale));
       }
     }
 

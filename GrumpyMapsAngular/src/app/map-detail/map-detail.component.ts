@@ -12,7 +12,6 @@ import {Square} from '../square'
   providers:  [DnDMapService]
 })
 
-/// yooo man
 export class MapDetailComponent implements OnInit {
   mapForm = new FormGroup ({
      heightwidth: new FormControl(),
@@ -31,12 +30,13 @@ export class MapDetailComponent implements OnInit {
   }
   public setMapScale(){
       const heightWidth = this.mapForm.get('heightwidth').value;
+      const squareSize = this.mapForm.get('feet').value;
       const numberOfSquares = heightWidth*heightWidth;
       this.squareScale = 100/heightWidth+'%';
       console.log('heightwidth: ' + heightWidth + '\n' +
                     'Scale = ' + this.squareScale);
 
-      this.dndMap =  new DnDMap(heightWidth, numberOfSquares, this.squareScale);
+      this.dndMap =  new DnDMap(heightWidth, squareSize, numberOfSquares, this.squareScale);
       this.allSquares = this.dndMap.getSquares();
 
 
