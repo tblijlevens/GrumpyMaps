@@ -29,8 +29,12 @@ export class MapDetailComponent implements OnInit {
 
   }
   public setMapScale(){
-      const heightWidth = this.mapForm.get('heightwidth').value;
-      const squareSize = this.mapForm.get('feet').value;
+      var heightWidth = +this.mapForm.get('heightwidth').value;
+      if (heightWidth >25){
+          heightWidth = 25;
+          alert("Map gridsize can't be bigger than 25x25. Therefore gridsize is set to 25x25.");
+      }
+      const squareSize = +this.mapForm.get('feet').value;
       const numberOfSquares = heightWidth*heightWidth;
       this.squareScale = 100/heightWidth+'%';
       console.log('heightwidth: ' + heightWidth + '\n' +
