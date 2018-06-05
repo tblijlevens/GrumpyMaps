@@ -10,8 +10,9 @@ import {Square} from '../square'
   templateUrl: './map-detail.component.html',
   styleUrls: ['./map-detail.component.css'],
   providers:  [DnDMapService]
-
 })
+
+/// yooo man
 export class MapDetailComponent implements OnInit {
   mapForm = new FormGroup ({
      heightwidth: new FormControl(),
