@@ -10,8 +10,6 @@ export class DnDMap {
       this.id = id;
       this.heightWidth = heightWidth;
       this.createSquares(squareSize);
-      console.log("dndmap id: " + this.id);
-      console.log("amount of squares: " + this.numberOfSquares);
     }
 
     getSquares(){
@@ -28,7 +26,5 @@ export class DnDMap {
         for (var i = 0 ; i<this.numberOfSquares ; i++){
             this.squares.push(new Square(i+1, squareSize, squareScale));
         }
-        console.log("dndmap id: " + this.id);
-        console.log("amount of squares: " + this.numberOfSquares);
     }
 }
