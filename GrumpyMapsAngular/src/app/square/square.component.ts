@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Square } from '../square';
-import { DnDMap } from '../dn-dmap';
+import { Square } from '../domain/square';
+import { DnDMap } from '../domain/dn-dmap';
 import { MapDetailComponent } from '../map-detail/map-detail.component';
 
 @Component({

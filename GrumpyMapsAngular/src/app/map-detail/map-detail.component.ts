@@ -2,8 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 
 import {DnDMapService} from '../dn-dmap.service'
-import {DnDMap} from '../dn-dmap'
-import {Square} from '../square'
+import {DnDMap} from '../domain/dn-dmap'
+import {Square} from '../domain/square'
 
 @Component({
   selector: 'app-map-detail',

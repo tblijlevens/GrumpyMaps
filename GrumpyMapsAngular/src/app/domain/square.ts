@@ -8,6 +8,5 @@ export class Square {
         this.id = id;
         this.squareScale = squareScale;
         this.squareSize = squareSize;
-
     }
 }
