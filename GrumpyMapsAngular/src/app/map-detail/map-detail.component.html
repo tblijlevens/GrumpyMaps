@@ -6,14 +6,11 @@
     <label class="center-block">In-game square size (ft):
       <input class="form-control" formControlName="feet">
     </label>
+<button (click)="setMapScale()" class="btn btn-success">Submit</button>
   </div>
 </form>
-<p>JSON uitvoer: {{ mapForm.value | json }}</p>
-<p>Street value: {{ mapForm.get('heightwidth').value}}</p>
-<p>Street value: {{ mapForm.get('feet').value}}</p>
-<p>
-<br />
 
+<p>
 
 <br>
 <div class="mapcontainer">

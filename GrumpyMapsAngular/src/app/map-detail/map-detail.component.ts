@@ -18,9 +18,7 @@ export class MapDetailComponent implements OnInit {
      feet: new FormControl()
    });
 
-   mapHeight:number = 10;
-   mapWidth:number = 5;
-   squareScale:string = '5%';
+     squareScale:string = '5%';
    allSquares:Square[];
    dndMap:DnDMap;
 
@@ -31,12 +29,13 @@ export class MapDetailComponent implements OnInit {
 
   }
   public setMapScale(){
-      const numberOfSquares = this.mapWidth*this.mapHeight;
-      this.squareScale = 100/this.mapWidth+'%';
-      console.log('scale: ' + this.squareScale);
+      const heightWidth = this.mapForm.get('heightwidth').value;
+      const numberOfSquares = heightWidth*heightWidth;
+      this.squareScale = 100/heightWidth+'%';
+      console.log('heightwidth: ' + heightWidth + '\n' +
+                    'Scale = ' + this.squareScale);
 
-      this.dndMap =  new DnDMap(this.mapHeight, this.mapWidth, numberOfSquares, this.squareScale);
-      console.log('Map created with mapheight is ' + this.dndMap.mapHeight);
+      this.dndMap =  new DnDMap(heightWidth, numberOfSquares, this.squareScale);
       this.allSquares = this.dndMap.getSquares();
 
 
