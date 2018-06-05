@@ -5,7 +5,7 @@ export class Square {
     scale:number;
     squareScale:string;
     squareSize:number;
-    physicals:Physical[];
+    physicals:Physical[] = new Array();
 
     constructor(id:number, squareSize:number, squareScale:string) {
         this.id = id;
@@ -13,6 +13,8 @@ export class Square {
         this.squareSize = squareSize;
     }
 
-    
+    addPhysical(object:Physical){
+        this.physicals.push(object);
+    }
 
 }

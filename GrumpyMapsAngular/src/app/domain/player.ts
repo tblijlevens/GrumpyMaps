@@ -15,6 +15,9 @@ export class Player implements Physical{
         this.actionPoints = actionPoints;
         this.movementAmount = movementAmount;
         this.attacksPerRound = attacksPerRound;
-        this.spellsPerRound = spellsPerRound;    
+        this.spellsPerRound = spellsPerRound;
+    }
+    getName(){
+        return this.name;
     }
 }

@@ -1,9 +1,11 @@
 <div class="squaredetail" *ngIf="square">
   <h4>Square details:</h4>
   <span class="lead">Id: </span> {{square.id}}<br />
-  <span class="lead">Contents: </span> some stuff<br />
+  <span *ngIf="square.physicals.length!=0"><span class="lead">Contents: <br></span>
+  <span *ngFor="let physical of square.physicals">{{square.physicals[0].getName()}} <br></span> </span><br>
+
   <hr class="my-4">
-  <button (click)="placeObject()" class="btn btn-success">Place object</button>
+  <button (click)="addObject()" class="btn btn-success">Add object</button>
   <button (click)="moveObject()" class="btn btn-success">Move object</button>
-  <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+  <button (click)="removeObject()" class="btn btn-success">Delete object</button>
 </div>
