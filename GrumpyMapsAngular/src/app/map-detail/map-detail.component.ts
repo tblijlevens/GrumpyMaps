@@ -11,7 +11,7 @@ import {Square} from '../square'
   styleUrls: ['./map-detail.component.css'],
   providers:  [DnDMapService]
 
-  // Aids
+  // Appelsap
 
 })
 export class MapDetailComponent implements OnInit {
