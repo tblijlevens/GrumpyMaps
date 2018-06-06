@@ -1,9 +1,12 @@
 package com.grumpymaps.GrumpyMaps.model;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Player implements Physical{
@@ -16,6 +19,11 @@ public class Player implements Physical{
     private int movementAmount;
     private int attacksPerRound;
     private int spellsPerRound;
+    private String type;
+
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="square_id")
+    private Square square;
 
 
 
@@ -113,5 +121,37 @@ public class Player implements Physical{
 	*/
 	public void setSpellsPerRound(int spellsPerRound) {
 		this.spellsPerRound = spellsPerRound;
+	}
+
+	/**
+	* Returns value of type
+	* @return
+	*/
+	public String getType() {
+		return type;
+	}
+
+	/**
+	* Sets new value of type
+	* @param
+	*/
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	/**
+	* Returns value of square
+	* @return
+	*/
+	public Square getSquare() {
+		return square;
+	}
+
+	/**
+	* Sets new value of square
+	* @param
+	*/
+	public void setSquare(Square square) {
+		this.square = square;
 	}
 }

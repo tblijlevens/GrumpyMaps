@@ -61,7 +61,10 @@ export class MapDetailComponent implements OnInit {
     this.dndMap.setHeightWidth(heightWidth, squareSize);
     this.allSquares = this.dndMap.getSquares();
 
-    //        this.dndMapService.setMapScale(dndMap).subscribe();
+  }
+
+  public saveMap(){
+      this.dndMapService.setMapScale(this.dndMap).subscribe();
   }
 
   /*    public retrieveMaps(){

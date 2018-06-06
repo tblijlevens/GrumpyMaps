@@ -1,10 +1,10 @@
-import {Physical} from './physical';
+import {Player} from './player';
 
 export class Square {
     id:number;
     squareScale:string;
     squareSize:number;
-    physicals:Physical[] = new Array();
+    players:Player[] = new Array();
 
     constructor(id:number, squareSize:number, squareScale:string) {
         this.id = id;
@@ -12,8 +12,8 @@ export class Square {
         this.squareSize = squareSize;
     }
 
-    addPhysical(object:Physical){
-        this.physicals.push(object);
+    addPhysical(object:Player){
+        this.players.push(object);
     }
 
 }

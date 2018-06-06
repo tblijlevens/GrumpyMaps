@@ -1,21 +1,30 @@
 package com.grumpymaps.GrumpyMaps.model;
 
-import java.util.ArrayList;
+import java.io.Serializable;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
-public class Square {
+public class Square implements Serializable{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    private int squareScale;
+    private String squareScale;
     private int squareSize;
-    private ArrayList<Physical> physicals;
+
+    @OneToMany(mappedBy="square", cascade=CascadeType.ALL)
+    private List<Player> players;
+
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="map_id")
+    private DndMap dndMap;
 
 
 	/**
@@ -38,7 +47,7 @@ public class Square {
 	* Returns value of squareScale
 	* @return
 	*/
-	public int getSquareScale() {
+	public String getSquareScale() {
 		return squareScale;
 	}
 
@@ -46,7 +55,7 @@ public class Square {
 	* Sets new value of squareScale
 	* @param
 	*/
-	public void setSquareScale(int squareScale) {
+	public void setSquareScale(String squareScale) {
 		this.squareScale = squareScale;
 	}
 
@@ -67,18 +76,34 @@ public class Square {
 	}
 
 	/**
-	* Returns value of physicals
+	* Returns value of players
 	* @return
 	*/
-	public ArrayList<Physical> getPhysicals() {
-		return physicals;
+	public List<Player> getPlayers() {
+		return players;
 	}
 
 	/**
-	* Sets new value of physicals
+	* Sets new value of players
 	* @param
 	*/
-	public void setPhysicals(ArrayList<Physical> physicals) {
-		this.physicals = physicals;
+	public void setPlayers(List<Player> players) {
+		this.players = players;
+	}
+
+	/**
+	* Returns value of dndMap
+	* @return
+	*/
+	public DndMap getDndMap() {
+		return dndMap;
+	}
+
+	/**
+	* Sets new value of dndMap
+	* @param
+	*/
+	public void setDndMap(DndMap dndMap) {
+		this.dndMap = dndMap;
 	}
 }

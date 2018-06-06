@@ -1,11 +1,13 @@
 package com.grumpymaps.GrumpyMaps.model;
 
-import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class DndMap {
@@ -15,7 +17,9 @@ public class DndMap {
     private long id;
     private int heightWidth;
     private int numberOfSquares;
-    private ArrayList<Square> squares;
+    
+    @OneToMany(mappedBy="dndMap", cascade=CascadeType.ALL)
+    private List<Square> squares;
     private String imageUrl;
 
 	/**
@@ -70,7 +74,7 @@ public class DndMap {
 	* Returns value of squares
 	* @return
 	*/
-	public ArrayList<Square> getSquares() {
+	public List<Square> getSquares() {
 		return squares;
 	}
 
@@ -78,7 +82,7 @@ public class DndMap {
 	* Sets new value of squares
 	* @param
 	*/
-	public void setSquares(ArrayList<Square> squares) {
+	public void setSquares(List<Square> squares) {
 		this.squares = squares;
 	}
 

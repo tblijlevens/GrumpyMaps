@@ -1,7 +1,7 @@
 
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-//import { Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 //import { map } from 'rxjs/operator/map';
 //import { catch } from 'rxjs/operator/catch';
 
@@ -16,7 +16,7 @@ export class DnDMapService {
 
   setMapScale(dndMap : DnDMap){
       console.log("sending...");
-      return this.http.post('http://localhost:8080/dndmap', dndMap)
+      return this.http.post('http://localhost:8080/dndmap', dndMap);
  /* .catch((error: any) => Observable.throw(error.json().error || 'Server error'))*/;
   }
 /*
