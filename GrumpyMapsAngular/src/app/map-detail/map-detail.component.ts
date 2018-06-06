@@ -26,6 +26,8 @@ export class MapDetailComponent implements OnInit {
 
   allSquares: Square[];
   dndMap: DnDMap;
+  mapBackground = {};
+
 
   constructor(private dndMapService: DnDMapService) { }
 
@@ -34,13 +36,14 @@ export class MapDetailComponent implements OnInit {
     //TODO dndmap should be created with a unique number as an id (first parameter): Get last map id from database, add 1.
     this.dndMap = new DnDMap(2, 10, 5);
     this.allSquares = this.dndMap.getSquares();
-
-  }
+    }
 
   public uploadImage() {
     const imageUrl = this.mapForm.get('imageUrl').value;
     console.log(imageUrl);
-    this.dndMap.setImage(imageUrl)
+    this.dndMap.setImage(imageUrl);
+    this.mapBackground = {
+      'background-image': 'url('+imageUrl+')'};
   }
 
   public setMapScale() {

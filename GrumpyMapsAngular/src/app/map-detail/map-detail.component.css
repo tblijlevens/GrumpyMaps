@@ -1,27 +1,27 @@
-
-.mapcontainer{
-    border-width: 2px;
-    border-style: solid;
-    border-color: #021744;
-    width: 600px;
-    height: 600px;
-    float: left;
+.mapcontainer {
+  border-width: 2px;
+  border-style: solid;
+  border-color: #021744;
+  background-size: 100% 100%;
+  width: 600px;
+  height: 600px;
+  float: left;
 }
-.square{
-    display: inline-block;
-    width: 100%;
-    height: 100%;
-    float: left;
+
+.square {
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  float: left;
 }
 
 .form-group {
-    float: left;
-    margin-left: 20px;
+  float: left;
+  margin-left: 20px;
 }
 
-.squaredetailcontainer{
-    float: left;
-    margin-left: 20px;
-    width: 300px;
-
+.squaredetailcontainer {
+  float: left;
+  margin-left: 20px;
+  width: 300px;
 }

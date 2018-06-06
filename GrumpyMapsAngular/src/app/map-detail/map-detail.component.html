@@ -1,5 +1,5 @@
 <br />
-<div class="mapcontainer">
+<div class="mapcontainer" [ngStyle]="mapBackground">
   <div class="square" id="square" [(ngStyle)]="squareStyles">
     <app-square *ngFor="let square of allSquares" [squareScale]=square.squareScale [square]=square></app-square>
   </div>
