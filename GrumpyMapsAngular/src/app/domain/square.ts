@@ -2,7 +2,6 @@ import {Physical} from './physical';
 
 export class Square {
     id:number;
-    scale:number;
     squareScale:string;
     squareSize:number;
     physicals:Physical[] = new Array();
