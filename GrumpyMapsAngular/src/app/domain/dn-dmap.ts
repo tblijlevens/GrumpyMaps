@@ -6,6 +6,7 @@ export class DnDMap {
     numberOfSquares:number;
     squares:Square[]= new Array();
     imageUrl:string;
+
     constructor(id:number, heightWidth:number, squareSize:number) {
       this.id = id;
       this.heightWidth = heightWidth;
