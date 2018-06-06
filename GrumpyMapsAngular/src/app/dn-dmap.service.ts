@@ -5,7 +5,7 @@ import {HttpClient} from '@angular/common/http';
 //import { map } from 'rxjs/operator/map';
 //import { catch } from 'rxjs/operator/catch';
 
-import {DnDMap} from './dn-dmap';
+import {DnDMap} from './domain/dn-dmap';
 
 @Injectable({
   providedIn: 'root'

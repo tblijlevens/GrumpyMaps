@@ -5,7 +5,7 @@ export class DnDMap {
     heightWidth:number;
     numberOfSquares:number;
     squares:Square[]= new Array();
-
+    imageUrl:string;
     constructor(id:number, heightWidth:number, squareSize:number) {
       this.id = id;
       this.heightWidth = heightWidth;
@@ -19,6 +19,12 @@ export class DnDMap {
         this.heightWidth = heightWidth;
         this.createSquares(squareSize);
     }
+
+    setImage(imageUrl:string) {
+      this.imageUrl = imageUrl;
+
+    }
+
     private createSquares(squareSize:number){
         var squareScale = 100/this.heightWidth+'%';
         this.numberOfSquares = this.heightWidth*this.heightWidth;

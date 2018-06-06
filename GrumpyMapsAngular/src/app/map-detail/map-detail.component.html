@@ -1,9 +1,8 @@
-
 <br />
 <div class="mapcontainer">
-    <div class="square" id="square" [(ngStyle)]="squareStyles">
-        <app-square *ngFor="let square of allSquares" [squareScale]=square.squareScale [square]=square></app-square>
-    </div>
+  <div class="square" id="square" [(ngStyle)]="squareStyles">
+    <app-square *ngFor="let square of allSquares" [squareScale]=square.squareScale [square]=square></app-square>
+  </div>
 
 </div>
 
@@ -15,10 +14,15 @@
     <label class="center-block">In-game square size (ft):
       <input class="form-control" formControlName="feet">
     </label>
-<button (click)="setMapScale()" class="btn btn-success">Submit</button>
+    <button (click)="setMapScale()" class="btn btn-success">Submit</button>
+    <br><a targett="_blank" href="https://imgur.com/upload">ImgUr to upload</a>
+    <label class="center-block">Map image url:
+<input class="form-control" formControlName="imageUrl">
+</label>
+    <button (click)="uploadImage()" class="btn btn-success">Select image</button>
   </div>
 </form>
 
 <div class="squaredetailcontainer">
-    <app-square-detail></app-square-detail>
+  <app-square-detail></app-square-detail>
 </div>
