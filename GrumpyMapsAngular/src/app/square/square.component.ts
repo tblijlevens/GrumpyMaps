@@ -30,7 +30,7 @@ export class SquareComponent implements OnInit {
   }
 
   selectSquare(){
-      console.log(this.square.id);
+      console.log(this.square.mapSquareId);
       this.squareDetailShareService.setSquare(this.square);
 /*      this.squareStyles = {
           'background-color': 'green',

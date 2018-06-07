@@ -1,13 +1,13 @@
 import {Player} from './player';
 
 export class Square {
-    id:number;
+    mapSquareId:number;
     squareScale:string;
     squareSize:number;
     players:Player[] = new Array();
 
-    constructor(id:number, squareSize:number, squareScale:string) {
-        this.id = id;
+    constructor(mapSquareId:number, squareSize:number, squareScale:string) {
+        this.mapSquareId = mapSquareId;
         this.squareScale = squareScale;
         this.squareSize = squareSize;
     }

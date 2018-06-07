@@ -1,8 +1,8 @@
 <div class="squaredetail" *ngIf="square">
   <h4>Square details:</h4>
-  <span class="lead">Id: </span> {{square.id}}<br />
-  <span *ngIf="square.physicals.length!=0"><span class="lead">Contents: <br></span>
-  <span *ngFor="let physical of square.physicals">{{square.players[0].getName()}} <br></span> </span><br>
+  <span class="lead">Id: </span> {{square.mapSquareId}}<br />
+  <span *ngIf="square.players.length!=0"><span class="lead">Contents: <br></span>
+  <span *ngFor="let player of square.players">{{square.players[0].getName()}} <br></span> </span><br>
 
   <hr class="my-4">
   <button (click)="addObject()" class="btn btn-success">Add object</button><br>
