@@ -64,7 +64,7 @@ export class MapDetailComponent implements OnInit {
   }
 
   public saveMap(){
-      this.dndMapService.setMapScale(this.dndMap).subscribe();
+          this.dndMapService.saveMap(this.dndMap).subscribe();
   }
 
   /*    public retrieveMaps(){

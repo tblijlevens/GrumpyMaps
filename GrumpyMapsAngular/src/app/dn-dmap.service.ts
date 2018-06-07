@@ -14,11 +14,11 @@ export class DnDMapService {
 
   constructor(private http: HttpClient) { }
 
-  setMapScale(dndMap : DnDMap){
+  saveMap(dndMap : DnDMap){
       console.log("sending...");
       return this.http.post('http://localhost:8080/dndmap', dndMap);
  /* .catch((error: any) => Observable.throw(error.json().error || 'Server error'))*/;
-  }
+
 /*
   findAll(): Observable<DnDMap[]>  {
     return this.http.get('http://localhost:8080/dndMap')
