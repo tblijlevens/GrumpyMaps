@@ -2,8 +2,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import { Observable } from 'rxjs';
-//import { map } from 'rxjs/operator/map';
-//import { catch } from 'rxjs/operator/catch';
+import { map, catchError } from 'rxjs/operators';
 
 import {DnDMap} from './domain/dn-dmap';
 
@@ -16,13 +15,13 @@ export class DnDMapService {
 
   saveMap(dndMap : DnDMap){
       console.log("sending...");
+
       return this.http.post('http://localhost:8080/dndmap', dndMap);
  /* .catch((error: any) => Observable.throw(error.json().error || 'Server error'))*/;
+}
 
-/*
   findAll(): Observable<DnDMap[]>  {
-    return this.http.get('http://localhost:8080/dndMap')
-     .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+    return <Observable<DnDMap[]>>this.http.get('http://localhost:8080/dndmap');
   }
-*/
+
 }

@@ -34,7 +34,7 @@ export class MapDetailComponent implements OnInit {
 
   ngOnInit() {
     //TODO dndmap should be created with a unique number as an id (first parameter): Get last map id from database, add 1.
-    this.dndMap = new DnDMap(2, 10, 5);
+    this.dndMap = new DnDMap(0, 10, 5);
     this.allSquares = this.dndMap.getSquares();
     }
 
@@ -44,6 +44,8 @@ export class MapDetailComponent implements OnInit {
     this.dndMap.setImage(imageUrl);
     this.mapBackground = {
       'background-image': 'url('+imageUrl+')'};
+      console.log(typeof this.mapBackground);
+
   }
 
   public setMapScale() {
@@ -64,7 +66,7 @@ export class MapDetailComponent implements OnInit {
   }
 
   public saveMap(){
-          this.dndMapService.saveMap(this.dndMap).subscribe();
+          this.dndMapService.saveMap(this.dndMap).subscribe((id:number) => this.dndMap.id = id);
   }
 
   /*    public retrieveMaps(){

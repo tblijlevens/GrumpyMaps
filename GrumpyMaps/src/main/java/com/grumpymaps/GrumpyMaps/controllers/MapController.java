@@ -2,6 +2,7 @@ package com.grumpymaps.GrumpyMaps.controllers;
 
 import java.util.List;
 
+import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -23,7 +24,7 @@ public class MapController {
 	  @ResponseBody
 	  @RequestMapping(value = "/dndmap", method = RequestMethod.POST)
 	  public  Long  create(@RequestBody DndMap dndMap) {
-		  System.out.println(dndMap.getId() + " with " + dndMap.getNumberOfSquares() + "squares");
+		System.out.println(dndMap.getId() + " with " + dndMap.getNumberOfSquares() + "squares");
 	    return mapService.save(dndMap).getId();
 	  }
 	  
