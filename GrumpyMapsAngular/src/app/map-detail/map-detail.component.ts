@@ -21,32 +21,59 @@ export class MapDetailComponent implements OnInit {
   mapForm = new FormGroup({
     heightwidth: new FormControl(),
     feet: new FormControl(),
-    imageUrl: new FormControl()
+    imageUrl: new FormControl(),
+    gridToggle: new FormControl()
   });
 
   allSquares: Square[];
   dndMap: DnDMap;
   mapBackground = {};
+  squareStyles = {};
+  squareScale: string = '10%';
 
 
-  constructor(private dndMapService: DnDMapService) { }
+  constructor(private dndMapService: DnDMapService, private squareDetailShareService: SquareDetailShareService) { }
 
 
   ngOnInit() {
     //TODO dndmap should be created with a unique number as an id (first parameter): Get last map id from database, add 1.
     this.dndMap = new DnDMap(0, 10, 5);
     this.allSquares = this.dndMap.getSquares();
-    }
+  }
 
   public uploadImage() {
     const imageUrl = this.mapForm.get('imageUrl').value;
     console.log(imageUrl);
     this.dndMap.setImage(imageUrl);
     this.mapBackground = {
-      'background-image': 'url('+imageUrl+')'};
-      console.log(typeof this.mapBackground);
+      'background-image': 'url(' + imageUrl + ')'
+    };
+    console.log(typeof this.mapBackground);
 
   }
+
+  public hideGrid() {
+  var gridToggle = this.mapForm.get('gridToggle').value;
+  console.log(gridToggle);
+  if (!gridToggle) {
+      // grid off
+    this.squareStyles = {
+      'border': 'dotted 1px rgba(0,0,0,0.5)',
+      'width': this.squareScale,
+      'height': this.squareScale
+    };
+  } else {
+
+    this.squareStyles = {
+      'border': 'dotted 1px rgba(0,0,0,0)',
+      'width': this.squareScale,
+      'height': this.squareScale
+    };
+  }
+
+  this.squareDetailShareService.setSquareStyles(this.squareStyles);
+
+}
 
   public setMapScale() {
     var heightWidth = +this.mapForm.get('heightwidth').value;
@@ -65,8 +92,8 @@ export class MapDetailComponent implements OnInit {
 
   }
 
-  public saveMap(){
-          this.dndMapService.saveMap(this.dndMap).subscribe((id:number) => this.dndMap.id = id);
+  public saveMap() {
+    this.dndMapService.saveMap(this.dndMap).subscribe((id: number) => this.dndMap.id = id);
   }
 
   /*    public retrieveMaps(){

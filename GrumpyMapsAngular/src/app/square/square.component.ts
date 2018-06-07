@@ -23,6 +23,7 @@ export class SquareComponent implements OnInit {
   constructor(private squareDetailShareService: SquareDetailShareService) { }
 
   ngOnInit() {
+    this.squareDetailShareService.squareStylesUpdated.subscribe(squareStyles => this.squareStyles = squareStyles);
       this.squareStyles = {
           'width': this.squareScale,
           'height': this.squareScale,

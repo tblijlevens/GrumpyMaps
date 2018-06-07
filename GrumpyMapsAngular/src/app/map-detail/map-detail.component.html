@@ -1,6 +1,6 @@
 <br />
 <div class="mapcontainer" [ngStyle]="mapBackground">
-  <div class="square" id="square" [(ngStyle)]="squareStyles">
+  <div class="square" id="square">
     <app-square *ngFor="let square of allSquares" [squareScale]=square.squareScale [square]=square></app-square>
   </div>
 
@@ -21,6 +21,9 @@
     </label>
     <button (click)="uploadImage()" class="btn btn-success">Select image</button><br><br><br>
     <button (click)="saveMap()" class="btn btn-success">Save map</button>
+    <br><br><label class="center-block">Hide grid:
+  <input type="checkbox" formControlName="gridToggle" (change)="hideGrid()" ng-model="checked">
+  </label>
   </div>
 </form>
 
