@@ -22,6 +22,7 @@ public class Square implements Serializable{
     private int mapSquareId;
     private String squareScale;
     private int squareSize;
+    private boolean obstructed;
 
     @OneToMany(mappedBy="square", cascade=CascadeType.ALL)
     private List<Player> players;
@@ -93,6 +94,22 @@ public class Square implements Serializable{
 	*/
 	public void setSquareSize(int squareSize) {
 		this.squareSize = squareSize;
+	}
+
+	/**
+	* Returns value of obstructed
+	* @return
+	*/
+	public boolean getObstructed() {
+		return obstructed;
+	}
+
+	/**
+	* Sets new value of obstructed
+	* @param
+	*/
+	public void setObstructed(boolean obstructed) {
+		this.obstructed = obstructed;
 	}
 
 	/**

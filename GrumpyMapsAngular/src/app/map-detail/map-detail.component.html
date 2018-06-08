@@ -8,18 +8,21 @@
 
 <form [formGroup]="mapForm">
   <div class="form-group">
+      <a target="_blank" href="https://i.pinimg.com/736x/f1/b3/f5/f1b3f576513897781c67fe55252ed2a2--maps.jpg">Testpicture</a>
+      <label class="center-block">Map image url:
+          <input class="form-control" formControlName="imageUrl">
+      </label>
+      <button (click)="uploadImage()" class="btn btn-success">Select image</button><br><br><br>
     <label class="center-block">Height/Width:
       <input class="form-control" formControlName="heightwidth">
     </label>
     <label class="center-block">In-game square size (ft):
       <input class="form-control" formControlName="feet">
     </label>
-    <button (click)="setMapScale()" class="btn btn-success">Submit</button>
-    <br><br><a target="_blank" href="https://i.pinimg.com/736x/f1/b3/f5/f1b3f576513897781c67fe55252ed2a2--maps.jpg">Testpicture</a>
-    <label class="center-block">Map image url:
-        <input class="form-control" formControlName="imageUrl">
-    </label>
-    <button (click)="uploadImage()" class="btn btn-success">Select image</button><br><br><br>
+    <button (click)="setMapScale()" class="btn btn-success">Submit</button><br /><br />
+    <label class="center-block">Obstruct squares:
+  <input type="checkbox" formControlName="obstructToggle" (change)="obstructSquares()" ng-model="checked">
+  </label><br /><br />
     <button (click)="saveMap()" class="btn btn-success">Save map</button>
     <br><br><label class="center-block">Hide grid:
   <input type="checkbox" formControlName="gridToggle" (change)="hideGrid()" ng-model="checked">

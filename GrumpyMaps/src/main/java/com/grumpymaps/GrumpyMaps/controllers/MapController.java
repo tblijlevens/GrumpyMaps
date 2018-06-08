@@ -28,7 +28,6 @@ public class MapController {
 	    return mapService.save(dndMap).getId();
 	  }
 	  
-	  //curl  http://localhost:8080/todo
 	  @ResponseBody
 	  @RequestMapping(value = "/dndmap", method = RequestMethod.GET)
 	  public List<DndMap> findAll() {

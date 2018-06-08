@@ -23,7 +23,8 @@ export class MapDetailComponent implements OnInit {
     heightwidth: new FormControl(),
     feet: new FormControl(),
     imageUrl: new FormControl(),
-    gridToggle: new FormControl()
+    gridToggle: new FormControl(),
+    obstructToggle: new FormControl()
   });
 
   allSquares: Square[];
@@ -53,6 +54,29 @@ export class MapDetailComponent implements OnInit {
 
   }
 
+  public setMapScale() {
+      var heightWidth = +this.mapForm.get('heightwidth').value;
+      if (heightWidth > 25) {
+          heightWidth = 25;
+          alert("Map gridsize can't be bigger than 25x25. Therefore gridsize is set to 25x25.");
+      }
+      var squareSize = +this.mapForm.get('feet').value;
+      if (!squareSize) {
+          squareSize = 5;
+          alert("Square size wasn't set and is now defaulted to 5.");
+      }
+
+      this.dndMap.setHeightWidth(heightWidth, squareSize);
+      this.allSquares = this.dndMap.getSquares();
+
+  }
+
+  public obstructSquares(){
+      var obstructionMode = this.mapForm.get('obstructToggle').value;
+      this.squareDetailShareService.setObstructionMode(obstructionMode);
+
+  }
+
   public hideGrid() {
   var gridToggle = this.mapForm.get('gridToggle').value;
   console.log(gridToggle);
@@ -61,27 +85,10 @@ export class MapDetailComponent implements OnInit {
       // grid off
     squareBorderStyle = 'dotted 1px rgba(0,0,0,0.5)';
   }
-
   this.squareDetailShareService.setSquareBorderStyles(squareBorderStyle);
 
 }
 
-  public setMapScale() {
-    var heightWidth = +this.mapForm.get('heightwidth').value;
-    if (heightWidth > 25) {
-      heightWidth = 25;
-      alert("Map gridsize can't be bigger than 25x25. Therefore gridsize is set to 25x25.");
-    }
-    var squareSize = +this.mapForm.get('feet').value;
-    if (!squareSize) {
-      squareSize = 5;
-      alert("Square size wasn't set and is now defaulted to 5.");
-    }
-
-    this.dndMap.setHeightWidth(heightWidth, squareSize);
-    this.allSquares = this.dndMap.getSquares();
-
-  }
 
   public saveMap() {
     this.dndMapService.saveMap(this.dndMap).subscribe((id: number) => this.dndMap.id = id);

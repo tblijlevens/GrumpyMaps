@@ -7,8 +7,10 @@ import { Square } from './domain/square';
 export class SquareDetailShareService {
   private square: Square;
   private squareBorderStyle: string;
+  private obstructionMode:boolean;
   @Output() squareUpdated: EventEmitter<Square> = new EventEmitter(true);
   @Output() squareBorderStyleUpdated: EventEmitter<string> = new EventEmitter(true);
+  @Output() obstructionModeUpdated: EventEmitter<boolean> = new EventEmitter(true);
 
   constructor() { }
 
@@ -23,6 +25,11 @@ export class SquareDetailShareService {
   setSquareBorderStyles(squareBorderStyle: string) {
     this.squareBorderStyle = squareBorderStyle;
     this.squareBorderStyleUpdated.emit(squareBorderStyle);
+  }
+
+  setObstructionMode(obstructionMode: boolean) {
+    this.obstructionMode = obstructionMode;
+    this.obstructionModeUpdated.emit(obstructionMode);
   }
 
 }
