@@ -9,8 +9,9 @@ export class Player implements Physical{
     attacksPerRound:number;
     spellsPerRound:number;
     type:string;
+    color:string;
 
-    constructor(id, name, actionPoints, movementAmount, attacksPerRound, spellsPerRound, type){
+    constructor(id, name, actionPoints, movementAmount, attacksPerRound, spellsPerRound, type, color){
         this.id = id;
         this.name = name;
         this.actionPoints = actionPoints;
@@ -18,6 +19,7 @@ export class Player implements Physical{
         this.attacksPerRound = attacksPerRound;
         this.spellsPerRound = spellsPerRound;
         this.type = type;
+        this.color = color;
     }
     getName(){
         return this.name;
