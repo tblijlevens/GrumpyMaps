@@ -4,7 +4,7 @@ import { Square } from './domain/square';
 @Injectable({
   providedIn: 'root'
 })
-export class SquareDetailShareService {
+export class MapShareService {
   private square: Square;
   private squareBorderStyle: string;
   private obstructionMode:boolean;

@@ -1,15 +1,15 @@
 import { TestBed, inject } from '@angular/core/testing';
 
-import { SquareDetailShareService } from './square-detail-share.service';
+import { MapShareService } from './map-share.service';
 
 describe('SquareDetailShareService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [SquareDetailShareService]
+      providers: [MapShareService]
     });
   });
 
-  it('should be created', inject([SquareDetailShareService], (service: SquareDetailShareService) => {
+  it('should be created', inject([MapShareService], (service: MapShareService) => {
     expect(service).toBeTruthy();
   }));
 });

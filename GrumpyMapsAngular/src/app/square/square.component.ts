@@ -3,7 +3,7 @@ import { Square } from '../domain/square';
 import { DnDMap } from '../domain/dn-dmap';
 import { MapDetailComponent } from '../map-detail/map-detail.component';
 import { SquareDetailComponent } from '../square-detail/square-detail.component';
-import {SquareDetailShareService} from '../square-detail-share.service';
+import {MapShareService} from '../map-share.service';
 
 @Component({
   selector: 'app-square',
@@ -23,7 +23,7 @@ export class SquareComponent implements OnInit {
 
     squareStyles = {};
 
-  constructor(private squareDetailShareService: SquareDetailShareService) { }
+  constructor(private squareDetailShareService: MapShareService) { }
 
   ngOnInit() {
     this.squareDetailShareService.squareBorderStyleUpdated.subscribe(squareBorderStyle => this.squareStyles['border'] = squareBorderStyle);

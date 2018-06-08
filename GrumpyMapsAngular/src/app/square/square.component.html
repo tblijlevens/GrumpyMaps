@@ -1,3 +1,7 @@
 <div id='squarecontainer' class="square" [ngStyle]="squareStyles" (click)=selectSquare()>
-    {{square.mapSquareId}}
+    {{square.mapSquareId}}<br>
+    <span *ngIf="square.players.length!=0">
+        <span *ngFor="let player of square.players">{{player.id}}</span>
+    </span>
+
 </div>

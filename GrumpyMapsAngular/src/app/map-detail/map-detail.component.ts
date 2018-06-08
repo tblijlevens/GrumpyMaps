@@ -6,7 +6,7 @@ import { DnDMapService } from '../dn-dmap.service'
 import { DnDMap } from '../domain/dn-dmap'
 import { Square } from '../domain/square'
 
-import { SquareDetailShareService } from '../square-detail-share.service';
+import { MapShareService } from '../map-share.service';
 import { SquareComponent } from '../square/square.component';
 import { SquareDetailComponent } from '../square-detail/square-detail.component';
 
@@ -15,7 +15,7 @@ import { SquareDetailComponent } from '../square-detail/square-detail.component'
   selector: 'app-map-detail',
   templateUrl: './map-detail.component.html',
   styleUrls: ['./map-detail.component.css'],
-  providers: [DnDMapService, SquareDetailShareService]
+  providers: [DnDMapService, MapShareService]
 })
 
 export class MapDetailComponent implements OnInit {
@@ -34,7 +34,7 @@ export class MapDetailComponent implements OnInit {
   squareScale: string = '10%';
 
 
-  constructor(private dndMapService: DnDMapService, private squareDetailShareService: SquareDetailShareService) { }
+  constructor(private dndMapService: DnDMapService, private squareDetailShareService: MapShareService) { }
 
 
   ngOnInit() {

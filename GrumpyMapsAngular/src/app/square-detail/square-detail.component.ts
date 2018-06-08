@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import {SquareDetailShareService} from '../square-detail-share.service';
+import {MapShareService} from '../map-share.service';
 import { Square } from '../domain/square';
 import { Player } from '../domain/player';
 
@@ -12,11 +12,11 @@ import { Player } from '../domain/player';
 export class SquareDetailComponent implements OnInit {
 
     square:Square;
-  constructor(private squareDetailShareService: SquareDetailShareService) { }
+  constructor(private mapShareService: MapShareService) { }
 
   ngOnInit() {
-      this.squareDetailShareService.squareUpdated.subscribe(square => this.square =square);
-//      this.squareId = this.squareDetailShareService.squareId;
+      this.mapShareService.squareUpdated.subscribe(square => this.square =square);
+//      this.squareId = this.mapShareService.squareId;
   }
 
   addObject(){
