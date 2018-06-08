@@ -4,7 +4,7 @@ export class Square {
     mapSquareId:number;
     squareScale:string;
     squareSize:number;
-    obstructed:boolean;
+    obstructed:boolean = false;
     players:Player[] = new Array();
 
     constructor(mapSquareId:number, squareSize:number, squareScale:string) {

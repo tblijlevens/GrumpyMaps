@@ -35,12 +35,17 @@ export class SquareComponent implements OnInit {
   }
 
   selectSquare(){
-      console.log(this.square.mapSquareId);
       this.squareDetailShareService.setSquare(this.square);
-
+      var isObstructed = this.square.obstructed;
       if (this.obstructionMode){
-          this.square.obstructed = true;
-          this.squareStyles['background-color'] = 'rgba(161, 0, 0, 0.35)';
+          if (isObstructed == false){
+              this.square.obstructed = true;
+              this.squareStyles['background-color'] = 'rgba(161, 0, 0, 0.35)';
+          }
+          else{
+              this.square.obstructed = false;
+              this.squareStyles['background-color'] = 'rgba(161, 0, 0, 0)';
+          }
       }
   }
 
