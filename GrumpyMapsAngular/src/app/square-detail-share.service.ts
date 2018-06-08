@@ -6,9 +6,9 @@ import { Square } from './domain/square';
 })
 export class SquareDetailShareService {
   private square: Square;
-  private squareStyles: object;
+  private squareBorderStyle: string;
   @Output() squareUpdated: EventEmitter<Square> = new EventEmitter(true);
-  @Output() squareStylesUpdated: EventEmitter<object> = new EventEmitter(true);
+  @Output() squareBorderStyleUpdated: EventEmitter<string> = new EventEmitter(true);
 
   constructor() { }
 
@@ -20,9 +20,9 @@ export class SquareDetailShareService {
     return this.square;
   }
 
-  setSquareStyles(squareStyles: object) {
-    this.squareStyles = squareStyles;
-    this.squareStylesUpdated.emit(squareStyles);
+  setSquareBorderStyles(squareBorderStyle: string) {
+    this.squareBorderStyle = squareBorderStyle;
+    this.squareBorderStyleUpdated.emit(squareBorderStyle);
   }
 
 }

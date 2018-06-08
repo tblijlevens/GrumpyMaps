@@ -18,12 +18,15 @@ export class SquareComponent implements OnInit {
     @Input()
     square:Square;
 
+    @Input()
+    obstructionModeOn:boolean = true;
+
     squareStyles = {};
 
   constructor(private squareDetailShareService: SquareDetailShareService) { }
 
   ngOnInit() {
-    this.squareDetailShareService.squareStylesUpdated.subscribe(squareStyles => this.squareStyles = squareStyles);
+    this.squareDetailShareService.squareBorderStyleUpdated.subscribe(squareBorderStyle => this.squareStyles['border'] = squareBorderStyle);
       this.squareStyles = {
           'width': this.squareScale,
           'height': this.squareScale,
@@ -33,6 +36,17 @@ export class SquareComponent implements OnInit {
   selectSquare(){
       console.log(this.square.mapSquareId);
       this.squareDetailShareService.setSquare(this.square);
+
+      if (this.obstructionModeOn){
+          this.square.obstructed = true;
+          this.squareStyles['background-color'] = 'rgba(161, 0, 0, 0.35)';
+          /*
+          this.squareStyles = {
+              'width': this.squareScale,
+              'height': this.squareScale,
+              'background-color': 'rgba(161, 0, 0, 0.35)'
+          }*/
+      }
 /*      this.squareStyles = {
           'background-color': 'green',
           'width': this.squareScale,

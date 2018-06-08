@@ -56,30 +56,18 @@ export class MapDetailComponent implements OnInit {
   public hideGrid() {
   var gridToggle = this.mapForm.get('gridToggle').value;
   console.log(gridToggle);
+  var squareBorderStyle= 'dotted 1px rgba(0,0,0,0)';
   if (!gridToggle) {
       // grid off
-    this.squareStyles = {
-      'border': 'dotted 1px rgba(0,0,0,0.5)',
-      'width': this.squareScale,
-      'height': this.squareScale
-    };
-  } else {
-
-    this.squareStyles = {
-      'border': 'dotted 1px rgba(0,0,0,0)',
-      'width': this.squareScale,
-      'height': this.squareScale
-    };
+    squareBorderStyle = 'dotted 1px rgba(0,0,0,0.5)';
   }
 
-  this.squareDetailShareService.setSquareStyles(this.squareStyles);
+  this.squareDetailShareService.setSquareBorderStyles(squareBorderStyle);
 
 }
 
   public setMapScale() {
     var heightWidth = +this.mapForm.get('heightwidth').value;
-    this.squareScale = 100/heightWidth+'%';
-
     if (heightWidth > 25) {
       heightWidth = 25;
       alert("Map gridsize can't be bigger than 25x25. Therefore gridsize is set to 25x25.");
