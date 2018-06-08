@@ -1,3 +1,4 @@
+
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 
@@ -77,6 +78,8 @@ export class MapDetailComponent implements OnInit {
 
   public setMapScale() {
     var heightWidth = +this.mapForm.get('heightwidth').value;
+    this.squareScale = 100/heightWidth+'%';
+
     if (heightWidth > 25) {
       heightWidth = 25;
       alert("Map gridsize can't be bigger than 25x25. Therefore gridsize is set to 25x25.");
@@ -98,8 +101,6 @@ export class MapDetailComponent implements OnInit {
 
   /*    public retrieveMaps(){
         console.log(this.dndMapService.findAll().subscribe());
-
     }
   */
-
 }
