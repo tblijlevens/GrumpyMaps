@@ -16,6 +16,7 @@ export class SquareDetailComponent implements OnInit {
 
   ngOnInit() {
       this.mapShareService.squareUpdated.subscribe(square => this.square =square);
+
 //      this.squareId = this.mapShareService.squareId;
   }
 
@@ -31,5 +32,7 @@ export class SquareDetailComponent implements OnInit {
       console.log(player.id + " has range: " + player.moveRange);
       this.mapShareService.setAllRangeSquares(allRangeSquares);
   }
+
+
 
 }

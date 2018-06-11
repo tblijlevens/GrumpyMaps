@@ -2,6 +2,7 @@ import { Injectable, EventEmitter, Output } from '@angular/core';
 import { Square } from './domain/square';
 import { DnDMap } from './domain/dn-dmap';
 import { Observable, from, of} from 'rxjs';
+import { distinct} from 'rxjs/operators';
 
 
 @Injectable({
@@ -11,12 +12,13 @@ export class MapShareService {
   private square: Square;
   private squareBorderStyle: string;
   private obstructionMode:boolean;
-  private allRangeSquares: number[];
+  private rangeSquares:Square[] = new Array();
   private dndMap:DnDMap;
+  private ready:boolean = false;
   @Output() squareUpdated: EventEmitter<Square> = new EventEmitter(true);
   @Output() squareBorderStyleUpdated: EventEmitter<string> = new EventEmitter(true);
   @Output() obstructionModeUpdated: EventEmitter<boolean> = new EventEmitter(true);
-  @Output() allRangeSquaresUpdated: EventEmitter<number[]> = new EventEmitter(true);
+  @Output() rangeSquaresUpdated: EventEmitter<Square[]> = new EventEmitter(true);
   @Output() dndMapUpdated: EventEmitter<DnDMap> = new EventEmitter(true);
 
   constructor() { }
@@ -38,22 +40,47 @@ export class MapShareService {
     this.obstructionMode = obstructionMode;
     this.obstructionModeUpdated.emit(obstructionMode);
   }
+
   setAllRangeSquares(allRangeSquares: number[]) {
+      this.rangeSquares = new Array();
       var allSquares = this.dndMap.squares;
-      var rangeSquares = new Array();
+      var selectedSquares=new Array();
       for (var i = 0 ; i<allSquares.length ; i++){
-          for (var j = 0 ; i<allRangeSquares.length ; j++){
+          allSquares[i].inRange = false; //first set everything out of range
+          for (var j = 0 ; j<allRangeSquares.length ; j++){
               if (allSquares[i].mapSquareId == allRangeSquares[j]){
-                  rangeSquares.push(allSquares[i]);
+                  allSquares[i].inRange = true;
+                  selectedSquares.push(allSquares[i]);
+                  console.log("rangeSquares were updated");
               }
           }
       }
-      for (var i=0 ; i<rangeSquares.length ; i++){
-          console.log("following squares will be styled: " + rangeSquares[i].id);
-      }
-    this.allRangeSquares = allRangeSquares;
-    this.allRangeSquaresUpdated.emit(allRangeSquares);
+      this.rangeSquares = selectedSquares;
+      this.rangeSquaresUpdated.emit(this.rangeSquares);
+
+//      from(allRangeSquares).pipe(distinct()).subscribe(x => this.fillRangeSquares(x));
+
   }
+/*
+  private fillRangeSquares(squareIdNr){
+      var allSquares = this.dndMap.squares;
+      for (var i = 0 ; i<allSquares.length ; i++){
+          allSquares[i].inRange = false; //first set everything out of range
+          if (allSquares[i].mapSquareId == squareIdNr){
+              allSquares[i].inRange = true;
+              selectedSquares.push(allSquares[i]);
+              console.log("rangeSquares were updated");
+          }
+      }
+
+         this.setRangeSquares(selectedSquares);
+  }
+  */
+  private setRangeSquares(selectedSquares){
+      this.rangeSquares = selectedSquares;
+      this.rangeSquaresUpdated.emit(this.rangeSquares);
+  }
+
   setDnDMap(dndMap: DnDMap) {
     this.dndMap = dndMap;
     this.dndMapUpdated.emit(dndMap);

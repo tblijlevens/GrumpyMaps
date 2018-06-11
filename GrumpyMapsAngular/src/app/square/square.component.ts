@@ -18,20 +18,20 @@ export class SquareComponent implements OnInit {
     @Input()
     square:Square;
 
-    @Input()
     obstructionMode:boolean = false;
+    rangeSquares:Square[];
 
     squareStyles = {};
-
   constructor(private mapShareService: MapShareService) { }
 
   ngOnInit() {
     this.mapShareService.squareBorderStyleUpdated.subscribe(squareBorderStyle => this.squareStyles['border'] = squareBorderStyle);
     this.mapShareService.obstructionModeUpdated.subscribe(obstructionMode => this.obstructionMode = obstructionMode);
-      this.squareStyles = {
-          'width': this.squareScale,
-          'height': this.squareScale,
-      }
+    this.mapShareService.rangeSquaresUpdated.subscribe(rangeSquares => this.setRangeSquareStyles());
+    this.squareStyles = {
+        'width': this.squareScale,
+        'height': this.squareScale,
+    }
   }
 
   selectSquare(){
@@ -49,4 +49,14 @@ export class SquareComponent implements OnInit {
       }
   }
 
+  private setRangeSquareStyles(){
+      if (!this.square.obstructed){
+          if (this.square.inRange){
+              this.squareStyles['background-color'] = 'rgba(8, 161, 0, 0.35)';
+          }
+          else{
+              this.squareStyles['background-color'] = 'rgba(8, 161, 0, 0)';
+          }
+      }
+  }
 }

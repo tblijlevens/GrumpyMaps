@@ -39,18 +39,15 @@ export class Player implements Physical{
         this.moveRange = new Array();
         for (var i = -this.movementAmount ; i <= this.movementAmount ; i++){
             var availableSquare = this.squareId + (i*this.mapHeightWidth);
-            this.moveRange.push(availableSquare);
 
             if(i<=0){
-                for (var j=1 ; j<= i+this.movementAmount ; j++){
-                    this.moveRange.push(availableSquare-j);
+                for (var j=-i-this.movementAmount ; j<= i+this.movementAmount ; j++){
                     this.moveRange.push(availableSquare+j);
                 }
             }
             if(i>0){
-                for (var j=1 ; j> i-this.movementAmount ; j--){
-                    this.moveRange.push(availableSquare-(i-this.movementAmount));
-                    this.moveRange.push(availableSquare+(i-this.movementAmount));
+                for (var j=i-this.movementAmount ; j<= this.movementAmount-i ; j++){
+                    this.moveRange.push(availableSquare+j);
                 }
             }
         }

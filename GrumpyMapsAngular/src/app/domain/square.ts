@@ -6,6 +6,7 @@ export class Square {
     squareSize:number;
     mapHeightWidth:number;
     obstructed:boolean = false;
+    inRange:boolean = false;
     players:Player[] = new Array();
 
     constructor(mapSquareId:number, squareSize:number, squareScale:string, heightWidth:number) {
