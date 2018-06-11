@@ -21,7 +21,7 @@ export class SquareDetailComponent implements OnInit {
 
   addObject(){
       console.log(this.square.players);
-      var playerJan:Player = new Player(1, "Jan de Man", 100, 10, 3, 2, "physical", "yellow");
+      var playerJan:Player = new Player(1, "Jan de Man", 100, 2, 3, 2, "physical", "yellow", this.square.mapSquareId, this.square.mapHeightWidth);
       this.square.addPhysical(playerJan);
   }
   showRange(playerId){

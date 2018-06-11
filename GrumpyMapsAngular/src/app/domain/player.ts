@@ -10,8 +10,11 @@ export class Player implements Physical{
     spellsPerRound:number;
     type:string;
     color:string;
+    squareId:number;
+    mapHeightWidth:number
+    moveRange:number[] = new Array();
 
-    constructor(id, name, actionPoints, movementAmount, attacksPerRound, spellsPerRound, type, color){
+    constructor(id, name, actionPoints, movementAmount, attacksPerRound, spellsPerRound, type, color, squareId, mapHeightWidth){
         this.id = id;
         this.name = name;
         this.actionPoints = actionPoints;
@@ -20,8 +23,37 @@ export class Player implements Physical{
         this.spellsPerRound = spellsPerRound;
         this.type = type;
         this.color = color;
+        this.squareId = squareId;
+        this.mapHeightWidth = mapHeightWidth;
+        this.setMoveRange();
     }
     getName(){
         return this.name;
     }
+    setSquareId(activeSquare){
+        this.squareId = activeSquare;
+        this.setMoveRange();
+    }
+
+    setMoveRange(){
+        for (var i = -this.movementAmount ; i <= this.movementAmount ; i++){
+            var availableSquare = this.squareId + (i*this.mapHeightWidth);
+            this.moveRange.push(availableSquare);
+
+            if(i<=0){
+                for (var j=1 ; j<= i+this.movementAmount ; j++){
+                    this.moveRange.push(availableSquare-j);
+                    this.moveRange.push(availableSquare+j);
+                }
+            }
+            if(i>0){
+                for (var j=1 ; j> i-this.movementAmount ; j--){
+                    this.moveRange.push(availableSquare-(i-this.movementAmount));
+                    this.moveRange.push(availableSquare+(i-this.movementAmount));
+                }
+            }
+        }
+        console.log(this.moveRange);
+    }
+
 }

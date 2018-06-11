@@ -31,7 +31,7 @@ export class DnDMap {
         this.numberOfSquares = this.heightWidth*this.heightWidth;
         this.squares = new Array();
         for (var i = 0 ; i<this.numberOfSquares ; i++){
-            this.squares.push(new Square(i+1, squareSize, squareScale));
+            this.squares.push(new Square(i+1, squareSize, squareScale, this.heightWidth));
         }
     }
 }
