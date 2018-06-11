@@ -23,11 +23,11 @@ export class SquareComponent implements OnInit {
 
     squareStyles = {};
 
-  constructor(private squareDetailShareService: MapShareService) { }
+  constructor(private mapShareService: MapShareService) { }
 
   ngOnInit() {
-    this.squareDetailShareService.squareBorderStyleUpdated.subscribe(squareBorderStyle => this.squareStyles['border'] = squareBorderStyle);
-    this.squareDetailShareService.obstructionModeUpdated.subscribe(obstructionMode => this.obstructionMode = obstructionMode);
+    this.mapShareService.squareBorderStyleUpdated.subscribe(squareBorderStyle => this.squareStyles['border'] = squareBorderStyle);
+    this.mapShareService.obstructionModeUpdated.subscribe(obstructionMode => this.obstructionMode = obstructionMode);
       this.squareStyles = {
           'width': this.squareScale,
           'height': this.squareScale,
@@ -35,7 +35,7 @@ export class SquareComponent implements OnInit {
   }
 
   selectSquare(){
-      this.squareDetailShareService.setSquare(this.square);
+      this.mapShareService.setSquare(this.square);
       var isObstructed = this.square.obstructed;
       if (this.obstructionMode){
           if (isObstructed == false){

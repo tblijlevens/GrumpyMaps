@@ -34,7 +34,7 @@ export class MapDetailComponent implements OnInit {
   squareScale: string = '10%';
 
 
-  constructor(private dndMapService: DnDMapService, private squareDetailShareService: MapShareService) { }
+  constructor(private dndMapService: DnDMapService, private mapShareService: MapShareService) { }
 
 
   ngOnInit() {
@@ -73,7 +73,7 @@ export class MapDetailComponent implements OnInit {
 
   public obstructSquares(){
       var obstructionMode = this.mapForm.get('obstructToggle').value;
-      this.squareDetailShareService.setObstructionMode(obstructionMode);
+      this.mapShareService.setObstructionMode(obstructionMode);
 
   }
 
@@ -85,7 +85,7 @@ export class MapDetailComponent implements OnInit {
       // grid off
     squareBorderStyle = 'dotted 1px rgba(0,0,0,0.5)';
   }
-  this.squareDetailShareService.setSquareBorderStyles(squareBorderStyle);
+  this.mapShareService.setSquareBorderStyles(squareBorderStyle);
 
 }
 

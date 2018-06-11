@@ -24,5 +24,8 @@ export class SquareDetailComponent implements OnInit {
       var playerJan:Player = new Player(1, "Jan de Man", 100, 10, 3, 2, "physical", "yellow");
       this.square.addPhysical(playerJan);
   }
+  showRange(playerId){
+      console.log(playerId);
+  }
 
 }
