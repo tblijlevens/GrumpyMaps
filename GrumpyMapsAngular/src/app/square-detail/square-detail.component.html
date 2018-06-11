@@ -2,7 +2,7 @@
   <h4>Square details:</h4>
   <span class="lead">Id: </span> {{square.mapSquareId}}<br />
   <span *ngIf="square.players.length!=0"><span class="lead">Contents: <br></span>
-  <span *ngFor="let player of square.players" (click)="showRange(player.id, player.moveRange)">{{player.getName()}} <br></span> </span><br>
+  <span *ngFor="let player of square.players" (click)="showRange(player)">{{player.getName()}} <br></span> </span><br>
 
   <hr class="my-4">
   <button (click)="addObject()" class="btn btn-success">Add object</button><br>

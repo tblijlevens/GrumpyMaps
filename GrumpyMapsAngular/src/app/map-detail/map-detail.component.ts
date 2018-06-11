@@ -27,7 +27,6 @@ export class MapDetailComponent implements OnInit {
     obstructToggle: new FormControl()
   });
 
-  allSquares: Square[];
   dndMap: DnDMap;
   mapBackground = {};
   squareStyles = {};
@@ -40,7 +39,7 @@ export class MapDetailComponent implements OnInit {
 
   ngOnInit() {
     this.dndMap = new DnDMap(0, this.heightWidth, 5); //id zero cannot exist in databse, so it will generate a new unique id)
-    this.allSquares = this.dndMap.getSquares();
+    this.mapShareService.setDnDMap(this.dndMap);
   }
 
   public uploadImage() {
@@ -67,7 +66,8 @@ export class MapDetailComponent implements OnInit {
       }
 
       this.dndMap.setHeightWidth(this.heightWidth, squareSize);
-      this.allSquares = this.dndMap.getSquares();
+      this.mapShareService.setDnDMap(this.dndMap);
+
 
   }
 
