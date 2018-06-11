@@ -12,7 +12,7 @@ export class Player implements Physical{
     color:string;
     squareId:number;
     mapHeightWidth:number
-    moveRange:number[] = new Array();
+    moveRange:number[];
 
     constructor(id, name, actionPoints, movementAmount, attacksPerRound, spellsPerRound, type, color, squareId, mapHeightWidth){
         this.id = id;
@@ -36,6 +36,7 @@ export class Player implements Physical{
     }
 
     setMoveRange(){
+        this.moveRange = new Array();
         for (var i = -this.movementAmount ; i <= this.movementAmount ; i++){
             var availableSquare = this.squareId + (i*this.mapHeightWidth);
             this.moveRange.push(availableSquare);
