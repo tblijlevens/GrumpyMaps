@@ -51,7 +51,6 @@ export class MapShareService {
               if (allSquares[i].mapSquareId == allRangeSquares[j]){
                   allSquares[i].inRange = true;
                   selectedSquares.push(allSquares[i]);
-                  console.log("rangeSquares were updated");
               }
           }
       }
