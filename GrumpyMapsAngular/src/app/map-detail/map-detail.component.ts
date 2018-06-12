@@ -57,12 +57,12 @@ export class MapDetailComponent implements OnInit {
       this.heightWidth = +this.mapForm.get('heightwidth').value;
       if (this.heightWidth > 25) {
           this.heightWidth = 25;
-          alert("Map gridsize can't be bigger than 25x25. Therefore gridsize is set to 25x25.");
+          // alert("Map gridsize can't be bigger than 25x25. Therefore gridsize is set to 25x25.");
       }
       var squareSize = +this.mapForm.get('feet').value;
       if (!squareSize) {
-          squareSize = 5;
-          alert("Square size wasn't set and is now defaulted to 5.");
+          squareSize = 3;
+          // alert("Square size wasn't set and is now defaulted to 3.");
       }
 
       this.dndMap.setHeightWidth(this.heightWidth, squareSize);

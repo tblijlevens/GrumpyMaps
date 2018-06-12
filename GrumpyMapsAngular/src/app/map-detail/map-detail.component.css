@@ -16,12 +16,20 @@
 }
 
 .form-group {
-  float: left;
-  margin-left: 20px;
+  padding-left: 20px;
+  float:left;
 }
 
 .squaredetailcontainer {
-  float: left;
-  margin-left: 20px;
-  width: 300px;
+  padding-left: 20px;
+  float:left;
+}
+
+.navButtons {
+margin-left: 20px;
+float:left;
+}
+
+button {
+margin-right: 10px;
 }
