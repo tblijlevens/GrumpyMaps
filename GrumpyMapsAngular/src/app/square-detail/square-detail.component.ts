@@ -16,6 +16,7 @@ export class SquareDetailComponent implements OnInit {
     playerIdCreator:number = 1;
     movementMode:boolean = false;
     selectedPlayer:Player;
+    movable:boolean = false;
 
     createObjectForm = new FormGroup({
       playerName: new FormControl(),
@@ -44,19 +45,23 @@ export class SquareDetailComponent implements OnInit {
       var allRangeSquares = player.moveRange;
       player.isSelected = true;
       this.mapShareService.setAllRangeSquares(allRangeSquares);
+      this.movable = true;
   }
 
   moveObject() {
-    var selectedPlayer;
-    for(var i = 0; i < this.square.players.length; i++) {
-      if(this.square.players[i].isSelected) {
-        selectedPlayer = this.square.players[i];
-        this.movementMode = true;
-        this.mapShareService.setMovementMode(true);
-        this.mapShareService.setPlayerToMove(selectedPlayer);
-        this.square.removePhysical(selectedPlayer.id);
+      if (this.movable){
+
+          var selectedPlayer;
+          for(var i = 0; i < this.square.players.length; i++) {
+              if(this.square.players[i].isSelected) {
+                  selectedPlayer = this.square.players[i];
+                  this.movementMode = true;
+                  this.mapShareService.setMovementMode(true);
+                  this.mapShareService.setPlayerToMove(selectedPlayer);
+                  this.square.removePhysical(selectedPlayer.id);
+              }
+          }
+          this.movable = false;
       }
-    }
-    console.log(this.movementMode + "Move mentMode uit");
   }
 }
