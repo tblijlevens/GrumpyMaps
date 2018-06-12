@@ -13,12 +13,14 @@ export class Player implements Physical{
     squareId:number;
     mapHeightWidth:number
     moveRange:number[];
+    isSelected:boolean;
 
     constructor(id, name, actionPoints, movementAmount, attacksPerRound, spellsPerRound, type, color, squareId, mapHeightWidth){
         this.id = id;
         this.name = name;
         this.actionPoints = actionPoints;
         this.movementAmount = movementAmount;
+        this.isSelected = false;
         this.attacksPerRound = attacksPerRound;
         this.spellsPerRound = spellsPerRound;
         this.type = type;

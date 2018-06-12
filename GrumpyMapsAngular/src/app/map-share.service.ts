@@ -3,6 +3,7 @@ import { Square } from './domain/square';
 import { DnDMap } from './domain/dn-dmap';
 import { Observable, from, of} from 'rxjs';
 import { distinct} from 'rxjs/operators';
+import { Player} from './domain/player';
 
 
 @Injectable({
@@ -12,12 +13,16 @@ export class MapShareService {
   private square: Square;
   private squareBorderStyle: string;
   private obstructionMode:boolean;
+  private movementMode:boolean;
   private rangeSquares:Square[] = new Array();
   private dndMap:DnDMap;
   private ready:boolean = false;
+  private playerToMove: Player;
   @Output() squareUpdated: EventEmitter<Square> = new EventEmitter(true);
   @Output() squareBorderStyleUpdated: EventEmitter<string> = new EventEmitter(true);
   @Output() obstructionModeUpdated: EventEmitter<boolean> = new EventEmitter(true);
+  @Output() movementModeUpdated: EventEmitter<boolean> = new EventEmitter(true);
+  @Output() playerToMoveUpdated: EventEmitter<Player> = new EventEmitter(true);
   @Output() rangeSquaresUpdated: EventEmitter<Square[]> = new EventEmitter(true);
   @Output() dndMapUpdated: EventEmitter<DnDMap> = new EventEmitter(true);
 
@@ -39,6 +44,16 @@ export class MapShareService {
   setObstructionMode(obstructionMode: boolean) {
     this.obstructionMode = obstructionMode;
     this.obstructionModeUpdated.emit(obstructionMode);
+  }
+
+  setMovementMode(movementMode: boolean) {
+    this.movementMode = movementMode;
+    this.movementModeUpdated.emit(movementMode);
+  }
+
+  setPlayerToMove(player: Player) {
+    this.playerToMove = player;
+    this.playerToMoveUpdated.emit(player);
   }
 
   setAllRangeSquares(allRangeSquares: number[]) {

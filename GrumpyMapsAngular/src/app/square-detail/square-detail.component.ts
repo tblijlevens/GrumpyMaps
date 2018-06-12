@@ -12,6 +12,8 @@ import { Player } from '../domain/player';
 export class SquareDetailComponent implements OnInit {
 
     square:Square;
+    movementMode:boolean = false;
+    selectedPlayer:Player;
   constructor(private mapShareService: MapShareService) { }
 
   ngOnInit() {
@@ -30,10 +32,21 @@ export class SquareDetailComponent implements OnInit {
   }
   showRange(player:Player){
       var allRangeSquares = player.moveRange;
+      player.isSelected = true;
       console.log(player.name + " has range: " + player.moveRange);
       this.mapShareService.setAllRangeSquares(allRangeSquares);
   }
 
-
-
+  moveObject() {
+    var selectedPlayer;
+    for(var i = 0; i < this.square.players.length; i++) {
+      if(this.square.players[i].isSelected) {
+        selectedPlayer = this.square.players[i];
+        this.movementMode = true;
+        this.mapShareService.setMovementMode(true);
+        this.mapShareService.setPlayerToMove(selectedPlayer);
+      }
+    }
+    console.log(this.movementMode + "Move mentMode uit");
+  }
 }
