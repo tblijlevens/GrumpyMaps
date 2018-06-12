@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import {MapShareService} from '../map-share.service';
+import { FormControl, FormGroup } from '@angular/forms';
 import { Square } from '../domain/square';
 import { Player } from '../domain/player';
 
@@ -14,6 +15,13 @@ export class SquareDetailComponent implements OnInit {
     square:Square;
     movementMode:boolean = false;
     selectedPlayer:Player;
+
+    createObjectForm = new FormGroup({
+      playerName: new FormControl(),
+      playerColor: new FormControl(),
+      playerMovement: new FormControl()
+    });
+
   constructor(private mapShareService: MapShareService) { }
 
   ngOnInit() {
