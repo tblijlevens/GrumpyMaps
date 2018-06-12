@@ -23,6 +23,8 @@ public class Square implements Serializable{
     private String squareScale;
     private int squareSize;
     private boolean obstructed;
+    private int mapHeightWidth;
+    private boolean inRange;
 
     @OneToMany(mappedBy="square", cascade=CascadeType.ALL)
     private List<Player> players;

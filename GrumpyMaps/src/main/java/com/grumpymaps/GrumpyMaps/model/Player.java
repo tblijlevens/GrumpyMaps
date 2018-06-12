@@ -20,6 +20,11 @@ public class Player implements Physical{
     private int attacksPerRound;
     private int spellsPerRound;
     private String type;
+    private String color;
+    private int squareId;
+    private int mapHeightWidth;
+    private List<int> moveRange;
+    private boolean isSelected;
 
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="square_id")
