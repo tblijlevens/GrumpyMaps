@@ -53,7 +53,6 @@ export class Player implements Physical{
                 }
             }
         }
-        console.log(this.movementAmount + " " + this.moveRange);
     }
 
 }
