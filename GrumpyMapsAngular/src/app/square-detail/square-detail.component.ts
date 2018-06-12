@@ -45,6 +45,7 @@ export class SquareDetailComponent implements OnInit {
         this.movementMode = true;
         this.mapShareService.setMovementMode(true);
         this.mapShareService.setPlayerToMove(selectedPlayer);
+        this.square.removePhysical(selectedPlayer.id);
       }
     }
     console.log(this.movementMode + "Move mentMode uit");
