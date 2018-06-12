@@ -1,5 +1,5 @@
 <div id='squarecontainer' class="square" [ngStyle]="squareStyles" (click)=selectSquare()>
-    <span >{{square.mapSquareId}}</span><br>
+    <span *ngIf="inRangeSquares.length!=0">{{square.mapSquareId}}</span><br>
     <div id="objectsInSquare" *ngIf="square.players.length!=0">
         <div class="playerDot" *ngFor="let player of square.players" [style.background-color]=player.color></div>
     </div>

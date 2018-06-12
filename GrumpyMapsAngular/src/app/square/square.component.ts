@@ -22,12 +22,14 @@ export class SquareComponent implements OnInit {
 
     squareStyles = {};
 
+    inRangeSquares:Square[] = new Array();
+
   constructor(private mapShareService: MapShareService) { }
 
   ngOnInit() {
     this.mapShareService.squareBorderStyleUpdated.subscribe(squareBorderStyle => this.squareStyles['border'] = squareBorderStyle);
     this.mapShareService.obstructionModeUpdated.subscribe(obstructionMode => this.obstructionMode = obstructionMode);
-    this.mapShareService.rangeSquaresUpdated.subscribe(rangeSquares => this.setRangeSquareStyles());
+    this.mapShareService.rangeSquaresUpdated.subscribe(rangeSquares => {this.setRangeSquareStyles(); this.inRangeSquares=rangeSquares});
     this.squareStyles = {
         'width': this.squareScale,
         'height': this.squareScale,
