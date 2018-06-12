@@ -85,7 +85,7 @@ export class SquareComponent implements OnInit {
   private setRangeSquareStyles() {
     if (!this.square.obstructed) {
       if (this.square.inRange) {
-        this.squareStyles['background-color'] = 'rgba(8, 161, 0, 0.35)';
+        this.squareStyles['background-color'] = 'rgba(8, 161, 0, 0.5)';
       }
       else {
         this.squareStyles['background-color'] = 'rgba(8, 161, 0, 0)';
