@@ -24,18 +24,18 @@ Hide square details
     <br>
     <button (click)="uploadImage()" class="btn btn-success">Select image</button><br><br>
     <label class="center-block">Height/Width:
-      <input class="form-control" formControlName="heightwidth" type="number" [value]=10 min="5" max="24" (click)="setMapScale()">
+      <input class="form-control" formControlName="heightwidth" type="number" min="5" max="25" (change)="setMapScale()" (click)="setMapScale()">
     </label>
     <br>
     <label class="center-block">In-game square size (ft):
-      <input class="form-control" formControlName="feet" type="number" [value]=10 (click)="setMapScale()">
+      <input class="form-control" formControlName="feet" type="number" (change)="setMapScale()"  (click)="setMapScale()">
       </label>
     <br>
     <label class="center-block">Obstruct squares:
-  <input type="checkbox" formControlName="obstructToggle" (change)="obstructSquares()" ng-model="checked">
+  <input type="checkbox" formControlName="obstructToggle" (change)="obstructSquares()">
   </label><br />
-    <label class="center-block">Hide grid:
-<input type="checkbox" formControlName="gridToggle" (change)="hideGrid()" ng-model="checked">
+    <label class="center-block">Show grid:
+<input type="checkbox" formControlName="gridToggle" (change)="hideGrid()">
 </label>
 
     <br><br>

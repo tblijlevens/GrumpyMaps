@@ -28,19 +28,20 @@ export class SquareDetailComponent implements OnInit {
 
   ngOnInit() {
       this.mapShareService.squareUpdated.subscribe(square => this.square =square);
-
-//      this.squareId = this.mapShareService.squareId;
+      this.createObjectForm.get('playerMovement').setValue(1);
+      this.createObjectForm.get('playerColor').setValue("#000");
   }
 
   addObject(){
       const name = this.createObjectForm.get('playerName').value;
       const color = this.createObjectForm.get('playerColor').value;
-      const movement = this.createObjectForm.get('playerMovement').value;
+      const movement = +this.createObjectForm.get('playerMovement').value;
 
       var player:Player = new Player(this.playerIdCreator++, name, 100, movement, 3, 2, "physical", color, this.square.mapSquareId, this.square.mapHeightWidth);
 
       this.square.addPhysical(player);
   }
+  
   showRange(player:Player){
       var allRangeSquares = player.moveRange;
       player.isSelected = true;

@@ -40,6 +40,10 @@ export class MapDetailComponent implements OnInit {
   ngOnInit() {
     this.dndMap = new DnDMap(0, this.heightWidth, 5); //id zero cannot exist in databse, so it will generate a new unique id)
     this.mapShareService.setDnDMap(this.dndMap);
+    this.mapForm.get('heightwidth').setValue(10);
+    this.mapForm.get('feet').setValue(5);
+    this.mapForm.get('gridToggle').setValue(true);
+
   }
 
   public uploadImage() {
@@ -78,7 +82,7 @@ export class MapDetailComponent implements OnInit {
   public hideGrid() {
   var gridToggle = this.mapForm.get('gridToggle').value;
   var squareBorderStyle= 'dotted 1px rgba(0,0,0,0)';
-  if (!gridToggle) {
+  if (gridToggle) {
       // grid off
     squareBorderStyle = 'dotted 1px rgba(0,0,0,0.5)';
   }
