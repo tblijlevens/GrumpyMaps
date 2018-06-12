@@ -23,14 +23,11 @@ public class Player implements Physical{
     private String color;
     private int squareId;
     private int mapHeightWidth;
-    private List<int> moveRange;
     private boolean isSelected;
 
     @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="square_id")
+    @JoinColumn(name="player_square_id")
     private Square square;
-
-
 
 	/**
 	* Returns value of id
@@ -142,6 +139,72 @@ public class Player implements Physical{
 	*/
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	/**
+	* Returns value of color
+	* @return
+	*/
+	public String getColor() {
+		return color;
+	}
+
+	/**
+	* Sets new value of color
+	* @param
+	*/
+	public void setColor(String color) {
+		this.color = color;
+	}
+
+	/**
+	* Returns value of squareId
+	* @return
+	*/
+	public int getSquareId() {
+		return squareId;
+	}
+
+	/**
+	* Sets new value of squareId
+	* @param
+	*/
+	public void setSquareId(int squareId) {
+		this.squareId = squareId;
+	}
+
+	/**
+	* Returns value of mapHeightWidth
+	* @return
+	*/
+	public int getMapHeightWidth() {
+		return mapHeightWidth;
+	}
+
+	/**
+	* Sets new value of mapHeightWidth
+	* @param
+	*/
+	public void setMapHeightWidth(int mapHeightWidth) {
+		this.mapHeightWidth = mapHeightWidth;
+	}
+
+
+
+	/**
+	* Returns value of isSelected
+	* @return
+	*/
+	public boolean isIsSelected() {
+		return isSelected;
+	}
+
+	/**
+	* Sets new value of isSelected
+	* @param
+	*/
+	public void setIsSelected(boolean isSelected) {
+		this.isSelected = isSelected;
 	}
 
 	/**

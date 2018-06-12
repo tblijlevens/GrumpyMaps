@@ -33,7 +33,6 @@ public class Square implements Serializable{
     @JoinColumn(name="map_id")
     private DndMap dndMap;
 
-
 	/**
 	* Returns value of id
 	* @return
@@ -51,7 +50,7 @@ public class Square implements Serializable{
 	}
 
 	/**
-	* Returns value of id
+	* Returns value of mapSquareId
 	* @return
 	*/
 	public int getMapSquareId() {
@@ -59,7 +58,7 @@ public class Square implements Serializable{
 	}
 
 	/**
-	* Sets new value of id
+	* Sets new value of mapSquareId
 	* @param
 	*/
 	public void setMapSquareId(int mapSquareId) {
@@ -102,7 +101,7 @@ public class Square implements Serializable{
 	* Returns value of obstructed
 	* @return
 	*/
-	public boolean getObstructed() {
+	public boolean isObstructed() {
 		return obstructed;
 	}
 
@@ -112,6 +111,38 @@ public class Square implements Serializable{
 	*/
 	public void setObstructed(boolean obstructed) {
 		this.obstructed = obstructed;
+	}
+
+	/**
+	* Returns value of mapHeightWidth
+	* @return
+	*/
+	public int getMapHeightWidth() {
+		return mapHeightWidth;
+	}
+
+	/**
+	* Sets new value of mapHeightWidth
+	* @param
+	*/
+	public void setMapHeightWidth(int mapHeightWidth) {
+		this.mapHeightWidth = mapHeightWidth;
+	}
+
+	/**
+	* Returns value of inRange
+	* @return
+	*/
+	public boolean isInRange() {
+		return inRange;
+	}
+
+	/**
+	* Sets new value of inRange
+	* @param
+	*/
+	public void setInRange(boolean inRange) {
+		this.inRange = inRange;
 	}
 
 	/**
