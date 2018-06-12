@@ -21,7 +21,6 @@ export class SquareComponent implements OnInit {
     obstructionMode:boolean = false;
 
     squareStyles = {};
-    playerDotStyle = {};
 
   constructor(private mapShareService: MapShareService) { }
 
@@ -36,7 +35,8 @@ export class SquareComponent implements OnInit {
   }
 
   selectSquare(){
-      this.mapShareService.setSquare(this.square);
+      this.mapShareService.setSquare(this.square); //update active square in squareDetail via mapShareService
+      this.mapShareService.setAllRangeSquares([0]); //set all styles of inrange squares back.
       var isObstructed = this.square.obstructed;
       if (this.obstructionMode){
           if (isObstructed == false){
