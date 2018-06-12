@@ -44,12 +44,10 @@ export class MapDetailComponent implements OnInit {
 
   public uploadImage() {
     const imageUrl = this.mapForm.get('imageUrl').value;
-    console.log(imageUrl);
     this.dndMap.setImage(imageUrl);
     this.mapBackground = {
       'background-image': 'url(' + imageUrl + ')'
     };
-    console.log(typeof this.mapBackground);
 
   }
 
@@ -79,7 +77,6 @@ export class MapDetailComponent implements OnInit {
 
   public hideGrid() {
   var gridToggle = this.mapForm.get('gridToggle').value;
-  console.log(gridToggle);
   var squareBorderStyle= 'dotted 1px rgba(0,0,0,0)';
   if (!gridToggle) {
       // grid off

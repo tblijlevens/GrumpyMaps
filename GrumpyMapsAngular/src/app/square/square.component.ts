@@ -42,6 +42,8 @@ export class SquareComponent implements OnInit {
 
   selectSquare() {
     this.mapShareService.setSquare(this.square); //update active square in squareDetail via mapShareService
+
+    // style squares if obstruct mode is on
     var isObstructed = this.square.obstructed;
     if (this.obstructionMode) {
       if (isObstructed == false) {
@@ -53,11 +55,11 @@ export class SquareComponent implements OnInit {
         this.squareStyles['background-color'] = 'rgba(161, 0, 0, 0)';
       }
     }
+
+    // move an object from a square to a square if movementMode is on
     if (this.movementMode) {
       var squareIdInRange = false;
-      console.log(this.movementMode + "movement is actief" + this.square.mapSquareId);
       for (var i = 0; i < this.inRangeSquares.length; i++) {
-        console.log("rangeid " + this.inRangeSquares[i].mapSquareId + "| thissquare " + this.square.mapSquareId);
         if (this.inRangeSquares[i].mapSquareId == this.square.mapSquareId) {
           squareIdInRange = true;
         }
@@ -68,9 +70,7 @@ export class SquareComponent implements OnInit {
       else {
         var movingPlayerSquareID = this.playerToMove.squareId;
         for (var j = 0; j < this.inRangeSquares.length; j++) {
-          console.log("for");
           if (movingPlayerSquareID == this.inRangeSquares[j].mapSquareId) {
-            console.log("if");
             this.inRangeSquares[j].addPhysical(this.playerToMove);
           }
         }
@@ -78,9 +78,7 @@ export class SquareComponent implements OnInit {
       this.mapShareService.setMovementMode(false);
 
     }
-    else {
-      console.log(this.movementMode + "movement is niet actief");
-    }
+
     this.mapShareService.setAllRangeSquares([0]); //set all styles of inrange squares back.
   }
 

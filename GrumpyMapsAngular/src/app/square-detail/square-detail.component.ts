@@ -43,7 +43,6 @@ export class SquareDetailComponent implements OnInit {
   showRange(player:Player){
       var allRangeSquares = player.moveRange;
       player.isSelected = true;
-      console.log(player.name + " has range: " + player.moveRange);
       this.mapShareService.setAllRangeSquares(allRangeSquares);
   }
 
