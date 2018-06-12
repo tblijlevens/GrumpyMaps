@@ -12,7 +12,6 @@ export class Player implements Physical{
     color:string;
     squareId:number;
     mapHeightWidth:number
-    moveRange:number[];
     isSelected:boolean;
 
     constructor(id, name, actionPoints, movementAmount, attacksPerRound, spellsPerRound, type, color, squareId, mapHeightWidth){
@@ -27,32 +26,31 @@ export class Player implements Physical{
         this.color = color;
         this.squareId = squareId;
         this.mapHeightWidth = mapHeightWidth;
-        this.setMoveRange();
     }
     getName(){
         return this.name;
     }
     setSquareId(activeSquare){
         this.squareId = activeSquare;
-        this.setMoveRange();
     }
 
-    setMoveRange(){
-        this.moveRange = new Array();
+    getMoveRange(){
+        var moveRange = new Array();
         for (var i = -this.movementAmount ; i <= this.movementAmount ; i++){
             var availableSquare = this.squareId + (i*this.mapHeightWidth);
 
             if(i<=0){
                 for (var j=-i-this.movementAmount ; j<= i+this.movementAmount ; j++){
-                    this.moveRange.push(availableSquare+j);
+                    moveRange.push(availableSquare+j);
                 }
             }
             if(i>0){
                 for (var j=i-this.movementAmount ; j<= this.movementAmount-i ; j++){
-                    this.moveRange.push(availableSquare+j);
+                    moveRange.push(availableSquare+j);
                 }
             }
         }
+        return moveRange;
     }
 
 }
