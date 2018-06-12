@@ -5,7 +5,7 @@
   <span *ngFor="let player of square.players" (click)="showRange(player)">{{player.getName()}} <br></span> </span><br>
 
   <hr class="my-4">
-  <button (click)="addObject()" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">Add object</button><br>
+  <button class="btn btn-success" data-toggle="modal" data-target="#exampleModal">Add object</button><br>
   <button (click)="moveObject()" class="btn btn-success">Move object</button><br>
   <button (click)="removeObject()" class="btn btn-success">Delete object</button><br>
 </div>
@@ -30,7 +30,7 @@
               </ul>
 
               <p>
-                  
+
               </p>
               <!-- CREATE OBJECT FORM -->
               <form [formGroup]="createObjectForm">
@@ -48,7 +48,6 @@
                           <input class="form-control" formControlName="playerMovement" type="number" [value]=1>
                       </label>
                       <br><br>
-                      <button (click)="saveMap()" class="btn btn-success">Save map</button>
                   </div>
               </form>
 
@@ -61,7 +60,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-primary" (click)="addObject()" data-dismiss="modal">Save/Add object</button>
       </div>
     </div>
   </div>
