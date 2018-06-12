@@ -19,9 +19,10 @@ export class SquareComponent implements OnInit {
     square:Square;
 
     obstructionMode:boolean = false;
-    rangeSquares:Square[];
 
     squareStyles = {};
+    playerDotStyle = {};
+
   constructor(private mapShareService: MapShareService) { }
 
   ngOnInit() {

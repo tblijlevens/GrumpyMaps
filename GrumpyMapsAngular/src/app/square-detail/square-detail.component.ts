@@ -23,7 +23,7 @@ export class SquareDetailComponent implements OnInit {
   addObject(){
       var playerJan:Player = new Player(1, "Jan de Man", 100, 2, 3, 2, "physical", "yellow", this.square.mapSquareId, this.square.mapHeightWidth);
       var playerBert:Player = new Player(2, "Bertje Buffelmelk", 100, 3, 3, 2, "physical", "blue", this.square.mapSquareId, this.square.mapHeightWidth);
-      var playerKarel:Player = new Player(3, "Karel de Kerel", 100, 4, 3, 2, "physical", "blue", this.square.mapSquareId, this.square.mapHeightWidth);
+      var playerKarel:Player = new Player(3, "Karel de Kerel", 100, 4, 3, 2, "physical", "green", this.square.mapSquareId, this.square.mapHeightWidth);
       this.square.addPhysical(playerJan);
       this.square.addPhysical(playerBert);
       this.square.addPhysical(playerKarel);

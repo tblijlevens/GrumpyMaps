@@ -27,8 +27,7 @@
     margin: auto;
     border-width: 1px;
     border-style:solid;
-    border-color: red;
+    border-color: black;
     border-radius: 50%;
-    background-color: red;
     display: block;
 }
