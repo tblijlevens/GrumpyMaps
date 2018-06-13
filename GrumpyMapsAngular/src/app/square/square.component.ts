@@ -23,6 +23,7 @@ export class SquareComponent implements OnInit {
   rangeSquares: Square[];
   movementMode: boolean;
   squareStyles = {};
+  playerNameStyles = {};
   playerToMove: Player;
   inRangeSquares: Square[] = new Array();
   constructor(private mapShareService: MapShareService) { }
@@ -42,7 +43,6 @@ export class SquareComponent implements OnInit {
 
   selectSquare() {
     this.mapShareService.setSquare(this.square); //update active square in squareDetail via mapShareService
-
     // style squares if obstruct mode is on
     var isObstructed = this.square.obstructed;
     if (this.obstructionMode) {

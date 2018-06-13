@@ -31,6 +31,7 @@ export class MapDetailComponent implements OnInit {
   dndMap: DnDMap;
   mapBackground = {};
   squareStyles = {};
+  playerStyles = {};
   squareScale: string = '10%';
   heightWidth:number = 10;
 
