@@ -44,6 +44,11 @@ export class SquareDetailComponent implements OnInit {
       this.square.addPhysical(player);
   }
 
+  clickPlayer(player: Player) {
+      this.showRange(player);
+      this.markPlayerName(player);
+  }
+  
   showRange(player:Player){
       var allRangeSquares = player.getMoveRange();
       player.isSelected = true;
@@ -58,11 +63,6 @@ export class SquareDetailComponent implements OnInit {
     this.previousPlayerColor = player.color;
     this.previousPlayer = player;
     player.color = "#00ff00";
-  }
-
-  clickPlayer(player: Player) {
-    this.showRange(player);
-    this.markPlayerName(player);
   }
 
   moveObject() {

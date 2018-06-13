@@ -75,6 +75,7 @@ export class SquareComponent implements OnInit {
           }
         }
       }
+      this.playerToMove.isSelected = false;
       this.mapShareService.setMovementMode(false);
 
     }
