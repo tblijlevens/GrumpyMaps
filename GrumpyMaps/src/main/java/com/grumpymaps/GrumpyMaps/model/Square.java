@@ -29,7 +29,7 @@ public class Square implements Serializable{
     @OneToMany(mappedBy="square", cascade=CascadeType.ALL)
     private List<Player> players;
 
-    @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="map_id")
     private DndMap dndMap;
 

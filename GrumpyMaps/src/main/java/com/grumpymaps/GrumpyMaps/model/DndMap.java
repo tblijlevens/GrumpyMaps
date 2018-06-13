@@ -8,6 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.FetchType;
+
 
 @Entity
 public class DndMap {
@@ -17,8 +19,8 @@ public class DndMap {
     private long id;
     private int heightWidth;
     private int numberOfSquares;
-    
-    @OneToMany(mappedBy="dndMap", cascade=CascadeType.ALL)
+
+    @OneToMany(mappedBy="dndMap", cascade=CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Square> squares;
     private String imageUrl;
 
