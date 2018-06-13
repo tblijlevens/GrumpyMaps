@@ -13,7 +13,8 @@ public class Player implements Physical{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private long id;
+    private int playerSquareId;
     private String name;
     private int actionPoints;
     private int movementAmount;
@@ -25,15 +26,13 @@ public class Player implements Physical{
     private int mapHeightWidth;
     private boolean isSelected;
 
-    @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="player_square_id")
     private Square square;
 
 	/**
 	* Returns value of id
 	* @return
 	*/
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
@@ -41,8 +40,24 @@ public class Player implements Physical{
 	* Sets new value of id
 	* @param
 	*/
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
+	}
+
+	/**
+	* Returns value of playerSquareId
+	* @return
+	*/
+	public int getPlayerSquareId() {
+		return playerSquareId;
+	}
+
+	/**
+	* Sets new value of playerSquareId
+	* @param
+	*/
+	public void setPlayerSquareId(int playerSquareId) {
+		this.playerSquareId = playerSquareId;
 	}
 
 	/**

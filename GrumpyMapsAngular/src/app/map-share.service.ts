@@ -80,7 +80,7 @@ export class MapShareService {
       var allSquares = this.dndMap.squares;
       for (var i = 0 ; i<allSquares.length ; i++){
           allSquares[i].inRange = false; //first set everything out of range
-          if (allSquares[i].mapSquareId == squareIdNr){
+          if (allSquares[i].id == squareIdNr){
               allSquares[i].inRange = true;
               selectedSquares.push(allSquares[i]);
               console.log("rangeSquares were updated");

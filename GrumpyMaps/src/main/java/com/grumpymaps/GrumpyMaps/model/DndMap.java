@@ -1,6 +1,6 @@
 package com.grumpymaps.GrumpyMaps.model;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.FetchType;
+import javax.persistence.Transient;
+
 
 
 @Entity
@@ -20,8 +22,8 @@ public class DndMap {
     private int heightWidth;
     private int numberOfSquares;
 
-    @OneToMany(mappedBy="dndMap", cascade=CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Square> squares;
+    @Transient
+    private ArrayList<Square> squares;
     private String imageUrl;
 
 	/**
@@ -76,7 +78,7 @@ public class DndMap {
 	* Returns value of squares
 	* @return
 	*/
-	public List<Square> getSquares() {
+	public ArrayList<Square> getSquares() {
 		return squares;
 	}
 
@@ -84,7 +86,7 @@ public class DndMap {
 	* Sets new value of squares
 	* @param
 	*/
-	public void setSquares(List<Square> squares) {
+	public void setSquares(ArrayList<Square> squares) {
 		this.squares = squares;
 	}
 

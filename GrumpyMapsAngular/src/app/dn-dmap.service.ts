@@ -5,6 +5,8 @@ import { Observable } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 
 import {DnDMap} from './domain/dn-dmap';
+import {Square} from './domain/square';
+import {Player} from './domain/player';
 
 @Injectable({
   providedIn: 'root'
@@ -14,10 +16,19 @@ export class DnDMapService {
   constructor(private http: HttpClient) { }
 
   saveMap(dndMap : DnDMap){
-      console.log("sending...");
+      console.log("sending map");
 
       return this.http.post('http://localhost:8080/dndmap', dndMap);
  /* .catch((error: any) => Observable.throw(error.json().error || 'Server error'))*/;
+}
+
+  saveSquare(square : Square){
+      console.log("sending square");
+      return this.http.post('http://localhost:8080/square', square);
+}
+  savePlayer(player : Player){
+      console.log("sending player");
+      return this.http.post('http://localhost:8080/player', player);
 }
 
   findAll(): Observable<DnDMap[]>  {
