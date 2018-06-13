@@ -23,7 +23,11 @@ export class Player implements Physical{
         this.attacksPerRound = attacksPerRound;
         this.spellsPerRound = spellsPerRound;
         this.type = type;
+        if(this.color != "#00ff00"){
         this.color = color;
+      } else {
+        this.color = "#00c40c";
+      }
         this.squareId = squareId;
         this.mapHeightWidth = mapHeightWidth;
     }

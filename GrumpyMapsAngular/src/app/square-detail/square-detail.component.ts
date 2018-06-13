@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import {MapShareService} from '../map-share.service';
+import { MapShareService } from '../map-share.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Square } from '../domain/square';
 import { Player } from '../domain/player';
@@ -12,17 +12,19 @@ import { Player } from '../domain/player';
 })
 export class SquareDetailComponent implements OnInit {
 
-    square:Square;
-    playerIdCreator:number = 1;
-    movementMode:boolean = false;
-    selectedPlayer:Player;
-    movable:boolean = false;
+  square: Square;
+  playerIdCreator: number = 1;
+  movementMode: boolean = false;
+  previousPlayer: Player;
+  movable: boolean = false;
+  playerNameColor = {};
+  previousPlayerColor: string;
 
-    createObjectForm = new FormGroup({
-      playerName: new FormControl(),
-      playerColor: new FormControl(),
-      playerMovement: new FormControl()
-    });
+  createObjectForm = new FormGroup({
+    playerName: new FormControl(),
+    playerColor: new FormControl(),
+    playerMovement: new FormControl()
+  });
 
   constructor(private mapShareService: MapShareService) { }
 
@@ -47,6 +49,20 @@ export class SquareDetailComponent implements OnInit {
       player.isSelected = true;
       this.mapShareService.setAllRangeSquares(allRangeSquares);
       this.movable = true;
+  }
+
+  markPlayerName(player) {
+    if (this.previousPlayer !=null){
+      this.previousPlayer.color = this.previousPlayerColor;
+    }
+    this.previousPlayerColor = player.color;
+    this.previousPlayer = player;
+    player.color = "#00ff00";
+  }
+
+  clickPlayer(player: Player) {
+    this.showRange(player);
+    this.markPlayerName(player);
   }
 
   moveObject() {
