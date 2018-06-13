@@ -70,7 +70,7 @@ export class SquareComponent implements OnInit {
       else {
         var movingPlayerSquareID = this.playerToMove.mapSquareId;
         for (var j = 0; j < this.inRangeSquares.length; j++) {
-          if (movingPlayerSquareID == this.inRangeSquares[j].id) {
+          if (movingPlayerSquareID == this.inRangeSquares[j].mapSquareId) {
             this.inRangeSquares[j].addPhysical(this.playerToMove);
           }
         }
