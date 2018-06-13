@@ -93,6 +93,11 @@ export class MapDetailComponent implements OnInit {
 
 
   public saveMap() {
+      this.saveMapWithSquares();
+      this.savePlayersOnSquares();
+  }
+
+  private saveMapWithSquares(){
       this.dndMapService.saveMap(this.dndMap).subscribe((mapId: number) => {
           this.dndMap.id = mapId;
           var mapSquares = this.dndMap.squares;
@@ -101,14 +106,24 @@ export class MapDetailComponent implements OnInit {
               var square = mapSquares[i];
               square.setMapId(this.dndMap.id);
               this.dndMapService.saveSquare(square).subscribe(result => {
+                  //var keys = Object.keys(result);
+                  //console.log("this: " + result["id"]);
                   for (var j = 0 ; j<mapSquares.length ; j++){
-                      if (mapSquares[j].mapSquareId == result.mapSquareId){
-                          mapSquares[j].id = result.id;
+                      if (mapSquares[j].mapSquareId == result["mapSquareId"]){
+                          mapSquares[j].id = result["id"];
                       }
                   }
               }); //saveSquare
           }
+
+          console.log("Map added/updated with");
+          console.log("id: " + this.dndMap.id);
+          console.log("id: " + this.dndMap.numberOfSquares);
     }); //saveMap end
+
+  }
+
+  private savePlayersOnSquares(){
 
     var mapSquares = this.dndMap.squares;
     for (var i = 0 ; i<mapSquares.length ; i++){
@@ -122,10 +137,10 @@ export class MapDetailComponent implements OnInit {
                     var players2 = mapSquares2[k].players;
                     for (var l = 0 ; l<players2.length ; l++){
                         //console.log("plres scndId: " + playerResult.playerSquareId);
-                        if (players2[l].playerSquareId == playerResult.playerSquareId){
-                            players2[l].id = playerResult.id;
-                            console.log("back Id: " + playerResult.id);
-                            console.log("front Id: " + players2[l].id);
+                        if (players2[l].playerSquareId == playerResult["playerSquareId"]){
+                            players2[l].id = playerResult["id"];
+                            console.log("square: " + mapSquares2[k].mapSquareId + " has got player: " + players2[l].id + "- " + players2[l].name);
+                            //console.log("front Id: " + players2[l].id);
                         }
                     }
                 }
@@ -133,7 +148,6 @@ export class MapDetailComponent implements OnInit {
         }
     }
   }
-
   /*    public retrieveMaps(){
         console.log(this.dndMapService.findAll().subscribe());
     }

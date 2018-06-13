@@ -22,11 +22,10 @@ public class Player implements Physical{
     private int spellsPerRound;
     private String type;
     private String color;
-    private int squareId;
+    private int mapSquareId;
     private int mapHeightWidth;
     private boolean isSelected;
 
-    private Square square;
 
 	/**
 	* Returns value of id
@@ -173,19 +172,19 @@ public class Player implements Physical{
 	}
 
 	/**
-	* Returns value of squareId
+	* Returns value of mapSquareId
 	* @return
 	*/
-	public int getSquareId() {
-		return squareId;
+	public int getMapSquareId() {
+		return mapSquareId;
 	}
 
 	/**
-	* Sets new value of squareId
+	* Sets new value of mapSquareId
 	* @param
 	*/
-	public void setSquareId(int squareId) {
-		this.squareId = squareId;
+	public void setMapSquareId(int mapSquareId) {
+		this.mapSquareId = mapSquareId;
 	}
 
 	/**
@@ -222,19 +221,5 @@ public class Player implements Physical{
 		this.isSelected = isSelected;
 	}
 
-	/**
-	* Returns value of square
-	* @return
-	*/
-	public Square getSquare() {
-		return square;
-	}
-
-	/**
-	* Sets new value of square
-	* @param
-	*/
-	public void setSquare(Square square) {
-		this.square = square;
-	}
+	
 }

@@ -24,7 +24,7 @@ export class Square {
   }
 
   addPhysical(player: Player) {
-    player.setSquareId(this.mapSquareId);
+    player.setMapSquareId(this.mapSquareId);
     this.players.push(player);
   }
 
