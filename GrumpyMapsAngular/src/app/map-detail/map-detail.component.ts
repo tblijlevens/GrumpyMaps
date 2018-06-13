@@ -117,9 +117,8 @@ export class MapDetailComponent implements OnInit {
               }); //saveSquare
           }
 
-          console.log("Map added/updated with");
-          console.log("id: " + this.dndMap.id);
-          console.log("id: " + this.dndMap.numberOfSquares);
+          console.log("Map added/updated with id: " + this.dndMap.id);
+          console.log("number of squares: " + this.dndMap.numberOfSquares);
     }); //saveMap end
 
   }
