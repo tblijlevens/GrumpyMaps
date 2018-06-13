@@ -3,6 +3,7 @@ import {Physical} from './physical';
 export class Player implements Physical{
 
     id:number;
+    playerSquareId:number
     name:string;
     actionPoints:number;
     movementAmount:number;
@@ -10,11 +11,11 @@ export class Player implements Physical{
     spellsPerRound:number;
     type:string;
     color:string;
-    squareId:number;
+    mapSquareId:number;
     mapHeightWidth:number
     isSelected:boolean;
 
-    constructor(id, name, actionPoints, movementAmount, attacksPerRound, spellsPerRound, type, color, squareId, mapHeightWidth){
+    constructor(id, playerSquareId, name, actionPoints, movementAmount, attacksPerRound, spellsPerRound, type, color, mapSquareId, mapHeightWidth){
         this.id = id;
         this.name = name;
         this.actionPoints = actionPoints;
@@ -28,20 +29,21 @@ export class Player implements Physical{
       } else {
         this.color = "#00c40c";
       }
-        this.squareId = squareId;
+        this.mapSquareId = mapSquareId;
         this.mapHeightWidth = mapHeightWidth;
+        this.playerSquareId = playerSquareId;
     }
     getName(){
         return this.name;
     }
-    setSquareId(activeSquare){
-        this.squareId = activeSquare;
+    setMapSquareId(activeSquare){
+        this.mapSquareId = activeSquare;
     }
 
     getMoveRange(){
         var moveRange = new Array();
         for (var i = -this.movementAmount ; i <= this.movementAmount ; i++){
-            var availableSquare = this.squareId + (i*this.mapHeightWidth);
+            var availableSquare = this.mapSquareId + (i*this.mapHeightWidth);
 
             if(i<=0){
                 for (var j=-i-this.movementAmount ; j<= i+this.movementAmount ; j++){

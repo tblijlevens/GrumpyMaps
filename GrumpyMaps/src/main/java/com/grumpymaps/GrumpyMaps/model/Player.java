@@ -13,7 +13,8 @@ public class Player implements Physical{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private long id;
+    private int playerSquareId;
     private String name;
     private int actionPoints;
     private int movementAmount;
@@ -21,19 +22,16 @@ public class Player implements Physical{
     private int spellsPerRound;
     private String type;
     private String color;
-    private int squareId;
+    private int mapSquareId;
     private int mapHeightWidth;
     private boolean isSelected;
 
-    @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="player_square_id")
-    private Square square;
 
 	/**
 	* Returns value of id
 	* @return
 	*/
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
@@ -41,8 +39,24 @@ public class Player implements Physical{
 	* Sets new value of id
 	* @param
 	*/
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
+	}
+
+	/**
+	* Returns value of playerSquareId
+	* @return
+	*/
+	public int getPlayerSquareId() {
+		return playerSquareId;
+	}
+
+	/**
+	* Sets new value of playerSquareId
+	* @param
+	*/
+	public void setPlayerSquareId(int playerSquareId) {
+		this.playerSquareId = playerSquareId;
 	}
 
 	/**
@@ -158,19 +172,19 @@ public class Player implements Physical{
 	}
 
 	/**
-	* Returns value of squareId
+	* Returns value of mapSquareId
 	* @return
 	*/
-	public int getSquareId() {
-		return squareId;
+	public int getMapSquareId() {
+		return mapSquareId;
 	}
 
 	/**
-	* Sets new value of squareId
+	* Sets new value of mapSquareId
 	* @param
 	*/
-	public void setSquareId(int squareId) {
-		this.squareId = squareId;
+	public void setMapSquareId(int mapSquareId) {
+		this.mapSquareId = mapSquareId;
 	}
 
 	/**
@@ -207,19 +221,5 @@ public class Player implements Physical{
 		this.isSelected = isSelected;
 	}
 
-	/**
-	* Returns value of square
-	* @return
-	*/
-	public Square getSquare() {
-		return square;
-	}
-
-	/**
-	* Sets new value of square
-	* @param
-	*/
-	public void setSquare(Square square) {
-		this.square = square;
-	}
+	
 }

@@ -1,7 +1,7 @@
 package com.grumpymaps.GrumpyMaps.model;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.ArrayList;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -12,13 +12,14 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 @Entity
 public class Square implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private long id;
     private int mapSquareId;
     private String squareScale;
     private int squareSize;
@@ -26,18 +27,17 @@ public class Square implements Serializable{
     private int mapHeightWidth;
     private boolean inRange;
 
-    @OneToMany(mappedBy="square", cascade=CascadeType.ALL)
-    private List<Player> players;
+    private int mapId;
 
-    @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="map_id")
-    private DndMap dndMap;
+    @Transient
+    private ArrayList<Player> players;
+
 
 	/**
 	* Returns value of id
 	* @return
 	*/
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
@@ -45,7 +45,7 @@ public class Square implements Serializable{
 	* Sets new value of id
 	* @param
 	*/
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
@@ -149,7 +149,7 @@ public class Square implements Serializable{
 	* Returns value of players
 	* @return
 	*/
-	public List<Player> getPlayers() {
+	public ArrayList<Player> getPlayers() {
 		return players;
 	}
 
@@ -157,7 +157,7 @@ public class Square implements Serializable{
 	* Sets new value of players
 	* @param
 	*/
-	public void setPlayers(List<Player> players) {
+	public void setPlayers(ArrayList<Player> players) {
 		this.players = players;
 	}
 
@@ -165,15 +165,15 @@ public class Square implements Serializable{
 	* Returns value of dndMap
 	* @return
 	*/
-	public DndMap getDndMap() {
-		return dndMap;
+	public int getMapId() {
+		return mapId;
 	}
 
 	/**
 	* Sets new value of dndMap
 	* @param
 	*/
-	public void setDndMap(DndMap dndMap) {
-		this.dndMap = dndMap;
+	public void setMapId(int mapId) {
+		this.mapId = mapId;
 	}
 }

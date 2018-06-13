@@ -5,6 +5,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { DnDMapService } from '../dn-dmap.service'
 import { DnDMap } from '../domain/dn-dmap'
 import { Square } from '../domain/square'
+import { Player } from '../domain/player'
 
 import { MapShareService } from '../map-share.service';
 import { SquareComponent } from '../square/square.component';
@@ -93,9 +94,61 @@ export class MapDetailComponent implements OnInit {
 
 
   public saveMap() {
-    this.dndMapService.saveMap(this.dndMap).subscribe((id: number) => this.dndMap.id = id);
+      this.saveMapWithSquares();
+      this.savePlayersOnSquares();
   }
 
+  private saveMapWithSquares(){
+      this.dndMapService.saveMap(this.dndMap).subscribe((mapId: number) => {
+          this.dndMap.id = mapId;
+          var mapSquares = this.dndMap.squares;
+
+          for (var i = 0 ; i<mapSquares.length ; i++){
+              var square = mapSquares[i];
+              square.setMapId(this.dndMap.id);
+              this.dndMapService.saveSquare(square).subscribe(result => {
+                  //var keys = Object.keys(result);
+                  //console.log("this: " + result["id"]);
+                  for (var j = 0 ; j<mapSquares.length ; j++){
+                      if (mapSquares[j].mapSquareId == result["mapSquareId"]){
+                          mapSquares[j].id = result["id"];
+                      }
+                  }
+              }); //saveSquare
+          }
+
+          console.log("Map added/updated with");
+          console.log("id: " + this.dndMap.id);
+          console.log("id: " + this.dndMap.numberOfSquares);
+    }); //saveMap end
+
+  }
+
+  private savePlayersOnSquares(){
+
+    var mapSquares = this.dndMap.squares;
+    for (var i = 0 ; i<mapSquares.length ; i++){
+        var square = mapSquares[i];
+        var players = square.players;
+        for (var j = 0 ; j<players.length ; j++){
+            var player = players[j];
+            this.dndMapService.savePlayer(player).subscribe(playerResult => {
+                var mapSquares2 = this.dndMap.squares;
+                for (var k = 0 ; k < mapSquares2.length ; k++){
+                    var players2 = mapSquares2[k].players;
+                    for (var l = 0 ; l<players2.length ; l++){
+                        //console.log("plres scndId: " + playerResult.playerSquareId);
+                        if (players2[l].playerSquareId == playerResult["playerSquareId"]){
+                            players2[l].id = playerResult["id"];
+                            console.log("square: " + mapSquares2[k].mapSquareId + " has got player: " + players2[l].id + "- " + players2[l].name);
+                            //console.log("front Id: " + players2[l].id);
+                        }
+                    }
+                }
+            });
+        }
+    }
+  }
   /*    public retrieveMaps(){
         console.log(this.dndMapService.findAll().subscribe());
     }
