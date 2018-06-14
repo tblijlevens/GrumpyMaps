@@ -37,6 +37,10 @@ button {
 .btn.btn-dark {
   border:50px;
   padding:6px 45px 6px 45px;
-  margin-right: 20px;
+  margin-right: 30px;
 
+}
+
+.alert.alert-success.alert-dismissible.fade.show {
+  margin-top: 6px;
 }

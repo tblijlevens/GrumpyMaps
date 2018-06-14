@@ -1,7 +1,7 @@
-<div class="squaredetail" *ngIf="square">
-  <span class="lead">Id: </span> {{square.mapSquareId}}<br />
+<div class="squaredetail" *ngIf="square" style="font-size:1.15em">
+  <span class="lead" style="font-weight:bold;">Player ID: </span> {{square.mapSquareId}}<br />
   <span *ngIf="square.players.length!=0"><span class="lead">Contents: <br></span>
-  <span *ngFor="let player of square.players" [style.color]="player.color" (click)="clickPlayer(player)">{{player.getName()}} is selected: {{player.isSelected}}<br></span></span><br>
+  <span *ngFor="let player of square.players" [style.color]="player.color" (click)="clickPlayer(player)">{{player.getName()}}<br></span></span><br>
 
   <hr class="my-4">
   <button class="btn btn-success" data-toggle="modal" data-target="#exampleModal">Add object</button><br>
