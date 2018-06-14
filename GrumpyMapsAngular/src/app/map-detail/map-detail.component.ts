@@ -34,7 +34,6 @@ export class MapDetailComponent implements OnInit {
   playerStyles = {};
   squareScale: string = '10%';
   heightWidth:number = 10;
-  mapsRetrieved=false;
 
 
   constructor(private dndMapService: DnDMapService, private mapShareService: MapShareService) { }
@@ -149,17 +148,8 @@ export class MapDetailComponent implements OnInit {
         }
     }
   }
-
-  loadMap(){
-      this.dndMapService.findAllMaps().subscribe(allMaps => {
-          console.log(allMaps.length);
-          // voor elke map moet de naam getoont worden in een modal
-          //
-          for (var i=0 ; i< allMaps.length ; i++){
-
-          }
-          this.mapsRetrieved=true;
-
-      });
-  }
+  /*    public retrieveMaps(){
+        console.log(this.dndMapService.findAll().subscribe());
+    }
+  */
 }
