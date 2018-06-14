@@ -40,6 +40,7 @@ Hide square details
 
     <br><br>
     <button (click)="saveMap()" class="btn btn-success">Save map</button>
+    <button (click)="loadMap()" class="btn btn-success" data-toggle="modal" data-target="#loadModal">Load map</button>
   </div>
 </form>
 
@@ -51,4 +52,29 @@ Hide square details
   </button>
   </div>
   <app-square-detail></app-square-detail>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="loadModal" tabindex="-1" role="dialog" aria-labelledby="loadModalLabel" aria-hidden="true">
+
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5>Select a map</h5>
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div *ngIf="mapsRetrieved==true">
+                    Hier staan maps.
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" (click)="loadSelectedMap()" data-dismiss="modal">Load map</button>
+            </div>
+        </div>
+    </div>
 </div>

@@ -55,6 +55,7 @@ public class MapController {
 	  @ResponseBody
 	  @RequestMapping(value = "/dndmap", method = RequestMethod.GET)
 	  public List<DndMap> findAll() {
+		  System.out.println("Retrieving all maps");
 	    return (List<DndMap>)mapService.findAll();
 	  }
 }
