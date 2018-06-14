@@ -2,7 +2,9 @@
   border-width: 2px;
   border-style: solid;
   border-color: #021744;
+  background-color: rgb(255, 255, 255, 0.5);
   background-size: 100% 100%;
+  margin-right: 20px;
   width: 600px;
   height: 600px;
   float: left;
@@ -16,20 +18,18 @@
 }
 
 .form-group {
-  padding-left: 20px;
-  float:left;
+  float: left;
+  margin-right: 20px;
 }
 
 .squaredetailcontainer {
-  padding-left: 20px;
-  float:left;
+  float: left;
 }
 
 .navButtons {
-margin-left: 20px;
-float:left;
+  float: left;
 }
 
 button {
-margin-right: 10px;
+  margin-right: 10px;
 }
