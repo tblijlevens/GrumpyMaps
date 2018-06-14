@@ -31,7 +31,7 @@ export class DnDMapService {
       return this.http.post('http://localhost:8080/player', player);
 }
 
-  findAll(): Observable<DnDMap[]>  {
+  findAllMaps(): Observable<DnDMap[]>  {
     return <Observable<DnDMap[]>>this.http.get('http://localhost:8080/dndmap');
   }
 

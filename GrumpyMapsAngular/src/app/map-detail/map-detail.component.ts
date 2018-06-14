@@ -34,6 +34,11 @@ export class MapDetailComponent implements OnInit {
   playerStyles = {};
   squareScale: string = '10%';
   heightWidth:number = 10;
+  mapsLoaded=false;
+  allLoadedMapsResult;
+  allLoadedMapIds:number[];
+  selectedMap:number;
+
 
 
   constructor(private dndMapService: DnDMapService, private mapShareService: MapShareService) { }
@@ -148,8 +153,28 @@ export class MapDetailComponent implements OnInit {
         }
     }
   }
-  /*    public retrieveMaps(){
-        console.log(this.dndMapService.findAll().subscribe());
-    }
-  */
+
+  loadMap(){
+      this.allLoadedMapIds = new Array();
+      this.dndMapService.findAllMaps().subscribe(allMaps => {
+          this.allLoadedMapsResult = allMaps;
+          for (var i=0 ; i< allMaps.length ; i++){
+              console.log(allMaps[i]);
+              this.allLoadedMapIds.push(allMaps[i]["id"]);
+          }
+          this.mapsLoaded=true;
+
+      });
+  }
+  selectMap(id:number){
+      this.selectedMap = id;
+      
+  }
+  loadSelectedMap(){
+      console.log("selected: " + this.selectedMap);
+      /*for (var i=0 ; i< this.allLoadedMapsResult.length ; i++){
+          var heightWidth = this.allLoadedMapsResult[i]["heightwidth"];
+          var image = this.allLoadedMapsResult[i]["image-url"];
+      }*/
+  }
 }

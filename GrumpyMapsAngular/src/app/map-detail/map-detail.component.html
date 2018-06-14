@@ -67,8 +67,12 @@ Hide square details
                 </button>
             </div>
             <div class="modal-body">
-                <div *ngIf="mapsRetrieved==true">
-                    Hier staan maps.
+                <div *ngIf="mapsLoaded==true">
+                    <span *ngFor="let id of allLoadedMapIds" [style.color]="" (click)="selectMap(id)">
+                        {{id}}<br />
+                    </span>
+                    <br />
+                    <span><B>You selected map: {{selectedMap}}</B></span>
                 </div>
             </div>
             <div class="modal-footer">
