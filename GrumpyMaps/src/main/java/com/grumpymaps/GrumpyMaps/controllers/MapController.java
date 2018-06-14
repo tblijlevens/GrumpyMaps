@@ -1,6 +1,7 @@
 package com.grumpymaps.GrumpyMaps.controllers;
 
 import java.util.List;
+import java.util.ArrayList;
 
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import com.grumpymaps.GrumpyMaps.model.DndMap;
 import com.grumpymaps.GrumpyMaps.model.Square;
@@ -56,5 +58,23 @@ public class MapController {
 	  @RequestMapping(value = "/dndmap", method = RequestMethod.GET)
 	  public List<DndMap> findAll() {
 	    return (List<DndMap>)mapService.findAll();
+	  }
+
+	  @ResponseBody
+	  @RequestMapping(value = "/square/{mapId}", method = RequestMethod.GET)
+	  public List<Square> findMapSquares(@PathVariable("mapId") Integer mapId) {
+		  List<Square> mapSquares = (List<Square>)squareService.findByMapId(mapId);
+		  System.out.println("retrieved " + mapSquares.size() + " squares");
+	    return mapSquares;
+	  }
+
+	  @ResponseBody
+	  @RequestMapping(value = "/player/{sqId}", method = RequestMethod.GET)
+	  public Player findPlayerByRealSquareId(@PathVariable("sqId") Integer sqId) {
+		  System.out.println("trying to retrieve player from square: " + sqId);
+		  Player player = (Player)playerService.findByRealSquareId(sqId);
+		  System.out.println("retrieved " + player.getName());
+
+	    return player;
 	  }
 }

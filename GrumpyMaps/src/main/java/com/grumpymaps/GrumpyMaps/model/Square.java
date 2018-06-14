@@ -27,10 +27,11 @@ public class Square implements Serializable{
     private int mapHeightWidth;
     private boolean inRange;
 
-    private int mapId;
+    private Integer mapId;
 
     @Transient
     private ArrayList<Player> players;
+    private int numberofPlayers;
 
 
 	/**
@@ -176,4 +177,21 @@ public class Square implements Serializable{
 	public void setMapId(int mapId) {
 		this.mapId = mapId;
 	}
+
+    /**
+	* Returns value of numberofPlayers
+	* @return
+	*/
+	public int getNumberofPlayers() {
+		return numberofPlayers;
+	}
+
+	/**
+	* Sets new value of numberofPlayers
+	* @param
+	*/
+	public void setNumberofPlayers(int numberofPlayers) {
+		this.numberofPlayers = numberofPlayers;
+	}
+
 }

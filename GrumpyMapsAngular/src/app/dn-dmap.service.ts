@@ -31,8 +31,18 @@ export class DnDMapService {
       return this.http.post('http://localhost:8080/player', player);
 }
 
-  findAllMaps(): Observable<DnDMap[]>  {
+
+findAllMaps(): Observable<DnDMap[]>  {
     return <Observable<DnDMap[]>>this.http.get('http://localhost:8080/dndmap');
-  }
+}
+
+
+getMapSquares(mapId:number): Observable<Square[]>  {
+    return <Observable<Square[]>>this.http.get('http://localhost:8080/square/'+mapId);
+}
+
+findPlayerByRealSquareId(sqId:number): Observable<Player>  {
+    return <Observable<Player>>this.http.get('http://localhost:8080/player/'+sqId);
+}
 
 }

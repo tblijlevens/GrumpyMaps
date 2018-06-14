@@ -10,6 +10,7 @@ export class Square {
   inRange: boolean = false;
   mapId:number;
   players: Player[] = new Array();
+  numberofPlayers:number;
 
   constructor(id:number, mapSquareId: number, squareSize: number, squareScale: string, heightWidth: number) {
     this.id = id;
@@ -26,13 +27,16 @@ export class Square {
   addPhysical(player: Player) {
     player.setMapSquareId(this.mapSquareId);
     this.players.push(player);
+    this.numberofPlayers=this.players.length;
   }
 
   removePhysical(id) {
     for (var i = 0; i < this.players.length; i++) {
       if (this.players[i].id == id) {
         this.players.splice(i, 1);
+        this.numberofPlayers=this.players.length;
       }
     }
   }
+
 }

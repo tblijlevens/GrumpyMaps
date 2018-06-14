@@ -38,6 +38,8 @@ export class MapDetailComponent implements OnInit {
   allLoadedMapsResult;
   allLoadedMapIds:number[];
   selectedMap:number;
+  resultCounter:number=0;
+  retrievedPlayer:Player;
 
 
 
@@ -100,10 +102,11 @@ export class MapDetailComponent implements OnInit {
 
   public saveMap() {
       this.saveMapWithSquares();
-      this.savePlayersOnSquares();
+
   }
 
   private saveMapWithSquares(){
+      this.resultCounter=0;
       this.dndMapService.saveMap(this.dndMap).subscribe((mapId: number) => {
           this.dndMap.id = mapId;
           var mapSquares = this.dndMap.squares;
@@ -112,14 +115,17 @@ export class MapDetailComponent implements OnInit {
               var square = mapSquares[i];
               square.setMapId(this.dndMap.id);
               this.dndMapService.saveSquare(square).subscribe(result => {
-                  //var keys = Object.keys(result);
-                  //console.log("this: " + result["id"]);
+                  this.resultCounter++;
                   for (var j = 0 ; j<mapSquares.length ; j++){
                       if (mapSquares[j].mapSquareId == result["mapSquareId"]){
                           mapSquares[j].id = result["id"];
+                          if (this.resultCounter == this.dndMap.squares.length){ //save players only when all squares have gotten their database Id
+                              this.savePlayersOnSquares();
+                          }
                       }
                   }
               }); //saveSquare
+
           }
 
           console.log("Map added/updated with id: " + this.dndMap.id);
@@ -129,6 +135,7 @@ export class MapDetailComponent implements OnInit {
   }
 
   private savePlayersOnSquares(){
+      //TODO var mapSquares naar let of const maken
 
     var mapSquares = this.dndMap.squares;
     for (var i = 0 ; i<mapSquares.length ; i++){
@@ -136,6 +143,8 @@ export class MapDetailComponent implements OnInit {
         var players = square.players;
         for (var j = 0 ; j<players.length ; j++){
             var player = players[j];
+            player.realSquareId = square.id; //give player square database Id so they can be retrieved on the right square when loading.
+            console.log("setting player realSquareId to: " + square.id);
             this.dndMapService.savePlayer(player).subscribe(playerResult => {
                 var mapSquares2 = this.dndMap.squares;
                 for (var k = 0 ; k < mapSquares2.length ; k++){
@@ -187,6 +196,58 @@ export class MapDetailComponent implements OnInit {
               //squaresize moet in dndMap opgeslagen
           }
       }
-    //   squares of this map must be retrieved from database and set into this.dndMap
+      this.getMapSquares();
+  }
+
+  getMapSquares(){
+
+      this.dndMapService.getMapSquares(this.selectedMap).subscribe(mapSquares => {
+          console.log(mapSquares[0]);
+          var allMapSquares: Square[] = new Array();
+          for (var i = 0 ; i < mapSquares.length ; i++){
+              var theSquare = new Square(
+                  mapSquares[i]["id"],
+                  mapSquares[i]["mapSquareId"],
+                  mapSquares[i]["squareSize"],
+                  mapSquares[i]["squareScale"],
+                  mapSquares[i]["mapHeightWidth"]
+              )
+              theSquare.players=new Array();
+              theSquare.inRange= mapSquares[i]["inRange"];
+              theSquare.mapId= mapSquares[i]["mapId"];
+              theSquare.numberofPlayers= mapSquares[i]["numberofPlayers"];
+              theSquare.obstructed= mapSquares[i]["obstructed"];
+
+              allMapSquares.push(theSquare);
+          }
+
+          allMapSquares = allMapSquares.sort((a, b) => a.mapSquareId < b.mapSquareId ? -1 : a.mapSquareId > b.mapSquareId ? 1 : 0);
+
+          this.dndMap.squares = allMapSquares;
+
+          for (var i = 0 ; i < this.dndMap.squares.length ; i++){
+              if(this.dndMap.squares[i].numberofPlayers>0){
+                  //TODO forloop to go through all players
+                  var sqId = this.dndMap.squares[i].id;
+                  console.log("found player on square: " + sqId);
+                  this.findPlayerByRealSquareId(sqId);
+              }
+          }
+
+      });
+  }
+  findPlayerByRealSquareId(sqId:number){
+      this.dndMapService.findPlayerByRealSquareId(sqId).subscribe(player => {
+          console.log(player);
+          var mapSquares = this.dndMap.squares;
+          for (var i = 0 ; i<mapSquares.length ; i++){
+              if (mapSquares[i].id == player.realSquareId){
+                  mapSquares[i].addPhysical(player);
+              }
+          }
+
+
+      });
+
   }
 }

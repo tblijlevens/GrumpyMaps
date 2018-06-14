@@ -9,4 +9,6 @@ import com.grumpymaps.GrumpyMaps.model.Player;
 @Repository
 public interface PlayerService extends CrudRepository<Player, Long>{
 
+    public Player findByRealSquareId(Integer sqId);
+
 }

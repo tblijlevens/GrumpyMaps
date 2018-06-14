@@ -39,7 +39,7 @@ export class SquareDetailComponent implements OnInit {
       const color = this.createObjectForm.get('playerColor').value;
       const movement = +this.createObjectForm.get('playerMovement').value;
 
-      var player:Player = new Player(0, this.playerIdCreator++, name, 100, movement, 3, 2, "physical", color, this.square.mapSquareId, this.square.mapHeightWidth);
+      var player:Player = new Player(0, this.playerIdCreator++, name, 100, movement, 3, 2, "physical", color, this.square.mapSquareId, this.square.mapHeightWidth, this.square.mapId);
 
       this.square.addPhysical(player);
   }
@@ -48,7 +48,7 @@ export class SquareDetailComponent implements OnInit {
       this.showRange(player);
       this.markPlayerName(player);
   }
-  
+
   showRange(player:Player){
       var allRangeSquares = player.getMoveRange();
       player.isSelected = true;
