@@ -168,13 +168,25 @@ export class MapDetailComponent implements OnInit {
   }
   selectMap(id:number){
       this.selectedMap = id;
-      
+
   }
   loadSelectedMap(){
       console.log("selected: " + this.selectedMap);
-      /*for (var i=0 ; i< this.allLoadedMapsResult.length ; i++){
-          var heightWidth = this.allLoadedMapsResult[i]["heightwidth"];
-          var image = this.allLoadedMapsResult[i]["image-url"];
-      }*/
+
+      for (var i=0 ; i< this.allLoadedMapsResult.length ; i++){
+          if (this.selectedMap == this.allLoadedMapsResult[i]["id"]){
+              console.log(this.allLoadedMapsResult[i]);
+              var heightWidth = this.allLoadedMapsResult[i]["heightWidth"];
+              var image = this.allLoadedMapsResult[i]["imageUrl"];
+
+              this.dndMap = new DnDMap(this.selectedMap, heightWidth, 5);
+              this.mapForm.get('heightwidth').setValue(heightWidth);
+              this.mapForm.get('feet').setValue(5);
+              this.mapForm.get('imageUrl').setValue(image);
+              this.uploadImage();
+              //squaresize moet in dndMap opgeslagen
+          }
+      }
+    //   squares of this map must be retrieved from database and set into this.dndMap
   }
 }
