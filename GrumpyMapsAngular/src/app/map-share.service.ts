@@ -59,7 +59,7 @@ export class MapShareService {
   setAllRangeSquares(allRangeSquares: number[]) {
       this.rangeSquares = new Array();
       var allSquares = this.dndMap.squares;
-      var selectedSquares=new Array();
+      var selectedSquares:Square[]=new Array();
       for (var i = 0 ; i<allSquares.length ; i++){
           allSquares[i].inRange = false; //first set everything out of range
           for (var j = 0 ; j<allRangeSquares.length ; j++){
@@ -70,7 +70,7 @@ export class MapShareService {
           }
       }
       this.rangeSquares = selectedSquares;
-      this.rangeSquaresUpdated.emit(this.rangeSquares);
+      this.rangeSquaresUpdated.emit(selectedSquares);
 
 //      from(allRangeSquares).pipe(distinct()).subscribe(x => this.fillRangeSquares(x));
 
@@ -90,10 +90,7 @@ export class MapShareService {
          this.setRangeSquares(selectedSquares);
   }
   */
-  private setRangeSquares(selectedSquares){
-      this.rangeSquares = selectedSquares;
-      this.rangeSquaresUpdated.emit(this.rangeSquares);
-  }
+
 
   setDnDMap(dndMap: DnDMap) {
     this.dndMap = dndMap;

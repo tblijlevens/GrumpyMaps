@@ -26,12 +26,13 @@ export class SquareComponent implements OnInit {
   playerNameStyles = {};
   playerToMove: Player;
   inRangeSquares: Square[] = new Array();
+  squarerangetruecounter=0;
   constructor(private mapShareService: MapShareService) { }
 
   ngOnInit() {
     this.mapShareService.squareBorderStyleUpdated.subscribe(squareBorderStyle => this.squareStyles['border'] = squareBorderStyle);
     this.mapShareService.obstructionModeUpdated.subscribe(obstructionMode => this.obstructionMode = obstructionMode);
-    this.mapShareService.rangeSquaresUpdated.subscribe(rangeSquares => { this.setRangeSquareStyles(); this.inRangeSquares = rangeSquares });
+    this.mapShareService.rangeSquaresUpdated.subscribe(rangeSquares => { this.inRangeSquares = rangeSquares; this.setRangeSquareStyles(); });
     this.mapShareService.playerToMoveUpdated.subscribe(playerToMove => this.playerToMove = playerToMove);
     this.mapShareService.movementModeUpdated.subscribe(movementMode => this.movementMode = movementMode);
 
@@ -39,9 +40,11 @@ export class SquareComponent implements OnInit {
       'width': this.squareScale,
       'height': this.squareScale
     }
+    this.setObstruction();
   }
 
   selectSquare() {
+    console.log("inrange: " + this.square.inRange);
     this.mapShareService.setSquare(this.square); //update active square in squareDetail via mapShareService
     // style squares if obstruct mode is on
     var isObstructed = this.square.obstructed;
@@ -79,11 +82,25 @@ export class SquareComponent implements OnInit {
       this.mapShareService.setMovementMode(false);
 
     }
-
     this.mapShareService.setAllRangeSquares([0]); //set all styles of inrange squares back.
+
+  }
+
+  setObstruction(){
+      // style squares if obstruct mode is on
+      var isObstructed = this.square.obstructed;
+
+        if (isObstructed) {
+          this.squareStyles['background-color'] = 'rgba(161, 0, 0, 0.35)';
+        }
+
   }
 
   private setRangeSquareStyles() {
+      if (this.square.inRange){
+          this.squarerangetruecounter++;
+          console.log("square inrange: " + this.square.inRange);
+      }
     if (!this.square.obstructed) {
       if (this.square.inRange) {
         this.squareStyles['background-color'] = 'rgba(8, 161, 0, 0.5)';

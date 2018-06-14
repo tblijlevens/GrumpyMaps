@@ -213,7 +213,7 @@ export class MapDetailComponent implements OnInit {
                   mapSquares[i]["mapHeightWidth"]
               )
               theSquare.players=new Array();
-              theSquare.inRange= mapSquares[i]["inRange"];
+              theSquare.inRange= false;
               theSquare.mapId= mapSquares[i]["mapId"];
               theSquare.numberofPlayers= mapSquares[i]["numberofPlayers"];
               theSquare.obstructed= mapSquares[i]["obstructed"];
@@ -260,6 +260,7 @@ export class MapDetailComponent implements OnInit {
               if (mapSquares[i].id == player.realSquareId){
                   mapSquares[i].addPhysical(player);
                   console.log("added player " + player.name + " on mapsquare " + mapSquares[i].mapSquareId);
+                  this.mapShareService.setAllRangeSquares([0]);
               }
           }
 

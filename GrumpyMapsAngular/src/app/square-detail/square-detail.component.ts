@@ -51,6 +51,7 @@ export class SquareDetailComponent implements OnInit {
 
   showRange(player:Player){
       var allRangeSquares = player.getMoveRange();
+      console.log(allRangeSquares);
       player.isSelected = true;
       this.mapShareService.setAllRangeSquares(allRangeSquares);
       this.movable = true;
