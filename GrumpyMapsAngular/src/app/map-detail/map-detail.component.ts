@@ -237,12 +237,29 @@ export class MapDetailComponent implements OnInit {
       });
   }
   findPlayerByRealSquareId(sqId:number){
-      this.dndMapService.findPlayerByRealSquareId(sqId).subscribe(player => {
-          console.log(player);
+      this.dndMapService.findPlayerByRealSquareId(sqId).subscribe(resultPlayer => {
+          console.log(resultPlayer);
+          var player:Player = new Player(
+              resultPlayer["id"],
+              resultPlayer["playerSquareId"],
+              resultPlayer["name"],
+              resultPlayer["actionPoints"],
+              resultPlayer["movementAmount"],
+              resultPlayer["attacksPerRound"],
+              resultPlayer["spellsPerRound"],
+              resultPlayer["type"],
+              resultPlayer["color"],
+              resultPlayer["mapSquareId"],
+              resultPlayer["mapHeightWidth"]
+          );
+          player.realSquareId = resultPlayer["realSquareId"];
+          player.isSelected = resultPlayer["isSelected"];
+
           var mapSquares = this.dndMap.squares;
           for (var i = 0 ; i<mapSquares.length ; i++){
               if (mapSquares[i].id == player.realSquareId){
                   mapSquares[i].addPhysical(player);
+                  console.log("added player " + player.name + " on mapsquare " + mapSquares[i].mapSquareId);
               }
           }
 
