@@ -1,7 +1,7 @@
 <br />
 <div class="mapcontainer" [ngStyle]="mapBackground" data-toggle="collapse" data-target="#derp">
   <div class="square" id="square">
-    <app-square *ngFor="let square of dndMap.squares" [squareScale]=square.squareScale [square]=square></app-square>
+    <app-square *ngFor="let square of dndMap.squares; index as i" [squareScale]=square.squareScale [square]=square [squareIndex]=i [obstructionMode]=obstructionMode [inRangeSquares]=rangeSquares [movementMode]=movementMode [playerToMove]=playerToMove (moveModeEvent)="receiveMoveMode($event)" (setRangeSquaresEvent)="receiveRangeSquares($event)" ></app-square>
   </div>
 </div>
 
@@ -51,7 +51,7 @@ Hide square details
     <span aria-hidden="true">&times;</span>
   </button>
   </div>
-  <app-square-detail></app-square-detail>
+  <app-square-detail (moveModeEvent)="receiveMoveMode($event)" (setRangeSquaresEvent)="receiveRangeSquares($event)" (setPlayerToMoveEvent)="receivePlayerToMove($event)"></app-square-detail>
 </div>
 
 <!-- Modal -->

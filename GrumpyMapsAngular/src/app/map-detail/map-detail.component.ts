@@ -39,9 +39,10 @@ export class MapDetailComponent implements OnInit {
   allLoadedMapIds:number[];
   selectedMap:number;
   resultCounter:number=0;
-  retrievedPlayer:Player;
-
-
+  obstructionMode:boolean=false;
+  movementMode:boolean=false; //received from squaredetail component
+  rangeSquares:Square[] = new Array();
+  playerToMove:Player;
 
   constructor(private dndMapService: DnDMapService, private mapShareService: MapShareService) { }
 
@@ -83,9 +84,29 @@ export class MapDetailComponent implements OnInit {
   }
 
   public obstructSquares(){
-      var obstructionMode = this.mapForm.get('obstructToggle').value;
-      this.mapShareService.setObstructionMode(obstructionMode);
-
+      this.obstructionMode = this.mapForm.get('obstructToggle').value;
+  }
+  public receiveMoveMode($event){
+      this.movementMode = $event;
+  }
+  public receiveRangeSquares($event){
+      var allRangeSquares = $event;
+      this.rangeSquares = new Array();
+      var allSquares = this.dndMap.squares;
+      var selectedSquares:Square[]=new Array();
+      for (var i = 0 ; i<allSquares.length ; i++){
+          allSquares[i].inRange = false; //first set everything out of range
+          for (var j = 0 ; j<allRangeSquares.length ; j++){
+              if (allSquares[i].mapSquareId == allRangeSquares[j]){
+                  allSquares[i].inRange = true;
+                  selectedSquares.push(allSquares[i]);
+              }
+          }
+      }
+      this.rangeSquares = selectedSquares;
+  }
+  public receivePlayerToMove($event){
+      this.playerToMove = $event;
   }
 
   public hideGrid() {
@@ -260,7 +281,7 @@ export class MapDetailComponent implements OnInit {
               if (mapSquares[i].id == player.realSquareId){
                   mapSquares[i].addPhysical(player);
                   console.log("added player " + player.name + " on mapsquare " + mapSquares[i].mapSquareId);
-                  this.mapShareService.setAllRangeSquares([0]);
+                  this.rangeSquares = new Array();
               }
           }
 

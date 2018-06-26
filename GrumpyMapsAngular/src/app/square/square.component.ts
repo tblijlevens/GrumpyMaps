@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output, OnChanges, SimpleChanges } from '@angular/core';
 import { Square } from '../domain/square';
 import { DnDMap } from '../domain/dn-dmap';
 import { Player } from '../domain/player';
@@ -19,28 +19,42 @@ export class SquareComponent implements OnInit {
   @Input()
   square: Square;
 
-  obstructionMode: boolean = false;
-  rangeSquares: Square[];
-  movementMode: boolean;
+  @Input()
+  squareIndex: number;
+  squareIndexAsLetter:string;
+
+  @Input() obstructionMode: boolean = false;
+  @Input() movementMode: boolean;
+  @Output() moveModeEvent = new EventEmitter<boolean>();
+  @Output() setRangeSquaresEvent = new EventEmitter<number[]>();
+
   squareStyles = {};
   playerNameStyles = {};
-  playerToMove: Player;
-  inRangeSquares: Square[] = new Array();
+  @Input() playerToMove: Player;
+  private _inRangeSquares: Square[] = new Array();
+  @Input() set inRangeSquares(squares: Square[]) {
+
+   this._inRangeSquares = squares;
+   this.setRangeSquareStyles();
+
+}
   squarerangetruecounter=0;
   constructor(private mapShareService: MapShareService) { }
 
   ngOnInit() {
     this.mapShareService.squareBorderStyleUpdated.subscribe(squareBorderStyle => this.squareStyles['border'] = squareBorderStyle);
-    this.mapShareService.obstructionModeUpdated.subscribe(obstructionMode => this.obstructionMode = obstructionMode);
-    this.mapShareService.rangeSquaresUpdated.subscribe(rangeSquares => { this.inRangeSquares = rangeSquares; this.setRangeSquareStyles(); });
-    this.mapShareService.playerToMoveUpdated.subscribe(playerToMove => this.playerToMove = playerToMove);
-    this.mapShareService.movementModeUpdated.subscribe(movementMode => this.movementMode = movementMode);
 
     this.squareStyles = {
       'width': this.squareScale,
       'height': this.squareScale
     }
     this.setObstruction();
+    if (this.squareIndex === 1){
+        this.squareIndexAsLetter = 'A';
+    }
+    if (this.squareIndex === 2){
+        this.squareIndexAsLetter = 'B';
+    }
   }
 
   selectSquare() {
@@ -62,8 +76,8 @@ export class SquareComponent implements OnInit {
     // move an object from a square to a square if movementMode is on
     if (this.movementMode) {
       var squareIdInRange = false;
-      for (var i = 0; i < this.inRangeSquares.length; i++) {
-        if (this.inRangeSquares[i].mapSquareId == this.square.mapSquareId) {
+      for (var i = 0; i < this._inRangeSquares.length; i++) {
+        if (this._inRangeSquares[i].mapSquareId == this.square.mapSquareId) {
           squareIdInRange = true;
         }
       }
@@ -72,17 +86,18 @@ export class SquareComponent implements OnInit {
       }
       else {
         var movingPlayerSquareID = this.playerToMove.mapSquareId;
-        for (var j = 0; j < this.inRangeSquares.length; j++) {
-          if (movingPlayerSquareID == this.inRangeSquares[j].mapSquareId) {
-            this.inRangeSquares[j].addPhysical(this.playerToMove);
+        for (var j = 0; j < this._inRangeSquares.length; j++) {
+          if (movingPlayerSquareID == this._inRangeSquares[j].mapSquareId) {
+            this._inRangeSquares[j].addPhysical(this.playerToMove);
           }
         }
       }
       this.playerToMove.isSelected = false;
-      this.mapShareService.setMovementMode(false);
+      this.moveModeEvent.emit(false);
 
     }
-    this.mapShareService.setAllRangeSquares([0]); //set all styles of inrange squares back.
+    this.setRangeSquaresEvent.emit([0]);
+
 
   }
 
@@ -96,7 +111,7 @@ export class SquareComponent implements OnInit {
 
   }
 
-  private setRangeSquareStyles() {
+  public setRangeSquareStyles() {
       if (this.square.inRange){
           this.squarerangetruecounter++;
           console.log("square inrange: " + this.square.inRange);
