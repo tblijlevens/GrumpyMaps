@@ -50,6 +50,7 @@ export class RowComponent implements OnInit {
     }
 
     private setRowSquares(){
+        this.rowSquares = new Array();
         let allSquares = this.dndMap.squares;
         for (var i=0 ; i<allSquares.length ; i++){
             if (allSquares[i].mapSquareId >= (this.rowIndex-1)*this.heightWidth+1

@@ -47,8 +47,7 @@ export class SquareComponent implements OnInit {
   ngOnInit() {
 
     this.squareStyles = {
-      'width': this.squareHeightWidth,
-      'height': this.squareHeightWidth
+      'width': this.squareHeightWidth
     }
     this.setObstruction();
 
