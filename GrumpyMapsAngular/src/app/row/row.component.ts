@@ -1,4 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { DnDMap } from '../domain/dn-dmap'
+import { Square } from '../domain/square'
+import { Player } from '../domain/player'
 
 @Component({
   selector: 'app-row',
@@ -7,119 +10,156 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class RowComponent implements OnInit {
 
-    @Input() rowIndex:number;
+    private rowIndex:number;
+    @Input() set _rowIndex(rowIndex: number) {
+        this.rowIndex=rowIndex;
+        this.setRowIndexLetters();
+    }
     rowIndexAsLetter:string;
+    @Input() dndMap:DnDMap;
 
-    @Input()
-    squareHeightWidth: string;
-    @Input()
-    rowStyles = {};
+    private heightWidth: number;
+    @Input() set _heightWidth(heightWidth: number) {
+        this.heightWidth=heightWidth;
+        this.setRowSquares();
+    }
+    rowSquares: Square[] = new Array();
+
+    @Input() rowStyles = {};
+
+    @Input() obstructionMode: boolean = false;
+    @Input() movementMode: boolean;
+    @Output() moveModeEvent = new EventEmitter<boolean>();
+    @Output() setRangeSquaresEvent = new EventEmitter<number[]>();
+    private _inRangeSquares: Square[] = new Array();
+    @Input() set inRangeSquares(squares: Square[]) {
+        this._inRangeSquares = squares;
+//        this.setRangeSquareStyles();
+    }
+
+    private squareStyles = {};
+    @Input() set _squareBorderStyles(squareBorderStyle: string) {
+        this.squareStyles['border'] = squareBorderStyle;
+    }
+    @Input() playerToMove: Player;
+
 
     constructor() { }
 
     ngOnInit() {
-        this.setRowIndexLetters();
+    }
+
+    private setRowSquares(){
+        let allSquares = this.dndMap.squares;
+        for (var i=0 ; i<allSquares.length ; i++){
+            if (allSquares[i].mapSquareId >= (this.rowIndex-1)*this.heightWidth+1
+        && allSquares[i].mapSquareId <= this.rowIndex*this.heightWidth){
+                this.rowSquares.push(allSquares[i]);
+                console.log(this.rowIndexAsLetter + "-" + allSquares[i].mapSquareId);
+            }
+        }
+        console.log("");
     }
 
     private setRowIndexLetters(){
         switch(this.rowIndex) {
-            case 0: {
+            case 1: {
                 this.rowIndexAsLetter="A";
                 break;
             }
-            case 1: {
+            case 2: {
                 this.rowIndexAsLetter="B";
                 break;
             }
-            case 2: {
+            case 3: {
                 this.rowIndexAsLetter="C";
                 break;
             }
-            case 3: {
+            case 4: {
                 this.rowIndexAsLetter="D";
                 break;
             }
-            case 4: {
+            case 5: {
                 this.rowIndexAsLetter="E";
                 break;
             }
-            case 5: {
+            case 6: {
                 this.rowIndexAsLetter="F";
                 break;
             }
-            case 6: {
+            case 7: {
                 this.rowIndexAsLetter="G";
                 break;
             }
-            case 7: {
+            case 8: {
                 this.rowIndexAsLetter="H";
                 break;
             }
-            case 8: {
+            case 9: {
                 this.rowIndexAsLetter="I";
                 break;
             }
-            case 9: {
+            case 10: {
                 this.rowIndexAsLetter="J";
                 break;
             }
-            case 10: {
+            case 11: {
                 this.rowIndexAsLetter="K";
                 break;
             }
-            case 11: {
+            case 12: {
                 this.rowIndexAsLetter="L";
                 break;
             }
-            case 12: {
+            case 13: {
                 this.rowIndexAsLetter="M";
                 break;
             }
-            case 13: {
+            case 14: {
                 this.rowIndexAsLetter="N";
                 break;
             }
-            case 14: {
+            case 15: {
                 this.rowIndexAsLetter="O";
                 break;
             }
-            case 15: {
+            case 16: {
                 this.rowIndexAsLetter="P";
                 break;
             }
-            case 16: {
+            case 17: {
                 this.rowIndexAsLetter="Q";
                 break;
             }
-            case 17: {
+            case 18: {
                 this.rowIndexAsLetter="R";
                 break;
             }
-            case 18: {
+            case 19: {
                 this.rowIndexAsLetter="S";
                 break;
             }
-            case 19: {
+            case 20: {
                 this.rowIndexAsLetter="T";
                 break;
             }
-            case 20: {
+            case 21: {
                 this.rowIndexAsLetter="U";
                 break;
             }
-            case 21: {
+            case 22: {
                 this.rowIndexAsLetter="V";
                 break;
             }
-            case 22: {
+            case 23: {
                 this.rowIndexAsLetter="W";
                 break;
             }
-            case 23: {
+            case 24: {
                 this.rowIndexAsLetter="X";
                 break;
             }
-            case 24: {
+            case 25: {
                 this.rowIndexAsLetter="Y";
                 break;
             }

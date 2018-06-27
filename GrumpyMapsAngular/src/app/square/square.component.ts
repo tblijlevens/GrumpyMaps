@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, EventEmitter, Output, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { Square } from '../domain/square';
 import { DnDMap } from '../domain/dn-dmap';
 import { Player } from '../domain/player';
@@ -21,7 +21,6 @@ export class SquareComponent implements OnInit {
 
   @Input()
   squareIndex: number;
-  squareIndexAsLetter:string;
 
   @Input() obstructionMode: boolean = false;
   @Input() movementMode: boolean;
@@ -42,7 +41,7 @@ export class SquareComponent implements OnInit {
 
   squarerangetruecounter=0;
 
-  
+
   constructor(private mapShareService: MapShareService) { }
 
   ngOnInit() {

@@ -27,6 +27,7 @@ export class DnDMap {
     }
 
     private createSquares(squareSize:number){
+
         var squareHeightWidth = 100/this.heightWidth+'%';
         this.numberOfSquares = this.heightWidth*this.heightWidth;
         this.squares = new Array();
