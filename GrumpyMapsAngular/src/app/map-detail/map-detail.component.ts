@@ -108,10 +108,10 @@ export class MapDetailComponent implements OnInit {
 
   public hideGrid() {
   var gridToggle = this.mapForm.get('gridToggle').value;
-  this.squareBorderStyle= 'dotted 1px rgba(0,0,0,0)';
+  this.squareBorderStyle= 'dotted 1px rgb(162, 162, 162, 0)';
   if (gridToggle) {
       // grid off
-    this.squareBorderStyle = 'dotted 1px rgba(0,0,0,0.5)';
+    this.squareBorderStyle = 'dotted 1px rgb(162, 162, 162, 0.7)';
   }
 }
 
