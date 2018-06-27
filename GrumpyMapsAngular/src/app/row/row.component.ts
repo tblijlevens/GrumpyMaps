@@ -9,10 +9,18 @@ export class RowComponent implements OnInit {
 
     @Input() rowIndex:number;
     rowIndexAsLetter:string;
+
+    @Input()
+    squareHeightWidth: string;
+    rowStyles = {};
+
     constructor() { }
 
     ngOnInit() {
         this.setRowIndexLetters();
+        this.rowStyles = {
+          'height': this.squareHeightWidth
+        }
     }
 
     private setRowIndexLetters(){
