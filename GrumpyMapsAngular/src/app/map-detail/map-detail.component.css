@@ -10,6 +10,10 @@
   float: left;
 }
 
+input[type=number]{
+    width: 80px;
+} 
+
 .square {
   display: inline-block;
   width: 100%;
