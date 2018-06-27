@@ -32,6 +32,7 @@ export class MapDetailComponent implements OnInit {
   playerStyles = {};
   squareScale: string = '10%';
   heightWidth:number = 10;
+  rowArray = Array;
   mapsLoaded=false;
   allLoadedMapsResult;
   allLoadedMapIds:number[];

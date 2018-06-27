@@ -8,13 +8,15 @@ import { MapDetailComponent } from './map-detail/map-detail.component';
 import {HttpClientModule} from '@angular/common/http';
 import { SquareComponent } from './square/square.component';
 import { SquareDetailComponent } from './square-detail/square-detail.component';
+import { RowComponent } from './row/row.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MapDetailComponent,
     SquareComponent,
-    SquareDetailComponent
+    SquareDetailComponent,
+    RowComponent
   ],
   imports: [
     BrowserModule,
