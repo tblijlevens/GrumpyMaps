@@ -27,11 +27,11 @@ export class DnDMap {
     }
 
     private createSquares(squareSize:number){
-        var squareScale = 100/this.heightWidth+'%';
+        var squareHeightWidth = 100/this.heightWidth+'%';
         this.numberOfSquares = this.heightWidth*this.heightWidth;
         this.squares = new Array();
         for (var i = 0 ; i<this.numberOfSquares ; i++){
-            this.squares.push(new Square(0, i+1, squareSize, squareScale, this.heightWidth));
+            this.squares.push(new Square(0, i+1, squareSize, squareHeightWidth, this.heightWidth));
         }
     }
 }

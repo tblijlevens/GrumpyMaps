@@ -41,6 +41,8 @@ export class SquareComponent implements OnInit {
   @Input() playerToMove: Player;
 
   squarerangetruecounter=0;
+
+  
   constructor(private mapShareService: MapShareService) { }
 
   ngOnInit() {

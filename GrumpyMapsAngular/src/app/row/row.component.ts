@@ -12,15 +12,13 @@ export class RowComponent implements OnInit {
 
     @Input()
     squareHeightWidth: string;
+    @Input()
     rowStyles = {};
 
     constructor() { }
 
     ngOnInit() {
         this.setRowIndexLetters();
-        this.rowStyles = {
-          'height': this.squareHeightWidth
-        }
     }
 
     private setRowIndexLetters(){
