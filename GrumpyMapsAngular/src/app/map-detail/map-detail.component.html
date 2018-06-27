@@ -1,7 +1,7 @@
 <br />
 <div class="mapcontainer" [ngStyle]="mapBackground" data-toggle="collapse" data-target="#derp">
     <div class="row" id="row">
-        <app-row *ngFor="let j of rowArray; index as i" [_rowIndex]=i+1 [dndMap]=dndMap [rowStyles]=rowStyles [_heightWidth]=heightWidth [obstructionMode]=obstructionMode [inRangeSquares]=rangeSquares [movementMode]=movementMode [playerToMove]=playerToMove [_squareBorderStyles]=squareBorderStyle (moveModeEvent)="receiveMoveMode($event)" (setRangeSquaresEvent)="receiveRangeSquares($event)" ></app-row>
+        <app-row *ngFor="let j of rowArray; index as i" [_rowIndex]=i+1 [dndMap]=dndMap [rowStyles]=rowStyles [_heightWidth]=heightWidth [obstructionMode]=obstructionMode [inRangeSquares]=rangeSquares [movementMode]=movementMode [playerToMove]=playerToMove [squareBorderStyle]=squareBorderStyle (moveModeEvent)="receiveMoveMode($event)" (setRangeSquaresEvent)="receiveRangeSquares($event)" ></app-row>
     </div>
     <!--
     <div class="square" id="square">

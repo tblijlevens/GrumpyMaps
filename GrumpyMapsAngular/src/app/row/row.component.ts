@@ -37,10 +37,7 @@ export class RowComponent implements OnInit {
 //        this.setRangeSquareStyles();
     }
 
-    private squareStyles = {};
-    @Input() set _squareBorderStyles(squareBorderStyle: string) {
-        this.squareStyles['border'] = squareBorderStyle;
-    }
+    @Input() squareBorderStyle:string;
     @Input() playerToMove: Player;
 
 
