@@ -31,11 +31,8 @@ export class RowComponent implements OnInit {
     @Input() movementMode: boolean;
     @Output() moveModeEvent = new EventEmitter<boolean>();
     @Output() setRangeSquaresEvent = new EventEmitter<number[]>();
-    private _inRangeSquares: Square[] = new Array();
-    @Input() set inRangeSquares(squares: Square[]) {
-        this._inRangeSquares = squares;
-//        this.setRangeSquareStyles();
-    }
+    @Input() inRangeSquares: Square[] = new Array();
+
 
     @Input() squareBorderStyle:string;
     @Input() playerToMove: Player;
@@ -57,6 +54,7 @@ export class RowComponent implements OnInit {
             }
         }
     }
+
     public receiveMoveMode($event){
         this.moveModeEvent.emit($event);
     }

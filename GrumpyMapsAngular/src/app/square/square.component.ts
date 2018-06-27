@@ -32,7 +32,7 @@ export class SquareComponent implements OnInit {
       this.setRangeSquareStyles();
   }
 
-  private squareStyles = {};
+  squareStyles = {};
   @Input() set _squareBorderStyles(squareBorderStyle: string) {
       this.squareStyles['border'] = squareBorderStyle;
   }
@@ -54,7 +54,7 @@ export class SquareComponent implements OnInit {
   }
 
   selectSquare() {
-    console.log("inrange: " + this.square.inRange);
+//    console.log("inrange: " + this.square.inRange);
     this.mapShareService.setSquare(this.square); //update active square in squareDetail via mapShareService
     // style squares if obstruct mode is on
     var isObstructed = this.square.obstructed;
@@ -108,9 +108,19 @@ export class SquareComponent implements OnInit {
   }
 
   public setRangeSquareStyles() {
+      if (this._inRangeSquares.length!=0){
+          for(var i=0;i<this._inRangeSquares.length;i++){
+              if (this._inRangeSquares[i].mapSquareId == this.square.mapSquareId){
+                  this.square.inRange = true;
+              }
+          }
+      }
+      else {
+          this.square.inRange = false;
+      }
+
       if (this.square.inRange){
           this.squarerangetruecounter++;
-          console.log("square inrange: " + this.square.inRange);
       }
     if (!this.square.obstructed) {
       if (this.square.inRange) {

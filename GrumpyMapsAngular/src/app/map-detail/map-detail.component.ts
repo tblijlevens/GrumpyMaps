@@ -79,7 +79,6 @@ export class MapDetailComponent implements OnInit {
 
         this.dndMap.setHeightWidth(this.heightWidth, squareSize);
         this.setRows();
-
     }
 
     public obstructSquares(){
