@@ -14,7 +14,7 @@ import { MapShareService } from '../map-share.service';
 export class SquareComponent implements OnInit {
 
   @Input()
-  squareScale: string;
+  squareHeightWidth: string;
 
   @Input()
   square: Square;
@@ -46,16 +46,11 @@ export class SquareComponent implements OnInit {
   ngOnInit() {
 
     this.squareStyles = {
-      'width': this.squareScale,
-      'height': this.squareScale
+      'width': this.squareHeightWidth,
+      'height': this.squareHeightWidth
     }
     this.setObstruction();
-    if (this.squareIndex === 1){
-        this.squareIndexAsLetter = 'A';
-    }
-    if (this.squareIndex === 2){
-        this.squareIndexAsLetter = 'B';
-    }
+    
   }
 
   selectSquare() {

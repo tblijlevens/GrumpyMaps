@@ -1,7 +1,7 @@
 <br />
 <div class="mapcontainer" [ngStyle]="mapBackground" data-toggle="collapse" data-target="#derp">
   <div class="square" id="square">
-    <app-square *ngFor="let square of dndMap.squares; index as i" [squareScale]=square.squareScale [square]=square [squareIndex]=i [obstructionMode]=obstructionMode [inRangeSquares]=rangeSquares [movementMode]=movementMode [playerToMove]=playerToMove [_squareStyles]=squareBorderStyle (moveModeEvent)="receiveMoveMode($event)" (setRangeSquaresEvent)="receiveRangeSquares($event)" ></app-square>
+    <app-square *ngFor="let square of dndMap.squares; index as i" [squareHeightWidth]=square.squareHeightWidth [square]=square [squareIndex]=i [obstructionMode]=obstructionMode [inRangeSquares]=rangeSquares [movementMode]=movementMode [playerToMove]=playerToMove [_squareStyles]=squareBorderStyle (moveModeEvent)="receiveMoveMode($event)" (setRangeSquaresEvent)="receiveRangeSquares($event)" ></app-square>
   </div>
 </div>
 
@@ -28,7 +28,7 @@ Hide square details
     </label>
     <br>
     <label class="center-block"><b>In-game square size (ft):</b>
-      <input class="form-control" formControlName="feet" type="number" (change)="setMapScale()"  (click)="setMapScale()">
+      <input class="form-control" formControlName="feet" type="number" min="1" max="25" (change)="setMapScale()"  (click)="setMapScale()">
       </label>
     <br>
     <label class="center-block">Obstruct squares:
