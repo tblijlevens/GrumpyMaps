@@ -29,20 +29,21 @@ export class SquareComponent implements OnInit {
   @Output() setRangeSquaresEvent = new EventEmitter<number[]>();
 
   squareStyles = {};
+  @Input() set _squareStyles(squareBorderStyle: string) {
+      this.squareStyles['border'] = squareBorderStyle;
+  }
   playerNameStyles = {};
   @Input() playerToMove: Player;
   private _inRangeSquares: Square[] = new Array();
   @Input() set inRangeSquares(squares: Square[]) {
+      this._inRangeSquares = squares;
+      this.setRangeSquareStyles();
+  }
 
-   this._inRangeSquares = squares;
-   this.setRangeSquareStyles();
-
-}
   squarerangetruecounter=0;
   constructor(private mapShareService: MapShareService) { }
 
   ngOnInit() {
-    this.mapShareService.squareBorderStyleUpdated.subscribe(squareBorderStyle => this.squareStyles['border'] = squareBorderStyle);
 
     this.squareStyles = {
       'width': this.squareScale,

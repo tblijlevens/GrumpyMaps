@@ -11,14 +11,9 @@ import { Player} from './domain/player';
 })
 export class MapShareService {
   private square: Square;
-  private squareBorderStyle: string;
   private rangeSquares:Square[] = new Array();
   private dndMap:DnDMap;
-  private ready:boolean = false;
-  private playerToMove: Player;
   @Output() squareUpdated: EventEmitter<Square> = new EventEmitter(true);
-  @Output() squareBorderStyleUpdated: EventEmitter<string> = new EventEmitter(true);
-  @Output() dndMapUpdated: EventEmitter<DnDMap> = new EventEmitter(true);
 
   constructor() { }
 
@@ -30,33 +25,5 @@ export class MapShareService {
     return this.square;
   }
 
-  setSquareBorderStyles(squareBorderStyle: string) {
-    this.squareBorderStyle = squareBorderStyle;
-    this.squareBorderStyleUpdated.emit(squareBorderStyle);
-  }
-
-
-/*
-  private fillRangeSquares(squareIdNr){
-      var allSquares = this.dndMap.squares;
-      for (var i = 0 ; i<allSquares.length ; i++){
-          allSquares[i].inRange = false; //first set everything out of range
-          if (allSquares[i].id == squareIdNr){
-              allSquares[i].inRange = true;
-              selectedSquares.push(allSquares[i]);
-              console.log("rangeSquares were updated");
-          }
-      }
-
-         this.setRangeSquares(selectedSquares);
-  }
-  */
-
-
-  setDnDMap(dndMap: DnDMap) {
-    this.dndMap = dndMap;
-    this.dndMapUpdated.emit(dndMap);
-    console.log("dndMap was updated");
-  }
 
 }

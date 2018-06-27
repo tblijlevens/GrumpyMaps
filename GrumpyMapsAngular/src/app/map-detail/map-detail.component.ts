@@ -7,7 +7,6 @@ import { DnDMap } from '../domain/dn-dmap'
 import { Square } from '../domain/square'
 import { Player } from '../domain/player'
 
-import { MapShareService } from '../map-share.service';
 import { SquareComponent } from '../square/square.component';
 import { SquareDetailComponent } from '../square-detail/square-detail.component';
 
@@ -16,7 +15,7 @@ import { SquareDetailComponent } from '../square-detail/square-detail.component'
   selector: 'app-map-detail',
   templateUrl: './map-detail.component.html',
   styleUrls: ['./map-detail.component.css'],
-  providers: [DnDMapService, MapShareService]
+  providers: [DnDMapService]
 })
 
 export class MapDetailComponent implements OnInit {
@@ -30,7 +29,6 @@ export class MapDetailComponent implements OnInit {
 
   dndMap: DnDMap;
   mapBackground = {};
-  squareStyles = {};
   playerStyles = {};
   squareScale: string = '10%';
   heightWidth:number = 10;
@@ -43,13 +41,13 @@ export class MapDetailComponent implements OnInit {
   movementMode:boolean=false; //received from squaredetail component
   rangeSquares:Square[] = new Array();
   playerToMove:Player;
+  squareBorderStyle = {};
 
-  constructor(private dndMapService: DnDMapService, private mapShareService: MapShareService) { }
+  constructor(private dndMapService: DnDMapService) { }
 
 
   ngOnInit() {
     this.dndMap = new DnDMap(0, this.heightWidth, 5); //id zero cannot exist in databse, so it will generate a new unique id)
-    this.mapShareService.setDnDMap(this.dndMap);
     this.mapForm.get('heightwidth').setValue(10);
     this.mapForm.get('feet').setValue(5);
     this.mapForm.get('gridToggle').setValue(true);
@@ -78,7 +76,6 @@ export class MapDetailComponent implements OnInit {
       }
 
       this.dndMap.setHeightWidth(this.heightWidth, squareSize);
-      this.mapShareService.setDnDMap(this.dndMap);
 
 
   }
@@ -111,13 +108,11 @@ export class MapDetailComponent implements OnInit {
 
   public hideGrid() {
   var gridToggle = this.mapForm.get('gridToggle').value;
-  var squareBorderStyle= 'dotted 1px rgba(0,0,0,0)';
+  this.squareBorderStyle= 'dotted 1px rgba(0,0,0,0)';
   if (gridToggle) {
       // grid off
-    squareBorderStyle = 'dotted 1px rgba(0,0,0,0.5)';
+    this.squareBorderStyle = 'dotted 1px rgba(0,0,0,0.5)';
   }
-  this.mapShareService.setSquareBorderStyles(squareBorderStyle);
-
 }
 
 
