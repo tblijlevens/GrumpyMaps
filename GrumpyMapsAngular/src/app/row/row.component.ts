@@ -53,12 +53,17 @@ export class RowComponent implements OnInit {
         let allSquares = this.dndMap.squares;
         for (var i=0 ; i<allSquares.length ; i++){
             if (allSquares[i].mapSquareId >= (this.rowIndex-1)*this.heightWidth+1
-        && allSquares[i].mapSquareId <= this.rowIndex*this.heightWidth){
+            && allSquares[i].mapSquareId <= this.rowIndex*this.heightWidth){
                 this.rowSquares.push(allSquares[i]);
-                console.log(this.rowIndexAsLetter + "-" + allSquares[i].mapSquareId);
+                allSquares[i].mapCoordinate = this.rowIndexAsLetter+ this.rowSquares.length;
             }
         }
-        console.log("");
+    }
+    public receiveMoveMode($event){
+        this.moveModeEvent.emit($event);
+    }
+    public receiveRangeSquares($event){
+        this.setRangeSquaresEvent.emit($event);
     }
 
     private setRowIndexLetters(){

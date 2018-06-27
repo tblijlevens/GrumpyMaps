@@ -3,6 +3,7 @@ import { Player } from './player';
 export class Square {
     id:number;
   mapSquareId: number;
+  mapCoordinate:string;
   squareHeightWidth: string;
   squareSize: number;
   mapHeightWidth: number;
