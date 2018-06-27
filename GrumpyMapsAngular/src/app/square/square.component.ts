@@ -27,18 +27,18 @@ export class SquareComponent implements OnInit {
   @Input() movementMode: boolean;
   @Output() moveModeEvent = new EventEmitter<boolean>();
   @Output() setRangeSquaresEvent = new EventEmitter<number[]>();
-
-  squareStyles = {};
-  @Input() set _squareStyles(squareBorderStyle: string) {
-      this.squareStyles['border'] = squareBorderStyle;
-  }
-  playerNameStyles = {};
-  @Input() playerToMove: Player;
   private _inRangeSquares: Square[] = new Array();
   @Input() set inRangeSquares(squares: Square[]) {
       this._inRangeSquares = squares;
       this.setRangeSquareStyles();
   }
+
+  private squareStyles = {};
+  @Input() set _squareBorderStyles(squareBorderStyle: string) {
+      this.squareStyles['border'] = squareBorderStyle;
+  }
+  playerNameStyles = {};
+  @Input() playerToMove: Player;
 
   squarerangetruecounter=0;
   constructor(private mapShareService: MapShareService) { }
@@ -50,7 +50,7 @@ export class SquareComponent implements OnInit {
       'height': this.squareHeightWidth
     }
     this.setObstruction();
-    
+
   }
 
   selectSquare() {
