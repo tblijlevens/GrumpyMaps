@@ -26,6 +26,9 @@ export class MapDetailComponent implements OnInit {
         gridToggle: new FormControl(),
         obstructToggle: new FormControl()
     });
+    saveForm = new FormGroup({
+        mapName: new FormControl()
+    });
 
     dndMap: DnDMap;
     mapBackground = {};
@@ -127,7 +130,13 @@ export class MapDetailComponent implements OnInit {
         }
     }
     public saveMap() {
-        this.saveMapWithSquares();
+        var mapName = this.saveForm.get('mapName').value;
+        var date = new Date().toLocaleDateString();
+        var time = new Date().toLocaleTimeString();
+        mapName = mapName + ": " + date + " - " + time;
+        console.log(mapName);
+
+        //this.saveMapWithSquares();
 
     }
 

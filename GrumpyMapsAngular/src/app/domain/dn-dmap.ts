@@ -1,7 +1,8 @@
 import {Square} from './square';
 
 export class DnDMap {
-    id:number
+    id:number;
+    name:string;
     heightWidth:number;
     numberOfSquares:number;
     squares:Square[]= new Array();

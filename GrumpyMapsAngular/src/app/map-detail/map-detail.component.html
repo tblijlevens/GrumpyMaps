@@ -44,7 +44,7 @@ Hide square details
 </label>
 
     <br><br>
-    <button (click)="saveMap()" class="btn btn-success">Save map</button>
+    <button class="btn btn-success" data-toggle="modal" data-target="#saveModal">Save map</button>
     <button (click)="loadMap()" class="btn btn-success" data-toggle="modal" data-target="#loadModal">Load map</button>
   </div>
 </form>
@@ -59,7 +59,34 @@ Hide square details
   <app-square-detail (moveModeEvent)="receiveMoveMode($event)" (setRangeSquaresEvent)="receiveRangeSquares($event)" (setPlayerToMoveEvent)="receivePlayerToMove($event)"></app-square-detail>
 </div>
 
-<!-- Modal -->
+<!-- Save Modal -->
+<div class="modal fade" id="saveModal" tabindex="-1" role="dialog" aria-labelledby="loadModalLabel" aria-hidden="true">
+
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5>Save map as:</h5>
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="saveForm">
+                    <label class="center-block"><b>Map name:</b>
+                        <input class="form-control" formControlName="mapName">
+                    </label>
+                </form>
+                <br>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" (click)="saveMap()" data-dismiss="modal">Save map</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Load Modal -->
 <div class="modal fade" id="loadModal" tabindex="-1" role="dialog" aria-labelledby="loadModalLabel" aria-hidden="true">
 
     <div class="modal-dialog" role="document">
