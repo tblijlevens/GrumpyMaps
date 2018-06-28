@@ -13,15 +13,9 @@ import { MapShareService } from '../map-share.service';
 })
 export class SquareComponent implements OnInit {
 
-  @Input()
-  squareHeightWidth: string;
-
-  @Input()
-  square: Square;
-
-  @Input()
-  squareIndex: number;
-
+  @Input()  squareHeightWidth: string;
+  @Input()  square: Square;
+  @Input()  squareIndex: number;
   @Input() obstructionMode: boolean = false;
   @Input() movementMode: boolean;
   @Output() moveModeEvent = new EventEmitter<boolean>();
@@ -49,63 +43,72 @@ export class SquareComponent implements OnInit {
     this.squareStyles = {
       'width': this.squareHeightWidth
     }
-    this.setObstruction();
+    this.setObstructionStyle();
 
   }
 
   selectSquare() {
 //    console.log("inrange: " + this.square.inRange);
     this.mapShareService.setSquare(this.square); //update active square in squareDetail via mapShareService
+
     // style squares if obstruct mode is on
-    var isObstructed = this.square.obstructed;
     if (this.obstructionMode) {
-      if (isObstructed == false) {
-        this.square.obstructed = true;
-        this.squareStyles['background-color'] = 'rgba(161, 0, 0, 0.35)';
-      }
-      else {
-        this.square.obstructed = false;
-        this.squareStyles['background-color'] = 'rgba(161, 0, 0, 0)';
-      }
+        this.setObstruction();
     }
 
     // move an object from a square to a square if movementMode is on
     if (this.movementMode) {
-      var squareIdInRange = false;
-      for (var i = 0; i < this._inRangeSquares.length; i++) {
-        if (this._inRangeSquares[i].mapSquareId == this.square.mapSquareId) {
-          squareIdInRange = true;
-        }
-      }
-      if (squareIdInRange) {
-        this.square.addPhysical(this.playerToMove);
-      }
-      else {
-        var movingPlayerSquareID = this.playerToMove.mapSquareId;
-        for (var j = 0; j < this._inRangeSquares.length; j++) {
-          if (movingPlayerSquareID == this._inRangeSquares[j].mapSquareId) {
-            this._inRangeSquares[j].addPhysical(this.playerToMove);
-          }
-        }
-      }
-      this.playerToMove.isSelected = false;
-      this.moveModeEvent.emit(false);
-
+        this.moveObject();
     }
+
+    // after moving the rangeSquares is always set to nothing so it stops showing range
     this.setRangeSquaresEvent.emit([0]);
-
-
   }
 
-  setObstruction(){
+  private setObstruction(){
+      var isObstructed = this.square.obstructed;
+      if (!isObstructed) {
+          this.square.obstructed = true;
+      }
+      else {
+          this.square.obstructed = false;
+      }
+      this.setObstructionStyle();
+  }
+
+  private setObstructionStyle(){
       // style squares if obstruct mode is on
       var isObstructed = this.square.obstructed;
 
         if (isObstructed) {
           this.squareStyles['background-color'] = 'rgba(161, 0, 0, 0.35)';
         }
+        else {
+          this.squareStyles['background-color'] = 'rgba(161, 0, 0, 0)';
+        }
+    }
 
-  }
+    private moveObject(){
+        var squareIdInRange = false;
+        for (var i = 0; i < this._inRangeSquares.length; i++) {
+            if (this._inRangeSquares[i].mapSquareId == this.square.mapSquareId) {
+                squareIdInRange = true;
+            }
+        }
+        if (squareIdInRange) {
+            this.square.addPhysical(this.playerToMove);
+        }
+        else {
+            var movingPlayerSquareID = this.playerToMove.mapSquareId;
+            for (var j = 0; j < this._inRangeSquares.length; j++) {
+                if (movingPlayerSquareID == this._inRangeSquares[j].mapSquareId) {
+                    this._inRangeSquares[j].addPhysical(this.playerToMove);
+                }
+            }
+        }
+        this.playerToMove.isSelected = false;
+        this.moveModeEvent.emit(false);
+    }
 
   public setRangeSquareStyles() {
       if (this._inRangeSquares.length!=0){
