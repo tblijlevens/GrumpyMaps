@@ -45,12 +45,13 @@ export class RowComponent implements OnInit {
 
     private setRowSquares(){
         this.rowSquares = new Array();
-        let allSquares = this.dndMap.squares;
-        for (var i=0 ; i<allSquares.length ; i++){
-            if (allSquares[i].mapSquareId >= (this.rowIndex-1)*this.heightWidth+1
-            && allSquares[i].mapSquareId <= this.rowIndex*this.heightWidth){
-                this.rowSquares.push(allSquares[i]);
-                allSquares[i].mapCoordinate = this.rowIndexAsLetter+ this.rowSquares.length;
+        //this.dndMap.squares = this.dndMap.squares;
+        for (var i=0 ; i<this.dndMap.squares.length ; i++){
+            if (this.dndMap.squares[i].mapSquareId >= (this.rowIndex-1)*this.heightWidth+1
+            && this.dndMap.squares[i].mapSquareId <= this.rowIndex*this.heightWidth){
+                console.log(this.rowIndexAsLetter + " setting rowSquare: " +this.dndMap.squares[i].id + " wih mapsqId: " + this.dndMap.squares[i].mapSquareId );
+                this.rowSquares.push(this.dndMap.squares[i]);
+                this.dndMap.squares[i].mapCoordinate = this.rowIndexAsLetter+ this.rowSquares.length;
             }
         }
     }

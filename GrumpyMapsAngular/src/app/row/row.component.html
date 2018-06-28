@@ -1,4 +1,5 @@
 <div class="row" [ngStyle]="rowStyles">
   <div class="square">
-      <app-square *ngFor="let square of rowSquares; index as i" [squareIndex]=i [squareHeightWidth]=square.squareHeightWidth [square]=square [obstructionMode]=obstructionMode [inRangeSquares]=inRangeSquares [movementMode]=movementMode [playerToMove]=playerToMove [_squareBorderStyles]=squareBorderStyle (moveModeEvent)="receiveMoveMode($event)" (setRangeSquaresEvent)="receiveRangeSquares($event)" ></app-square>
+      <app-square *ngFor="let square of rowSquares; index as i" [squareIndex]=i [square]=square [squareHeightWidth]=square.squareHeightWidth  [obstructionMode]=obstructionMode [inRangeSquares]=inRangeSquares [movementMode]=movementMode [playerToMove]=playerToMove [_squareBorderStyles]=squareBorderStyle (moveModeEvent)="receiveMoveMode($event)" (setRangeSquaresEvent)="receiveRangeSquares($event)" ></app-square>
   </div>
+ </div>

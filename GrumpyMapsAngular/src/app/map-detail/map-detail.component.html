@@ -1,7 +1,8 @@
-<br />
+<br />eerste square is obstructed {{dndMap.squares[0].obstructed}}
 <div class="mapcontainer" [ngStyle]="mapBackground" data-toggle="collapse" data-target="#derp">
     <div class="row" id="row">
-        <app-row *ngFor="let j of rowArray; index as i" [_rowIndex]=i+1 [dndMap]=dndMap [rowStyles]=rowStyles [_heightWidth]=heightWidth [obstructionMode]=obstructionMode [inRangeSquares]=rangeSquares [movementMode]=movementMode [playerToMove]=playerToMove [squareBorderStyle]=squareBorderStyle (moveModeEvent)="receiveMoveMode($event)" (setRangeSquaresEvent)="receiveRangeSquares($event)" ></app-row>
+        <app-row *ngFor="let j of rowArray; index as i" [_rowIndex]=i+1 [dndMap]=dndMap [rowStyles]=rowStyles [_heightWidth]=heightWidth [obstructionMode]=obstructionMode [inRangeSquares]=rangeSquares [movementMode]=movementMode [playerToMove]=playerToMove [squareBorderStyle]=squareBorderStyle  (moveModeEvent)="receiveMoveMode($event)" (setRangeSquaresEvent)="receiveRangeSquares($event)" >
+        </app-row>
     </div>
     <!--
     <div class="square" id="square">
@@ -74,7 +75,7 @@ Hide square details
             <div class="modal-body">
                 <form [formGroup]="saveForm">
                     <label class="center-block"><b>Map name:</b>
-                        <input class="form-control" formControlName="mapName" (change)="selectSaveMap(0, '#saveWarningModal')">
+                        <input class="form-control" formControlName="mapName" (change)="selectSaveMap(0)">
                     </label>
                 </form>
                 <div *ngIf="mapsLoaded==true">
@@ -111,7 +112,7 @@ Hide square details
                         {{name}}<br />
                     </span>
                     <br />
-                    <span><B>You selected map: {{selectedLoadMap}}</B></span>
+                    <span><B>You selected map: {{selectedLoadMapidname}}</B></span>
                 </div>
             </div>
             <div class="modal-footer">

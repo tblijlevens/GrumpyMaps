@@ -41,6 +41,7 @@ export class MapDetailComponent implements OnInit {
     allLoadedMapIds:number[];
     allLoadedMapNames:string[];
     selectedLoadMap:number;
+    selectedLoadMapidname:string;
     resultCounter:number=0;
     obstructionMode:boolean=false;
     movementMode:boolean=false; //received from squaredetail component
@@ -81,7 +82,7 @@ export class MapDetailComponent implements OnInit {
             // alert("Square size wasn't set and is now defaulted to 3.");
         }
 
-        this.dndMap.setHeightWidth(this.heightWidth, squareSize);
+        this.dndMap = new DnDMap(0, this.heightWidth, squareSize); //id zero cannot exist in databse, so it will generate a new unique id)
         this.setRows();
     }
 
@@ -131,7 +132,7 @@ export class MapDetailComponent implements OnInit {
         }
     }
 
-    selectSaveMap(idname, saveWarningModal){
+    selectSaveMap(idname){
         this.dndMap.id = 0;
         this.dndMap.name = this.saveForm.get('mapName').value;
         if(idname!=0){
@@ -166,9 +167,13 @@ export class MapDetailComponent implements OnInit {
             this.dndMap.id = mapId;
             var mapSquares = this.dndMap.squares;
 
+
             for (var i = 0 ; i<mapSquares.length ; i++){
                 var square = mapSquares[i];
                 square.setMapId(this.dndMap.id);
+                if (square.obstructed){
+                    console.log("square " + square.id + " is being saved and is obstructed");
+                }
                 this.dndMapService.saveSquare(square).subscribe(result => {
                     this.resultCounter++;
                     for (var j = 0 ; j<mapSquares.length ; j++){
@@ -233,32 +238,37 @@ export class MapDetailComponent implements OnInit {
 
         });
     }
-    selectLoadMap(id:number){
+    selectLoadMap(idname:string){
+        var id = +idname.split(": ")[0];
         this.selectedLoadMap = id;
-
+        this.selectedLoadMapidname = idname;
     }
+
     loadSelectedMap(){
         console.log("selected: " + this.selectedLoadMap);
 
         for (var i=0 ; i< this.allLoadedMapsResult.length ; i++){
             if (this.selectedLoadMap == this.allLoadedMapsResult[i]["id"]){
                 console.log(this.allLoadedMapsResult[i]);
-                var heightWidth = this.allLoadedMapsResult[i]["heightWidth"];
+                this.heightWidth = this.allLoadedMapsResult[i]["heightWidth"];
                 var image = this.allLoadedMapsResult[i]["imageUrl"];
+                var name = this.allLoadedMapsResult[i]["name"];
 
-                this.dndMap = new DnDMap(this.selectedLoadMap, heightWidth, 5);
-                this.mapForm.get('heightwidth').setValue(heightWidth);
+                this.dndMap = new DnDMap(this.selectedLoadMap,this.heightWidth, 5);
+                this.dndMap.name = name;
+                this.mapForm.get('heightwidth').setValue(this.heightWidth);
                 this.mapForm.get('feet').setValue(5);
                 this.mapForm.get('imageUrl').setValue(image);
                 this.uploadImage();
                 //squaresize moet in dndMap opgeslagen
             }
         }
+
         this.getMapSquares();
     }
 
     getMapSquares(){
-
+        console.log("calling squares of map: " + this.selectedLoadMap);
         this.dndMapService.getMapSquares(this.selectedLoadMap).subscribe(mapSquares => {
             console.log(mapSquares[0]);
             var allMapSquares: Square[] = new Array();
@@ -273,6 +283,7 @@ export class MapDetailComponent implements OnInit {
                 theSquare.players=new Array();
                 theSquare.inRange= false;
                 theSquare.mapId= mapSquares[i]["mapId"];
+                theSquare.mapCoordinate= mapSquares[i]["mapCoordinate"];
                 theSquare.numberofPlayers= mapSquares[i]["numberofPlayers"];
                 theSquare.obstructed= mapSquares[i]["obstructed"];
 
@@ -282,6 +293,8 @@ export class MapDetailComponent implements OnInit {
             allMapSquares = allMapSquares.sort((a, b) => a.mapSquareId < b.mapSquareId ? -1 : a.mapSquareId > b.mapSquareId ? 1 : 0);
 
             this.dndMap.squares = allMapSquares;
+            console.log("first square is " + this.dndMap.squares[0].id + " and is obestucted: " + this.dndMap.squares[0].obstructed);
+            console.log("second square is " + this.dndMap.squares[1].id + " and is obestucted: " + this.dndMap.squares[1].obstructed);
 
             for (var i = 0 ; i < this.dndMap.squares.length ; i++){
                 if(this.dndMap.squares[i].numberofPlayers>0){
@@ -293,8 +306,10 @@ export class MapDetailComponent implements OnInit {
             }
 
         });
+        this.setRows();
     }
     findPlayerByRealSquareId(sqId:number){
+        console.log("calling players for square: " + sqId);
         this.dndMapService.findPlayerByRealSquareId(sqId).subscribe(resultPlayer => {
             console.log(resultPlayer);
             var player:Player = new Player(
