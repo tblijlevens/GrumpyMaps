@@ -74,13 +74,13 @@ Hide square details
             <div class="modal-body">
                 <form [formGroup]="saveForm">
                     <label class="center-block"><b>Map name:</b>
-                        <input class="form-control" formControlName="mapName">
+                        <input class="form-control" formControlName="mapName" (change)="selectSaveMap(0, '#saveWarningModal')">
                     </label>
                 </form>
                 <div *ngIf="mapsLoaded==true">
                     <label class="center-block"><b>Your maps:</b></label><br>
-                    <span *ngFor="let id of allLoadedMapIds" [style.color]="" (click)="selectSaveMap(id)">
-                        {{id}}<br />
+                    <span *ngFor="let name of allLoadedMapNames" [style.color]="" (click)="selectSaveMap(name)">
+                        {{name}}<br />
                     </span>
                 </div>
             </div>
@@ -91,6 +91,7 @@ Hide square details
         </div>
     </div>
 </div>
+
 <!-- Load Modal -->
 <div class="modal fade" id="loadModal" tabindex="-1" role="dialog" aria-labelledby="loadModalLabel" aria-hidden="true">
 
@@ -106,8 +107,8 @@ Hide square details
             <div class="modal-body">
                 <div *ngIf="mapsLoaded==true">
                     <label class="center-block"><b>Your maps:</b></label><br>
-                    <span *ngFor="let id of allLoadedMapIds" [style.color]="" (click)="selectLoadMap(id)">
-                        {{id}}<br />
+                    <span *ngFor="let name of allLoadedMapNames" [style.color]="" (click)="selectLoadMap(name)">
+                        {{name}}<br />
                     </span>
                     <br />
                     <span><B>You selected map: {{selectedLoadMap}}</B></span>

@@ -39,6 +39,7 @@ export class MapDetailComponent implements OnInit {
     mapsLoaded=false;
     allLoadedMapsResult;
     allLoadedMapIds:number[];
+    allLoadedMapNames:string[];
     selectedLoadMap:number;
     resultCounter:number=0;
     obstructionMode:boolean=false;
@@ -129,18 +130,34 @@ export class MapDetailComponent implements OnInit {
             'height': this.dndMap.squares[0].squareHeightWidth
         }
     }
-    public saveMap() {
-        var mapName = this.saveForm.get('mapName').value;
-        var date = new Date().toLocaleDateString();
-        var time = new Date().toLocaleTimeString();
-        mapName = mapName + ": " + date + " - " + time;
-        console.log(mapName);
 
-        this.saveMapWithSquares();
+    selectSaveMap(idname, saveWarningModal){
+        this.dndMap.id = 0;
+        this.dndMap.name = this.saveForm.get('mapName').value;
+        if(idname!=0){
+            this.dndMap.id = +idname.split(": ")[0];
+            this.dndMap.name = idname.split(": ")[1];
+            this.saveForm.get('mapName').setValue(this.dndMap.name);
+        }
 
+        // check if name already exists and if so, overwrite that map instead of creating a new one. The alert will warn the user.
+        for (var i = 0 ; i < this.allLoadedMapNames.length ; i++){
+            var existingId = +this.allLoadedMapNames[i].split(": ")[0];
+            var existingName = this.allLoadedMapNames[i].split(": ")[1];
+            if (this.dndMap.name === existingName){
+                this.dndMap.id = existingId;
+                alert("This will overwrite the existing map '" + this.dndMap.name + "'.");
+            }
+        }
+
+        console.log("|"+this.dndMap.id +"|"+this.dndMap.name+"|");
     }
-    selectSaveMap(id){
-        this.saveForm.get('mapName').setValue(id);
+
+    public saveMap() {
+        // var date = new Date().toLocaleDateString();
+        // var time = new Date().toLocaleTimeString();
+        console.log("saving now");
+        this.saveMapWithSquares();
     }
 
     private saveMapWithSquares(){
@@ -202,12 +219,15 @@ export class MapDetailComponent implements OnInit {
     }
 
     loadMap(){
+        // TODO load names instead of id's
         this.allLoadedMapIds = new Array();
+        this.allLoadedMapNames = new Array();
         this.dndMapService.findAllMaps().subscribe(allMaps => {
             this.allLoadedMapsResult = allMaps;
             for (var i=0 ; i< allMaps.length ; i++){
                 console.log(allMaps[i]);
                 this.allLoadedMapIds.push(allMaps[i]["id"]);
+                this.allLoadedMapNames.push(allMaps[i]["id"] + ": " + allMaps[i]["name"]);
             }
             this.mapsLoaded=true;
 
