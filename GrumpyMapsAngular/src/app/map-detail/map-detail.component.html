@@ -44,7 +44,7 @@ Hide square details
 </label>
 
     <br><br>
-    <button class="btn btn-success" data-toggle="modal" data-target="#saveModal">Save map</button>
+    <button (click)="loadMap()" class="btn btn-success" data-toggle="modal" data-target="#saveModal">Save map</button>
     <button (click)="loadMap()" class="btn btn-success" data-toggle="modal" data-target="#loadModal">Load map</button>
   </div>
 </form>
@@ -77,7 +77,12 @@ Hide square details
                         <input class="form-control" formControlName="mapName">
                     </label>
                 </form>
-                <br>
+                <div *ngIf="mapsLoaded==true">
+                    <label class="center-block"><b>Your maps:</b></label><br>
+                    <span *ngFor="let id of allLoadedMapIds" [style.color]="" (click)="selectSaveMap(id)">
+                        {{id}}<br />
+                    </span>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -100,11 +105,12 @@ Hide square details
             </div>
             <div class="modal-body">
                 <div *ngIf="mapsLoaded==true">
-                    <span *ngFor="let id of allLoadedMapIds" [style.color]="" (click)="selectMap(id)">
+                    <label class="center-block"><b>Your maps:</b></label><br>
+                    <span *ngFor="let id of allLoadedMapIds" [style.color]="" (click)="selectLoadMap(id)">
                         {{id}}<br />
                     </span>
                     <br />
-                    <span><B>You selected map: {{selectedMap}}</B></span>
+                    <span><B>You selected map: {{selectedLoadMap}}</B></span>
                 </div>
             </div>
             <div class="modal-footer">

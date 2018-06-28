@@ -39,7 +39,7 @@ export class MapDetailComponent implements OnInit {
     mapsLoaded=false;
     allLoadedMapsResult;
     allLoadedMapIds:number[];
-    selectedMap:number;
+    selectedLoadMap:number;
     resultCounter:number=0;
     obstructionMode:boolean=false;
     movementMode:boolean=false; //received from squaredetail component
@@ -136,8 +136,11 @@ export class MapDetailComponent implements OnInit {
         mapName = mapName + ": " + date + " - " + time;
         console.log(mapName);
 
-        //this.saveMapWithSquares();
+        this.saveMapWithSquares();
 
+    }
+    selectSaveMap(id){
+        this.saveForm.get('mapName').setValue(id);
     }
 
     private saveMapWithSquares(){
@@ -210,20 +213,20 @@ export class MapDetailComponent implements OnInit {
 
         });
     }
-    selectMap(id:number){
-        this.selectedMap = id;
+    selectLoadMap(id:number){
+        this.selectedLoadMap = id;
 
     }
     loadSelectedMap(){
-        console.log("selected: " + this.selectedMap);
+        console.log("selected: " + this.selectedLoadMap);
 
         for (var i=0 ; i< this.allLoadedMapsResult.length ; i++){
-            if (this.selectedMap == this.allLoadedMapsResult[i]["id"]){
+            if (this.selectedLoadMap == this.allLoadedMapsResult[i]["id"]){
                 console.log(this.allLoadedMapsResult[i]);
                 var heightWidth = this.allLoadedMapsResult[i]["heightWidth"];
                 var image = this.allLoadedMapsResult[i]["imageUrl"];
 
-                this.dndMap = new DnDMap(this.selectedMap, heightWidth, 5);
+                this.dndMap = new DnDMap(this.selectedLoadMap, heightWidth, 5);
                 this.mapForm.get('heightwidth').setValue(heightWidth);
                 this.mapForm.get('feet').setValue(5);
                 this.mapForm.get('imageUrl').setValue(image);
@@ -236,7 +239,7 @@ export class MapDetailComponent implements OnInit {
 
     getMapSquares(){
 
-        this.dndMapService.getMapSquares(this.selectedMap).subscribe(mapSquares => {
+        this.dndMapService.getMapSquares(this.selectedLoadMap).subscribe(mapSquares => {
             console.log(mapSquares[0]);
             var allMapSquares: Square[] = new Array();
             for (var i = 0 ; i < mapSquares.length ; i++){
