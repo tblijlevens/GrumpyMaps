@@ -165,15 +165,13 @@ export class MapDetailComponent implements OnInit {
         this.resultCounter=0;
         this.dndMapService.saveMap(this.dndMap).subscribe((mapId: number) => {
             this.dndMap.id = mapId;
+            console.log("eerste square is obstructed: " + this.dndMap.squares[0].obstructed);
             var mapSquares = this.dndMap.squares;
 
 
             for (var i = 0 ; i<mapSquares.length ; i++){
                 var square = mapSquares[i];
                 square.setMapId(this.dndMap.id);
-                if (square.obstructed){
-                    console.log("square " + square.id + " is being saved and is obstructed");
-                }
                 this.dndMapService.saveSquare(square).subscribe(result => {
                     this.resultCounter++;
                     for (var j = 0 ; j<mapSquares.length ; j++){
@@ -224,7 +222,6 @@ export class MapDetailComponent implements OnInit {
     }
 
     loadMap(){
-        // TODO load names instead of id's
         this.allLoadedMapIds = new Array();
         this.allLoadedMapNames = new Array();
         this.dndMapService.findAllMaps().subscribe(allMaps => {
