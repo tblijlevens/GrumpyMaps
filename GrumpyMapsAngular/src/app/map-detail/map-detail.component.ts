@@ -32,6 +32,7 @@ export class MapDetailComponent implements OnInit {
 
     dndMap: DnDMap;
     mapBackground = {};
+    legendSquare = {};
     squareScale: string = '10%';
     heightWidth:number = 10;
     rowArray:number[] = new Array();
@@ -48,6 +49,8 @@ export class MapDetailComponent implements OnInit {
     playerToMove:Player;
     squareBorderStyle = {};
     rowStyles = {};
+    mapYards:number;
+    squareYards:number;
 
     constructor(private dndMapService: DnDMapService) { }
 
@@ -58,6 +61,7 @@ export class MapDetailComponent implements OnInit {
         this.mapForm.get('feet').setValue(5);
         this.mapForm.get('gridToggle').setValue(true);
         this.setRows();
+        this.calculateMapYards();
     }
 
     public uploadImage() {
@@ -85,6 +89,13 @@ export class MapDetailComponent implements OnInit {
 
         this.dndMap = new DnDMap(0, this.heightWidth, squareSize); //id zero cannot exist in databse, so it will generate a new unique id)
         this.setRows();
+        this.calculateMapYards();
+    }
+
+    private calculateMapYards(){
+        this.mapYards = +(this.dndMap.squares[0].squareSize*this.heightWidth/3).toFixed(1);
+        this.squareYards = +(this.dndMap.squares[0].squareSize/3).toFixed(1);
+        this.legendSquare['width'] = this.dndMap.squares[0].squareHeightWidth;
     }
 
     public obstructSquares(){

@@ -1,4 +1,4 @@
-
+<br />
 <div class="mapcontainer" [ngStyle]="mapBackground" data-toggle="collapse" data-target="#derp">
     <div class="rowsContainer">
         <div *ngFor="let j of rowArray" id="row_{{j}}" class="row" [ngStyle]="rowStyles">
@@ -7,8 +7,15 @@
             </div>
         </div>
 
+    </div><br /><br />
+    <div [ngStyle]="legendSquare" class="legend"></div>
+    <div>
+        {{dndMap.squares[0].squareSize}} feet ({{squareYards}} yards)
+    </div><br />
+    <div [ngStyle]="legendMap" class="legend"></div>
+    <div style="text-align:center;">
+        {{(dndMap.squares[0].squareSize) * heightWidth}} feet ({{mapYards}} yards)
     </div>
-
 </div>
 
 <h3><img class="img-fuild" src="assets/dnd.png"> GrumpyMaps V1.0</h3>
