@@ -61,13 +61,14 @@ export class MapDetailComponent implements OnInit {
     }
 
     public uploadImage() {
-        var a = document.getElementById( "row10" );
         const imageUrl = this.mapForm.get('imageUrl').value;
         this.dndMap.setImage(imageUrl);
         this.mapBackground = {
             'background-image': 'url(' + imageUrl + ')'
         };
-
+    }
+    setPic(img){
+        this.mapForm.get('imageUrl').setValue(img);
     }
 
     public setMapScale() {
