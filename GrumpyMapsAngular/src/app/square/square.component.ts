@@ -14,12 +14,19 @@ import { MapShareService } from '../map-share.service';
 export class SquareComponent implements OnInit {
 
   @Input()  square: Square;
+  @Input() squareIndex:number;
+  private rowIndex:number;
+  @Input() set _rowIndex(rowIndex: number) {
+      this.rowIndex=rowIndex;
+      this.setRowIndexLetter();
+  }
+  rowIndexAsLetter:string;
   private _squareHeightWidth: string;
   @Input() set squareHeightWidth(squareHeightWidth: string) {
       this._squareHeightWidth = squareHeightWidth;
       this.squareStyles['width'] = squareHeightWidth;
+      this.setSquareMapCoordinates();
   }
-  @Input()  squareIndex: number;
   @Input() obstructionMode: boolean = false;
   @Input() movementMode: boolean;
   @Output() moveModeEvent = new EventEmitter<boolean>();
@@ -138,5 +145,114 @@ export class SquareComponent implements OnInit {
         this.squareStyles['background-color'] = 'rgba(8, 161, 0, 0)';
       }
     }
+  }
+
+  private setSquareMapCoordinates(){
+      this.square.mapCoordinate = this.rowIndexAsLetter+ (this.squareIndex+1);
+  }
+
+  private setRowIndexLetter(){
+      switch(this.rowIndex) {
+          case 1: {
+              this.rowIndexAsLetter="A";
+              break;
+          }
+          case 2: {
+              this.rowIndexAsLetter="B";
+              break;
+          }
+          case 3: {
+              this.rowIndexAsLetter="C";
+              break;
+          }
+          case 4: {
+              this.rowIndexAsLetter="D";
+              break;
+          }
+          case 5: {
+              this.rowIndexAsLetter="E";
+              break;
+          }
+          case 6: {
+              this.rowIndexAsLetter="F";
+              break;
+          }
+          case 7: {
+              this.rowIndexAsLetter="G";
+              break;
+          }
+          case 8: {
+              this.rowIndexAsLetter="H";
+              break;
+          }
+          case 9: {
+              this.rowIndexAsLetter="I";
+              break;
+          }
+          case 10: {
+              this.rowIndexAsLetter="J";
+              break;
+          }
+          case 11: {
+              this.rowIndexAsLetter="K";
+              break;
+          }
+          case 12: {
+              this.rowIndexAsLetter="L";
+              break;
+          }
+          case 13: {
+              this.rowIndexAsLetter="M";
+              break;
+          }
+          case 14: {
+              this.rowIndexAsLetter="N";
+              break;
+          }
+          case 15: {
+              this.rowIndexAsLetter="O";
+              break;
+          }
+          case 16: {
+              this.rowIndexAsLetter="P";
+              break;
+          }
+          case 17: {
+              this.rowIndexAsLetter="Q";
+              break;
+          }
+          case 18: {
+              this.rowIndexAsLetter="R";
+              break;
+          }
+          case 19: {
+              this.rowIndexAsLetter="S";
+              break;
+          }
+          case 20: {
+              this.rowIndexAsLetter="T";
+              break;
+          }
+          case 21: {
+              this.rowIndexAsLetter="U";
+              break;
+          }
+          case 22: {
+              this.rowIndexAsLetter="V";
+              break;
+          }
+          case 23: {
+              this.rowIndexAsLetter="W";
+              break;
+          }
+          case 24: {
+              this.rowIndexAsLetter="X";
+              break;
+          }
+          case 25: {
+              this.rowIndexAsLetter="Y";
+              break;
+          }
+      }
   }
 }

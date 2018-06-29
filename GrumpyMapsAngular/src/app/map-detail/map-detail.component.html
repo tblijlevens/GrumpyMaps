@@ -4,7 +4,7 @@ eerste square is obstructed {{dndMap.squares[0].obstructed}} ------ eerste squar
     <div class="rowsContainer">
         <div *ngFor="let j of rowArray" id="row_{{j}}" class="row" [ngStyle]="rowStyles">
             <div class="square">
-                <app-square *ngFor="let square of dndMap.squares | slice:(j-1)*heightWidth:j*heightWidth; index as i" [squareHeightWidth]=square.squareHeightWidth [square]=square [squareIndex]=i [obstructionMode]=obstructionMode [inRangeSquares]=rangeSquares [movementMode]=movementMode [playerToMove]=playerToMove [_squareBorderStyles]=squareBorderStyle (moveModeEvent)="receiveMoveMode($event)" (setRangeSquaresEvent)="receiveRangeSquares($event)" ></app-square>
+                <app-square *ngFor="let square of dndMap.squares | slice:(j-1)*heightWidth:j*heightWidth; index as i" [squareHeightWidth]=square.squareHeightWidth [square]=square [squareIndex]=i [_rowIndex]=j [obstructionMode]=obstructionMode [inRangeSquares]=rangeSquares [movementMode]=movementMode [playerToMove]=playerToMove [_squareBorderStyles]=squareBorderStyle (moveModeEvent)="receiveMoveMode($event)" (setRangeSquaresEvent)="receiveRangeSquares($event)" ></app-square>
             </div>
         </div>
 
