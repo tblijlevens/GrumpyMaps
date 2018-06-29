@@ -54,7 +54,7 @@ export class SquareDetailComponent implements OnInit {
 
   showRange(player:Player){
       var allRangeSquares = player.getMoveRange();
-      console.log(allRangeSquares);
+      //console.log(allRangeSquares);
       player.isSelected = true;
       this.setRangeSquaresEvent.emit(allRangeSquares);
 
