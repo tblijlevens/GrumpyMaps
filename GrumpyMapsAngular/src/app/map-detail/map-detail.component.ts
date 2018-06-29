@@ -1,6 +1,7 @@
 
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+//import  $ from 'jquery';
 
 import { DnDMapService } from '../dn-dmap.service'
 import { DnDMap } from '../domain/dn-dmap'
@@ -99,6 +100,8 @@ export class MapDetailComponent implements OnInit {
             squares[i].squareSize = squareSize;
         }
         this.calculateMapYards();
+        //$('#saving').fadeIn(2000);
+
     }
 
     private calculateMapYards(){
@@ -181,7 +184,6 @@ export class MapDetailComponent implements OnInit {
     public saveMap() {
         // var date = new Date().toLocaleDateString();
         // var time = new Date().toLocaleTimeString();
-        console.log("saving now");
 
         this.savingDiv.setAttribute("style", "opacity:1;");
 
@@ -206,7 +208,6 @@ export class MapDetailComponent implements OnInit {
                             if (this.resultCounter == this.dndMap.squares.length){ //save players only when all squares have gotten their database Id
                                 this.savePlayersOnSquares();
                                 console.log("done saving everything");
-                                this.savingDiv.innerHTML = "Saving... succes!";
                                 this.savingDiv.setAttribute("style", "opacity:0;");
 
                             }
