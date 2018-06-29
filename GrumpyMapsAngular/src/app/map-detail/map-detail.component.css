@@ -40,6 +40,15 @@ input[type=number]{
     white-space: nowrap;
     text-align: center;
 }
+#saving{
+    position:fixed;
+    text-align: center;
+    width:300px;
+    background-color: white;
+    font-size: 20px;
+    opacity: 0;
+}
+
 .form-group {
   float: left;
   margin-right: 20px;

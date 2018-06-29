@@ -51,6 +51,7 @@ export class MapDetailComponent implements OnInit {
     rowStyles = {};
     mapYards:number;
     squareYards:number;
+    savingDiv;
 
     constructor(private dndMapService: DnDMapService) { }
 
@@ -62,6 +63,7 @@ export class MapDetailComponent implements OnInit {
         this.mapForm.get('gridToggle').setValue(true);
         this.setRows();
         this.calculateMapYards();
+        this.savingDiv = document.getElementById('saving');
     }
 
     public uploadImage() {
@@ -153,7 +155,9 @@ export class MapDetailComponent implements OnInit {
     playerAdded($event){
         this.savePlayersOnSquares();
     }
-
+    delay(ms: number) {
+        return new Promise( resolve => setTimeout(resolve, ms) );
+    }
     selectSaveMap(idname){
         this.dndMap.id = 0;
         this.dndMap.name = this.saveForm.get('mapName').value;
@@ -178,6 +182,9 @@ export class MapDetailComponent implements OnInit {
         // var date = new Date().toLocaleDateString();
         // var time = new Date().toLocaleTimeString();
         console.log("saving now");
+
+        this.savingDiv.setAttribute("style", "opacity:1;");
+
         this.saveMapWithSquares();
     }
 
@@ -199,6 +206,9 @@ export class MapDetailComponent implements OnInit {
                             if (this.resultCounter == this.dndMap.squares.length){ //save players only when all squares have gotten their database Id
                                 this.savePlayersOnSquares();
                                 console.log("done saving everything");
+                                this.savingDiv.innerHTML = "Saving... succes!";
+                                this.savingDiv.setAttribute("style", "opacity:0;");
+
                             }
                         }
                     }
