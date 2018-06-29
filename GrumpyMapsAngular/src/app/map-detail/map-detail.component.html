@@ -38,11 +38,11 @@
         <br>
         <button (click)="uploadImage()" class="btn btn-success">Select image</button><br><br>
         <label class="center-block"><b>Height/Width:</b>
-            <input class="form-control" formControlName="heightwidth" type="number" min="5" max="24" (change)="setMapScale()" (click)="setMapScale()">
+            <input class="form-control" formControlName="heightwidth" type="number" min="5" max="24" (change)="setMapHeightWidth()" (click)="setMapHeightWidth()">
         </label>
         <br>
         <label class="center-block"><b>In-game square size (ft):</b>
-            <input class="form-control" formControlName="feet" type="number" min="1" max="25" (change)="setMapScale()"  (click)="setMapScale()">
+            <input class="form-control" formControlName="feet" type="number" min="1" max="25" (change)="setSquareSize()"  (click)="setSquareSize()">
         </label>
         <br>
         <label class="center-block">Obstruct squares:

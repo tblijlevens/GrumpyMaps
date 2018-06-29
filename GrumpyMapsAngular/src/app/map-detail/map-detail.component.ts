@@ -75,20 +75,27 @@ export class MapDetailComponent implements OnInit {
         this.mapForm.get('imageUrl').setValue(img);
     }
 
-    public setMapScale() {
+    public setMapHeightWidth() {
         this.heightWidth = +this.mapForm.get('heightwidth').value;
         if (this.heightWidth > 25) {
             this.heightWidth = 25;
             // alert("Map gridsize can't be bigger than 25x25. Therefore gridsize is set to 25x25.");
         }
         var squareSize = +this.mapForm.get('feet').value;
+        this.dndMap = new DnDMap(0, this.heightWidth, squareSize); //id zero cannot exist in databse, so it will generate a new unique id)
+        this.setRows();
+        this.calculateMapYards();
+    }
+    setSquareSize(){
+        var squareSize = +this.mapForm.get('feet').value;
         if (!squareSize) {
             squareSize = 3;
             // alert("Square size wasn't set and is now defaulted to 3.");
         }
-
-        this.dndMap = new DnDMap(0, this.heightWidth, squareSize); //id zero cannot exist in databse, so it will generate a new unique id)
-        this.setRows();
+         var squares = this.dndMap.squares;
+        for (var i = 0 ; i < squares.length ; i++){
+            squares[i].squareSize = squareSize;
+        }
         this.calculateMapYards();
     }
 
@@ -286,6 +293,8 @@ export class MapDetailComponent implements OnInit {
             allMapSquares = allMapSquares.sort((a, b) => a.mapSquareId < b.mapSquareId ? -1 : a.mapSquareId > b.mapSquareId ? 1 : 0);
 
             this.dndMap.squares = allMapSquares;
+            this.mapForm.get('feet').setValue(this.dndMap.squares[0].squareSize);
+            this.setSquareSize();
             this.setRows();
 
 
