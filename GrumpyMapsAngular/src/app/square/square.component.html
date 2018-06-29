@@ -1,8 +1,6 @@
 <div id='squarecontainer' class="square" [ngStyle]="squareStyles" (click)=selectSquare()>
-    <span >{{square.mapCoordinate}}|{{square.mapSquareId}}</span><br>
+    <span *ngIf="_inRangeSquares.length!=0">{{square.mapCoordinate}}</span><br>
     <div id="objectsInSquare" *ngIf="square.players.length!=0">
         <div class="playerDot" *ngFor="let player of square.players" [style.background-color]=player.color></div>
     </div>
 </div>
-<!-- put this in the first span tag: -->
-<!-- *ngIf="_inRangeSquares.length!=0" -->

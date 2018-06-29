@@ -32,7 +32,6 @@ export class MapDetailComponent implements OnInit {
 
     dndMap: DnDMap;
     mapBackground = {};
-    playerStyles = {};
     squareScale: string = '10%';
     heightWidth:number = 10;
     rowArray:number[] = new Array();
@@ -63,7 +62,6 @@ export class MapDetailComponent implements OnInit {
 
     public uploadImage() {
         var a = document.getElementById( "row10" );
-        console.log("did i get element row10: " + a);
         const imageUrl = this.mapForm.get('imageUrl').value;
         this.dndMap.setImage(imageUrl);
         this.mapBackground = {
@@ -152,8 +150,6 @@ export class MapDetailComponent implements OnInit {
                 alert("This will overwrite the existing map '" + this.dndMap.name + "'.");
             }
         }
-
-        console.log("|"+this.dndMap.id +"|"+this.dndMap.name+"|");
     }
 
     public saveMap() {
@@ -167,7 +163,6 @@ export class MapDetailComponent implements OnInit {
         this.resultCounter=0;
         this.dndMapService.saveMap(this.dndMap).subscribe((mapId: number) => {
             this.dndMap.id = mapId;
-            console.log("eerste square is obstructed: " + this.dndMap.squares[0].obstructed);
             var mapSquares = this.dndMap.squares;
 
 
@@ -181,17 +176,14 @@ export class MapDetailComponent implements OnInit {
                             mapSquares[j].id = result["id"];
                             if (this.resultCounter == this.dndMap.squares.length){ //save players only when all squares have gotten their database Id
                                 this.savePlayersOnSquares();
+                                console.log("done saving everything");
                             }
                         }
                     }
                 }); //saveSquare
 
             }
-
-            console.log("Map added/updated with id: " + this.dndMap.id);
-            console.log("number of squares: " + this.dndMap.numberOfSquares);
         }); //saveMap end
-
     }
 
     private savePlayersOnSquares(){
@@ -204,17 +196,13 @@ export class MapDetailComponent implements OnInit {
             for (var j = 0 ; j<players.length ; j++){
                 var player = players[j];
                 player.realSquareId = square.id; //give player square database Id so they can be retrieved on the right square when loading.
-                console.log("setting player realSquareId to: " + square.id);
                 this.dndMapService.savePlayer(player).subscribe(playerResult => {
                     var mapSquares2 = this.dndMap.squares;
                     for (var k = 0 ; k < mapSquares2.length ; k++){
                         var players2 = mapSquares2[k].players;
                         for (var l = 0 ; l<players2.length ; l++){
-                            //console.log("plres scndId: " + playerResult.playerSquareId);
                             if (players2[l].playerSquareId == playerResult["playerSquareId"]){
                                 players2[l].id = playerResult["id"];
-                                console.log("square: " + mapSquares2[k].mapSquareId + " has got player: " + players2[l].id + "- " + players2[l].name);
-                                //console.log("front Id: " + players2[l].id);
                             }
                         }
                     }
@@ -229,7 +217,6 @@ export class MapDetailComponent implements OnInit {
         this.dndMapService.findAllMaps().subscribe(allMaps => {
             this.allLoadedMapsResult = allMaps;
             for (var i=0 ; i< allMaps.length ; i++){
-                console.log(allMaps[i]);
                 this.allLoadedMapIds.push(allMaps[i]["id"]);
                 this.allLoadedMapNames.push(allMaps[i]["id"] + ": " + allMaps[i]["name"]);
             }
@@ -244,11 +231,8 @@ export class MapDetailComponent implements OnInit {
     }
 
     loadSelectedMap(){
-        console.log("selected: " + this.selectedLoadMap);
-
         for (var i=0 ; i< this.allLoadedMapsResult.length ; i++){
             if (this.selectedLoadMap == this.allLoadedMapsResult[i]["id"]){
-                console.log(this.allLoadedMapsResult[i]);
                 this.heightWidth = this.allLoadedMapsResult[i]["heightWidth"];
                 var image = this.allLoadedMapsResult[i]["imageUrl"];
                 var name = this.allLoadedMapsResult[i]["name"];
@@ -267,9 +251,7 @@ export class MapDetailComponent implements OnInit {
     }
 
     getMapSquares(){
-        console.log("calling squares of map: " + this.selectedLoadMap);
         this.dndMapService.getMapSquares(this.selectedLoadMap).subscribe(mapSquares => {
-            console.log(mapSquares[0]);
             var allMapSquares: Square[] = new Array();
             for (var i = 0 ; i < mapSquares.length ; i++){
                 var theSquare = new Square(
@@ -292,8 +274,6 @@ export class MapDetailComponent implements OnInit {
             allMapSquares = allMapSquares.sort((a, b) => a.mapSquareId < b.mapSquareId ? -1 : a.mapSquareId > b.mapSquareId ? 1 : 0);
 
             this.dndMap.squares = allMapSquares;
-            console.log("first square is " + this.dndMap.squares[0].id + " and is has squareHeightWidth: " + this.dndMap.squares[0].squareHeightWidth);
-            console.log("second square is " + this.dndMap.squares[1].id + " and is obestucted: " + this.dndMap.squares[1].obstructed);
             this.setRows();
 
 
@@ -301,7 +281,6 @@ export class MapDetailComponent implements OnInit {
                 if(this.dndMap.squares[i].numberofPlayers>0){
                     //TODO forloop to go through all players
                     var sqId = this.dndMap.squares[i].id;
-                    console.log("found player on square: " + sqId);
                     this.findPlayerByRealSquareId(sqId);
                 }
             }
@@ -309,9 +288,7 @@ export class MapDetailComponent implements OnInit {
         });
     }
     findPlayerByRealSquareId(sqId:number){
-        console.log("calling players for square: " + sqId);
         this.dndMapService.findPlayerByRealSquareId(sqId).subscribe(resultPlayer => {
-            console.log(resultPlayer);
             var player:Player = new Player(
                 resultPlayer["id"],
                 resultPlayer["playerSquareId"],
@@ -332,7 +309,6 @@ export class MapDetailComponent implements OnInit {
             for (var i = 0 ; i<mapSquares.length ; i++){
                 if (mapSquares[i].id == player.realSquareId){
                     mapSquares[i].addPhysical(player);
-                    console.log("added player " + player.name + " on mapsquare " + mapSquares[i].mapSquareId);
                     this.rangeSquares = new Array();
                 }
             }
