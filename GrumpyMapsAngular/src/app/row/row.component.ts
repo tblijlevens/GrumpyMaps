@@ -49,9 +49,9 @@ export class RowComponent implements OnInit {
         for (var i=0 ; i<this.dndMap.squares.length ; i++){
             if (this.dndMap.squares[i].mapSquareId >= (this.rowIndex-1)*this.heightWidth+1
             && this.dndMap.squares[i].mapSquareId <= this.rowIndex*this.heightWidth){
-                console.log(this.rowIndexAsLetter + " setting rowSquare: " +this.dndMap.squares[i].id + " wih mapsqId: " + this.dndMap.squares[i].mapSquareId );
                 this.rowSquares.push(this.dndMap.squares[i]);
                 this.dndMap.squares[i].mapCoordinate = this.rowIndexAsLetter+ this.rowSquares.length;
+                console.log(this.rowIndexAsLetter + " setting rowSquare: " +this.dndMap.squares[i].id + " wih mapsqId: " + this.dndMap.squares[i].mapSquareId +" and coordinate: " + this.dndMap.squares[i].mapCoordinate);
             }
         }
     }

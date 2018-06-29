@@ -13,8 +13,12 @@ import { MapShareService } from '../map-share.service';
 })
 export class SquareComponent implements OnInit {
 
-    @Input()  square: Square;
-  @Input()  squareHeightWidth: string;
+  @Input()  square: Square;
+  private _squareHeightWidth: string;
+  @Input() set squareHeightWidth(squareHeightWidth: string) {
+      this._squareHeightWidth = squareHeightWidth;
+      this.squareStyles['width'] = squareHeightWidth;
+  }
   @Input()  squareIndex: number;
   @Input() obstructionMode: boolean = false;
   @Input() movementMode: boolean;
@@ -41,7 +45,7 @@ export class SquareComponent implements OnInit {
   ngOnInit() {
 
     this.squareStyles = {
-      'width': this.squareHeightWidth
+      'width': this._squareHeightWidth
     }
     this.setObstructionStyle();
 
@@ -73,7 +77,7 @@ export class SquareComponent implements OnInit {
       else {
           this.square.obstructed = false;
       }
-      console.log("square " + this.square.id + " is obstructed: " + this.square.obstructed);
+      console.log("square " + this.square.mapSquareId + " is obstructed: " + this.square.obstructed);
       this.setObstructionStyle();
   }
 

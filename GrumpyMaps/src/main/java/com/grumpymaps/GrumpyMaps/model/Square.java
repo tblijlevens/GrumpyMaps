@@ -22,7 +22,7 @@ public class Square implements Serializable{
     private long id;
     private int mapSquareId;
     private String mapCoordinate;
-    private String squareScale;
+    private String squareHeightWidth;
     private int squareSize;
     private boolean obstructed;
     private int mapHeightWidth;
@@ -84,19 +84,19 @@ public class Square implements Serializable{
 	}
 
 	/**
-	* Returns value of squareScale
+	* Returns value of squareHeightWidth
 	* @return
 	*/
-	public String getSquareScale() {
-		return squareScale;
+	public String getSquareHeightWidth() {
+		return squareHeightWidth;
 	}
 
 	/**
-	* Sets new value of squareScale
+	* Sets new value of squareHeightWidth
 	* @param
 	*/
-	public void setSquareScale(String squareScale) {
-		this.squareScale = squareScale;
+	public void setSquareHeightWidth(String squareHeightWidth) {
+		this.squareHeightWidth = squareHeightWidth;
 	}
 
 	/**

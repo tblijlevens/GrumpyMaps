@@ -62,6 +62,8 @@ export class MapDetailComponent implements OnInit {
     }
 
     public uploadImage() {
+        var a = document.getElementById( "row10" );
+        console.log("did i get element row10: " + a);
         const imageUrl = this.mapForm.get('imageUrl').value;
         this.dndMap.setImage(imageUrl);
         this.mapBackground = {
@@ -124,7 +126,7 @@ export class MapDetailComponent implements OnInit {
     private setRows(){
         this.rowArray = new Array();
         for (var i = 0 ; i< this.heightWidth ; i++){
-            this.rowArray.push(i);
+            this.rowArray.push(i+1);
         }
 
         this.rowStyles = {
@@ -274,7 +276,7 @@ export class MapDetailComponent implements OnInit {
                     mapSquares[i]["id"],
                     mapSquares[i]["mapSquareId"],
                     mapSquares[i]["squareSize"],
-                    mapSquares[i]["squareScale"],
+                    mapSquares[i]["squareHeightWidth"],
                     mapSquares[i]["mapHeightWidth"]
                 )
                 theSquare.players=new Array();
@@ -290,8 +292,10 @@ export class MapDetailComponent implements OnInit {
             allMapSquares = allMapSquares.sort((a, b) => a.mapSquareId < b.mapSquareId ? -1 : a.mapSquareId > b.mapSquareId ? 1 : 0);
 
             this.dndMap.squares = allMapSquares;
-            console.log("first square is " + this.dndMap.squares[0].id + " and is obestucted: " + this.dndMap.squares[0].obstructed);
+            console.log("first square is " + this.dndMap.squares[0].id + " and is has squareHeightWidth: " + this.dndMap.squares[0].squareHeightWidth);
             console.log("second square is " + this.dndMap.squares[1].id + " and is obestucted: " + this.dndMap.squares[1].obstructed);
+            this.setRows();
+
 
             for (var i = 0 ; i < this.dndMap.squares.length ; i++){
                 if(this.dndMap.squares[i].numberofPlayers>0){
@@ -303,7 +307,6 @@ export class MapDetailComponent implements OnInit {
             }
 
         });
-        this.setRows();
     }
     findPlayerByRealSquareId(sqId:number){
         console.log("calling players for square: " + sqId);

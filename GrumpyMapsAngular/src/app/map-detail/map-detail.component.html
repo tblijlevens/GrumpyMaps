@@ -1,8 +1,17 @@
-<br />eerste square is obstructed {{dndMap.squares[0].obstructed}}
+
+eerste square is obstructed {{dndMap.squares[0].obstructed}} ------ eerste square heeft zoveel players: {{dndMap.squares[0].players.length}} ////// laatste square is obstructed {{dndMap.squares[dndMap.squares.length-1].obstructed}} ------ laatste square heeft zoveel players: {{dndMap.squares[dndMap.squares.length-1].players.length}}
 <div class="mapcontainer" [ngStyle]="mapBackground" data-toggle="collapse" data-target="#derp">
-    <div class="row" id="row">
-        <app-row *ngFor="let j of rowArray; index as i" [_rowIndex]=i+1 [dndMap]=dndMap [rowStyles]=rowStyles [_heightWidth]=heightWidth [obstructionMode]=obstructionMode [inRangeSquares]=rangeSquares [movementMode]=movementMode [playerToMove]=playerToMove [squareBorderStyle]=squareBorderStyle  (moveModeEvent)="receiveMoveMode($event)" (setRangeSquaresEvent)="receiveRangeSquares($event)" >
-        </app-row>
+    <div class="rowsContainer">
+        <div *ngFor="let j of rowArray" id="row_{{j}}" class="row" [ngStyle]="rowStyles">
+            <div class="square">
+                <app-square *ngFor="let square of dndMap.squares | slice:(j-1)*heightWidth:j*heightWidth; index as i" [squareHeightWidth]=square.squareHeightWidth [square]=square [squareIndex]=i [obstructionMode]=obstructionMode [inRangeSquares]=rangeSquares [movementMode]=movementMode [playerToMove]=playerToMove [_squareBorderStyles]=squareBorderStyle (moveModeEvent)="receiveMoveMode($event)" (setRangeSquaresEvent)="receiveRangeSquares($event)" ></app-square>
+            </div>
+        </div>
+
+        <!-- <app-row *ngFor="let j of rowArray; index as i" [_rowIndex]=i+1 [dndMap]=dndMap [rowStyles]=rowStyles [_heightWidth]=heightWidth [obstructionMode]=obstructionMode [inRangeSquares]=rangeSquares [movementMode]=movementMode [playerToMove]=playerToMove [squareBorderStyle]=squareBorderStyle  (moveModeEvent)="receiveMoveMode($event)" (setRangeSquaresEvent)="receiveRangeSquares($event)" >
+        </app-row> -->
+
+
     </div>
     <!--
     <div class="square" id="square">
