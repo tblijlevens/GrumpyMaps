@@ -18,10 +18,13 @@ export class SquareDetailComponent implements OnInit {
   @Output() moveModeEvent = new EventEmitter<boolean>();
   @Output() setRangeSquaresEvent = new EventEmitter<number[]>();
   @Output() setPlayerToMoveEvent = new EventEmitter<Player>();
+  @Output() playerAddedEvent = new EventEmitter<Player>();
+  playerToMove:Player;
   previousPlayer: Player;
   movable: boolean = false;
   playerNameColor = {};
   previousPlayerColor: string;
+  playerIdGenerator:number=0;
 
   createObjectForm = new FormGroup({
     playerName: new FormControl(),
@@ -42,46 +45,39 @@ export class SquareDetailComponent implements OnInit {
       const color = this.createObjectForm.get('playerColor').value;
       const movement = +this.createObjectForm.get('playerMovement').value;
 
-      var player:Player = new Player(0, this.playerIdCreator++, name, 100, movement, 3, 2, "physical", color, this.square.mapSquareId, this.square.mapHeightWidth);
+      var player:Player = new Player(this.playerIdGenerator--, this.playerIdCreator++, name, 100, movement, 3, 2, "physical", color, this.square.mapSquareId, this.square.mapHeightWidth);
 
       this.square.addPhysical(player);
   }
 
   clickPlayer(player: Player) {
+      if (this.previousPlayer !=null){
+        this.previousPlayer.isSelected = false;
+        this.previousPlayer.setActiveColor();
+      }
+      player.isSelected = true;
+      player.setActiveColor();
+      this.playerToMove = player;
+      this.setPlayerToMoveEvent.emit(player);
+
       this.showRange(player);
-      this.markPlayerName(player);
-  }
+      this.previousPlayer = player;
+        }
 
   showRange(player:Player){
       var allRangeSquares = player.getMoveRange();
-      //console.log(allRangeSquares);
-      player.isSelected = true;
       this.setRangeSquaresEvent.emit(allRangeSquares);
-
       this.movable = true;
   }
 
-  markPlayerName(player) {
-    if (this.previousPlayer !=null){
-      this.previousPlayer.color = this.previousPlayerColor;
-    }
-    this.previousPlayerColor = player.color;
-    this.previousPlayer = player;
-    player.color = "#00ff00";
-  }
 
   moveObject() {
       if (this.movable){
-
-          var selectedPlayer;
-          for(var i = 0; i < this.square.players.length; i++) {
-              if(this.square.players[i].isSelected) {
-                  selectedPlayer = this.square.players[i];
-                  this.movementMode = true;
-                  this.moveModeEvent.emit(this.movementMode);
-                  this.setPlayerToMoveEvent.emit(selectedPlayer);
-                  this.square.removePhysical(selectedPlayer.id);
-              }
+          if(this.playerToMove.isSelected) {
+              this.movementMode = true;
+              this.moveModeEvent.emit(this.movementMode);
+              this.setPlayerToMoveEvent.emit(this.playerToMove);
+              this.square.removePhysical(this.playerToMove.id);
           }
           this.movable = false;
       }

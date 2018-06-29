@@ -22,6 +22,7 @@ public class Player implements Physical{
     private int spellsPerRound;
     private String type;
     private String color;
+    private String activeColor;
     private Integer mapSquareId;
     private int mapHeightWidth;
     private boolean isSelected;
@@ -170,6 +171,22 @@ public class Player implements Physical{
 	*/
 	public void setColor(String color) {
 		this.color = color;
+	}
+
+	/**
+	* Returns value of activeColor
+	* @return
+	*/
+	public String getActiveColor() {
+		return activeColor;
+	}
+
+	/**
+	* Sets new value of activeColor
+	* @param
+	*/
+	public void setActiveColor(String activeColor) {
+		this.activeColor = activeColor;
 	}
 
 	/**

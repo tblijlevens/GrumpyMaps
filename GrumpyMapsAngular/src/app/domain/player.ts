@@ -11,6 +11,7 @@ export class Player implements Physical{
     spellsPerRound:number;
     type:string;
     color:string;
+    activeColor:string;
     mapSquareId:number;
     mapHeightWidth:number
     isSelected:boolean;
@@ -33,6 +34,7 @@ export class Player implements Physical{
         this.mapSquareId = mapSquareId;
         this.mapHeightWidth = mapHeightWidth;
         this.playerSquareId = playerSquareId;
+        this.setActiveColor();
     }
     getName(){
         return this.name;
@@ -58,6 +60,16 @@ export class Player implements Physical{
             }
         }
         return moveRange;
+    }
+
+    setActiveColor(){
+        if (this.isSelected){
+            this.activeColor = "#00ff00";
+        }
+        else
+        {
+            this.activeColor = this.color;
+        }
     }
 
 }

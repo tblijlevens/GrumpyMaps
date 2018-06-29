@@ -4,7 +4,7 @@
   obstructed: {{square.obstructed}}<br />
   nr of players: {{square.players.length}}<br />
   <span *ngIf="square.players.length!=0"><span class="lead">Contents: <br></span>
-  <span *ngFor="let player of square.players" [style.color]="player.color" (click)="clickPlayer(player)">{{player.getName()}}<br></span></span><br>
+  <span *ngFor="let player of square.players" [style.color]="player.activeColor" (click)="clickPlayer(player)">{{player.id}}: {{player.name}}<br></span></span><br>
 
   <hr class="my-4">
   <button class="btn btn-success" data-toggle="modal" data-target="#exampleModal">Add object</button><br>

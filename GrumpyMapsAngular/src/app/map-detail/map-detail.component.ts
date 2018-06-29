@@ -150,6 +150,9 @@ export class MapDetailComponent implements OnInit {
             'height': this.dndMap.squares[0].squareHeightWidth
         }
     }
+    playerAdded($event){
+        this.savePlayersOnSquares();
+    }
 
     selectSaveMap(idname){
         this.dndMap.id = 0;

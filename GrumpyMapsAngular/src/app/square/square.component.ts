@@ -74,6 +74,11 @@ export class SquareComponent implements OnInit {
 
     // after moving the rangeSquares is always set to nothing so it stops showing range
     this.setRangeSquaresEvent.emit([0]);
+    if (this.playerToMove!=null){
+        this.playerToMove.isSelected = false;
+        this.playerToMove.setActiveColor();
+    }
+
   }
 
   private setObstruction(){
@@ -118,7 +123,6 @@ export class SquareComponent implements OnInit {
                 }
             }
         }
-        this.playerToMove.isSelected = false;
         this.moveModeEvent.emit(false);
     }
 
