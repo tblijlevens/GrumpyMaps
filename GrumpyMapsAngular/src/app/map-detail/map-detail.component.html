@@ -35,7 +35,7 @@
 <br><br>
 <form [formGroup]="mapForm">
     <div class="form-group" id="mapSetup">
-        <label class="center-block"><b>Map image: </b> <span class="testImage" (click)="setPic('https://i.pinimg.com/736x/f1/b3/f5/f1b3f576513897781c67fe55252ed2a2--maps.jpg')">Use test image</span>
+        <label class="center-block"><b>Map image: </b> Test image: <span class="testImage" (click)="setPic('https://i.pinimg.com/736x/f1/b3/f5/f1b3f576513897781c67fe55252ed2a2--maps.jpg')">one</span> | <span class="testImage" (click)="setPic('http://www.umanise.nl/images/dndmaptablet.png')">two</span>
             <input class="form-control" formControlName="imageUrl" placeholder="Enter url...">
         </label>
         <br>
@@ -45,7 +45,7 @@
         </label>
         <br>
         <label class="center-block"><b>In-game square size (ft):</b>
-            <input class="form-control" formControlName="feet" type="number" min="1" max="25" (change)="setSquareSize()"  (click)="setSquareSize()">
+            <input class="form-control" formControlName="feet" type="number" min="1" max="100" (change)="setSquareSize()"  (click)="setSquareSize()">
         </label>
         <br>
         <label class="center-block">Obstruct squares:
