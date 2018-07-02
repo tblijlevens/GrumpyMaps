@@ -34,7 +34,8 @@ export class MapDetailComponent implements OnInit {
         feet: new FormControl(),
         imageUrl: new FormControl(),
         gridToggle: new FormControl(),
-        obstructToggle: new FormControl()
+        obstructToggle: new FormControl(),
+        multiSelectToggle: new FormControl()
     });
     saveForm = new FormGroup({
         mapName: new FormControl()
@@ -121,9 +122,23 @@ export class MapDetailComponent implements OnInit {
     }
 
     public setMultiSelect(){
-        this.multiSelect = this.mapForm.get('obstructToggle').value;
+        this.multiSelect = this.mapForm.get('multiSelectToggle').value;
+        if (this.multiSelect){
+            $("#multiAction").show();
+        }
+        else {
+            $("#multiAction").hide();
+        }
     }
-
+    multiAction(){
+        for (var i = 0 ; i < this.selectedSquares.length ; i++){
+            this.selectedSquares[i].obstructed = true;
+        }
+        this.selectedSquares = new Array();
+        console.log("selectedSquares is set to 0 in md: " + this.selectedSquares.length);
+        this.mapForm.get('multiSelectToggle').setValue(false);
+        this.setMultiSelect();
+    }
     public obstructSquares(){
         this.obstructionMode = this.mapForm.get('obstructToggle').value;
     }

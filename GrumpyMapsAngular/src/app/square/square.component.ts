@@ -49,14 +49,26 @@ export class SquareComponent implements OnInit {
   @Output() selectingEvent = new EventEmitter<boolean>();
   @Input() selecting:boolean;
   @Input() multiSelect:boolean;
+  @Input() set _multiSelect(multiSelect:boolean) {
+      console.log( "triggering styles");
+      this.multiSelect = multiSelect;
+      if (!multiSelect){
+          this.selectedSquares = new Array();
+          this.setObstructionStyle();
+          this.setRangeSquareStyles();
+      }
+  }
   @Output() selectSquaresEvent = new EventEmitter<Square>();
   private selectedSquares:Square[] = new Array();
   @Input() set _selectedSquares(selectedSquares:Square[]) {
       this.selectedSquares = selectedSquares;
+      console.log("selectedSquares is set to " + + this.selectedSquares.length  + "in sq: ");
+
       if (this.selectedSquares.length!=0){
           console.log( "triggering")
           this.setRangeSquareStyles();
       }
+
   }
 
 
@@ -163,8 +175,8 @@ export class SquareComponent implements OnInit {
           this.originalSquareColor = 'rgba(8, 161, 0, 0)';
         this.squareStyles['background-color'] = this.originalSquareColor;
       }
+      this.selectionStyles();
     }
-    this.selectionStyles();
 
   }
   selectionStyles(){
@@ -190,21 +202,18 @@ export class SquareComponent implements OnInit {
           //console.log("DRAG over " + this.square.mapCoordinate);
       }
       this.squareStyles['background-color'] = 'rgba(0, 112, 161, 0.4)';
-
   }
   mouseUpSquare(){
       this.selecting=false;
       this.selectingEvent.emit(false);
       this.selectedSquares = this.removeDuplicates(this.selectedSquares);
-      //console.log("mouseUP on " + this.square.mapCoordinate);
-      console.log("nr of selected squares: " +this.selectedSquares.length )
-      for (var i= 0 ; i<this.selectedSquares.length; i++){
-          console.log(this.selectedSquares[i].mapCoordinate)
-      }
   }
   mouseOutSquare(){
-      if (!this.selecting ){
+      if (!this.selecting){
           this.setRangeSquareStyles();
+          if (this.square.obstructed){
+              this.setObstructionStyle();
+          }
       }
   }
 
