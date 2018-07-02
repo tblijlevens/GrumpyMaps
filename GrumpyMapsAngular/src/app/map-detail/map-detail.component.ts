@@ -2,6 +2,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 //import  $ from 'jquery';
+//import $ = require("jquery");
+import * as $ from 'jquery';
 
 import { DnDMapService } from '../dn-dmap.service'
 import { DnDMap } from '../domain/dn-dmap'
@@ -100,7 +102,7 @@ export class MapDetailComponent implements OnInit {
             squares[i].squareSize = squareSize;
         }
         this.calculateMapYards();
-        //$('#saving').fadeIn(2000);
+        $('#saving').fadeIn(2000);
 
     }
 
@@ -125,13 +127,16 @@ export class MapDetailComponent implements OnInit {
             allSquares[i].inRange = false; //first set everything out of range
             for (var j = 0 ; j<allRangeSquares.length ; j++){
                 if (allSquares[i].mapSquareId == allRangeSquares[j]){
-                    allSquares[i].inRange = true;
-                    selectedSquares.push(allSquares[i]);
+                    if (!allSquares[i].obstructed){ //only add squares if not obstructed
+                        allSquares[i].inRange = true;
+                        selectedSquares.push(allSquares[i]);
+                    }
                 }
             }
         }
         this.rangeSquares = selectedSquares;
     }
+
     public receivePlayerToMove($event){
         this.playerToMove = $event;
     }
