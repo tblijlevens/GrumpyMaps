@@ -27,6 +27,7 @@ public class Player implements Physical{
     private int mapHeightWidth;
     private boolean isSelected;
     private Integer realSquareId;
+    private String squareMapCoordinate;
 
 
 	/**
@@ -255,4 +256,18 @@ public class Player implements Physical{
 		this.realSquareId = realSquareId;
 	}
 
+    * Returns value of squareMapCoordinate
+	* @return
+	*/
+	public String getSquareMapCoordinate() {
+		return squareMapCoordinate;
+	}
+
+	/**
+	* Sets new value of squareMapCoordinate
+	* @param
+	*/
+	public void setSquareMapCoordinate(String squareMapCoordinate) {
+		this.squareMapCoordinate = squareMapCoordinate;
+	}
 }

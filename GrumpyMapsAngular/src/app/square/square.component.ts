@@ -152,7 +152,7 @@ export class SquareComponent implements OnInit {
   }
 
   private setSquareMapCoordinates(){
-      this.square.mapCoordinate = this.rowIndexAsLetter+ (this.squareIndex+1);
+      this.square.mapCoordinate = this.rowIndexAsLetter+":"+ (this.squareIndex+1);
   }
 
   private setRowIndexLetter(){

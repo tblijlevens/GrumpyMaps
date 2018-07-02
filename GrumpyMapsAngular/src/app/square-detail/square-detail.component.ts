@@ -45,7 +45,7 @@ export class SquareDetailComponent implements OnInit {
       const color = this.createObjectForm.get('playerColor').value;
       const movement = +this.createObjectForm.get('playerMovement').value;
 
-      var player:Player = new Player(this.playerIdGenerator--, this.playerIdCreator++, name, 100, movement, 3, 2, "physical", color, this.square.mapSquareId, this.square.mapHeightWidth);
+      var player:Player = new Player(this.playerIdGenerator--, this.playerIdCreator++, name, 100, movement, 3, 2, "physical", color, this.square.mapSquareId, this.square.mapHeightWidth, this.square.mapCoordinate);
 
       this.square.addPhysical(player);
   }

@@ -123,11 +123,20 @@ export class MapDetailComponent implements OnInit {
         this.rangeSquares = new Array();
         var allSquares = this.dndMap.squares;
         var selectedSquares:Square[]=new Array();
+        var playerToMoveColumn;
+        if (this.playerToMove!=null){
+            playerToMoveColumn = +this.playerToMove.squareMapCoordinate.split(":")[1];
+        }
         for (var i = 0 ; i<allSquares.length ; i++){
             allSquares[i].inRange = false; //first set everything out of range
+
             for (var j = 0 ; j<allRangeSquares.length ; j++){
                 if (allSquares[i].mapSquareId == allRangeSquares[j]){
-                    if (!allSquares[i].obstructed){ //only add squares if not obstructed
+                    var currentSquareColumn = +allSquares[i].mapCoordinate.split(":")[1];
+
+                    console.log("playercol - curSqCol ("+allSquares[i].mapCoordinate+") = " + (playerToMoveColumn-currentSquareColumn))
+
+                    if (!allSquares[i].obstructed && (playerToMoveColumn-currentSquareColumn<=this.playerToMove.movementAmount && playerToMoveColumn-currentSquareColumn>=-this.playerToMove.movementAmount)){ //only add squares if not obstructed AND column number is within movementrange
                         allSquares[i].inRange = true;
                         selectedSquares.push(allSquares[i]);
                     }
@@ -340,7 +349,8 @@ export class MapDetailComponent implements OnInit {
                 resultPlayer["type"],
                 resultPlayer["color"],
                 resultPlayer["mapSquareId"],
-                resultPlayer["mapHeightWidth"]
+                resultPlayer["mapHeightWidth"],
+                resultPlayer["squareMapCoordinate"]
             );
             player.realSquareId = resultPlayer["realSquareId"];
             player.isSelected = resultPlayer["isSelected"];
