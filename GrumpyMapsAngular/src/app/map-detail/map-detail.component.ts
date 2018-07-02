@@ -62,7 +62,9 @@ export class MapDetailComponent implements OnInit {
     mapYards:number;
     squareYards:number;
     selectedSquares:Square[] = new Array();
+    multiSelect:boolean=false;
     selecting:boolean=false;
+
     constructor(private dndMapService: DnDMapService) { }
 
 
@@ -118,6 +120,10 @@ export class MapDetailComponent implements OnInit {
         this.legendSquare['width'] = this.dndMap.squares[0].squareHeightWidth;
     }
 
+    public setMultiSelect(){
+        this.multiSelect = this.mapForm.get('obstructToggle').value;
+    }
+
     public obstructSquares(){
         this.obstructionMode = this.mapForm.get('obstructToggle').value;
     }
@@ -163,7 +169,9 @@ export class MapDetailComponent implements OnInit {
     }
 
     resetSelectedSquares(){
-        this.selectedSquares = new Array();
+        if (!this.multiSelect){
+            this.selectedSquares = new Array();
+        }
     }
     public hideGrid() {
         var gridToggle = this.mapForm.get('gridToggle').value;

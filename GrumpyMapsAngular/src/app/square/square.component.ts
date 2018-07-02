@@ -48,6 +48,7 @@ export class SquareComponent implements OnInit {
   originalSquareColor:string = 'rgba(8, 161, 0, 0)';
   @Output() selectingEvent = new EventEmitter<boolean>();
   @Input() selecting:boolean;
+  @Input() multiSelect:boolean;
   @Output() selectSquaresEvent = new EventEmitter<Square>();
   private selectedSquares:Square[] = new Array();
   @Input() set _selectedSquares(selectedSquares:Square[]) {
@@ -163,16 +164,27 @@ export class SquareComponent implements OnInit {
         this.squareStyles['background-color'] = this.originalSquareColor;
       }
     }
+    this.selectionStyles();
 
-    for (var i = 0 ; i < this.selectedSquares.length ; i++){
-        if (this.square.mapSquareId == this.selectedSquares[i].mapSquareId){
-            this.squareStyles['background-color'] = 'rgba(0, 112, 161, 0.4)';
-        }
-    }
   }
+  selectionStyles(){
+      for (var i = 0 ; i < this.selectedSquares.length ; i++){
+          if (this.square.mapSquareId == this.selectedSquares[i].mapSquareId){
+              this.squareStyles['background-color'] = 'rgba(0, 112, 161, 0.4)';
+          }
+      }
+  }
+  mouseDownSquare(){
+      if (this.multiSelect){
+          this.selecting=true;
+          this.selectingEvent.emit(true);
+      }
+      this.selectSquaresEvent.emit(this.square);
 
+      //console.log("mouseDOWN on " + this.square.mapCoordinate);
+  }
   mouseOverSquare(){
-      if(this.selecting){
+      if(this.selecting && this.multiSelect){
 
           this.selectSquaresEvent.emit(this.square);
           //console.log("DRAG over " + this.square.mapCoordinate);
@@ -180,18 +192,6 @@ export class SquareComponent implements OnInit {
       this.squareStyles['background-color'] = 'rgba(0, 112, 161, 0.4)';
 
   }
-  mouseOutSquare(){
-      if (!this.selecting){
-      this.squareStyles['background-color'] = this.originalSquareColor;
-  }
-  }
-  mouseDownSquare(){
-      this.selecting=true;
-      this.selectingEvent.emit(true);
-      this.selectSquaresEvent.emit(this.square);
-      //console.log("mouseDOWN on " + this.square.mapCoordinate);
-  }
-
   mouseUpSquare(){
       this.selecting=false;
       this.selectingEvent.emit(false);
@@ -202,6 +202,14 @@ export class SquareComponent implements OnInit {
           console.log(this.selectedSquares[i].mapCoordinate)
       }
   }
+  mouseOutSquare(){
+      if (!this.selecting ){
+          this.setRangeSquareStyles();
+      }
+  }
+
+
+
   private removeDuplicates(arr){
       let unique_array = arr.filter(function(elem, index, self) {
         return index == self.indexOf(elem);
