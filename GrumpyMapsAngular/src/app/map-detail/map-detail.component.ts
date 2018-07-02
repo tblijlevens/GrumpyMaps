@@ -18,6 +18,7 @@ jquare examples
 $('#setParButton').css({bottom: "300px", right: '-500px'});
 $('#setParButton').animate({bottom: "-15px", right: '25px'}, 1000);
 $('#setParButton').click(function() { do things}
+$( "#row3" ).mouseover(function() {}
 
 */
 @Component({
@@ -60,8 +61,8 @@ export class MapDetailComponent implements OnInit {
     rowStyles = {};
     mapYards:number;
     squareYards:number;
-    savingDiv;
-
+    selectedSquares:Square[] = new Array();
+    selecting:boolean=false;
     constructor(private dndMapService: DnDMapService) { }
 
 
@@ -72,8 +73,8 @@ export class MapDetailComponent implements OnInit {
         this.mapForm.get('gridToggle').setValue(true);
         this.setRows();
         this.calculateMapYards();
-        this.savingDiv = document.getElementById('saving');
     }
+
 
     public uploadImage() {
         const imageUrl = this.mapForm.get('imageUrl').value;
@@ -139,8 +140,6 @@ export class MapDetailComponent implements OnInit {
                 if (allSquares[i].mapSquareId == allRangeSquares[j]){
                     var currentSquareColumn = +allSquares[i].mapCoordinate.split(":")[1];
 
-                    console.log("playercol - curSqCol ("+allSquares[i].mapCoordinate+") = " + (playerToMoveColumn-currentSquareColumn))
-
                     if (!allSquares[i].obstructed && (playerToMoveColumn-currentSquareColumn<=this.playerToMove.movementAmount && playerToMoveColumn-currentSquareColumn>=-this.playerToMove.movementAmount)){ //only add squares if not obstructed AND column number is within movementrange
                         allSquares[i].inRange = true;
                         selectedSquares.push(allSquares[i]);
@@ -155,6 +154,17 @@ export class MapDetailComponent implements OnInit {
         this.playerToMove = $event;
     }
 
+    public receiveSelectedSquare($event){
+        this.selectedSquares.push($event);
+    }
+
+    public receiveSelecting($event){
+        this.selecting = $event;
+    }
+
+    resetSelectedSquares(){
+        this.selectedSquares = new Array();
+    }
     public hideGrid() {
         var gridToggle = this.mapForm.get('gridToggle').value;
         this.squareBorderStyle= 'dotted 1px rgb(162, 162, 162, 0)';
@@ -174,12 +184,9 @@ export class MapDetailComponent implements OnInit {
             'height': this.dndMap.squares[0].squareHeightWidth
         }
     }
-    /*playerAdded($event){
-        this.savePlayersOnSquares();
-    }*/
-    delay(ms: number) {
-        return new Promise( resolve => setTimeout(resolve, ms) );
-    }
+
+
+
     selectSaveMap(idname){
         this.dndMap.id = 0;
         this.dndMap.name = this.saveForm.get('mapName').value;

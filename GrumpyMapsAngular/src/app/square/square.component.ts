@@ -5,6 +5,8 @@ import { Player } from '../domain/player';
 import { MapDetailComponent } from '../map-detail/map-detail.component';
 import { SquareDetailComponent } from '../square-detail/square-detail.component';
 import { MapShareService } from '../map-share.service';
+import * as $ from 'jquery';
+
 
 @Component({
   selector: 'app-square',
@@ -41,10 +43,20 @@ export class SquareComponent implements OnInit {
   @Input() set _squareBorderStyles(squareBorderStyle: string) {
       this.squareStyles['border'] = squareBorderStyle;
   }
-  playerNameStyles = {};
   @Input() playerToMove: Player;
 
-  squarerangetruecounter=0;
+  originalSquareColor:string = 'rgba(8, 161, 0, 0)';
+  @Output() selectingEvent = new EventEmitter<boolean>();
+  @Input() selecting:boolean;
+  @Output() selectSquaresEvent = new EventEmitter<Square>();
+  private selectedSquares:Square[] = new Array();
+  @Input() set _selectedSquares(selectedSquares:Square[]) {
+      this.selectedSquares = selectedSquares;
+      if (this.selectedSquares.length!=0){
+          console.log( "triggering")
+          this.setRangeSquareStyles();
+      }
+  }
 
 
   constructor(private mapShareService: MapShareService) { }
@@ -98,10 +110,12 @@ export class SquareComponent implements OnInit {
       var isObstructed = this.square.obstructed;
 
         if (isObstructed) {
-          this.squareStyles['background-color'] = 'rgba(161, 0, 0, 0.35)';
+            this.originalSquareColor = 'rgba(161, 0, 0, 0.35)';
+          this.squareStyles['background-color'] = this.originalSquareColor;
         }
         else {
-          this.squareStyles['background-color'] = 'rgba(161, 0, 0, 0)';
+            this.originalSquareColor = 'rgba(161, 0, 0, 0)';
+          this.squareStyles['background-color'] = this.originalSquareColor;
         }
     }
 
@@ -127,6 +141,7 @@ export class SquareComponent implements OnInit {
     }
 
   public setRangeSquareStyles() {
+    //  console.log("settingstyles");
       if (this._inRangeSquares.length!=0){
           for(var i=0;i<this._inRangeSquares.length;i++){
               if (this._inRangeSquares[i].mapSquareId == this.square.mapSquareId){
@@ -138,19 +153,61 @@ export class SquareComponent implements OnInit {
           this.square.inRange = false;
       }
 
-      if (this.square.inRange){
-          this.squarerangetruecounter++;
-      }
     if (!this.square.obstructed) {
       if (this.square.inRange) {
-        this.squareStyles['background-color'] = 'rgba(8, 161, 0, 0.5)';
+          this.originalSquareColor = 'rgba(8, 161, 0, 0.5)';
+        this.squareStyles['background-color'] = this.originalSquareColor;
       }
       else {
-        this.squareStyles['background-color'] = 'rgba(8, 161, 0, 0)';
+          this.originalSquareColor = 'rgba(8, 161, 0, 0)';
+        this.squareStyles['background-color'] = this.originalSquareColor;
       }
+    }
+
+    for (var i = 0 ; i < this.selectedSquares.length ; i++){
+        if (this.square.mapSquareId == this.selectedSquares[i].mapSquareId){
+            this.squareStyles['background-color'] = 'rgba(0, 112, 161, 0.4)';
+        }
     }
   }
 
+  mouseOverSquare(){
+      if(this.selecting){
+
+          this.selectSquaresEvent.emit(this.square);
+          //console.log("DRAG over " + this.square.mapCoordinate);
+      }
+      this.squareStyles['background-color'] = 'rgba(0, 112, 161, 0.4)';
+
+  }
+  mouseOutSquare(){
+      if (!this.selecting){
+      this.squareStyles['background-color'] = this.originalSquareColor;
+  }
+  }
+  mouseDownSquare(){
+      this.selecting=true;
+      this.selectingEvent.emit(true);
+      this.selectSquaresEvent.emit(this.square);
+      //console.log("mouseDOWN on " + this.square.mapCoordinate);
+  }
+
+  mouseUpSquare(){
+      this.selecting=false;
+      this.selectingEvent.emit(false);
+      this.selectedSquares = this.removeDuplicates(this.selectedSquares);
+      //console.log("mouseUP on " + this.square.mapCoordinate);
+      console.log("nr of selected squares: " +this.selectedSquares.length )
+      for (var i= 0 ; i<this.selectedSquares.length; i++){
+          console.log(this.selectedSquares[i].mapCoordinate)
+      }
+  }
+  private removeDuplicates(arr){
+      let unique_array = arr.filter(function(elem, index, self) {
+        return index == self.indexOf(elem);
+    });
+    return unique_array;
+  }
   private setSquareMapCoordinates(){
       this.square.mapCoordinate = this.rowIndexAsLetter+":"+ (this.squareIndex+1);
   }

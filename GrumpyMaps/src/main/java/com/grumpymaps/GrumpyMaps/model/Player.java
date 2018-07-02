@@ -256,6 +256,7 @@ public class Player implements Physical{
 		this.realSquareId = realSquareId;
 	}
 
+    /**
     * Returns value of squareMapCoordinate
 	* @return
 	*/
