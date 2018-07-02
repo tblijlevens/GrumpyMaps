@@ -13,7 +13,13 @@ import { Player } from '../domain/player'
 import { SquareComponent } from '../square/square.component';
 import { SquareDetailComponent } from '../square-detail/square-detail.component';
 
+/*
+jquare examples
+$('#setParButton').css({bottom: "300px", right: '-500px'});
+$('#setParButton').animate({bottom: "-15px", right: '25px'}, 1000);
+$('#setParButton').click(function() { do things}
 
+*/
 @Component({
     selector: 'app-map-detail',
     templateUrl: './map-detail.component.html',
@@ -102,7 +108,6 @@ export class MapDetailComponent implements OnInit {
             squares[i].squareSize = squareSize;
         }
         this.calculateMapYards();
-        $('#saving').fadeIn(2000);
 
     }
 
@@ -169,9 +174,9 @@ export class MapDetailComponent implements OnInit {
             'height': this.dndMap.squares[0].squareHeightWidth
         }
     }
-    playerAdded($event){
+    /*playerAdded($event){
         this.savePlayersOnSquares();
-    }
+    }*/
     delay(ms: number) {
         return new Promise( resolve => setTimeout(resolve, ms) );
     }
@@ -199,7 +204,7 @@ export class MapDetailComponent implements OnInit {
         // var date = new Date().toLocaleDateString();
         // var time = new Date().toLocaleTimeString();
 
-        this.savingDiv.setAttribute("style", "opacity:1;");
+        $('#saving').fadeIn(500);
 
         this.saveMapWithSquares();
     }
@@ -222,8 +227,7 @@ export class MapDetailComponent implements OnInit {
                             if (this.resultCounter == this.dndMap.squares.length){ //save players only when all squares have gotten their database Id
                                 this.savePlayersOnSquares();
                                 console.log("done saving everything");
-                                this.savingDiv.setAttribute("style", "opacity:0;");
-
+                                $('#saving').html("Saving... Succes!").delay( 500 ).fadeOut(2000);
                             }
                         }
                     }

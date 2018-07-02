@@ -46,7 +46,7 @@ input[type=number]{
     width:300px;
     background-color: white;
     font-size: 20px;
-    opacity: 0;
+    display: none;
 }
 
 .form-group {
