@@ -50,7 +50,6 @@ export class SquareComponent implements OnInit {
   @Input() selecting:boolean;
   @Input() multiSelect:boolean;
   @Input() set _multiSelect(multiSelect:boolean) {
-      console.log( "triggering styles");
       this.multiSelect = multiSelect;
       if (!multiSelect){
           this.selectedSquares = new Array();
@@ -62,10 +61,7 @@ export class SquareComponent implements OnInit {
   private selectedSquares:Square[] = new Array();
   @Input() set _selectedSquares(selectedSquares:Square[]) {
       this.selectedSquares = selectedSquares;
-      console.log("selectedSquares is set to " + + this.selectedSquares.length  + "in sq: ");
-
       if (this.selectedSquares.length!=0){
-          console.log( "triggering")
           this.setRangeSquareStyles();
       }
 

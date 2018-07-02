@@ -135,7 +135,6 @@ export class MapDetailComponent implements OnInit {
             this.selectedSquares[i].obstructed = true;
         }
         this.selectedSquares = new Array();
-        console.log("selectedSquares is set to 0 in md: " + this.selectedSquares.length);
         this.mapForm.get('multiSelectToggle').setValue(false);
         this.setMultiSelect();
     }
