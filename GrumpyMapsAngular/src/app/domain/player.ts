@@ -5,6 +5,7 @@ export class Player implements Physical{
     id:number;
     playerSquareId:number
     name:string;
+    playerIcon:File;
     actionPoints:number;
     movementAmount:number;
     attacksPerRound:number;
@@ -18,7 +19,7 @@ export class Player implements Physical{
     realSquareId:number;
     squareMapCoordinate:string;
 
-    constructor(id, playerSquareId, name, actionPoints, movementAmount, attacksPerRound, spellsPerRound, type, color, mapSquareId, mapHeightWidth, squareMapCoordinate){
+    constructor(id, playerSquareId, name, actionPoints, movementAmount, attacksPerRound, spellsPerRound, type, color, mapSquareId, mapHeightWidth, squareMapCoordinate, playerIcon){
         this.id = id;
         this.name = name;
         this.actionPoints = actionPoints;
@@ -36,6 +37,7 @@ export class Player implements Physical{
         this.mapHeightWidth = mapHeightWidth;
         this.playerSquareId = playerSquareId;
         this.squareMapCoordinate = squareMapCoordinate;
+        this.playerIcon = playerIcon;
         this.setActiveColor();
     }
     getName(){

@@ -65,6 +65,7 @@ export class MapDetailComponent implements OnInit {
     selectedSquares:Square[] = new Array();
     multiSelect:boolean=false;
     selecting:boolean=false;
+    selectedFile: File;
 
     constructor(private dndMapService: DnDMapService) { }
 
@@ -206,8 +207,6 @@ export class MapDetailComponent implements OnInit {
             'height': this.dndMap.squares[0].squareHeightWidth
         }
     }
-
-
 
     selectSaveMap(idname){
         this.dndMap.id = 0;
@@ -383,7 +382,8 @@ export class MapDetailComponent implements OnInit {
                 resultPlayer["color"],
                 resultPlayer["mapSquareId"],
                 resultPlayer["mapHeightWidth"],
-                resultPlayer["squareMapCoordinate"]
+                resultPlayer["squareMapCoordinate"],
+                resultPlayer["playerIcon"]
             );
             player.realSquareId = resultPlayer["realSquareId"];
             player.isSelected = resultPlayer["isSelected"];

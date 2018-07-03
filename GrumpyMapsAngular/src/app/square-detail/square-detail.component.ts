@@ -25,32 +25,78 @@ export class SquareDetailComponent implements OnInit {
   playerNameColor = {};
   previousPlayerColor: string;
   playerIdGenerator:number=0;
+  selectedFile:File;
+  theFileContents;
+  imgString:string;
 
-  createObjectForm = new FormGroup({
+  createPlayerForm = new FormGroup({
     playerName: new FormControl(),
     playerColor: new FormControl(),
     playerMovement: new FormControl()
+  });
+
+  createItemForm = new FormGroup({
+    itemName: new FormControl(),
+    itemColor: new FormControl(),
+    itemAmount: new FormControl()
+  });
+
+  getObjectForm = new FormGroup({
+      playerMovement: new FormControl(),
+      objectAmount: new FormControl()
   });
 
   constructor(private mapShareService: MapShareService) { }
 
   ngOnInit() {
       this.mapShareService.squareUpdated.subscribe(square => this.square =square);
-      this.createObjectForm.get('playerMovement').setValue(1);
-      this.createObjectForm.get('playerColor').setValue("#000");
+      this.createPlayerForm.get('playerMovement').setValue(1);
+      this.createPlayerForm.get('playerColor').setValue("#000");
   }
 
-  addObject(){
-      const name = this.createObjectForm.get('playerName').value;
-      const color = this.createObjectForm.get('playerColor').value;
-      const movement = +this.createObjectForm.get('playerMovement').value;
+  onFileChanged(event) {
+      // This grabs the file contents when the file changes
+      this.selectedFile = event.target.files[0];
 
-      var player:Player = new Player(this.playerIdGenerator--, this.playerIdCreator++, name, 100, movement, 3, 2, "physical", color, this.square.mapSquareId, this.square.mapHeightWidth, this.square.mapCoordinate);
+      // Instantiate FileReader
+      var reader = new FileReader();
+      reader.onload = ()=> {
+          this.theFileContents = reader.result;
+          //this.imgString = "<img width='100' src='"+this.theFileContents+"' />";
+          //
+          // Update the output to include the <img> tag with the data URL as the source
+          $("#showPic").html(this.imgString);
+      };
+      // Produce a data URL (base64 encoded string of the data in the file)
+      // We are retrieving the first file from the FileList object
+      reader.readAsDataURL(this.selectedFile);
+  }
+
+
+  showImage(player:Player){
+      var reader = new FileReader();
+      reader.onload = function(){
+          var theFileContents = reader.result;
+          // Update the output to include the <img> tag with the data URL as the source
+          $("#playerIcon").html('<img width="100" src="'+theFileContents+'" />');
+      };
+      // Produce a data URL (base64 encoded string of the data in the file)
+      // We are retrieving the first file from the FileList object
+      reader.readAsDataURL(player.playerIcon);
+  }
+
+  addPlayer(){
+      const name = this.createPlayerForm.get('playerName').value;
+      const color = this.createPlayerForm.get('playerColor').value;
+      const movement = +this.createPlayerForm.get('playerMovement').value;
+
+      var player:Player = new Player(this.playerIdGenerator--, this.playerIdCreator++, name, 100, movement, 3, 2, "physical", color, this.square.mapSquareId, this.square.mapHeightWidth, this.square.mapCoordinate, this.selectedFile);
 
       this.square.addPhysical(player);
   }
 
   clickPlayer(player: Player) {
+      this.showImage(player);
       if (this.previousPlayer !=null){
         this.previousPlayer.isSelected = false;
         this.previousPlayer.setActiveColor();

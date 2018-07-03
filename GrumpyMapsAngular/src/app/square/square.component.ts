@@ -182,20 +182,18 @@ export class SquareComponent implements OnInit {
           }
       }
   }
+
+  // all the mouseevents below make multiSelecting possible
   mouseDownSquare(){
       if (this.multiSelect){
           this.selecting=true;
           this.selectingEvent.emit(true);
       }
       this.selectSquaresEvent.emit(this.square);
-
-      //console.log("mouseDOWN on " + this.square.mapCoordinate);
   }
   mouseOverSquare(){
       if(this.selecting && this.multiSelect){
-
           this.selectSquaresEvent.emit(this.square);
-          //console.log("DRAG over " + this.square.mapCoordinate);
       }
       this.squareStyles['background-color'] = 'rgba(0, 112, 161, 0.4)';
   }
@@ -212,8 +210,6 @@ export class SquareComponent implements OnInit {
           }
       }
   }
-
-
 
   private removeDuplicates(arr){
       let unique_array = arr.filter(function(elem, index, self) {

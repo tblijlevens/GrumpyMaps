@@ -1,68 +1,113 @@
 <div class="squaredetail" *ngIf="square" style="font-size:1.15em">
-  <span class="lead" style="font-weight:bold;">Square: </span> {{square.mapCoordinate}}<br />
-  id: {{square.id}}<br />
-  obstructed: {{square.obstructed}}<br />
-  nr of players: {{square.players.length}}<br />
-  <span *ngIf="square.players.length!=0"><span class="lead">Contents: <br></span>
-  <span *ngFor="let player of square.players" [style.color]="player.activeColor" (click)="clickPlayer(player)">{{player.id}}: {{player.name}}<br></span></span><br>
-
-  <hr class="my-4">
-  <button class="btn btn-success" data-toggle="modal" data-target="#exampleModal">Add object</button><br>
-  <button (click)="moveObject()" class="btn btn-success">Move object</button><br>
-  <button (click)="removeObject()" class="btn btn-success">Delete object</button><br>
+    <span class="lead" style="font-weight:bold;">Square: </span> {{square.mapCoordinate}}<br />
+    nr of players: {{square.players.length}}<br />
+    <span *ngIf="square.players.length!=0"><span class="lead">Contents: <br></span>
+        <span *ngFor="let player of square.players" [style.color]="player.activeColor" (click)="clickPlayer(player)">
+            {{player.name}} <br>
+            <!-- <img width="100" src="{{theFileContents}}" /> -->
+            <span id="playerIcon"></span>
+        </span>
+    </span><br>
+<hr class="my-4">
+<button class="btn btn-success" data-toggle="modal" data-target="#exampleModal">Add object</button><br>
+<button (click)="moveObject()" class="btn btn-success">Move object</button><br>
+<button (click)="removeObject()" class="btn btn-success">Delete object</button><br>
 </div>
-
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <!-- HEADER -->
+                <ul class="nav nav-pills" id="modal-tab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="pills-create-player-tab" data-toggle="pill" href="#pills-create-player" role="tab" aria-controls="pills-create-player" aria-selected="true">Create Player</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="pills-item-tab" data-toggle="pill" href="#pills-item" role="tab" aria-controls="pills-item" aria-selected="false">Create Item</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="pills-database-tab" data-toggle="pill" href="#pills-database" role="tab" aria-controls="pills-database" aria-selected="false">Select from saves</a>
+                    </li>
+                </ul>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- CREATE PLAYER FORM -->
+                <div class="tab-content" id="pills-tabContent">
+                    <div class="tab-pane fade show active" id="pills-create-player" role="tabpanel" aria-labelledby="pills-create-player-tab">
+                        <form [formGroup]="createPlayerForm">
+                            <div class="form-group" id="objectMap">
+                                <label class="center-block">Player Name:
+                                    <input class="form-control" formControlName="playerName" type="text">
+                                </label>
+                                <br>
+                                <label class="center-block">Player color:
+                                    <input formControlName="playerColor" type="color">
+                                </label>
+                                <br>
+                                <label class="center-block">Player icon:
+                                    <input
+                                    style="display: none"
+                                    type="file" (change)="onFileChanged($event)"
+                                    #fileInput>
+                                    <button (click)="fileInput.click()">Select File</button>
+                                </label>
+                                <div id="showPic">
 
-
-
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-              <!-- NAVBAR -->
-              <ul class="nav justify-content-end">
-                  <li class="nav-item">
-                      <a class="nav-link active" href="#">Create object</a>
-                  </li>
-                  <li class="nav-item">
-                      <a class="nav-link" href="#">Select object</a>
-                  </li>
-              </ul>
-
-
-
-
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-          <!-- CREATE OBJECT FORM -->
-          <form [formGroup]="createObjectForm">
-              <div class="form-group" id="objectMap">
-                  <label class="center-block">Name:
-                      <input class="form-control" formControlName="playerName" type="text">
-                  </label>
-                  <br>
-                  <label class="center-block">Player color:
-                      <input formControlName="playerColor" type="color">
-                  </label>
-                  <br>
-                  <label class="center-block">Movement speed:
-                      <input class="form-control" formControlName="playerMovement" type="number">
-                  </label>
-                  <br><br>
-              </div>
-          </form>
-
-
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" (click)="addObject()" data-dismiss="modal">Save/Add object</button>
-      </div>
+                                </div>
+                                <br>
+                                <label class="center-block">Movement speed:
+                                    <input class="form-control" formControlName="playerMovement" type="number">
+                                </label>
+                                <br><br>
+                            </div>
+                        </form>
+                        <button type="button" class="btn btn-primary" (click)="addPlayer()" data-dismiss="modal">Save/Add player</button>
+                    </div>
+                    <!-- CREATE ITEM FORM  -->
+                    <div class="tab-pane fade" id="pills-item" role="tabpanel" aria-labelledby="pills-profile-tab">
+                        <form [formGroup]="createItemForm">
+                            <div class="form-group" id="objectMap">
+                                <label class="center-block">Item Name:
+                                    <input class="form-control" formControlName="itemName" type="text">
+                                </label>
+                                <br>
+                                <label class="center-block">Item color:
+                                    <input formControlName="itemColor" type="color">
+                                </label>
+                                <br>
+                                <label class="center-block">Item Amount:
+                                    <input class="form-control" formControlName="itemAmount" type="number">
+                                </label>
+                                <br>
+                            </div>
+                        </form>
+                        <button type="button" class="btn btn-primary" (click)="addItem()" data-dismiss="modal">Save/Add item</button>
+                    </div>
+                    <!-- SELECT FROM DATABASE FORM -->
+                    <div class="tab-pane fade" id="pills-database" role="tabpanel" aria-labelledby="pills-databse-tab">
+                        <form [formGroup]="getObjectForm">
+                            <div class="form-group" id="objectMap">
+                                <label class="center-block">Select Object:
+                                    <input class="form-control" formControlName="playerMovement" type="text">
+                                </label>
+                                <br>
+                                <label class="center-block">Object Amount:
+                                    <input formControlName="objectAmount" type="number">
+                                </label>
+                                <br>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
