@@ -27,6 +27,7 @@ export class Square {
 
   addPhysical(player: Player) {
     player.setMapSquareId(this.mapSquareId);
+    player.squareMapCoordinate = this.mapCoordinate;
     this.players.push(player);
     this.numberofPlayers=this.players.length;
   }
