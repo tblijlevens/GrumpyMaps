@@ -3,9 +3,8 @@
     nr of players: {{square.players.length}}<br />
     <span *ngIf="square.players.length!=0"><span class="lead">Contents: <br></span>
         <span *ngFor="let player of square.players" [style.color]="player.activeColor" (click)="clickPlayer(player)">
-            {{player.name}} <br>
-            <!-- <img width="100" src="{{theFileContents}}" /> -->
-            <span id="playerIcon"></span>
+            {{player.name}}
+            <img width="100" src="{{player.playerIconUrl}}" /><br />
         </span>
     </span><br>
 <hr class="my-4">

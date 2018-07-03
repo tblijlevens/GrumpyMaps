@@ -6,6 +6,7 @@ export class Player implements Physical{
     playerSquareId:number
     name:string;
     playerIcon:File;
+    playerIconUrl:string;
     actionPoints:number;
     movementAmount:number;
     attacksPerRound:number;
