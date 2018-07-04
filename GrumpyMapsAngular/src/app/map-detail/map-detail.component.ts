@@ -1,5 +1,6 @@
 //with jQuery
 $(document).ready(function() {
+    $("#mapSetup").toggle( 1000 );
     $(window).on('resize', function(){
         var mapHeight = $(".mapcontainer").css('height');
         $(".mapcontainer").css({width: mapHeight});

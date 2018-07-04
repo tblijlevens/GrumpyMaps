@@ -41,7 +41,6 @@ input[type=number]{
 #logo {
 }
 #legend{
-    border: solid 1px teal;
 }
 .legend{
     background-color: green;
@@ -60,10 +59,15 @@ input[type=number]{
     font-size: 20px;
     display: none;
 }
+.contentBox{
+    padding:5px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 8px 0px #729ab1;
+
+}
 #firstColumn{
     width: 20%;
-    height: 100%;
-    border: solid 1px green;
+    height: 88%;
     float:left;
 }
 mdb-icon{
@@ -91,28 +95,28 @@ mdb-icon{
     border-radius: 10px;
     padding:20px;
     box-shadow: 0 4px 8px 0 #888888, 0 6px 20px 0 #888888;
+    display: none;
 }
 .allCharacters{
-    border: solid 1px black;
-    height: 75%;
+    height: 70%;
     overflow-y: auto;
+    margin-bottom: 5%;
 }
 .mapOptions{
-
-    border: solid 1px purple;
+    height: 20%;
 }
 #multiAction{
     display: none;
 }
 #secondColumn{
     width: 15%;
-    height: 100%;
-    border: solid 1px red;
+    height: 88%;
     margin-left: 20px;
     float:left;
+    /*border: solid 1px red;*/
 }
 .squaredetailcontainer {
-    border: solid 1px green;
+    height:95%;
 }
 
 .form-group {
