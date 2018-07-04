@@ -25,9 +25,7 @@ export class SquareDetailComponent implements OnInit {
   playerNameColor = {};
   previousPlayerColor: string;
   playerIdGenerator:number=0;
-  selectedFile:File;
-  theFileContents;
-  imgString:string;
+  selectedFile:File = null;
 
   createPlayerForm = new FormGroup({
     playerName: new FormControl(),
@@ -85,7 +83,9 @@ export class SquareDetailComponent implements OnInit {
       const movement = +this.createPlayerForm.get('playerMovement').value;
 
       var player:Player = new Player(this.playerIdGenerator--, this.playerIdCreator++, name, 100, movement, 3, 2, "physical", color, this.square.mapSquareId, this.square.mapHeightWidth, this.square.mapCoordinate, this.selectedFile);
-      this.setPlayerIconUrl(player);
+      if (player.playerIcon!=null){
+          this.setPlayerIconUrl(player);
+      }
       this.square.addPhysical(player);
   }
 
