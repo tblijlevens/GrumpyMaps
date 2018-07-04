@@ -1,5 +1,7 @@
 <div class="squaredetail" *ngIf="square" style="font-size:1.15em">
-    Square: {{square.mapCoordinate}}<br />
+    Square:
+    <span *ngIf="selectedSquares.length==0">{{square.mapCoordinate}} </span>
+    <span *ngFor="let square of selectedSquares"> {{square.mapCoordinate}} </span><br />
     nr of players: {{square.players.length}}<br />
     <span *ngIf="square.players.length!=0"><span class="lead">Contents: <br></span>
         <span *ngFor="let player of square.players" [style.color]="player.activeColor" (click)="clickPlayer(player)">
@@ -11,6 +13,7 @@
 <button class="btn btn-success" data-toggle="modal" data-target="#exampleModal">Add object</button><br>
 <button (click)="moveObject()" class="btn btn-success">Move object</button><br>
 <button (click)="removeObject()" class="btn btn-success">Delete object</button><br>
+<button (click)="multiAction()" class="btn btn-success" id="multiAction">Obstruct selection</button>
 </div>
 
 <!-- Modal -->

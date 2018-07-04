@@ -13,12 +13,14 @@ import { Player } from '../domain/player';
 export class SquareDetailComponent implements OnInit {
 
   square: Square;
+  @Input() selectedSquares:Square[];
   playerIdCreator: number = 1;
   movementMode: boolean = false;
   @Output() moveModeEvent = new EventEmitter<boolean>();
   @Output() setRangeSquaresEvent = new EventEmitter<number[]>();
   @Output() setPlayerToMoveEvent = new EventEmitter<Player>();
   @Output() playerAddedEvent = new EventEmitter<Player>();
+  @Output() turnOffMultiSelectEvent = new EventEmitter<boolean>();
   playerToMove:Player;
   previousPlayer: Player;
   movable: boolean = false;
@@ -77,6 +79,13 @@ export class SquareDetailComponent implements OnInit {
       reader.readAsDataURL(player.playerIcon);
   }
 
+  multiAction(){
+      for (var i = 0 ; i < this.selectedSquares.length ; i++){
+          this.selectedSquares[i].obstructed = true;
+      }
+      this.selectedSquares = new Array();
+      this.turnOffMultiSelectEvent.emit(true);
+  }
   addPlayer(){
       const name = this.createPlayerForm.get('playerName').value;
       const color = this.createPlayerForm.get('playerColor').value;

@@ -151,14 +151,7 @@ export class MapDetailComponent implements OnInit {
             $("#multiAction").hide();
         }
     }
-    multiAction(){
-        for (var i = 0 ; i < this.selectedSquares.length ; i++){
-            this.selectedSquares[i].obstructed = true;
-        }
-        this.selectedSquares = new Array();
-        this.mapForm.get('multiSelectToggle').setValue(false);
-        this.setMultiSelect();
-    }
+
     public obstructSquares(){
         this.obstructionMode = this.mapForm.get('obstructToggle').value;
     }
@@ -197,8 +190,20 @@ export class MapDetailComponent implements OnInit {
 
     public receiveSelectedSquare($event){
         this.selectedSquares.push($event);
+        this.selectedSquares = this.removeDuplicates(this.selectedSquares);
+
     }
 
+      private removeDuplicates(arr){
+          let unique_array = arr.filter(function(elem, index, self) {
+            return index == self.indexOf(elem);
+        });
+        return unique_array;
+      }
+    public receiveTurnOff($event){
+        this.mapForm.get('multiSelectToggle').setValue(false);
+        this.setMultiSelect();
+    }
     public receiveSelecting($event){
         this.selecting = $event;
     }

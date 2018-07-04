@@ -189,6 +189,7 @@ export class SquareComponent implements OnInit {
           this.selecting=true;
           this.selectingEvent.emit(true);
       }
+      this.selectedSquares.push(this.square);
       this.selectSquaresEvent.emit(this.square);
   }
   mouseOverSquare(){
@@ -200,7 +201,6 @@ export class SquareComponent implements OnInit {
   mouseUpSquare(){
       this.selecting=false;
       this.selectingEvent.emit(false);
-      this.selectedSquares = this.removeDuplicates(this.selectedSquares);
   }
   mouseOutSquare(){
       if (!this.selecting){
@@ -211,12 +211,6 @@ export class SquareComponent implements OnInit {
       }
   }
 
-  private removeDuplicates(arr){
-      let unique_array = arr.filter(function(elem, index, self) {
-        return index == self.indexOf(elem);
-    });
-    return unique_array;
-  }
   private setSquareMapCoordinates(){
       this.square.mapCoordinate = this.rowIndexAsLetter+":"+ (this.squareIndex+1);
   }
