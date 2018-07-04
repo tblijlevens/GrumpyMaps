@@ -15,18 +15,21 @@
         </div>
 
     </div><br />
-    <div [ngStyle]="legendSquare" class="legend"></div>
-    <div>
-        {{dndMap.squares[0].squareSize}} feet ({{squareYards}} yards)
-    </div>
-    <div [ngStyle]="legendMap" class="legend"></div>
-    <div style="text-align:center;">
-        {{(dndMap.squares[0].squareSize) * heightWidth}} feet ({{mapYards}} yards)
+    <div id="legend">
+        <div [ngStyle]="legendSquare" class="legend"></div>
+        <div>
+            {{dndMap.squares[0].squareSize}} feet ({{squareYards}} yards)
+        </div>
+        <div [ngStyle]="legendMap" class="legend"></div>
+        <div style="text-align:center;">
+            {{(dndMap.squares[0].squareSize) * heightWidth}} feet ({{mapYards}} yards)
+        </div>
     </div>
 </div>
-
-<h3><img class="img-fuild" src="assets/dnd.png"> GrumpyMaps V1.0</h3>
-<div class="navButtons">
+<div id="logo">
+    <h3><img class="img-fuild" src="assets/dnd.png"> GrumpyMaps V1.0</h3>
+</div>
+<div class="navButtons" style="border:solid 1px red">
     <button class="btn btn-dark" type="button" data-toggle="collapse" data-target="#mapSetup" aria-expanded="false" aria-controls="mapSetup">
         Hide map setup
     </button>
@@ -37,8 +40,8 @@
 </div>
 
 <br><br>
-<form [formGroup]="mapForm">
-    <div class="form-group" id="mapSetup">
+<form [formGroup]="mapForm" >
+    <div class="form-group" id="mapSetup" style="border:solid 1px red">
         <label class="center-block"><b>Map image: </b> Test: <span class="testImage" (click)="setPic('https://i.pinimg.com/736x/f1/b3/f5/f1b3f576513897781c67fe55252ed2a2--maps.jpg')">1</span> | <span class="testImage" (click)="setPic('http://www.umanise.nl/images/dndmaptablet.png')">2</span>
             <input class="form-control" formControlName="imageUrl" placeholder="Enter url...">
         </label>
@@ -52,15 +55,6 @@
             <input class="form-control" formControlName="feet" type="number" min="1" max="100" (change)="setSquareSize()"  (click)="setSquareSize()">
         </label>
         <br>
-        <label class="center-block">Multi select:
-            <input type="checkbox" formControlName="multiSelectToggle" (change)="setMultiSelect()">
-        </label><br />
-        <label class="center-block">Obstruct squares:
-            <input type="checkbox" formControlName="obstructToggle" (change)="obstructSquares()">
-        </label><br />
-        <label class="center-block">Show grid:
-            <input type="checkbox" formControlName="gridToggle" (change)="hideGrid()">
-        </label>
 
         <br><br>
         <button (click)="loadMap()" class="btn btn-success" data-toggle="modal" data-target="#saveModal">Save map</button>
@@ -141,6 +135,17 @@
     </div>
 </div>
 
+<div class="mapOptions">
+    <form [formGroup]="mapForm" >
+    <label class="center-block">Select:
+        <input type="checkbox" formControlName="multiSelectToggle" (change)="setMultiSelect()">
+    </label><br />
+    <label class="center-block">Show grid:
+        <input type="checkbox" formControlName="gridToggle" (change)="hideGrid()">
+    </label>
+</form>
+
+</div>
 <div class="testdiv">
 
 </div>
