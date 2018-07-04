@@ -39,7 +39,6 @@ input[type=number]{
     padding: 0px;
 }
 #logo {
-    border: solid 1px blue;
 }
 #legend{
     border: solid 1px teal;
@@ -67,12 +66,27 @@ input[type=number]{
     border: solid 1px green;
     float:left;
 }
+mdb-icon{
+    color: #0099fb;
+}
+#cog {
+    position:fixed;
+    top:25px;
+    right: 15px;
+    cursor: pointer;
+}
+#collapse {
+    position: absolute;
+    top:5px;
+    right: 5px;
+    cursor: pointer;
+}
 #mapSetup{
     background-image: url(../../assets/bg.jpg);
     position:fixed;
     top:25px;
     right: 15px;
-    width: 300px;
+    width: 350px;
     border: solid 3px #888888;
     border-radius: 10px;
     padding:20px;

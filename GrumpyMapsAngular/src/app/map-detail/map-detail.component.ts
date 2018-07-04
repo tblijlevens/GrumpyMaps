@@ -5,6 +5,8 @@ $(document).ready(function() {
         $(".mapcontainer").css({width: mapHeight});
     });
 });
+
+
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 //import  $ from 'jquery';
@@ -88,6 +90,15 @@ export class MapDetailComponent implements OnInit {
     }
 
 
+    toggleSettings(){
+        $("#mapSetup").toggle( 500 );
+    }
+
+    hideSettings(){
+        if ($("#mapSetup").css("display")!='none'){
+            $("#mapSetup").toggle( 500 );
+        }
+    }
     public uploadImage() {
         const imageUrl = this.mapForm.get('imageUrl').value;
         this.dndMap.setImage(imageUrl);

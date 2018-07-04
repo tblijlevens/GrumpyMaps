@@ -2,7 +2,7 @@
 
 <div id="completeScreen">
 
-<div class="mapcontainer" [ngStyle]="mapBackground" data-toggle="collapse" data-target="#derp">
+<div class="mapcontainer" [ngStyle]="mapBackground" data-toggle="collapse" data-target="#derp" (click)="hideSettings()">
     <div class="rowsContainer">
         <div id='saving'>
             Saving...
@@ -15,7 +15,7 @@
         </div>
 
     </div><br />
-    <div id="legend">
+    <div id="legend" >
         <div [ngStyle]="legendSquare" class="legend"></div>
         <div>
             {{dndMap.squares[0].squareSize}} feet ({{squareYards}} yards)
@@ -26,7 +26,7 @@
         </div>
     </div>
 </div>
-<div id="logo">
+<div id="logo" (click)="hideSettings()">
     <h3><img class="img-fuild" src="assets/dnd.png"> GrumpyMaps V1.0</h3>
 </div>
 <!--
@@ -39,8 +39,9 @@
     </button>
     <br>
 </div> -->
-
+<mdb-icon id="cog" icon="cog" size="3x" (click)="toggleSettings()"></mdb-icon>
 <div id="mapSetup">
+<mdb-icon id="collapse" icon="chevron-circle-right" size="3x" (click)="toggleSettings()"></mdb-icon><br />
 <form [formGroup]="mapForm" >
     <div class="form-group">
         <label class="center-block"><b>Map image: </b> Test: <span class="testImage" (click)="setPic('https://i.pinimg.com/736x/f1/b3/f5/f1b3f576513897781c67fe55252ed2a2--maps.jpg')">1</span> | <span class="testImage" (click)="setPic('http://www.umanise.nl/images/dndmaptablet.png')">2</span>
@@ -63,8 +64,8 @@
     </div>
 </form>
 </div>
-<div id="firstColumn">
-    <div class="allCharacters">
+<div id="firstColumn" >
+    <div class="allCharacters" (click)="hideSettings()">
         all chars go here<br />
         all chars go here<br />
         all chars go here<br />
@@ -72,6 +73,11 @@
         all chars go here<br />
         all chars go here<br />
         all chars go here<br />
+        <span class="glyphicon glyphicon-cog"></span>
+        <i class="glyphicon glyphicon-cog"></i>
+        <i class="fa fa-android" aria-hidden="true"></i>
+        <i class="fa fa-android"></i>
+        <i class="fa fa-cog" size="3x"></i>
     </div>
     <br />
     <div class="mapOptions">
@@ -86,7 +92,7 @@
     </div>
 </div>
 
-<div id="secondColumn">
+<div id="secondColumn" (click)="hideSettings()">
     <div class="squaredetailcontainer" id="squareDetails">
         <app-square-detail (moveModeEvent)="receiveMoveMode($event)" (setRangeSquaresEvent)="receiveRangeSquares($event)" (setPlayerToMoveEvent)="receivePlayerToMove($event)" (playerAddedEvent)="playerAdded($event)"></app-square-detail>
     </div>
