@@ -48,7 +48,7 @@
         <br>
         <button (click)="uploadImage()" class="btn btn-success">Select image</button><br><br>
         <label class="center-block"><b>Height/Width:</b>
-            <input class="form-control" formControlName="heightwidth" type="number" min="5" max="24" (change)="setMapHeightWidth()" (click)="setMapHeightWidth()"> 
+            <input class="form-control" formControlName="heightwidth" type="number" min="5" max="24" (change)="setMapHeightWidth()" (click)="setMapHeightWidth()">
         </label>
         <br>
         <label class="center-block"><b>In-game square size (ft):</b>
@@ -63,12 +63,6 @@
     </div>
 </form>
 <div class="squaredetailcontainer" id="squareDetails">
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-        Selecteer een square.
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
     <app-square-detail (moveModeEvent)="receiveMoveMode($event)" (setRangeSquaresEvent)="receiveRangeSquares($event)" (setPlayerToMoveEvent)="receivePlayerToMove($event)" (playerAddedEvent)="playerAdded($event)"></app-square-detail>
 </div>
 
@@ -144,6 +138,10 @@
         <input type="checkbox" formControlName="gridToggle" (change)="hideGrid()">
     </label>
 </form>
+
+</div>
+<div class="allCharacters">
+    all chars go here
 
 </div>
 <div class="testdiv">

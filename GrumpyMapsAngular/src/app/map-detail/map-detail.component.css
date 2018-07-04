@@ -72,7 +72,11 @@ input[type=number]{
     float: left;
     margin-right: 20px;
 }
-
+.allCharacters{
+    width: 15%;
+    height: 20%;
+    border: solid 1px black;
+}
 .squaredetailcontainer {
     float: left;
     border: solid 1px green;
