@@ -1,3 +1,8 @@
+#completeScreen{
+    width:95%;
+    height:95%;
+    margin: auto;
+}
 .mapcontainer {
   border-width: 2px;
   border-style: solid;
@@ -5,8 +10,7 @@
   background-color: rgb(255, 255, 255, 0.5);
   background-size: 100% 100%;
   margin-right: 20px;
-  width: 600px;
-  height: 600px;
+  height: 93%;
   float: left;
 }
 
@@ -39,6 +43,8 @@ input[type=number]{
     height:5px;
     white-space: nowrap;
     text-align: center;
+    margin-top: 5px;
+    margin-bottom: 3px;
 }
 #saving{
     position:fixed;

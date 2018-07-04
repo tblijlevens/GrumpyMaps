@@ -1,4 +1,10 @@
-
+//with jQuery
+$(document).ready(function() {
+    $(window).on('resize', function(){
+        var mapHeight = $(".mapcontainer").css('height');
+        $(".mapcontainer").css({width: mapHeight});
+    });
+});
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 //import  $ from 'jquery';
@@ -69,14 +75,16 @@ export class MapDetailComponent implements OnInit {
 
     constructor(private dndMapService: DnDMapService) { }
 
-
     ngOnInit() {
+
         this.dndMap = new DnDMap(0, this.heightWidth, 5); //id zero cannot exist in databse, so it will generate a new unique id)
         this.mapForm.get('heightwidth').setValue(10);
         this.mapForm.get('feet').setValue(5);
         this.mapForm.get('gridToggle').setValue(true);
         this.setRows();
         this.calculateMapYards();
+        var mapHeight = $(".mapcontainer").css('height');
+        $(".mapcontainer").css({width: mapHeight});
     }
 
 

@@ -3,3 +3,7 @@
 body {
   background-image: url(assets/bg.jpg);
 }
+html, body {
+    width: 100%;
+    height: 100%;
+}
