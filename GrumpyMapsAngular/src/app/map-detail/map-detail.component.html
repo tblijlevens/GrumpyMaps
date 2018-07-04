@@ -29,6 +29,7 @@
 <div id="logo">
     <h3><img class="img-fuild" src="assets/dnd.png"> GrumpyMaps V1.0</h3>
 </div>
+<!--
 <div class="navButtons" style="border:solid 1px red">
     <button class="btn btn-dark" type="button" data-toggle="collapse" data-target="#mapSetup" aria-expanded="false" aria-controls="mapSetup">
         Hide map setup
@@ -37,11 +38,11 @@
         Hide square details
     </button>
     <br>
-</div>
+</div> -->
 
-<br><br>
+<div id="mapSetup">
 <form [formGroup]="mapForm" >
-    <div class="form-group" id="mapSetup" style="border:solid 1px red">
+    <div class="form-group">
         <label class="center-block"><b>Map image: </b> Test: <span class="testImage" (click)="setPic('https://i.pinimg.com/736x/f1/b3/f5/f1b3f576513897781c67fe55252ed2a2--maps.jpg')">1</span> | <span class="testImage" (click)="setPic('http://www.umanise.nl/images/dndmaptablet.png')">2</span>
             <input class="form-control" formControlName="imageUrl" placeholder="Enter url...">
         </label>
@@ -56,15 +57,42 @@
         </label>
         <br>
 
-        <br><br>
         <button (click)="loadMap()" class="btn btn-success" data-toggle="modal" data-target="#saveModal">Save map</button>
         <button (click)="loadMap()" class="btn btn-success" data-toggle="modal" data-target="#loadModal">Load map</button><br><br>
         <button (click)="multiAction()" class="btn btn-success" id="multiAction">Obstruct all</button>
     </div>
 </form>
-<div class="squaredetailcontainer" id="squareDetails">
-    <app-square-detail (moveModeEvent)="receiveMoveMode($event)" (setRangeSquaresEvent)="receiveRangeSquares($event)" (setPlayerToMoveEvent)="receivePlayerToMove($event)" (playerAddedEvent)="playerAdded($event)"></app-square-detail>
 </div>
+<div id="firstColumn">
+    <div class="allCharacters">
+        all chars go here<br />
+        all chars go here<br />
+        all chars go here<br />
+        all chars go here<br />
+        all chars go here<br />
+        all chars go here<br />
+        all chars go here<br />
+    </div>
+    <br />
+    <div class="mapOptions">
+        <form [formGroup]="mapForm" >
+            <label class="center-block">Select:
+                <input type="checkbox" formControlName="multiSelectToggle" (change)="setMultiSelect()">
+            </label><br />
+            <label class="center-block">Show grid:
+                <input type="checkbox" formControlName="gridToggle" (change)="hideGrid()">
+            </label>
+        </form>
+    </div>
+</div>
+
+<div id="secondColumn">
+    <div class="squaredetailcontainer" id="squareDetails">
+        <app-square-detail (moveModeEvent)="receiveMoveMode($event)" (setRangeSquaresEvent)="receiveRangeSquares($event)" (setPlayerToMoveEvent)="receivePlayerToMove($event)" (playerAddedEvent)="playerAdded($event)"></app-square-detail>
+    </div>
+</div>
+
+
 
 <!-- Save Modal -->
 <div class="modal fade" id="saveModal" tabindex="-1" role="dialog" aria-labelledby="loadModalLabel" aria-hidden="true">
@@ -129,21 +157,7 @@
     </div>
 </div>
 
-<div class="mapOptions">
-    <form [formGroup]="mapForm" >
-    <label class="center-block">Select:
-        <input type="checkbox" formControlName="multiSelectToggle" (change)="setMultiSelect()">
-    </label><br />
-    <label class="center-block">Show grid:
-        <input type="checkbox" formControlName="gridToggle" (change)="hideGrid()">
-    </label>
-</form>
 
-</div>
-<div class="allCharacters">
-    all chars go here
-
-</div>
 <div class="testdiv">
 
 </div>
