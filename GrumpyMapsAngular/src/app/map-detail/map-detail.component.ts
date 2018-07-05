@@ -75,6 +75,7 @@ export class MapDetailComponent implements OnInit {
     multiSelect:boolean=false;
     selecting:boolean=false;
     selectedFile: File;
+    allCharacters:Player[] = new Array();
 
     constructor(private dndMapService: DnDMapService) { }
 
@@ -186,6 +187,13 @@ export class MapDetailComponent implements OnInit {
 
     public receivePlayerToMove($event){
         this.playerToMove = $event;
+    }
+    public playerAdded($event){
+        this.allCharacters.push($event);
+        console.log("all characters: ");
+        for (var i=0 ; i<this.allCharacters.length ; i++){
+            console.log(this.allCharacters[i].name);
+        }
     }
 
     public receiveSelectedSquare($event){

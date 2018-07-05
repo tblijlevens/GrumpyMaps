@@ -67,18 +67,10 @@
     <div class="allCharacters contentBox" (click)="hideSettings()">
         <span class="lead" style="font-weight:bold;">Characters:</span>
         <p>
-        all chars go here<br />
-        all chars go here<br />
-        all chars go here<br />
-        all chars go here<br />
-        all chars go here<br />
-        all chars go here<br />
-        all chars go here<br />
-        <span class="glyphicon glyphicon-cog"></span>
-        <i class="glyphicon glyphicon-cog"></i>
-        <i class="fa fa-android" aria-hidden="true"></i>
-        <i class="fa fa-android"></i>
-        <i class="fa fa-cog" size="3x"></i>
+            <span *ngFor="let char of allCharacters" [style.color]="char.activeColor" (click)="clickPlayer(char)">
+                <h5><img width="50" src="{{char.playerIconUrl}}" /> {{char.name}}</h5><br />
+            </span>
+
     </div>
     <div class="mapOptions contentBox">
         <span class="lead" style="font-weight:bold;">Options:</span>

@@ -96,6 +96,7 @@ export class SquareDetailComponent implements OnInit {
           this.setPlayerIconUrl(player);
       }
       this.square.addPhysical(player);
+      this.playerAddedEvent.emit(player);
   }
 
   clickPlayer(player: Player) {
