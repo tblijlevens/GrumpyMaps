@@ -1,6 +1,6 @@
 # GrumpyMaps
 
-A flexible interactive battle map for turn based Dungeons and Dragons battles. 
+A flexible interactive battle map for turn based Dungeons and Dragons battles, in the browser. 
 
 **(Future) Features:**
 * Upload any image (e.g. a map made in photoshop, a picture of a drawing or an existing map from the internet)
