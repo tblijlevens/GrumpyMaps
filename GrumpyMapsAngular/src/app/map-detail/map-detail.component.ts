@@ -67,6 +67,7 @@ export class MapDetailComponent implements OnInit {
     movementMode:boolean=false; //received from squaredetail component
     rangeSquares:Square[] = new Array();
     playerToMove:Player;
+    previousPlayer:Player;
     squareBorderStyle = {};
     rowStyles = {};
     mapYards:number;
@@ -156,6 +157,24 @@ export class MapDetailComponent implements OnInit {
     public obstructSquares(){
         this.obstructionMode = this.mapForm.get('obstructToggle').value;
     }
+
+    clickPlayer(player: Player) {
+        if (this.previousPlayer !=null){
+          this.previousPlayer.isSelected = false;
+          this.previousPlayer.setActiveColor();
+        }
+        player.isSelected = true;
+        player.setActiveColor();
+        this.playerToMove = player;
+
+        this.showRange(player);
+        this.previousPlayer = player;
+          }
+
+    showRange(player:Player){
+        this.receiveRangeSquares(player.getMoveRange());
+    }
+
     public receiveMoveMode($event){
         this.movementMode = $event;
     }
