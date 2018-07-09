@@ -1,4 +1,5 @@
 import {Physical} from './physical';
+import * as $ from 'jquery';
 
 export class Player implements Physical{
 
@@ -69,11 +70,15 @@ export class Player implements Physical{
 
     setActiveColor(){
         if (this.isSelected){
-            this.activeColor = "#00ff00";
+            $("#playerMap"+this.id).css({"box-shadow": "0px 0px 15px 3px " + this.color, "border-radius":"5px"});
+            $("#playerDetail"+this.id).css({"box-shadow": "0px 0px 15px 3px " + this.color, "border-radius":"5px"});
+            $("#playerDot"+this.id).css({"box-shadow": "0px 0px 15px 3px " + this.color, "border":"none"});
         }
         else
         {
-            this.activeColor = this.color;
+            $("#playerMap"+this.id).css({"box-shadow": "none"});
+            $("#playerDetail"+this.id).css({"box-shadow": "none"});
+            $("#playerDot"+this.id).css({"box-shadow": "none", "border":"solid 1px black"});
         }
     }
 

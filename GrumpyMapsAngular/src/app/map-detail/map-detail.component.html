@@ -67,9 +67,14 @@
     <div class="allCharacters contentBox" (click)="hideSettings()">
         <span class="lead" style="font-weight:bold;">Characters:</span>
         <p>
-            <span *ngFor="let char of allCharacters" [style.color]="char.activeColor" (click)="clickPlayer(char)">
-                <h5><img width="50" src="{{char.playerIconUrl}}" /> {{char.name}}</h5><br />
-            </span>
+            <span *ngFor="let char of allCharacters" (click)="clickPlayer(char)">
+                <h5><img width="50" src="{{char.playerIconUrl}}" />&nbsp; &nbsp;
+                    <span id="playerMap{{char.id}}"  [style.color]=char.color>{{char.name}} &nbsp;
+                        <mdb-icon id="move" icon="map-marker" (click)="moveCharacter()"></mdb-icon>&nbsp;
+                        <mdb-icon id="move" icon="remove" (click)="deleteCharacter()"></mdb-icon>&nbsp;
+
+                    </span></h5><br />
+                </span>
 
     </div>
     <div class="mapOptions contentBox">
@@ -90,7 +95,7 @@
 <div id="secondColumn" (click)="hideSettings()">
     <div class="squaredetailcontainer contentBox" id="squareDetails">
         <span class="lead" style="font-weight:bold;">Tile Details:</span>
-        <app-square-detail [selectedSquares]=selectedSquares (turnOffMultiSelectEvent)="receiveTurnOff($event)" (moveModeEvent)="receiveMoveMode($event)" (setRangeSquaresEvent)="receiveRangeSquares($event)" (setPlayerToMoveEvent)="receivePlayerToMove($event)" (playerAddedEvent)="playerAdded($event)"></app-square-detail>
+        <app-square-detail [selectedSquares]=selectedSquares [_allCharacters]=allCharacters (turnOffMultiSelectEvent)="receiveTurnOff($event)" (moveModeEvent)="receiveMoveMode($event)" (setRangeSquaresEvent)="receiveRangeSquares($event)" (setPlayerToMoveEvent)="receivePlayerToMove($event)" (playerAddedEvent)="playerAdded($event)" ></app-square-detail>
     </div>
 </div>
 

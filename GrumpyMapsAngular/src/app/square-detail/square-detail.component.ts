@@ -3,6 +3,7 @@ import { MapShareService } from '../map-share.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Square } from '../domain/square';
 import { Player } from '../domain/player';
+import * as $ from 'jquery';
 
 
 @Component({
@@ -22,10 +23,17 @@ export class SquareDetailComponent implements OnInit {
   @Output() playerAddedEvent = new EventEmitter<Player>();
   @Output() turnOffMultiSelectEvent = new EventEmitter<boolean>();
   playerToMove:Player;
-  previousPlayer: Player;
+  // @Input() set _playerToMove(playerToMove: Player) {
+  //     this.playerToMove = playerToMove;
+  //     this.setAllActiveColors();
+  // }
+  allCharacters: Player[] = new Array();
+  @Input() set _allCharacters(allCharacters: Player[]) {
+      this.allCharacters = allCharacters;
+      this.setAllActiveColors();
+  }
   movable: boolean = false;
   playerNameColor = {};
-  previousPlayerColor: string;
   playerIdGenerator:number=0;
   selectedFile:File = null;
 
@@ -86,6 +94,12 @@ export class SquareDetailComponent implements OnInit {
       this.selectedSquares = new Array();
       this.turnOffMultiSelectEvent.emit(true);
   }
+  clearAllFields(){
+      this.createPlayerForm.get('playerName').setValue("");
+      this.createPlayerForm.get('playerMovement').setValue(1);
+      this.createItemForm.get('itemName').setValue("");
+      this.createItemForm.get('itemAmount').setValue(1);
+  }
   addPlayer(){
       const name = this.createPlayerForm.get('playerName').value;
       const color = this.createPlayerForm.get('playerColor').value;
@@ -99,20 +113,28 @@ export class SquareDetailComponent implements OnInit {
       this.playerAddedEvent.emit(player);
   }
 
+
   clickPlayer(player: Player) {
-      if (this.previousPlayer !=null){
-        this.previousPlayer.isSelected = false;
-        this.previousPlayer.setActiveColor();
-      }
+      this.deselectAllCharacters();
+      this.setAllActiveColors();
       player.isSelected = true;
       player.setActiveColor();
       this.playerToMove = player;
       this.setPlayerToMoveEvent.emit(player);
 
       this.showRange(player);
-      this.previousPlayer = player;
-        }
+  }
 
+  deselectAllCharacters(){
+      for (var i=0 ; i<this.allCharacters.length;i++){
+          this.allCharacters[i].isSelected=false;
+      }
+  }
+  setAllActiveColors(){
+      for (var i=0 ; i<this.allCharacters.length;i++){
+          this.allCharacters[i].setActiveColor();
+      }
+  }
   showRange(player:Player){
       var allRangeSquares = player.getMoveRange();
       this.setRangeSquaresEvent.emit(allRangeSquares);

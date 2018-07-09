@@ -67,7 +67,6 @@ export class MapDetailComponent implements OnInit {
     movementMode:boolean=false; //received from squaredetail component
     rangeSquares:Square[] = new Array();
     playerToMove:Player;
-    previousPlayer:Player;
     squareBorderStyle = {};
     rowStyles = {};
     mapYards:number;
@@ -159,18 +158,25 @@ export class MapDetailComponent implements OnInit {
     }
 
     clickPlayer(player: Player) {
-        if (this.previousPlayer !=null){
-          this.previousPlayer.isSelected = false;
-          this.previousPlayer.setActiveColor();
-        }
+        this.deselectAllCharacters();
+        this.setAllActiveColors();
         player.isSelected = true;
         player.setActiveColor();
         this.playerToMove = player;
 
         this.showRange(player);
-        this.previousPlayer = player;
           }
 
+    deselectAllCharacters(){
+        for (var i=0 ; i<this.allCharacters.length;i++){
+            this.allCharacters[i].isSelected=false;
+        }
+    }
+    setAllActiveColors(){
+        for (var i=0 ; i<this.allCharacters.length;i++){
+            this.allCharacters[i].setActiveColor();
+        }
+    }
     showRange(player:Player){
         this.receiveRangeSquares(player.getMoveRange());
     }
@@ -209,10 +215,6 @@ export class MapDetailComponent implements OnInit {
     }
     public playerAdded($event){
         this.allCharacters.push($event);
-        console.log("all characters: ");
-        for (var i=0 ; i<this.allCharacters.length ; i++){
-            console.log(this.allCharacters[i].name);
-        }
     }
 
     public receiveSelectedSquare($event){

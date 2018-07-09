@@ -4,13 +4,13 @@
     <span *ngFor="let square of selectedSquares"> {{square.mapCoordinate}} </span><br />
     nr of players: {{square.players.length}}<br />
     <span *ngIf="square.players.length!=0"><span class="lead">Contents: <br></span>
-        <span *ngFor="let player of square.players" [style.color]="player.activeColor" (click)="clickPlayer(player)">
-            {{player.name}}
+        <span *ngFor="let player of square.players" (click)="clickPlayer(player)">
+            <span id="playerDetail{{player.id}}" [style.color]=player.color> {{player.name}} </span> &nbsp;
             <img width="100" src="{{player.playerIconUrl}}" /><br />
         </span>
     </span><br>
 <hr class="my-4">
-<button class="btn btn-success" data-toggle="modal" data-target="#exampleModal">Add object</button><br>
+<button class="btn btn-success" data-toggle="modal" data-target="#exampleModal" (click)="clearAllFields()">Add object</button><br>
 <button (click)="moveObject()" class="btn btn-success">Move object</button><br>
 <button (click)="removeObject()" class="btn btn-success">Delete object</button><br>
 <button (click)="multiAction()" class="btn btn-success" id="multiAction">Obstruct selection</button>
@@ -23,13 +23,13 @@
             <div class="modal-header">
                 <!-- HEADER -->
                 <ul class="nav nav-pills" id="modal-tab" role="tablist">
-                    <li class="nav-item">
+                    <li class="nav-item" (click)="clearAllFields()">
                         <a class="nav-link active" id="pills-create-player-tab" data-toggle="pill" href="#pills-create-player" role="tab" aria-controls="pills-create-player" aria-selected="true">Create Player</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" (click)="clearAllFields()">
                         <a class="nav-link" id="pills-item-tab" data-toggle="pill" href="#pills-item" role="tab" aria-controls="pills-item" aria-selected="false">Create Item</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" (click)="clearAllFields()">
                         <a class="nav-link" id="pills-database-tab" data-toggle="pill" href="#pills-database" role="tab" aria-controls="pills-database" aria-selected="false">Select from saves</a>
                     </li>
                 </ul>
