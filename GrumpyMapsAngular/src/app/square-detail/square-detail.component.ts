@@ -89,7 +89,12 @@ export class SquareDetailComponent implements OnInit {
 
   multiAction(){
       for (var i = 0 ; i < this.selectedSquares.length ; i++){
-          this.selectedSquares[i].obstructed = true;
+          if (this.selectedSquares[i].obstructed ==false){
+              this.selectedSquares[i].obstructed = true;
+          }
+          else{
+              this.selectedSquares[i].obstructed = false;
+          }
       }
       this.selectedSquares = new Array();
       this.turnOffMultiSelectEvent.emit(true);
