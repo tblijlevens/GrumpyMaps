@@ -22,7 +22,7 @@ export class SquareDetailComponent implements OnInit {
   @Output() setPlayerToMoveEvent = new EventEmitter<Player>();
   @Output() playerAddedEvent = new EventEmitter<Player>();
   @Output() turnOffMultiSelectEvent = new EventEmitter<boolean>();
-  playerToMove:Player;
+  @Input() playerToMove:Player;
   // @Input() set _playerToMove(playerToMove: Player) {
   //     this.playerToMove = playerToMove;
   //     this.setAllActiveColors();
@@ -32,7 +32,6 @@ export class SquareDetailComponent implements OnInit {
       this.allCharacters = allCharacters;
       this.setAllActiveColors();
   }
-  movable: boolean = false;
   playerNameColor = {};
   playerIdGenerator:number=0;
   selectedFile:File = null;
@@ -94,12 +93,7 @@ export class SquareDetailComponent implements OnInit {
       this.selectedSquares = new Array();
       this.turnOffMultiSelectEvent.emit(true);
   }
-  clearAllFields(){
-      this.createPlayerForm.get('playerName').setValue("");
-      this.createPlayerForm.get('playerMovement').setValue(1);
-      this.createItemForm.get('itemName').setValue("");
-      this.createItemForm.get('itemAmount').setValue(1);
-  }
+
   addPlayer(){
       const name = this.createPlayerForm.get('playerName').value;
       const color = this.createPlayerForm.get('playerColor').value;
@@ -111,8 +105,16 @@ export class SquareDetailComponent implements OnInit {
       }
       this.square.addPhysical(player);
       this.playerAddedEvent.emit(player);
+
+      this.clearAllFields();
   }
 
+  clearAllFields(){
+      this.createPlayerForm.get('playerName').setValue("");
+      this.createPlayerForm.get('playerMovement').setValue(1);
+      this.createItemForm.get('itemName').setValue("");
+      this.createItemForm.get('itemAmount').setValue(1);
+  }
 
   clickPlayer(player: Player) {
       this.deselectAllCharacters();
@@ -138,19 +140,15 @@ export class SquareDetailComponent implements OnInit {
   showRange(player:Player){
       var allRangeSquares = player.getMoveRange();
       this.setRangeSquaresEvent.emit(allRangeSquares);
-      this.movable = true;
   }
 
 
   moveObject() {
-      if (this.movable){
           if(this.playerToMove.isSelected) {
               this.movementMode = true;
               this.moveModeEvent.emit(this.movementMode);
               this.setPlayerToMoveEvent.emit(this.playerToMove);
               this.square.removePhysical(this.playerToMove.id);
           }
-          this.movable = false;
-      }
   }
 }

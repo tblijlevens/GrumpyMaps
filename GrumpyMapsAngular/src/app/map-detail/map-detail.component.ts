@@ -15,6 +15,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import * as $ from 'jquery';
 
 import { DnDMapService } from '../dn-dmap.service'
+import { MapShareService } from '../map-share.service';
 import { DnDMap } from '../domain/dn-dmap'
 import { Square } from '../domain/square'
 import { Player } from '../domain/player'
@@ -71,13 +72,14 @@ export class MapDetailComponent implements OnInit {
     rowStyles = {};
     mapYards:number;
     squareYards:number;
-    selectedSquares:Square[] = new Array();
     multiSelect:boolean=false;
     selecting:boolean=false;
+    selectedSquares:Square[] = new Array();
+    selectedSquare:Square;
     selectedFile: File;
     allCharacters:Player[] = new Array();
 
-    constructor(private dndMapService: DnDMapService) { }
+    constructor(private dndMapService: DnDMapService, private mapShareService: MapShareService) { }
 
     ngOnInit() {
 
@@ -163,7 +165,7 @@ export class MapDetailComponent implements OnInit {
         player.isSelected = true;
         player.setActiveColor();
         this.playerToMove = player;
-
+        this.setSelectedSquare();
         this.showRange(player);
           }
 
@@ -177,10 +179,27 @@ export class MapDetailComponent implements OnInit {
             this.allCharacters[i].setActiveColor();
         }
     }
+    setSelectedSquare(){
+        var squareId = this.playerToMove.squareMapCoordinate;
+        var allSquares = this.dndMap.squares;
+        for (var i = 0 ; i<allSquares.length ; i++){
+            if (allSquares[i].mapCoordinate == squareId){
+                this.selectedSquare = allSquares[i];
+                console.log("slected square is: " + this.selectedSquare.mapCoordinate);
+                this.mapShareService.setSquare(this.selectedSquare);
+            }
+        }
+    }
     showRange(player:Player){
         this.receiveRangeSquares(player.getMoveRange());
     }
 
+    moveCharacter() {
+        if(this.playerToMove.isSelected) {
+            this.movementMode = true;
+            this.selectedSquare.removePhysical(this.playerToMove.id);
+        }
+    }
     public receiveMoveMode($event){
         this.movementMode = $event;
     }
