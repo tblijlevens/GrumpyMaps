@@ -22,11 +22,8 @@ export class SquareDetailComponent implements OnInit {
   @Output() setPlayerToMoveEvent = new EventEmitter<Player>();
   @Output() playerAddedEvent = new EventEmitter<Player>();
   @Output() turnOffMultiSelectEvent = new EventEmitter<boolean>();
-  @Input() playerToMove:Player;
-  // @Input() set _playerToMove(playerToMove: Player) {
-  //     this.playerToMove = playerToMove;
-  //     this.setAllActiveColors();
-  // }
+  @Input() selectedPlayer:Player;
+
   allCharacters: Player[] = new Array();
   @Input() set _allCharacters(allCharacters: Player[]) {
       this.allCharacters = allCharacters;
@@ -121,7 +118,7 @@ export class SquareDetailComponent implements OnInit {
       this.setAllActiveColors();
       player.isSelected = true;
       player.setActiveColor();
-      this.playerToMove = player;
+      this.selectedPlayer = player;
       this.setPlayerToMoveEvent.emit(player);
 
       this.showRange(player);
@@ -144,11 +141,11 @@ export class SquareDetailComponent implements OnInit {
 
 
   moveObject() {
-          if(this.playerToMove.isSelected) {
+          if(this.selectedPlayer.isSelected) {
               this.movementMode = true;
               this.moveModeEvent.emit(this.movementMode);
-              this.setPlayerToMoveEvent.emit(this.playerToMove);
-              this.square.removePhysical(this.playerToMove.id);
+              this.setPlayerToMoveEvent.emit(this.selectedPlayer);
+              this.square.removePhysical(this.selectedPlayer.id);
           }
   }
 }

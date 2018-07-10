@@ -67,7 +67,7 @@ export class MapDetailComponent implements OnInit {
     obstructionMode:boolean=false;
     movementMode:boolean=false; //received from squaredetail component
     rangeSquares:Square[] = new Array();
-    playerToMove:Player;
+    selectedPlayer:Player;
     squareBorderStyle = {};
     rowStyles = {};
     mapYards:number;
@@ -164,7 +164,7 @@ export class MapDetailComponent implements OnInit {
         this.setAllActiveColors();
         player.isSelected = true;
         player.setActiveColor();
-        this.playerToMove = player;
+        this.selectedPlayer = player;
         this.setSelectedSquare();
         this.showRange(player);
           }
@@ -180,12 +180,11 @@ export class MapDetailComponent implements OnInit {
         }
     }
     setSelectedSquare(){
-        var squareId = this.playerToMove.squareMapCoordinate;
+        var squareId = this.selectedPlayer.squareMapCoordinate;
         var allSquares = this.dndMap.squares;
         for (var i = 0 ; i<allSquares.length ; i++){
             if (allSquares[i].mapCoordinate == squareId){
                 this.selectedSquare = allSquares[i];
-                console.log("slected square is: " + this.selectedSquare.mapCoordinate);
                 this.mapShareService.setSquare(this.selectedSquare);
             }
         }
@@ -195,9 +194,9 @@ export class MapDetailComponent implements OnInit {
     }
 
     moveCharacter() {
-        if(this.playerToMove.isSelected) {
+        if(this.selectedPlayer.isSelected) {
             this.movementMode = true;
-            this.selectedSquare.removePhysical(this.playerToMove.id);
+            this.selectedSquare.removePhysical(this.selectedPlayer.id);
         }
     }
     public receiveMoveMode($event){
@@ -209,8 +208,8 @@ export class MapDetailComponent implements OnInit {
         var allSquares = this.dndMap.squares;
         var selectedSquares:Square[]=new Array();
         var playerToMoveColumn;
-        if (this.playerToMove!=null){
-            playerToMoveColumn = +this.playerToMove.squareMapCoordinate.split(":")[1];
+        if (this.selectedPlayer!=null){
+            playerToMoveColumn = +this.selectedPlayer.squareMapCoordinate.split(":")[1];
         }
         for (var i = 0 ; i<allSquares.length ; i++){
             allSquares[i].inRange = false; //first set everything out of range
@@ -219,7 +218,7 @@ export class MapDetailComponent implements OnInit {
                 if (allSquares[i].mapSquareId == allRangeSquares[j]){
                     var currentSquareColumn = +allSquares[i].mapCoordinate.split(":")[1];
 
-                    if (!allSquares[i].obstructed && (playerToMoveColumn-currentSquareColumn<=this.playerToMove.movementAmount && playerToMoveColumn-currentSquareColumn>=-this.playerToMove.movementAmount)){ //only add squares if not obstructed AND column number is within movementrange
+                    if (!allSquares[i].obstructed && (playerToMoveColumn-currentSquareColumn<=this.selectedPlayer.movementAmount && playerToMoveColumn-currentSquareColumn>=-this.selectedPlayer.movementAmount)){ //only add squares if not obstructed AND column number is within movementrange
                         allSquares[i].inRange = true;
                         selectedSquares.push(allSquares[i]);
                     }
@@ -230,7 +229,7 @@ export class MapDetailComponent implements OnInit {
     }
 
     public receivePlayerToMove($event){
-        this.playerToMove = $event;
+        this.selectedPlayer = $event;
     }
     public playerAdded($event){
         this.allCharacters.push($event);

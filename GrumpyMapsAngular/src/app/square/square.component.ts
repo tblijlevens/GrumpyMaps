@@ -43,7 +43,7 @@ export class SquareComponent implements OnInit {
   @Input() set _squareBorderStyles(squareBorderStyle: string) {
       this.squareStyles['border'] = squareBorderStyle;
   }
-  @Input() playerToMove: Player;
+  @Input() selectedPlayer: Player;
 
   originalSquareColor:string = 'rgba(8, 161, 0, 0)';
   @Output() selectingEvent = new EventEmitter<boolean>();
@@ -95,9 +95,9 @@ export class SquareComponent implements OnInit {
 
     // after moving the rangeSquares is always set to nothing so it stops showing range
     this.setRangeSquaresEvent.emit([0]);
-    if (this.playerToMove!=null){
-        this.playerToMove.isSelected = false;
-        this.playerToMove.setActiveColor();
+    if (this.selectedPlayer!=null){
+        this.selectedPlayer.isSelected = false;
+        this.selectedPlayer.setActiveColor();
     }
 
   }
@@ -139,13 +139,13 @@ export class SquareComponent implements OnInit {
             }
         }
         if (squareIdInRange) {
-            this.square.addPhysical(this.playerToMove);
+            this.square.addPhysical(this.selectedPlayer);
         }
         else {
-            var movingPlayerSquareID = this.playerToMove.mapSquareId;
+            var movingPlayerSquareID = this.selectedPlayer.mapSquareId;
             for (var j = 0; j < this._inRangeSquares.length; j++) {
                 if (movingPlayerSquareID == this._inRangeSquares[j].mapSquareId) {
-                    this._inRangeSquares[j].addPhysical(this.playerToMove);
+                    this._inRangeSquares[j].addPhysical(this.selectedPlayer);
                 }
             }
         }
