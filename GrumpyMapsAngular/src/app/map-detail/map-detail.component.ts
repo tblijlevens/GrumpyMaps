@@ -233,9 +233,8 @@ export class MapDetailComponent implements OnInit {
         this.allCharacters.push($event);
     }
 
-    public receiveSelectedSquare($event){
-        this.selectedSquares.push($event);
-        this.selectedSquares = this.removeDuplicates(this.selectedSquares);
+    public receiveSelectedSquares($event){
+        this.selectedSquares = this.removeDuplicates($event);
 
     }
 

@@ -9,7 +9,7 @@
         </div>
         <div *ngFor="let j of rowArray" id="row_{{j}}" class="row" [ngStyle]="rowStyles">
             <div class="square">
-                <app-square *ngFor="let square of dndMap.squares | slice:(j-1)*heightWidth:j*heightWidth; index as i" [squareHeightWidth]=square.squareHeightWidth [square]=square [squareIndex]=i [_rowIndex]=j [obstructionMode]=obstructionMode [inRangeSquares]=rangeSquares [movementMode]=movementMode [selectedPlayer]=selectedPlayer [_squareBorderStyles]=squareBorderStyle [_selectedSquares]=selectedSquares [selecting]=selecting [_multiSelect]=multiSelect (mousedown)="resetSelectedSquares()" (moveModeEvent)="receiveMoveMode($event)" (setRangeSquaresEvent)="receiveRangeSquares($event)" (selectSquaresEvent)="receiveSelectedSquare($event)"
+                <app-square *ngFor="let square of dndMap.squares | slice:(j-1)*heightWidth:j*heightWidth; index as i" [squareHeightWidth]=square.squareHeightWidth [square]=square [squareIndex]=i [_rowIndex]=j [obstructionMode]=obstructionMode [inRangeSquares]=rangeSquares [movementMode]=movementMode [selectedPlayer]=selectedPlayer [_squareBorderStyles]=squareBorderStyle [_selectedSquares]=selectedSquares [selecting]=selecting [_multiSelect]=multiSelect (mousedown)="resetSelectedSquares()" (moveModeEvent)="receiveMoveMode($event)" (setRangeSquaresEvent)="receiveRangeSquares($event)" (selectedSquaresEvent)="receiveSelectedSquares($event)"
                 (selectingEvent)="receiveSelecting($event)" ></app-square>
             </div>
         </div>
@@ -68,7 +68,7 @@
         <span class="lead" style="font-weight:bold;">Characters:</span>
         <p>
             <span *ngFor="let char of allCharacters" (click)="clickPlayer(char)">
-                <h5><img width="50" src="{{char.playerIconUrl}}" />&nbsp; &nbsp;
+                <h5>&nbsp;<img width="50" src="{{char.playerIconUrl}}" />&nbsp; &nbsp;
                     <span id="playerMap{{char.id}}"  [style.color]=char.color>{{char.name}} &nbsp;
                         <mdb-icon id="move" icon="map-marker" (click)="moveCharacter()"></mdb-icon>&nbsp;
                         <mdb-icon id="move" icon="remove" (click)="deleteCharacter()"></mdb-icon>&nbsp;

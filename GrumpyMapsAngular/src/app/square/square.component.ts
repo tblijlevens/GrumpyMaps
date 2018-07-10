@@ -57,7 +57,7 @@ export class SquareComponent implements OnInit {
           this.setRangeSquareStyles();
     //   }
   }
-  @Output() selectSquaresEvent = new EventEmitter<Square>();
+  @Output() selectedSquaresEvent = new EventEmitter<Square[]>();
   private selectedSquares:Square[] = new Array();
   @Input() set _selectedSquares(selectedSquares:Square[]) {
       this.selectedSquares = selectedSquares;
@@ -195,18 +195,19 @@ export class SquareComponent implements OnInit {
           this.selecting=true;
           this.selectingEvent.emit(true);
       }
-      this.selectedSquares.push(this.square);
-      this.selectSquaresEvent.emit(this.square);
+      this.addToSelection();
   }
   mouseOverSquare(){
       if(this.selecting && this.multiSelect){
-          this.selectSquaresEvent.emit(this.square);
+          this.addToSelection();
       }
       this.squareStyles['background-color'] = 'rgba(0, 112, 161, 0.3)';
   }
   mouseUpSquare(){
       this.selecting=false;
       this.selectingEvent.emit(false);
+      this.selectedSquaresEvent.emit(this.selectedSquares);
+
   }
   mouseOutSquare(){
       if (!this.selecting){
@@ -216,6 +217,19 @@ export class SquareComponent implements OnInit {
           }
       }
   }
+  addToSelection(){
+      // if it already is selected it will be unselected
+      if(this.selectedSquares.includes(this.square)){
+          var index = this.selectedSquares.indexOf(this.square);
+          if (index > -1) {
+              this.selectedSquares.splice(index, 1);
+          }
+      }
+      else{
+          this.selectedSquares.push(this.square);
+      }
+  }
+
 
   private setSquareMapCoordinates(){
       this.square.mapCoordinate = this.rowIndexAsLetter+":"+ (this.squareIndex+1);
