@@ -73,7 +73,7 @@
                         <mdb-icon id="move" icon="map-marker" (click)="moveCharacter()"></mdb-icon>&nbsp;
                         <mdb-icon id="move" icon="remove" (click)="deleteCharacter()"></mdb-icon>&nbsp;
 
-                    </span></h5><br />
+                    </span></h5>
                 </span>
 
     </div>
@@ -95,7 +95,7 @@
 <div id="secondColumn" (click)="hideSettings()">
     <div class="squaredetailcontainer contentBox" id="squareDetails">
         <span class="lead" style="font-weight:bold;">Tile Details:</span>
-        <app-square-detail [selectedSquares]=selectedSquares [_allCharacters]=allCharacters [selectedPlayer]=selectedPlayer (turnOffMultiSelectEvent)="receiveTurnOff($event)" (moveModeEvent)="receiveMoveMode($event)" (setRangeSquaresEvent)="receiveRangeSquares($event)" (setPlayerToMoveEvent)="receivePlayerToMove($event)" (playerAddedEvent)="playerAdded($event)" ></app-square-detail>
+        <app-square-detail [_selectedSquares]=selectedSquares [_allCharacters]=allCharacters [selectedPlayer]=selectedPlayer (turnOffMultiSelectEvent)="receiveTurnOff($event)" (moveModeEvent)="receiveMoveMode($event)" (setRangeSquaresEvent)="receiveRangeSquares($event)" (setPlayerToMoveEvent)="receivePlayerToMove($event)" (playerAddedEvent)="playerAdded($event)" ></app-square-detail>
     </div>
 </div>
 

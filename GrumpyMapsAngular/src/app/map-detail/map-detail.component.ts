@@ -147,14 +147,12 @@ export class MapDetailComponent implements OnInit {
 
     public setMultiSelect(){
         this.multiSelect = this.mapForm.get('multiSelectToggle').value;
-        if (this.multiSelect){
-            $("#multiAction").show();
-        }
-        else {
-            $("#multiAction").hide();
-        }
+        this.selectedSquares = new Array();
     }
-
+    public receiveTurnOff($event){
+        this.mapForm.get('multiSelectToggle').setValue(false);
+        this.setMultiSelect();
+    }
     public obstructSquares(){
         this.obstructionMode = this.mapForm.get('obstructToggle').value;
     }
@@ -247,10 +245,7 @@ export class MapDetailComponent implements OnInit {
         });
         return unique_array;
       }
-    public receiveTurnOff($event){
-        this.mapForm.get('multiSelectToggle').setValue(false);
-        this.setMultiSelect();
-    }
+
     public receiveSelecting($event){
         this.selecting = $event;
     }

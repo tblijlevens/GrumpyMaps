@@ -1,8 +1,7 @@
 <div class="squaredetail" *ngIf="square" style="font-size:1.15em">
-    Square:
+    Tile:
     <span *ngIf="selectedSquares.length==0">{{square.mapCoordinate}} </span>
     <span *ngFor="let square of selectedSquares"> {{square.mapCoordinate}} </span><br />
-    nr of players: {{square.players.length}}<br />
     <span *ngIf="square.players.length!=0"><span class="lead">Contents: <br></span>
         <span *ngFor="let player of square.players" (click)="clickPlayer(player)">
             <span id="playerDetail{{player.id}}" [style.color]=player.color> {{player.name}} </span> &nbsp;

@@ -14,7 +14,11 @@ import * as $ from 'jquery';
 export class SquareDetailComponent implements OnInit {
 
   square: Square;
-  @Input() selectedSquares:Square[];
+  private selectedSquares:Square[];
+  @Input() set _selectedSquares(selectedSquares: Square[]) {
+      this.square = selectedSquares[0];
+      this.selectedSquares = selectedSquares;
+  }
   playerIdCreator: number = 1;
   movementMode: boolean = false;
   @Output() moveModeEvent = new EventEmitter<boolean>();
@@ -53,7 +57,7 @@ export class SquareDetailComponent implements OnInit {
   constructor(private mapShareService: MapShareService) { }
 
   ngOnInit() {
-      this.mapShareService.squareUpdated.subscribe(square => this.square =square);
+      this.mapShareService.squareUpdated.subscribe(square => {this.square =square});
       this.createPlayerForm.get('playerMovement').setValue(1);
       this.createPlayerForm.get('playerColor').setValue("#000");
   }
@@ -96,12 +100,26 @@ export class SquareDetailComponent implements OnInit {
       const color = this.createPlayerForm.get('playerColor').value;
       const movement = +this.createPlayerForm.get('playerMovement').value;
 
-      var player:Player = new Player(this.playerIdGenerator--, this.playerIdCreator++, name, 100, movement, 3, 2, "physical", color, this.square.mapSquareId, this.square.mapHeightWidth, this.square.mapCoordinate, this.selectedFile);
-      if (player.playerIcon!=null){
-          this.setPlayerIconUrl(player);
+      if (this.selectedSquares.length!=0){
+          for (var i = 0 ; i < this.selectedSquares.length ; i++){
+              var player:Player = new Player(this.playerIdGenerator--, this.playerIdCreator++, name+" "+i, 100, movement, 3, 2, "physical", color, this.square.mapSquareId, this.square.mapHeightWidth, this.square.mapCoordinate, this.selectedFile);
+              if (player.playerIcon!=null){
+                  this.setPlayerIconUrl(player);
+              }
+              this.selectedSquares[i].addPhysical(player);
+              this.playerAddedEvent.emit(player);
+          }
+          this.selectedSquares = new Array();
+          this.turnOffMultiSelectEvent.emit(true);
       }
-      this.square.addPhysical(player);
-      this.playerAddedEvent.emit(player);
+      else{
+          var player:Player = new Player(this.playerIdGenerator--, this.playerIdCreator++, name, 100, movement, 3, 2, "physical", color, this.square.mapSquareId, this.square.mapHeightWidth, this.square.mapCoordinate, this.selectedFile);
+          if (player.playerIcon!=null){
+              this.setPlayerIconUrl(player);
+          }
+          this.square.addPhysical(player);
+          this.playerAddedEvent.emit(player);
+      }
 
       this.clearAllFields();
   }

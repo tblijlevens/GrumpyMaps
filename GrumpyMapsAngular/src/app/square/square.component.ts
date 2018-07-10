@@ -51,11 +51,11 @@ export class SquareComponent implements OnInit {
   @Input() multiSelect:boolean;
   @Input() set _multiSelect(multiSelect:boolean) {
       this.multiSelect = multiSelect;
-      if (!multiSelect){
+    //   if (!multiSelect){
           this.selectedSquares = new Array();
           this.setObstructionStyle();
           this.setRangeSquareStyles();
-      }
+    //   }
   }
   @Output() selectSquaresEvent = new EventEmitter<Square>();
   private selectedSquares:Square[] = new Array();
@@ -114,11 +114,34 @@ export class SquareComponent implements OnInit {
       this.setObstructionStyle();
   }
 
+
+      private moveObject(){
+          var squareIdInRange = false;
+          for (var i = 0; i < this._inRangeSquares.length; i++) {
+              if (this._inRangeSquares[i].mapSquareId == this.square.mapSquareId) {
+                  squareIdInRange = true;
+              }
+          }
+          if (squareIdInRange) {
+              this.square.addPhysical(this.selectedPlayer);
+          }
+          else {
+              var movingPlayerSquareID = this.selectedPlayer.mapSquareId;
+              for (var j = 0; j < this._inRangeSquares.length; j++) {
+                  if (movingPlayerSquareID == this._inRangeSquares[j].mapSquareId) {
+                      this._inRangeSquares[j].addPhysical(this.selectedPlayer);
+                  }
+              }
+          }
+          this.moveModeEvent.emit(false);
+      }
+
   private setObstructionStyle(){
       // style squares if obstruct mode is on
       var isObstructed = this.square.obstructed;
 
         if (isObstructed) {
+            this.squareStyles['background-color'] = 'rgba(0, 0, 0, 0)';
             this.originalSquareColor = 'rgba(161, 0, 0, 0.35)';
           //this.squareStyles['background-color'] = this.originalSquareColor;
           this.squareStyles['background'] = 'repeating-linear-gradient(          135deg, rgba(161, 0, 0, 0.6), rgba(161, 0, 0, 0.6) 8px, rgba(0, 0, 0, 0.0) 8px, rgba(0, 0, 0, 0.0) 16px)'
@@ -131,26 +154,6 @@ export class SquareComponent implements OnInit {
         }
     }
 
-    private moveObject(){
-        var squareIdInRange = false;
-        for (var i = 0; i < this._inRangeSquares.length; i++) {
-            if (this._inRangeSquares[i].mapSquareId == this.square.mapSquareId) {
-                squareIdInRange = true;
-            }
-        }
-        if (squareIdInRange) {
-            this.square.addPhysical(this.selectedPlayer);
-        }
-        else {
-            var movingPlayerSquareID = this.selectedPlayer.mapSquareId;
-            for (var j = 0; j < this._inRangeSquares.length; j++) {
-                if (movingPlayerSquareID == this._inRangeSquares[j].mapSquareId) {
-                    this._inRangeSquares[j].addPhysical(this.selectedPlayer);
-                }
-            }
-        }
-        this.moveModeEvent.emit(false);
-    }
 
   public setRangeSquareStyles() {
     //  console.log("settingstyles");
@@ -181,7 +184,7 @@ export class SquareComponent implements OnInit {
   selectionStyles(){
       for (var i = 0 ; i < this.selectedSquares.length ; i++){
           if (this.square.mapSquareId == this.selectedSquares[i].mapSquareId){
-              this.squareStyles['background-color'] = 'rgba(0, 112, 161, 0.4)';
+              this.squareStyles['background-color'] = 'rgba(0, 112, 161, 0.6)';
           }
       }
   }
@@ -199,7 +202,7 @@ export class SquareComponent implements OnInit {
       if(this.selecting && this.multiSelect){
           this.selectSquaresEvent.emit(this.square);
       }
-      this.squareStyles['background-color'] = 'rgba(0, 112, 161, 0.4)';
+      this.squareStyles['background-color'] = 'rgba(0, 112, 161, 0.3)';
   }
   mouseUpSquare(){
       this.selecting=false;
