@@ -87,7 +87,7 @@ export class SquareDetailComponent implements OnInit {
       reader.readAsDataURL(player.playerIcon);
   }
 
-  multiAction(){
+  obstructSelection(){
       for (var i = 0 ; i < this.selectedSquares.length ; i++){
           if (this.selectedSquares[i].obstructed ==false){
               this.selectedSquares[i].obstructed = true;
