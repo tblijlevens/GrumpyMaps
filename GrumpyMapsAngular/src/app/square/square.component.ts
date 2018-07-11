@@ -1,3 +1,4 @@
+
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { Square } from '../domain/square';
 import { DnDMap } from '../domain/dn-dmap';
@@ -63,9 +64,9 @@ export class SquareComponent implements OnInit {
       this.selectedSquares = selectedSquares;
       this.setObstructionStyle();
 
-      if (this.selectedSquares.length!=0){
+     // if (this.selectedSquares.length!=0){
           this.setRangeSquareStyles();
-      }
+     // }
   }
 
 
@@ -83,13 +84,7 @@ export class SquareComponent implements OnInit {
   selectSquare() {
 //    console.log("inrange: " + this.square.inRange);
     this.mapShareService.setSquare(this.square); //update active square in squareDetail via mapShareService
-    if (!this.multiSelect){
-        this.selectedSquares = new Array();
-        this.selectedSquares.push(this.square);
 
-        this.selectedSquaresEvent.emit(this.selectedSquares);
-
-    }
     // move an object from a square to a square if movementMode is on
     if (this.movementMode) {
         this.moveObject();
@@ -191,15 +186,24 @@ export class SquareComponent implements OnInit {
       }
   }
 
+  deselectAll(){
+              this.selectedSquares = new Array();
+              this.selectedSquaresEvent.emit(this.selectedSquares);
+  }
+
   // all the mouseevents below make multiSelecting possible
-  mouseDownSquare(){
+  mouseDownSquare($event){
       if (this.multiSelect){
           this.selecting=true;
           this.selectingEvent.emit(true);
       }
+      if (!this.multiSelect){
+          this.selectedSquares = new Array();
+          this.selectedSquares.push(this.square);
+          this.selectedSquaresEvent.emit(this.selectedSquares);
+      }
       this.addToSelection();
       this.selectionStyles();
-
   }
   mouseOverSquare(){
       if(this.selecting && this.multiSelect){

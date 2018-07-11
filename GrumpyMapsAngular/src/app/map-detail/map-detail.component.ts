@@ -5,6 +5,13 @@ $(document).ready(function() {
         var mapHeight = $(".mapcontainer").css('height');
         $(".mapcontainer").css({width: mapHeight});
     });
+    //make right mouse click in map not popup contextmenu
+    $( ".mapcontainer" ).on( "contextmenu",  (e)=> {
+      //alert( "Handler for .contextmenu() called." );
+      e.preventDefault();
+    })
+
+
 });
 
 

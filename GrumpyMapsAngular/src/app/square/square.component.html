@@ -1,4 +1,4 @@
-<div id='squarecontainer' class="square noselect" [ngStyle]="squareStyles" (mousedown)="mouseDownSquare()" (mouseup)="mouseUpSquare()"  (click)=selectSquare() (mouseover)="mouseOverSquare()" (mouseout)="mouseOutSquare()" >
+<div id='squarecontainer' class="square noselect" [ngStyle]="squareStyles" (click)=selectSquare() (mousedown)="mouseDownSquare($event)" (mouseup)="mouseUpSquare()"   (mouseover)="mouseOverSquare()" (mouseout)="mouseOutSquare()" (contextmenu)="deselectAll()">
     <span *ngIf="_inRangeSquares.length!=0">{{square.mapCoordinate}}</span><br>
     <div id="objectsInSquare" *ngIf="square.players.length!=0">
         <div class="playerDot" *ngFor="let player of square.players" [style.background-color]=player.color id="playerDot{{player.id}}"></div>
