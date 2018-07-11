@@ -85,6 +85,9 @@ mdb-icon{
     right: 5px;
     cursor: pointer;
 }
+.playerNameMap{
+    text-shadow: 0px 0px 2px black;
+}
 #mapSetup{
     background-image: url(../../assets/bg.jpg);
     position:fixed;
