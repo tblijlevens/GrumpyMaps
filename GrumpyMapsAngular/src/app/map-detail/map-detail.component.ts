@@ -1,17 +1,17 @@
 //with jQuery
 $(document).ready(function() {
     $("#mapSetup").toggle( 1000 );
+
+    // responsive sizing on resizing the window (e.g. fullscreen)
     $(window).on('resize', function(){
         var mapHeight = $(".mapcontainer").css('height');
         $(".mapcontainer").css({width: mapHeight});
     });
-    //make right mouse click in map not popup contextmenu
-    $( ".mapcontainer" ).on( "contextmenu",  (e)=> {
-      //alert( "Handler for .contextmenu() called." );
-      e.preventDefault();
-    })
 
-
+    //make right mouse click in map not popup the contextmenu
+    $( ".mapcontainer" ).contextmenu(function(e) {
+        e.preventDefault();
+    });
 });
 
 
@@ -162,6 +162,11 @@ export class MapDetailComponent implements OnInit {
     }
     public obstructSquares(){
         this.obstructionMode = this.mapForm.get('obstructToggle').value;
+    }
+
+    public toggleFullScreen() {
+        $('body').fullscreen();
+        return false;
     }
 
     clickPlayer(player: Player) {
