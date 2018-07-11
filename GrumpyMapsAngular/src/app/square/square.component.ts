@@ -143,7 +143,7 @@ export class SquareComponent implements OnInit {
       // style squares if obstruct mode is on
       var isObstructed = this.square.obstructed;
         if (isObstructed) {
-            this.squareStyles['background-color'] = 'none';
+            this.squareStyles['background-color'] = 'rgba(8, 161, 0, 0)';
             this.originalSquareColor = 'rgba(161, 0, 0, 0.35)';
           //this.squareStyles['background-color'] = this.originalSquareColor;
           this.squareStyles['background'] = 'repeating-linear-gradient(          135deg, rgba(161, 0, 0, 0.6), rgba(161, 0, 0, 0.6) 8px, rgba(0, 0, 0, 0.0) 8px, rgba(0, 0, 0, 0.0) 16px)'
