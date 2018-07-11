@@ -58,8 +58,7 @@ export class SquareDetailComponent implements OnInit {
 
   ngOnInit() {
       this.mapShareService.squareUpdated.subscribe(square => {this.square =square});
-      this.createPlayerForm.get('playerMovement').setValue(1);
-      this.createPlayerForm.get('playerColor').setValue("#000");
+      this.createPlayerForm.get('playerColor').setValue("#ff0000");
   }
 
   onFileChanged(event) {
@@ -105,7 +104,7 @@ export class SquareDetailComponent implements OnInit {
       const color = this.createPlayerForm.get('playerColor').value;
       const movement = +this.createPlayerForm.get('playerMovement').value;
 
-      if (this.selectedSquares.length!=0){
+      if (this.selectedSquares.length>1){
           for (var i = 0 ; i < this.selectedSquares.length ; i++){
               var player:Player = new Player(this.playerIdGenerator--, this.playerIdCreator++, name+" "+i, 100, movement, 3, 2, "physical", color, this.square.mapSquareId, this.square.mapHeightWidth, this.square.mapCoordinate, this.selectedFile);
               if (player.playerIcon!=null){
