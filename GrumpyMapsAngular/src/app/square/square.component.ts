@@ -62,7 +62,9 @@ export class SquareComponent implements OnInit {
   private selectedSquares:Square[] = new Array();
   @Input() set _selectedSquares(selectedSquares:Square[]) {
       this.selectedSquares = selectedSquares;
-      this.setObstructionStyle();
+      if (!this.multiSelect){
+          this.setObstructionStyle();
+      }
 
      // if (this.selectedSquares.length!=0){
           this.setRangeSquareStyles();
