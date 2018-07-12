@@ -34,7 +34,7 @@ export class SquareComponent implements OnInit {
   @Input() movementMode: boolean;
   @Output() moveModeEvent = new EventEmitter<boolean>();
   @Output() setRangeSquaresEvent = new EventEmitter<number[]>();
-  private _inRangeSquares: Square[] = new Array();
+  _inRangeSquares: Square[] = new Array();
   @Input() set inRangeSquares(squares: Square[]) {
       this._inRangeSquares = squares;
       this.setRangeSquareStyles();

@@ -16,11 +16,11 @@
 
     </div><br />
     <div id="legend" >
-        <div [ngStyle]="legendSquare" class="legend"></div>
+        <div class="legend"></div>
         <div>
             {{dndMap.squares[0].squareSize}} feet ({{squareYards}} yards)
         </div>
-        <div [ngStyle]="legendMap" class="legend"></div>
+        <div class="legend"></div>
         <div style="text-align:center;">
             {{(dndMap.squares[0].squareSize) * heightWidth}} feet ({{mapYards}} yards)
         </div>
@@ -163,5 +163,5 @@
         </div>
     </div>
 </div>
-<button type="button" (click)="toggleFullScreen()">fullscreen</button>
+<!-- <button type="button" (click)="toggleFullScreen()">fullscreen</button> -->
 </div>
