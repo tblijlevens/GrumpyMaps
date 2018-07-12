@@ -22,7 +22,8 @@ import com.grumpymaps.GrumpyMaps.services.MapService;
 import com.grumpymaps.GrumpyMaps.services.SquareService;
 import com.grumpymaps.GrumpyMaps.services.PlayerService;
 
-@CrossOrigin(origins = "http://localhost:4200")
+//@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "http://www.umanise.nl")
 @Controller
 public class MapController {
 
