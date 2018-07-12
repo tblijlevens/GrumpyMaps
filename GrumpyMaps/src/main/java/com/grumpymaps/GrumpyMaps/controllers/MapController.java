@@ -34,6 +34,12 @@ public class MapController {
 	private PlayerService playerService;
 
 	  @ResponseBody
+	  @RequestMapping(value = "/test", method = RequestMethod.GET)
+	  public  String  test() {
+	    return "hoi";
+	  }
+
+	  @ResponseBody
 	  @RequestMapping(value = "/dndmap", method = RequestMethod.POST)
 	  public  Long  createMap(@RequestBody DndMap dndMap) {
 		System.out.println(dndMap.getId() + " with " + dndMap.getNumberOfSquares() + "squares");

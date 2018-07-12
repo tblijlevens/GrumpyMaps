@@ -164,10 +164,10 @@ export class MapDetailComponent implements OnInit {
         this.obstructionMode = this.mapForm.get('obstructToggle').value;
     }
 
-    public toggleFullScreen() {
-        $('body').fullscreen();
-        return false;
-    }
+    // public toggleFullScreen() {
+    //     $('body').fullscreen();
+    //     return false;
+    // }
 
     clickPlayer(player: Player) {
         this.deselectAllCharacters();
