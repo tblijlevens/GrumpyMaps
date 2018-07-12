@@ -397,6 +397,8 @@ export class MapDetailComponent implements OnInit {
     }
 
     loadSelectedMap(){
+        $('#saving').html("Loading...");
+        $('#saving').fadeIn(500);
         for (var i=0 ; i< this.allLoadedMapsResult.length ; i++){
             if (this.selectedLoadMap == this.allLoadedMapsResult[i]["id"]){
                 this.heightWidth = this.allLoadedMapsResult[i]["heightWidth"];
@@ -452,7 +454,7 @@ export class MapDetailComponent implements OnInit {
                     this.findPlayerByRealSquareId(sqId);
                 }
             }
-
+            $('#saving').html("Loading... Succes!").delay( 500 ).fadeOut(2000);
         });
     }
     //TODO: don't look for players per square, just look for all players and then set them on the right squares.
