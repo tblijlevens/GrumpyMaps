@@ -33,7 +33,11 @@ public class MapController {
 	@Autowired
 	private PlayerService playerService;
 
-
+	  @ResponseBody
+	  @RequestMapping(value = "/test", method = RequestMethod.GET)
+	  public  String  test() {
+	    return "hoi";
+	  }
 
 	  @ResponseBody
 	  @RequestMapping(value = "/dndmap", method = RequestMethod.POST)
