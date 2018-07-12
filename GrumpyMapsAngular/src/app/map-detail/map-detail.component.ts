@@ -317,19 +317,18 @@ export class MapDetailComponent implements OnInit {
 
     private saveMapWithSquares(){
         this.resultCounter=0;
+        //Save the map
         this.dndMapService.saveMap(this.dndMap).subscribe((mapId: number) => {
             this.dndMap.id = mapId;
             var mapSquares = this.dndMap.squares;
-
-
-            for (var i = 0 ; i<mapSquares.length ; i++){
-                var square = mapSquares[i];
-                square.setMapId(this.dndMap.id);
-                this.dndMapService.saveSquare(square).subscribe(result => {
+            // save all the squares at once
+            this.dndMapService.saveSquares(mapSquares).subscribe((result:number[]) => {
+                // get a list objects back. These objects contain a squares real database id and the squares mapSquareId. Use the mapSquareId to find the right squre and give it it's real database id (so it can be overwritten)
+                for (var i = 0 ; i<result.length ; i++){
                     this.resultCounter++;
                     for (var j = 0 ; j<mapSquares.length ; j++){
-                        if (mapSquares[j].mapSquareId == result["mapSquareId"]){
-                            mapSquares[j].id = result["id"];
+                        if (mapSquares[j].mapSquareId == result[i]["mapSquareId"]){
+                            mapSquares[j].id = result[i]["id"];
                             if (this.resultCounter == this.dndMap.squares.length){ //save players only when all squares have gotten their database Id
                                 this.savePlayersOnSquares();
                                 console.log("done saving everything");
@@ -337,9 +336,8 @@ export class MapDetailComponent implements OnInit {
                             }
                         }
                     }
-                }); //saveSquare
-
-            }
+                }
+            });
         }); //saveMap end
     }
 
@@ -347,9 +345,20 @@ export class MapDetailComponent implements OnInit {
         //TODO var mapSquares naar let of const maken
 
         var mapSquares = this.dndMap.squares;
+        var players = new Array();
+        // get all the players in the map:
         for (var i = 0 ; i<mapSquares.length ; i++){
             var square = mapSquares[i];
-            var players = square.players;
+            if (square.players.length!=0){
+                for (var h = 0 ; h<square.players.length ; h++){
+                    //give player the real square database Id so they can be retrieved on the right square when loading:
+                    square.players[h].realSquareId = square.id;
+                    players.push(square.players[h]);
+                }
+            }
+        }
+        // save all players at once:
+        this.dndMapService.savePlayer(player).subscribe(playerResult => {});
             for (var j = 0 ; j<players.length ; j++){
                 var player = players[j];
                 player.realSquareId = square.id; //give player square database Id so they can be retrieved on the right square when loading.

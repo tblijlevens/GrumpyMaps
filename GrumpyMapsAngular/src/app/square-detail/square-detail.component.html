@@ -3,6 +3,7 @@
     <span *ngIf="selectedSquares.length==0">{{square.mapCoordinate}} </span>
     <span *ngFor="let square of selectedSquares"> {{square.mapCoordinate}} </span><br />
     Obstructed: {{square.obstructed}}<br />
+    dbId: {{square.id}}<br />
     <span *ngIf="square.players.length!=0"><span class="lead">Contents: <br></span>
         <span *ngFor="let player of square.players" (click)="clickPlayer(player)">
             <span id="playerDetail{{player.id}}" class="playerNameDetail"[style.color]=player.color> {{player.name}} </span> &nbsp;

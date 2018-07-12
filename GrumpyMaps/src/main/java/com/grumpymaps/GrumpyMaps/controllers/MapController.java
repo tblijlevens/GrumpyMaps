@@ -22,8 +22,8 @@ import com.grumpymaps.GrumpyMaps.services.MapService;
 import com.grumpymaps.GrumpyMaps.services.SquareService;
 import com.grumpymaps.GrumpyMaps.services.PlayerService;
 
-//@CrossOrigin(origins = "http://localhost:4200")
-@CrossOrigin(origins = "http://www.umanise.nl")
+@CrossOrigin(origins = "http://localhost:4200")
+//@CrossOrigin(origins = "http://www.umanise.nl")
 @Controller
 public class MapController {
 
@@ -52,6 +52,18 @@ public class MapController {
 	  public  SquareIds createSquare(@RequestBody Square square) {
 		  Square retour = squareService.save(square);
 	    return new SquareIds(retour.getId(), retour.getMapSquareId() );
+	  }
+
+	  @ResponseBody
+	  @RequestMapping(value = "/squares", method = RequestMethod.POST)
+	  public  ArrayList<SquareIds> createSquare(@RequestBody ArrayList<Square> squares) {
+		  ArrayList<SquareIds> squareIds = new ArrayList<>();
+		  for (Square s : squares){
+			  System.out.println("Square: " + s.getMapCoordinate());
+			  Square retour = squareService.save(s);
+			  squareIds.add(new SquareIds(retour.getId(), retour.getMapSquareId()));
+		  }
+	     return squareIds;
 	  }
 
 	  @ResponseBody
