@@ -15,9 +15,9 @@ export class Player implements Physical{
     type:string;
     color:string;
     activeColor:string;
-    mapSquareId:number;
     mapHeightWidth:number
     isSelected:boolean;
+    mapSquareId:number;
     realSquareId:number;
     squareMapCoordinate:string;
 

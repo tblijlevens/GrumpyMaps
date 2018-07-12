@@ -22,18 +22,14 @@ export class DnDMapService {
  /* .catch((error: any) => Observable.throw(error.json().error || 'Server error'))*/;
 }
 
-  saveSquare(square : Square){
-      console.log("sending square");
-      return this.http.post('http://localhost:8080/square', square);
-}
-
   saveSquares(squares : Square[]){
       console.log("sending squares");
       return this.http.post('http://localhost:8080/squares', squares);
 }
-  savePlayer(player : Player){
-      console.log("sending player");
-      return this.http.post('http://localhost:8080/player', player);
+
+  savePlayers(players : Player[]){
+      console.log("sending players");
+      return this.http.post('http://localhost:8080/players', players);
 }
 
 

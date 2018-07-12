@@ -321,6 +321,11 @@ export class MapDetailComponent implements OnInit {
         this.dndMapService.saveMap(this.dndMap).subscribe((mapId: number) => {
             this.dndMap.id = mapId;
             var mapSquares = this.dndMap.squares;
+
+            // give all squares the right mapId
+            for (var h = 0 ; h<mapSquares.length ; h++){
+                mapSquares[h].mapId = mapId;
+            }
             // save all the squares at once
             this.dndMapService.saveSquares(mapSquares).subscribe((result:number[]) => {
                 // get a list objects back. These objects contain a squares real database id and the squares mapSquareId. Use the mapSquareId to find the right squre and give it it's real database id (so it can be overwritten)
@@ -342,7 +347,6 @@ export class MapDetailComponent implements OnInit {
     }
 
     private savePlayersOnSquares(){
-        //TODO var mapSquares naar let of const maken
 
         var mapSquares = this.dndMap.squares;
         var players = new Array();
@@ -357,23 +361,19 @@ export class MapDetailComponent implements OnInit {
                 }
             }
         }
-        // save all players at once:
-        this.dndMapService.savePlayer(player).subscribe(playerResult => {});
-            for (var j = 0 ; j<players.length ; j++){
-                var player = players[j];
-                player.realSquareId = square.id; //give player square database Id so they can be retrieved on the right square when loading.
-                this.dndMapService.savePlayer(player).subscribe(playerResult => {
-                    var mapSquares2 = this.dndMap.squares;
-                    for (var k = 0 ; k < mapSquares2.length ; k++){
-                        var players2 = mapSquares2[k].players;
-                        for (var l = 0 ; l<players2.length ; l++){
-                            if (players2[l].playerSquareId == playerResult["playerSquareId"]){
-                                players2[l].id = playerResult["id"];
-                            }
+        if (players.length!=0){
+            // save all players at once:
+            this.dndMapService.savePlayers(players).subscribe((playerResult:number[]) => {
+                // give each player its real database id:
+                for (var j = 0 ; j<players.length ; j++){
+                    console.log(playerResult[j]["playerSquareId"] + " got id: " + playerResult[j]["id"]);
+                    for (var k = 0 ; k<players.length ; k++){
+                        if (players[j].playerSquareId == playerResult[k]["playerSquareId"]){
+                            players[j].id = playerResult[k]["id"];
                         }
                     }
-                });
-            }
+                }
+            });
         }
     }
 
@@ -455,6 +455,7 @@ export class MapDetailComponent implements OnInit {
 
         });
     }
+    //TODO: don't look for players per square, just look for all players and then set them on the right squares.
     findPlayerByRealSquareId(sqId:number){
         this.dndMapService.findPlayerByRealSquareId(sqId).subscribe(resultPlayer => {
             var player:Player = new Player(

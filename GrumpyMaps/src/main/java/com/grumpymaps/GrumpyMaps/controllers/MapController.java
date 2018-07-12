@@ -47,12 +47,6 @@ public class MapController {
 	    return mapService.save(dndMap).getId();
 	  }
 
-	  @ResponseBody
-	  @RequestMapping(value = "/square", method = RequestMethod.POST)
-	  public  SquareIds createSquare(@RequestBody Square square) {
-		  Square retour = squareService.save(square);
-	    return new SquareIds(retour.getId(), retour.getMapSquareId() );
-	  }
 
 	  @ResponseBody
 	  @RequestMapping(value = "/squares", method = RequestMethod.POST)
@@ -71,6 +65,18 @@ public class MapController {
 	  public  PlayerIds  createPlayer(@RequestBody Player player) {
 		  Player retour = playerService.save(player);
   	  return new PlayerIds(retour.getId(), retour.getPlayerSquareId() );
+	  }
+
+	  @ResponseBody
+	  @RequestMapping(value = "/players", method = RequestMethod.POST)
+	  public  ArrayList<PlayerIds>  createPlayer(@RequestBody ArrayList<Player> players) {
+		  ArrayList<PlayerIds> playerIds = new ArrayList<>();
+		 for (Player p : players){
+			 System.out.println("Player: " + p.getName());
+			 Player retour = playerService.save(p);
+			 playerIds.add(new PlayerIds(retour.getId(), retour.getPlayerSquareId()));
+		 }
+		return playerIds;
 	  }
 
 	  @ResponseBody

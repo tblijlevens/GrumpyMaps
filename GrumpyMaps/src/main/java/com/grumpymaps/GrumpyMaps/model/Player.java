@@ -7,6 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import java.io.File;
 
 @Entity
 public class Player implements Physical{
@@ -16,7 +17,8 @@ public class Player implements Physical{
     private long id;
     private int playerSquareId;
     private String name;
-//    private File playerIcon;
+    private File playerIcon;
+    private String playerIconUrl;
     private int actionPoints;
     private int movementAmount;
     private int attacksPerRound;
@@ -79,21 +81,37 @@ public class Player implements Physical{
 		this.name = name;
 	}
 
-	// /**
-	// * Returns value of playerIcon
-	// * @return
-	// */
-	// public File getPlayerIcon() {
-	// 	return playerIcon;
-	// }
-    //
-	// /**
-	// * Sets new value of playerIcon
-	// * @param
-	// */
-	// public void setPlayerIcon(File playerIcon) {
-	// 	this.playerIcon = playerIcon;
-	// }
+	/**
+	* Returns value of playerIcon
+	* @return
+	*/
+	public File getPlayerIcon() {
+		return playerIcon;
+	}
+
+	/**
+	* Sets new value of playerIcon
+	* @param
+	*/
+	public void setPlayerIcon(File playerIcon) {
+		this.playerIcon = playerIcon;
+	}
+
+    /**
+    * Returns value of playerIconUrl
+    * @return
+    */
+    public String getPlayerIconUrl() {
+        return playerIconUrl;
+    }
+
+    /**
+    * Sets new value of playerIconUrl
+    * @param
+    */
+    public void setPlayerIconUrl(String playerIconUrl) {
+        this.playerIconUrl = playerIconUrl;
+    }
 
 	/**
 	* Returns value of actionPoints
