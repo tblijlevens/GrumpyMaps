@@ -16,7 +16,7 @@ public class Player implements Physical{
     private long id;
     private int playerSquareId;
     private String name;
-    private File playerIcon;
+//    private File playerIcon;
     private int actionPoints;
     private int movementAmount;
     private int attacksPerRound;
@@ -79,21 +79,21 @@ public class Player implements Physical{
 		this.name = name;
 	}
 
-	/**
-	* Returns value of playerIcon
-	* @return
-	*/
-	public File getPlayerIcon() {
-		return playerIcon;
-	}
-
-	/**
-	* Sets new value of playerIcon
-	* @param
-	*/
-	public void setPlayerIcon(File playerIcon) {
-		this.playerIcon = playerIcon;
-	}
+	// /**
+	// * Returns value of playerIcon
+	// * @return
+	// */
+	// public File getPlayerIcon() {
+	// 	return playerIcon;
+	// }
+    //
+	// /**
+	// * Sets new value of playerIcon
+	// * @param
+	// */
+	// public void setPlayerIcon(File playerIcon) {
+	// 	this.playerIcon = playerIcon;
+	// }
 
 	/**
 	* Returns value of actionPoints
