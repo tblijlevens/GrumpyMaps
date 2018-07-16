@@ -11,7 +11,7 @@
     background-color: rgb(255, 255, 255, 0.5);
     background-size: 100% 100%;
     margin-right: 20px;
-    height: 93%;
+    height: 89%;
     float: left;
 }
 
@@ -65,11 +65,7 @@ input[type=number]{
     box-shadow: 0px 0px 8px 0px #729ab1;
 
 }
-#firstColumn{
-    width: 20%;
-    height: 88%;
-    float:left;
-}
+
 mdb-icon{
     color: #0099fb;
 }
@@ -100,8 +96,13 @@ mdb-icon{
     box-shadow: 0 4px 8px 0 #888888, 0 6px 20px 0 #888888;
     display: none;
 }
+#firstColumn{
+    width: 20%;
+    height: 88%;
+    float:left;
+}
 .allCharacters{
-    height: 70%;
+    height: 66%;
     overflow-y: auto;
     margin-bottom: 5%;
 }
@@ -110,14 +111,14 @@ mdb-icon{
 }
 
 #secondColumn{
-    width: 15%;
+    width: 20%;
     height: 88%;
     margin-left: 20px;
     float:left;
     /*border: solid 1px red;*/
 }
 .squaredetailcontainer {
-    height:95%;
+    height:90%;
 }
 
 .form-group {

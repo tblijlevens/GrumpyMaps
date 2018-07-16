@@ -59,6 +59,7 @@ export class SquareDetailComponent implements OnInit {
   ngOnInit() {
       this.mapShareService.squareUpdated.subscribe(square => {this.square =square});
       this.createPlayerForm.get('playerColor').setValue("#ff0000");
+      this.createPlayerForm.get('playerMovement').setValue(1);
   }
 
   onFileChanged(event) {

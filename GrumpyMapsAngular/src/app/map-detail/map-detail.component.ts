@@ -1,4 +1,3 @@
-//with jQuery
 $(document).ready(function() {
     $("#mapSetup").toggle( 1000 );
 
