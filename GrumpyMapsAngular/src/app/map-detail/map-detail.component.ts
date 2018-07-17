@@ -80,6 +80,7 @@ export class MapDetailComponent implements OnInit {
     squareYards:number;
     multiSelect:boolean=false;
     selecting:boolean=false;
+    deselecting:boolean=false;
     selectedSquares:Square[] = new Array();
     selectedSquare:Square;
     selectedFile: File;
@@ -255,6 +256,10 @@ export class MapDetailComponent implements OnInit {
         });
         return unique_array;
       }
+
+    public receiveDeselecting($event){
+        this.deselecting = $event;
+    }
 
     public receiveSelecting($event){
         this.selecting = $event;

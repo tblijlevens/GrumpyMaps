@@ -49,6 +49,8 @@ export class SquareComponent implements OnInit {
   originalSquareColor:string = 'rgba(8, 161, 0, 0)';
   @Output() selectingEvent = new EventEmitter<boolean>();
   @Input() selecting:boolean;
+  @Output() deselectingEvent = new EventEmitter<boolean>();
+  @Input() deselecting:boolean;
   private multiSelect:boolean;
   @Input() set _multiSelect(multiSelect:boolean) {
       this.multiSelect = multiSelect;
@@ -65,11 +67,11 @@ export class SquareComponent implements OnInit {
       if (!this.multiSelect){
           this.setObstructionStyle();
       }
-
      // if (this.selectedSquares.length!=0){
           this.setRangeSquareStyles();
      // }
   }
+
 
 
   constructor(private mapShareService: MapShareService) { }
@@ -204,6 +206,15 @@ export class SquareComponent implements OnInit {
           this.selectedSquares.push(this.square);
           this.selectedSquaresEvent.emit(this.selectedSquares);
       }
+      if (this.selectedSquares.includes(this.square)){
+          console.log("mousedown includes");
+          this.deselecting = true;
+      }
+      else {
+          console.log("mousedown not includes");
+          this.deselecting = false;
+      }
+      this.deselectingEvent.emit(this.deselecting);
       this.addToSelection();
       this.selectionStyles();
   }
@@ -232,14 +243,13 @@ export class SquareComponent implements OnInit {
       }
   }
   addToSelection(){
-      // if it already is selected it will be unselected
-      if(this.selectedSquares.includes(this.square)){
+      if(this.deselecting && this.selectedSquares.includes(this.square)){
           var index = this.selectedSquares.indexOf(this.square);
           if (index > -1) {
               this.selectedSquares.splice(index, 1);
           }
       }
-      else{
+      else if (!this.deselecting){
           this.selectedSquares.push(this.square);
       }
   }
