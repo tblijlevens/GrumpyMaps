@@ -304,7 +304,7 @@ export class MapDetailComponent implements OnInit {
             }
         }
     }
-//test
+
     public saveMap() {
         // var date = new Date().toLocaleDateString();
         // var time = new Date().toLocaleTimeString();
