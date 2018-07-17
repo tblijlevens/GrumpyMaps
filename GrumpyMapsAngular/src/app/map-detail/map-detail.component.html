@@ -16,7 +16,7 @@
 
     </div><br />
     <div id="legend" >
-        <div class="legend"></div>
+        <div class="legend" [style.width]=dndMap.squares[0].squareHeightWidth></div>
         <div>
             {{dndMap.squares[0].squareSize}} feet ({{squareYards}} yards)
         </div>
@@ -69,7 +69,7 @@
         <p>
             <span *ngFor="let char of allCharacters" (click)="clickPlayer(char)">
                 <h5>&nbsp;<img width="50" src="{{char.playerIconUrl}}" />&nbsp; &nbsp;
-                    <span id="playerMap{{char.id}}" class="playerNameMap" [style.color]=char.color>{{char.id}}{{char.name}} &nbsp;
+                    <span id="playerMap{{char.id}}" class="playerNameMap" [style.color]=char.color>{{char.name}} &nbsp;
                         <mdb-icon id="move" icon="map-marker" (click)="moveCharacter()"></mdb-icon>&nbsp;
                         <mdb-icon id="move" icon="remove" (click)="deleteCharacter()"></mdb-icon>&nbsp;
 

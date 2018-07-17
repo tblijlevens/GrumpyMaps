@@ -88,7 +88,7 @@ export class MapDetailComponent implements OnInit {
     constructor(private dndMapService: DnDMapService, private mapShareService: MapShareService) { }
 
     ngOnInit() {
-
+        this.loadMap();
         this.dndMap = new DnDMap(0, this.heightWidth, 5); //id zero cannot exist in databse, so it will generate a new unique id)
         this.mapForm.get('heightwidth').setValue(10);
         this.mapForm.get('feet').setValue(5);
