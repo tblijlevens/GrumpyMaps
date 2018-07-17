@@ -85,6 +85,7 @@ export class MapDetailComponent implements OnInit {
     selectedSquare:Square;
     selectedFile: File;
     allCharacters:Player[] = new Array();
+    setStyles:boolean = false;
 
     constructor(private dndMapService: DnDMapService, private mapShareService: MapShareService) { }
 
@@ -156,13 +157,7 @@ export class MapDetailComponent implements OnInit {
         this.multiSelect = this.mapForm.get('multiSelectToggle').value;
         this.selectedSquares = new Array();
     }
-    public receiveTurnOff($event){
-        this.mapForm.get('multiSelectToggle').setValue(false);
-        this.setMultiSelect();
-    }
-    public obstructSquares(){
-        this.obstructionMode = this.mapForm.get('obstructToggle').value;
-    }
+
 
     // public toggleFullScreen() {
     //     $('body').fullscreen();
@@ -250,12 +245,15 @@ export class MapDetailComponent implements OnInit {
 
     }
 
-      private removeDuplicates(arr){
-          let unique_array = arr.filter(function(elem, index, self) {
+    private removeDuplicates(arr){
+        let unique_array = arr.filter(function(elem, index, self) {
             return index == self.indexOf(elem);
         });
         return unique_array;
-      }
+    }
+    public receiveSetStyles($event){
+        this.setStyles = $event;
+    }
 
     public receiveDeselecting($event){
         this.deselecting = $event;

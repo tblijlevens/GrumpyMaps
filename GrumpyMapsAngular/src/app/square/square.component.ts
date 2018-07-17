@@ -71,6 +71,14 @@ export class SquareComponent implements OnInit {
           this.setRangeSquareStyles();
      // }
   }
+  @Input() set setStyles(setstyles:boolean){
+      if (this.selectedSquares.length > 0){
+         this.deselectAll();
+      }
+      console.log("setting styles");
+      this.setObstructionStyle();
+      this.setRangeSquareStyles();
+  }
 
 
 
@@ -134,7 +142,6 @@ export class SquareComponent implements OnInit {
       else {
           this.square.obstructed = false;
       }
-      console.log("square " + this.square.mapSquareId + " is obstructed: " + this.square.obstructed);
       this.setObstructionStyle();
   }
 
@@ -191,27 +198,26 @@ export class SquareComponent implements OnInit {
   }
 
   deselectAll(){
-              this.selectedSquares = new Array();
-              this.selectedSquaresEvent.emit(this.selectedSquares);
+      this.selectedSquaresEvent.emit(new Array());
   }
 
   // all the mouseevents below make multiSelecting possible
   mouseDownSquare($event){
+      console.log("mousedown multiselect is: " + this.multiSelect);
       if (this.multiSelect){
           this.selecting=true;
           this.selectingEvent.emit(true);
       }
       if (!this.multiSelect){
+          console.log("resetting selection");
           this.selectedSquares = new Array();
           this.selectedSquares.push(this.square);
           this.selectedSquaresEvent.emit(this.selectedSquares);
       }
       if (this.selectedSquares.includes(this.square)){
-          console.log("mousedown includes");
           this.deselecting = true;
       }
       else {
-          console.log("mousedown not includes");
           this.deselecting = false;
       }
       this.deselectingEvent.emit(this.deselecting);
@@ -248,9 +254,17 @@ export class SquareComponent implements OnInit {
           if (index > -1) {
               this.selectedSquares.splice(index, 1);
           }
+          console.log("removing from selection " + this.square.mapCoordinate);
       }
       else if (!this.deselecting){
+          var allSquares = "";
           this.selectedSquares.push(this.square);
+          for (var i = 0 ; i < this.selectedSquares.length ; i++){
+              allSquares+= this.selectedSquares[i].mapCoordinate + " ";
+          }
+          console.log("adding to selection " + this.square.mapCoordinate);
+
+          console.log(allSquares);
       }
   }
 

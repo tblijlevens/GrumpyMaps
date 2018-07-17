@@ -25,7 +25,8 @@ export class SquareDetailComponent implements OnInit {
   @Output() setRangeSquaresEvent = new EventEmitter<number[]>();
   @Output() setPlayerToMoveEvent = new EventEmitter<Player>();
   @Output() playerAddedEvent = new EventEmitter<Player>();
-  @Output() turnOffMultiSelectEvent = new EventEmitter<boolean>();
+  @Output() setStylesEvent = new EventEmitter<boolean>();
+  @Input() setStyles:boolean;
   @Input() selectedPlayer:Player;
 
   allCharacters: Player[] = new Array();
@@ -87,6 +88,14 @@ export class SquareDetailComponent implements OnInit {
       reader.readAsDataURL(player.playerIcon);
   }
 
+  private setSquareStyles(){
+      if (this.setStyles){
+          this.setStylesEvent.emit(false);
+      }
+      else{
+          this.setStylesEvent.emit(true);
+      }
+  }
   obstructSelection(){
       for (var i = 0 ; i < this.selectedSquares.length ; i++){
           if (this.selectedSquares[i].obstructed ==false){
@@ -97,7 +106,9 @@ export class SquareDetailComponent implements OnInit {
           }
       }
       this.selectedSquares = new Array();
-      this.turnOffMultiSelectEvent.emit(true);
+
+      // make all squares set their styles:
+      this.setSquareStyles();
   }
 
   addPlayer(){
@@ -115,7 +126,7 @@ export class SquareDetailComponent implements OnInit {
               this.playerAddedEvent.emit(player);
           }
           this.selectedSquares = new Array();
-          this.turnOffMultiSelectEvent.emit(true);
+          this.setSquareStyles();
       }
       else{
           var player:Player = new Player(this.playerIdGenerator--, this.playerIdCreator++, name, 100, movement, 3, 2, "physical", color, this.square.mapSquareId, this.square.mapHeightWidth, this.square.mapCoordinate, this.selectedFile);
