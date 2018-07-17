@@ -308,7 +308,7 @@ export class MapDetailComponent implements OnInit {
     public saveMap() {
         // var date = new Date().toLocaleDateString();
         // var time = new Date().toLocaleTimeString();
-
+        $('#saving').html("Saving...");
         $('#saving').fadeIn(500);
 
         this.saveMapWithSquares();
