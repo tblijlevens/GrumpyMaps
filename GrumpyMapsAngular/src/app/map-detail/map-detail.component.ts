@@ -112,7 +112,7 @@ export class MapDetailComponent implements OnInit {
         }
     }
     public uploadImage() {
-        const imageUrl = this.mapForm.get('imageUrl').value;
+        var imageUrl = this.mapForm.get('imageUrl').value;
         this.dndMap.setImage(imageUrl);
         this.mapBackground = {
             'background-image': 'url(' + imageUrl + ')'
@@ -130,6 +130,9 @@ export class MapDetailComponent implements OnInit {
         }
         var squareSize = +this.mapForm.get('feet').value;
         this.dndMap = new DnDMap(0, this.heightWidth, squareSize); //id zero cannot exist in databse, so it will generate a new unique id)
+        var imageUrl = this.mapForm.get('imageUrl').value;
+        this.dndMap.setImage(imageUrl);
+
         this.setRows();
         this.calculateMapYards();
     }
