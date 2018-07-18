@@ -484,6 +484,7 @@ export class MapDetailComponent implements OnInit {
                 newPlayer.realSquareId = allPlayers[i]["realSquareId"];
                 newPlayer.isSelected = allPlayers[i]["isSelected"];
 
+
                 // get the right square, put the player in that square's players-list
                 var allSquares = this.dndMap.squares;
                 for (var j = 0 ; j < allSquares.length ; j++){
@@ -491,6 +492,7 @@ export class MapDetailComponent implements OnInit {
                         allSquares[j].addPhysical(newPlayer);
                     }
                 }
+                this.allCharacters.push(newPlayer);
             }
             this.rangeSquares = new Array();
         });
