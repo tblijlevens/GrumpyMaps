@@ -73,7 +73,7 @@ public class MapController {
 		  ArrayList<PlayerIds> playerIds = new ArrayList<>();
 		  System.out.println("Saving " + players.size() + " characters:");
 		 for (Player p : players){
-			 System.out.println("Character " + p.getName());
+			 System.out.println("- Character " + p.getName());
 			 Player retour = playerService.save(p);
 			 playerIds.add(new PlayerIds(retour.getId(), retour.getPlayerSquareId()));
 		 }
