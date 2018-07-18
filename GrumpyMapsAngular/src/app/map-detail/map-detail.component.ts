@@ -371,7 +371,6 @@ export class MapDetailComponent implements OnInit {
             this.dndMapService.savePlayers(players).subscribe((playerResult:number[]) => {
                 // give each player its real database id:
                 for (var j = 0 ; j<players.length ; j++){
-                    console.log(playerResult[j]["playerSquareId"] + " got id: " + playerResult[j]["id"]);
                     for (var k = 0 ; k<players.length ; k++){
                         if (players[j].playerSquareId == playerResult[k]["playerSquareId"]){
                             players[j].id = playerResult[k]["id"];

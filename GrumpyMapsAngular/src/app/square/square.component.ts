@@ -73,7 +73,6 @@ export class SquareComponent implements OnInit {
   }
   @Input() set setStyles(setstyles:boolean){
       this.deselectAll(); // ExpressionChangedAfterItHasBeenCheckedError is not thrown in production
-      console.log("setting styles");
       this.setObstructionStyle();
       this.setRangeSquareStyles();
   }
@@ -92,7 +91,6 @@ export class SquareComponent implements OnInit {
   }
 
   selectSquare() {
-//    console.log("inrange: " + this.square.inRange);
     this.mapShareService.setSquare(this.square); //update active square in squareDetail via mapShareService
 
     // move an object from a square to a square if movementMode is on
@@ -162,7 +160,6 @@ export class SquareComponent implements OnInit {
 
 
   public setRangeSquareStyles() {
-    //  console.log("settingstyles");
       if (this._inRangeSquares.length!=0){
           for(var i=0;i<this._inRangeSquares.length;i++){
               if (this._inRangeSquares[i].mapSquareId == this.square.mapSquareId){
@@ -201,13 +198,11 @@ export class SquareComponent implements OnInit {
 
   // all the mouseevents below make multiSelecting possible
   mouseDownSquare($event){
-      console.log("mousedown multiselect is: " + this.multiSelect);
       if (this.multiSelect){
           this.selecting=true;
           this.selectingEvent.emit(true);
       }
       if (!this.multiSelect){
-          console.log("resetting selection");
           this.selectedSquares = new Array();
           this.selectedSquares.push(this.square);
           this.selectedSquaresEvent.emit(this.selectedSquares);
@@ -252,7 +247,6 @@ export class SquareComponent implements OnInit {
           if (index > -1) {
               this.selectedSquares.splice(index, 1);
           }
-          console.log("removing from selection " + this.square.mapCoordinate);
       }
       else if (!this.deselecting){
           var allSquares = "";
@@ -260,9 +254,7 @@ export class SquareComponent implements OnInit {
           for (var i = 0 ; i < this.selectedSquares.length ; i++){
               allSquares+= this.selectedSquares[i].mapCoordinate + " ";
           }
-          console.log("adding to selection " + this.square.mapCoordinate);
 
-          console.log(allSquares);
       }
   }
 
