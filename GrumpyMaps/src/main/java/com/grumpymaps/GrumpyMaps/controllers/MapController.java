@@ -91,7 +91,7 @@ public class MapController {
 	  @RequestMapping(value = "/square/{mapId}", method = RequestMethod.GET)
 	  public List<Square> findMapSquares(@PathVariable("mapId") Integer mapId) {
 		  List<Square> mapSquares = (List<Square>)squareService.findByMapId(mapId);
-		  System.out.println("Loading " + mapSquares.size() + " squares");
+		  System.out.println("Loading " + mapSquares.size() + " squares for map " + mapId);
 	    return mapSquares;
 	  }
 
@@ -99,7 +99,7 @@ public class MapController {
 	  @RequestMapping(value = "/players/{mapId}", method = RequestMethod.GET)
 	  public List<Player> findMapPlayers(@PathVariable("mapId") Integer mapId) {
 		  List<Player> mapPlayers = (List<Player>)playerService.findByMapId(mapId);
-		  System.out.println("Loading " + mapPlayers.size() + " characters");
+		  System.out.println("Loading " + mapPlayers.size() + " characters for map " + mapId);
 	    return mapPlayers;
 	  }
 
