@@ -118,7 +118,7 @@ export class SquareDetailComponent implements OnInit {
 
       if (this.selectedSquares.length>1){
           for (var i = 0 ; i < this.selectedSquares.length ; i++){
-              var player:Player = new Player(this.playerIdGenerator--, this.playerIdCreator++, name+" "+i, 100, movement, 3, 2, "physical", color, this.square.mapSquareId, this.square.mapHeightWidth, this.square.mapCoordinate, this.selectedFile);
+              var player:Player = new Player(this.playerIdGenerator--, this.playerIdCreator++, name+" "+i, 100, movement, 3, 2, "physical", color, this.square.mapSquareId, this.square.mapHeightWidth, this.square.mapCoordinate, this.selectedFile, this.square.mapId);
               if (player.playerIcon!=null){
                   this.setPlayerIconUrl(player);
               }
@@ -129,7 +129,7 @@ export class SquareDetailComponent implements OnInit {
           this.setSquareStyles();
       }
       else{
-          var player:Player = new Player(this.playerIdGenerator--, this.playerIdCreator++, name, 100, movement, 3, 2, "physical", color, this.square.mapSquareId, this.square.mapHeightWidth, this.square.mapCoordinate, this.selectedFile);
+          var player:Player = new Player(this.playerIdGenerator--, this.playerIdCreator++, name, 100, movement, 3, 2, "physical", color, this.square.mapSquareId, this.square.mapHeightWidth, this.square.mapCoordinate, this.selectedFile, this.square.mapId);
           if (player.playerIcon!=null){
               this.setPlayerIconUrl(player);
           }

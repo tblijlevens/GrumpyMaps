@@ -44,6 +44,11 @@ getMapSquares(mapId:number): Observable<Square[]>  {
     return <Observable<Square[]>>this.http.get('http://localhost:8080/square/'+mapId);
 }
 
+getAllPlayers(mapId:number): Observable<Player[]>  {
+    console.log("getting all players from map " + mapId);
+    return <Observable<Player[]>>this.http.get('http://localhost:8080/players/'+mapId);
+}
+
 findPlayerByRealSquareId(sqId:number): Observable<Player>  {
     console.log("getting a player");
     return <Observable<Player>>this.http.get('http://localhost:8080/player/'+sqId);

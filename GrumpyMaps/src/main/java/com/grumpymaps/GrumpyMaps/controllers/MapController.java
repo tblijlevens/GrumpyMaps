@@ -94,6 +94,14 @@ public class MapController {
 	  }
 
 	  @ResponseBody
+	  @RequestMapping(value = "/players/{mapId}", method = RequestMethod.GET)
+	  public List<Player> findMapPlayers(@PathVariable("mapId") Integer mapId) {
+		  List<Player> mapPlayers = (List<Player>)playerService.findByMapId(mapId);
+		  System.out.println("retrieved " + mapPlayers.size() + " players");
+	    return mapPlayers;
+	  }
+
+	  @ResponseBody
 	  @RequestMapping(value = "/player/{sqId}", method = RequestMethod.GET)
 	  public Player findPlayerByRealSquareId(@PathVariable("sqId") Integer sqId) {
 		  System.out.println("trying to retrieve player from square: " + sqId);

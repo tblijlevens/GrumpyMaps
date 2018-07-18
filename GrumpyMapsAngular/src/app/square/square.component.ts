@@ -72,9 +72,7 @@ export class SquareComponent implements OnInit {
      // }
   }
   @Input() set setStyles(setstyles:boolean){
-      if (this.selectedSquares.length > 0){
-         this.deselectAll();
-      }
+      this.deselectAll(); // ExpressionChangedAfterItHasBeenCheckedError is not thrown in production
       console.log("setting styles");
       this.setObstructionStyle();
       this.setRangeSquareStyles();

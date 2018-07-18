@@ -20,8 +20,9 @@ export class Player implements Physical{
     mapSquareId:number;
     realSquareId:number;
     squareMapCoordinate:string;
+    mapId:number;
 
-    constructor(id, playerSquareId, name, actionPoints, movementAmount, attacksPerRound, spellsPerRound, type, color, mapSquareId, mapHeightWidth, squareMapCoordinate, playerIcon){
+    constructor(id, playerSquareId, name, actionPoints, movementAmount, attacksPerRound, spellsPerRound, type, color, mapSquareId, mapHeightWidth, squareMapCoordinate, playerIcon, mapId){
         this.id = id;
         this.name = name;
         this.actionPoints = actionPoints;
@@ -40,6 +41,7 @@ export class Player implements Physical{
         this.playerSquareId = playerSquareId;
         this.squareMapCoordinate = squareMapCoordinate;
         this.playerIcon = playerIcon;
+        this.mapId = mapId;
         this.setActiveColor();
     }
     getName(){
