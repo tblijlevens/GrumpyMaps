@@ -51,23 +51,33 @@ export class Player implements Physical{
         this.mapSquareId = activeSquare;
     }
 
-    getMoveRange(){
+    getMoveRange(currentSquareSize:number){
+        var movementLeft = this.movementAmount*(this.actionPoints/100)
+        var relativeMoveSpeed = +(movementLeft/currentSquareSize).toFixed(0);
         var moveRange = new Array();
-        for (var i = -this.movementAmount ; i <= this.movementAmount ; i++){
+        for (var i = -relativeMoveSpeed ; i <= relativeMoveSpeed ; i++){
             var availableSquare = this.mapSquareId + (i*this.mapHeightWidth);
 
             if(i<=0){
-                for (var j=-i-this.movementAmount ; j<= i+this.movementAmount ; j++){
+                for (var j=-i-relativeMoveSpeed ; j<= i+relativeMoveSpeed ; j++){
                     moveRange.push(availableSquare+j);
                 }
             }
             if(i>0){
-                for (var j=i-this.movementAmount ; j<= this.movementAmount-i ; j++){
+                for (var j=i-relativeMoveSpeed ; j<= relativeMoveSpeed-i ; j++){
                     moveRange.push(availableSquare+j);
                 }
             }
         }
         return moveRange;
+    }
+
+    movePlayer(yardsMoved:number){
+        console.log("Actionpoints before move: " + this.actionPoints);
+        var percentageMoved = yardsMoved/this.movementAmount;
+        console.log("moved " + percentageMoved + "%");
+        this.actionPoints -= +(100*percentageMoved).toFixed(0);
+        console.log("Actionpoints after move: " + this.actionPoints);
     }
 
     setActiveColor(){

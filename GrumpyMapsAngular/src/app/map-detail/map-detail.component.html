@@ -18,11 +18,11 @@
     <div id="legend" >
         <div class="legend" [style.width]=dndMap.squares[0].squareHeightWidth></div>
         <div>
-            {{dndMap.squares[0].squareSize}} feet ({{squareYards}} yards)
+            {{dndMap.squares[0].squareSize}} yards ({{squareFeet}} feet)
         </div>
         <div class="legend"></div>
         <div style="text-align:center;">
-            {{(dndMap.squares[0].squareSize) * heightWidth}} feet ({{mapYards}} yards)
+            {{(dndMap.squares[0].squareSize) * heightWidth}} yards ({{mapFeet}} feet)
         </div>
     </div>
 </div>
@@ -49,12 +49,12 @@
         </label>
         <br>
         <button (click)="uploadImage()" class="btn btn-success">Select image</button><br><br>
-        <label class="center-block"><b>Height/Width:</b>
-            <input class="form-control" formControlName="heightwidth" type="number" min="5" max="24" (change)="setMapHeightWidth()" (click)="setMapHeightWidth()">
+        <label class="center-block"><b>Amount of tiles (grid density): {{heightWidth}}x{{heightWidth}}</b>
+            <input class="form-control" formControlName="heightwidth" type="number" min="5" max="24" (change)="setMapHeightWidth()" (click)="setMapHeightWidth()" >
         </label>
         <br>
-        <label class="center-block"><b>In-game square size (ft):</b>
-            <input class="form-control" formControlName="feet" type="number" min="1" max="100" (change)="setSquareSize()"  (click)="setSquareSize()">{{squareYards}} yards
+        <label class="center-block"><b>In-game square size (yards):</b>
+            <input class="form-control" formControlName="yards" type="number" min="1" max="100" (change)="setSquareSize()"  (click)="setSquareSize()">{{squareFeet}} feet
         </label>
         <br>
 

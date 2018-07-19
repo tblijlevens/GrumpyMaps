@@ -68,7 +68,7 @@ export class SquareDetailComponent implements OnInit {
   ngOnInit() {
       this.mapShareService.squareUpdated.subscribe(square => {this.square =square});
       this.createPlayerForm.get('playerColor').setValue("#ff0000");
-      this.createPlayerForm.get('playerMovement').setValue(1);
+      this.createPlayerForm.get('playerMovement').setValue(10);
   }
   createImageForm() {
       this.imageForm = this.fb.group({
@@ -177,7 +177,7 @@ export class SquareDetailComponent implements OnInit {
 
   clearAllFields(){
       this.createPlayerForm.get('playerName').setValue("");
-      this.createPlayerForm.get('playerMovement').setValue(1);
+      this.createPlayerForm.get('playerMovement').setValue(10);
       this.createItemForm.get('itemName').setValue("");
       this.createItemForm.get('itemAmount').setValue(1);
   }
@@ -204,7 +204,7 @@ export class SquareDetailComponent implements OnInit {
       }
   }
   showRange(player:Player){
-      var allRangeSquares = player.getMoveRange();
+      var allRangeSquares = player.getMoveRange(this.square.squareSize);
       this.setRangeSquaresEvent.emit(allRangeSquares);
   }
 

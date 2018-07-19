@@ -47,7 +47,7 @@ $( "#row3" ).mouseover(function() {}
 export class MapDetailComponent implements OnInit {
     mapForm = new FormGroup({
         heightwidth: new FormControl(),
-        feet: new FormControl(),
+        yards: new FormControl(),
         imageUrl: new FormControl(),
         gridToggle: new FormControl(),
         obstructToggle: new FormControl(),
@@ -76,8 +76,8 @@ export class MapDetailComponent implements OnInit {
     selectedPlayer:Player;
     squareBorderStyle = {};
     rowStyles = {};
-    mapYards:number;
-    squareYards:number;
+    mapFeet:number;
+    squareFeet:number;
     multiSelect:boolean=false;
     selecting:boolean=false;
     deselecting:boolean=false;
@@ -91,12 +91,12 @@ export class MapDetailComponent implements OnInit {
 
     ngOnInit() {
         this.loadMap();
-        this.dndMap = new DnDMap(0, this.heightWidth, 5); //id zero cannot exist in databse, so it will generate a new unique id)
         this.mapForm.get('heightwidth').setValue(10);
-        this.mapForm.get('feet').setValue(5);
+        this.mapForm.get('yards').setValue(5);
         this.mapForm.get('gridToggle').setValue(true);
+        this.dndMap = new DnDMap(0, this.heightWidth, this.mapForm.get('yards').value); //id zero cannot exist in databse, so it will generate a new unique id)
         this.setRows();
-        this.calculateMapYards();
+        this.calculateMapFeet();
         var mapHeight = $(".mapcontainer").css('height');
         $(".mapcontainer").css({width: mapHeight});
     }
@@ -128,16 +128,16 @@ export class MapDetailComponent implements OnInit {
             this.heightWidth = 25;
             // alert("Map gridsize can't be bigger than 25x25. Therefore gridsize is set to 25x25.");
         }
-        var squareSize = +this.mapForm.get('feet').value;
+        var squareSize = +this.mapForm.get('yards').value;
         this.dndMap = new DnDMap(0, this.heightWidth, squareSize); //id zero cannot exist in databse, so it will generate a new unique id)
         var imageUrl = this.mapForm.get('imageUrl').value;
         this.dndMap.setImage(imageUrl);
 
         this.setRows();
-        this.calculateMapYards();
+        this.calculateMapFeet();
     }
     setSquareSize(){
-        var squareSize = +this.mapForm.get('feet').value;
+        var squareSize = +this.mapForm.get('yards').value;
         if (!squareSize) {
             squareSize = 3;
             // alert("Square size wasn't set and is now defaulted to 3.");
@@ -146,13 +146,13 @@ export class MapDetailComponent implements OnInit {
         for (var i = 0 ; i < squares.length ; i++){
             squares[i].squareSize = squareSize;
         }
-        this.calculateMapYards();
+        this.calculateMapFeet();
 
     }
 
-    private calculateMapYards(){
-        this.mapYards = +(this.dndMap.squares[0].squareSize*this.heightWidth/3).toFixed(1);
-        this.squareYards = +(this.dndMap.squares[0].squareSize/3).toFixed(1);
+    private calculateMapFeet(){
+        this.mapFeet = +(this.dndMap.squares[0].squareSize*this.heightWidth*3).toFixed(1);
+        this.squareFeet = +(this.dndMap.squares[0].squareSize*3).toFixed(1);
         this.legendSquare['width'] = this.dndMap.squares[0].squareHeightWidth;
     }
 
@@ -198,7 +198,7 @@ export class MapDetailComponent implements OnInit {
         }
     }
     showRange(player:Player){
-        this.receiveRangeSquares(player.getMoveRange());
+        this.receiveRangeSquares(player.getMoveRange(+this.mapForm.get('yards').value));
     }
 
     moveCharacter() {
@@ -413,7 +413,7 @@ export class MapDetailComponent implements OnInit {
                 this.dndMap = new DnDMap(this.selectedLoadMap,this.heightWidth, 5);
                 this.dndMap.name = name;
                 this.mapForm.get('heightwidth').setValue(this.heightWidth);
-                this.mapForm.get('feet').setValue(5);
+                this.mapForm.get('yards').setValue(5);
                 this.mapForm.get('imageUrl').setValue(image);
                 this.uploadImage();
                 //squaresize moet in dndMap opgeslagen
@@ -447,7 +447,7 @@ export class MapDetailComponent implements OnInit {
             allMapSquares = allMapSquares.sort((a, b) => a.mapSquareId < b.mapSquareId ? -1 : a.mapSquareId > b.mapSquareId ? 1 : 0);
 
             this.dndMap.squares = allMapSquares;
-            this.mapForm.get('feet').setValue(this.dndMap.squares[0].squareSize);
+            this.mapForm.get('yards').setValue(this.dndMap.squares[0].squareSize);
             this.setSquareSize();
             this.setRows();
 
