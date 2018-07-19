@@ -8,6 +8,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import java.io.File;
+import javax.swing.ImageIcon;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.grumpymaps.GrumpyMaps.model.Image;
 
 @Entity
 public class Player implements Physical{
@@ -17,8 +21,8 @@ public class Player implements Physical{
     private long id;
     private int playerSquareId;
     private String name;
-    private File playerIcon;
-    private String playerIconUrl;
+    private byte[] playerIcon;
+    //private String playerIconUrl;
     private int actionPoints;
     private int movementAmount;
     private int attacksPerRound;
@@ -86,7 +90,7 @@ public class Player implements Physical{
 	* Returns value of playerIcon
 	* @return
 	*/
-	public File getPlayerIcon() {
+	public byte[] getPlayerIcon() {
 		return playerIcon;
 	}
 
@@ -94,25 +98,26 @@ public class Player implements Physical{
 	* Sets new value of playerIcon
 	* @param
 	*/
-	public void setPlayerIcon(File playerIcon) {
-		this.playerIcon = playerIcon;
+    @JsonProperty("image")
+	public void setPlayerIcon(Image playerIcon) {
+		this.playerIcon = playerIcon.getImage();
 	}
 
-    /**
-    * Returns value of playerIconUrl
-    * @return
-    */
-    public String getPlayerIconUrl() {
-        return playerIconUrl;
-    }
-
-    /**
-    * Sets new value of playerIconUrl
-    * @param
-    */
-    public void setPlayerIconUrl(String playerIconUrl) {
-        this.playerIconUrl = playerIconUrl;
-    }
+    // /**
+    // * Returns value of playerIconUrl
+    // * @return
+    // */
+    // public String getPlayerIconUrl() {
+    //     return playerIconUrl;
+    // }
+    //
+    // /**
+    // * Sets new value of playerIconUrl
+    // * @param
+    // */
+    // public void setPlayerIconUrl(String playerIconUrl) {
+    //     this.playerIconUrl = playerIconUrl;
+    // }
 
 	/**
 	* Returns value of actionPoints

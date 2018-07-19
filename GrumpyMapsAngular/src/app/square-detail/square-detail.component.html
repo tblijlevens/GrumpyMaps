@@ -8,6 +8,7 @@
         <span *ngFor="let player of square.players" (click)="clickPlayer(player)">
             <span id="playerDetail{{player.id}}" class="playerNameDetail"[style.color]=player.color> {{player.name}} </span> &nbsp;
             <img width="100" src="{{player.playerIconUrl}}" /><br />
+            {{player.playerIcon}}
         </span>
     </span><br>
 <hr class="my-4">

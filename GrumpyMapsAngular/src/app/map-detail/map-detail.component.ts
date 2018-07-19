@@ -363,6 +363,7 @@ export class MapDetailComponent implements OnInit {
                     square.players[h].realSquareId = square.id;
                     square.players[h].mapId = square.mapId;
                     players.push(square.players[h]);
+                    console.log("playericon: " + square.players[h].playerIcon);
                 }
             }
         }
@@ -464,6 +465,7 @@ export class MapDetailComponent implements OnInit {
     }
 
     getPlayers(){
+        this.allCharacters = new Array();
         this.dndMapService.getAllPlayers(this.selectedLoadMap).subscribe(allPlayers => {
             // create a player for each retreived player
             for (var i = 0 ; i < allPlayers.length ; i++){
@@ -485,7 +487,9 @@ export class MapDetailComponent implements OnInit {
                 )
                 newPlayer.realSquareId = allPlayers[i]["realSquareId"];
                 newPlayer.isSelected = allPlayers[i]["isSelected"];
+                // newPlayer.playerIconUrl = allPlayers[i]["playerIconUrl"];
 
+                //console.log("players iconUrl is: " + newPlayer.playerIconUrl);
 
                 // get the right square, put the player in that square's players-list
                 var allSquares = this.dndMap.squares;

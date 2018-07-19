@@ -34,6 +34,7 @@ public class MapController {
 	@Autowired
 	private PlayerService playerService;
 
+
 	  @ResponseBody
 	  @RequestMapping(value = "/test", method = RequestMethod.GET)
 	  public  String  test() {
@@ -75,6 +76,7 @@ public class MapController {
 		 for (Player p : players){
 			 System.out.println("- Character " + p.getName());
 			 Player retour = playerService.save(p);
+			 System.out.println("- image " + retour.getPlayerIcon());
 			 playerIds.add(new PlayerIds(retour.getId(), retour.getPlayerSquareId()));
 		 }
 		return playerIds;

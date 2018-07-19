@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { MapShareService } from '../map-share.service';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { Square } from '../domain/square';
 import { Player } from '../domain/player';
 import * as $ from 'jquery';
@@ -37,6 +37,10 @@ export class SquareDetailComponent implements OnInit {
   playerNameColor = {};
   playerIdGenerator:number=0;
   selectedFile:File = null;
+  iconUrl;
+  fileName;
+  fileType;
+  fileValue;
 
   createPlayerForm = new FormGroup({
     playerName: new FormControl(),
@@ -55,14 +59,24 @@ export class SquareDetailComponent implements OnInit {
       objectAmount: new FormControl()
   });
 
-  constructor(private mapShareService: MapShareService) { }
+  imageForm:FormGroup;
+
+  constructor(private mapShareService: MapShareService, private fb: FormBuilder) {
+    this.createImageForm();
+  }
 
   ngOnInit() {
       this.mapShareService.squareUpdated.subscribe(square => {this.square =square});
       this.createPlayerForm.get('playerColor').setValue("#ff0000");
       this.createPlayerForm.get('playerMovement').setValue(1);
   }
+  createImageForm() {
+      this.imageForm = this.fb.group({
+        image: null
+      });
+    }
 
+// TODO try sending it as FormData: https://nehalist.io/uploading-files-in-angular2/
   onFileChanged(event) {
       // This grabs the file contents when the file changes
       this.selectedFile = event.target.files[0];
@@ -70,22 +84,42 @@ export class SquareDetailComponent implements OnInit {
       // Instantiate FileReader
       var reader = new FileReader();
       reader.onload = ()=> {
-          var iconUrl = reader.result;
+          this.iconUrl = reader.result;
           // Update the output to include the <img> tag with the data URL as the source
-          $("#showPic").html("<img width='100' src='"+iconUrl+"' />");
+          $("#showPic").html("<img width='100' src='"+this.iconUrl+"' />");
+          this.fileName = this.selectedFile.name;
+          this.fileType = this.selectedFile.type;
+          this.fileValue = reader.result.split(',')[1];
+          console.log(this.fileName);
+          console.log(this.fileType);
+          //console.log(this.fileValue);
       };
       // Produce a data URL (base64 encoded string of the data in the file)
       // We are retrieving the first file from the FileList object
       reader.readAsDataURL(this.selectedFile);
+
+      //might only need the following:
+      if(event.target.files.length > 0) {
+     let file = event.target.files[0];
+     this.imageForm.get('image').setValue(file);
+   }
   }
 
+  private prepareSave(): any {
+      let input = new FormData();
+      input.append('image', this.imageForm.get('image').value);
+      return input;
+    }
 
   setPlayerIconUrl(player:Player){
-      var reader = new FileReader();
-      reader.onload = ()=>{
-          player.playerIconUrl = reader.result;
-      };
-      reader.readAsDataURL(player.playerIcon);
+    //   var reader = new FileReader();
+    //   reader.onload = ()=>{
+    //       player.playerIconUrl = reader.result;
+    //   };
+    //   reader.readAsDataURL(player.playerIcon);
+
+    player.playerIconUrl = this.iconUrl;
+    //console.log("players iconUrl set to: " + player.playerIconUrl);
   }
 
   private setSquareStyles(){
@@ -115,7 +149,8 @@ export class SquareDetailComponent implements OnInit {
       const name = this.createPlayerForm.get('playerName').value;
       const color = this.createPlayerForm.get('playerColor').value;
       const movement = +this.createPlayerForm.get('playerMovement').value;
-
+      const imageFormModel = this.prepareSave();
+      console.log("imageFormModel: " + imageFormModel);
       if (this.selectedSquares.length>1){
           for (var i = 0 ; i < this.selectedSquares.length ; i++){
               var player:Player = new Player(this.playerIdGenerator--, this.playerIdCreator++, name+" "+i, 100, movement, 3, 2, "physical", color, this.square.mapSquareId, this.square.mapHeightWidth, this.square.mapCoordinate, this.selectedFile, this.square.mapId);
