@@ -6,7 +6,7 @@ export class Square {
   mapCoordinate:string;
   squareHeightWidth: string;
   squareSize: number;
-  currentDistance:number;
+  currentDistance:number = 9999;
   mapHeightWidth: number;
   obstructed: boolean = false;
   inRange: boolean = false;

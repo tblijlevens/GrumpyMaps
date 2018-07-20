@@ -1,5 +1,5 @@
 <div id='squarecontainer' class="square noselect" [ngStyle]="squareStyles" (click)=selectSquare() (mousedown)="mouseDownSquare($event)" (mouseup)="mouseUpSquare()"   (mouseover)="mouseOverSquare()" (mouseout)="mouseOutSquare()" (contextmenu)="deselectAll()">
-    <span *ngIf="_inRangeSquares.length!=0">{{square.mapCoordinate}}</span><br>
+    <span *ngIf="square.currentDistance!=9999">{{square.mapCoordinate}} {{square.currentDistance}} y</span><br>
     <div id="objectsInSquare" *ngIf="square.players.length!=0">
         <div class="playerDot" *ngFor="let player of square.players" [style.background-color]=player.color id="playerDot{{player.id}}"></div>
     </div>

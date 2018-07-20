@@ -103,7 +103,7 @@ export class Player{
                 // put in range tiles in the moveRange variable to return:
                 if (distance <= this.movementLeft){
                     //set the distance of the square:
-                    allSquares[i].currentDistance = distance;
+                    allSquares[i].currentDistance = +distance.toFixed(1);
                     moveRange.push(allSquares[i].mapSquareId);
                 }
             }
