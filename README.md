@@ -1,5 +1,7 @@
 # GrumpyMaps
 
+Online demo: www.umanise.nl/grumpymaps
+
 A flexible interactive battle map for turn based Dungeons and Dragons battles, in the browser. 
 
 **(Future) Features:**
