@@ -1,7 +1,7 @@
-import {Physical} from './physical';
+import {Square} from './square';
 import * as $ from 'jquery';
 
-export class Player implements Physical{
+export class Player{
 
     id:number;
     playerSquareId:number
@@ -10,6 +10,7 @@ export class Player implements Physical{
     playerIconUrl:string;
     actionPoints:number;
     movementAmount:number;
+    movementLeft:number;
     attacksPerRound:number;
     spellsPerRound:number;
     type:string;
@@ -27,6 +28,7 @@ export class Player implements Physical{
         this.name = name;
         this.actionPoints = actionPoints;
         this.movementAmount = movementAmount;
+        this.movementLeft = movementAmount;
         this.isSelected = false;
         this.attacksPerRound = attacksPerRound;
         this.spellsPerRound = spellsPerRound;
@@ -51,33 +53,72 @@ export class Player implements Physical{
         this.mapSquareId = activeSquare;
     }
 
-    getMoveRange(currentSquareSize:number){
-        var movementLeft = this.movementAmount*(this.actionPoints/100)
-        var relativeMoveSpeed = +(movementLeft/currentSquareSize).toFixed(0);
+    getMoveRange(currentSquareSize:number, allSquares:Square[]){
+        // calculate movementleft based on actionPoints:
+        this.movementLeft = this.movementAmount*(this.actionPoints/100);
+        // calculate relativeMoveSpeed based on tile width
+        var relativeMoveSpeed = +(this.movementLeft/currentSquareSize).toFixed(0);
         var moveRange = new Array();
-        for (var i = -relativeMoveSpeed ; i <= relativeMoveSpeed ; i++){
-            var availableSquare = this.mapSquareId + (i*this.mapHeightWidth);
 
-            if(i<=0){
-                for (var j=-i-relativeMoveSpeed ; j<= i+relativeMoveSpeed ; j++){
-                    moveRange.push(availableSquare+j);
+        //get row and column of players current position coordinates:
+        var rowNumber = this.squareMapCoordinate.split(":")[0].charCodeAt(0);
+        var column = +this.squareMapCoordinate.split(":")[1];
+
+        // calculate distance of elligable tiles:
+        for (var i = 0 ; i < allSquares.length ; i++){
+            var targetRowNumber = allSquares[i].mapCoordinate.split(":")[0].charCodeAt(0);
+            var targetColumn = +allSquares[i].mapCoordinate.split(":")[1];
+
+            var rowDif = this.getDifference(rowNumber, targetRowNumber);
+            var colDif = this.getDifference(column, targetColumn);
+
+            // make selection of tiles to do calculations on smaller:
+            if (rowDif<=relativeMoveSpeed && colDif<=relativeMoveSpeed){
+
+                var distance = 0;
+                if (rowDif == 0){
+                    distance = colDif*currentSquareSize
                 }
-            }
-            if(i>0){
-                for (var j=i-relativeMoveSpeed ; j<= relativeMoveSpeed-i ; j++){
-                    moveRange.push(availableSquare+j);
+                if (colDif == 0 && rowDif!=0){
+                    distance = rowDif*currentSquareSize
+                }
+
+                // when diagonal movement calc distance based on a^2+b^2=c^2
+                // just a diagonal line:
+                if (colDif == rowDif && colDif !=0){
+                    var squaredTileSize = Math.pow(currentSquareSize,2);
+                    distance = colDif * Math.sqrt(squaredTileSize+squaredTileSize);
+                }
+
+                // combination of diagonal and vertical/horizontal line
+                if (colDif!=rowDif && colDif>0 && rowDif>0){
+                    var minimum = Math.min(colDif,rowDif);
+                    var maximum = Math.max(colDif,rowDif);
+                    var squaredTileSize = Math.pow(currentSquareSize,2);
+                    var diagonal = minimum * Math.sqrt(squaredTileSize+squaredTileSize);
+                    var straight = (maximum-minimum)*currentSquareSize;
+                    distance=diagonal+straight;
+                }
+
+                // put in range tiles in the moveRange variable to return:
+                if (distance <= this.movementLeft){
+                    //set the distance of the square:
+                    allSquares[i].currentDistance = distance;
+                    moveRange.push(allSquares[i].mapSquareId);
                 }
             }
         }
+
         return moveRange;
     }
-
+    getDifference(num1, num2){
+    return (num1 > num2)? num1-num2 : num2-num1
+  }
     movePlayer(yardsMoved:number){
-        console.log("Actionpoints before move: " + this.actionPoints);
+        this.movementLeft = this.movementAmount*(this.actionPoints/100);
         var percentageMoved = yardsMoved/this.movementAmount;
-        console.log("moved " + percentageMoved + "%");
         this.actionPoints -= +(100*percentageMoved).toFixed(0);
-        console.log("Actionpoints after move: " + this.actionPoints);
+        this.movementLeft = this.movementAmount*(this.actionPoints/100);
     }
 
     setActiveColor(){

@@ -116,19 +116,9 @@ export class SquareComponent implements OnInit {
           }
       }
       if (squareIdInRange) {
-          //calculate the distance moved:
-          var fromRowNumber = this.selectedPlayer.squareMapCoordinate.split(":")[0].charCodeAt(0);
-          var fromColumn = +this.selectedPlayer.squareMapCoordinate.split(":")[1];
-
-          var toRowNumber = this.square.mapCoordinate.split(":")[0].charCodeAt(0);
-          var toColumn = +this.square.mapCoordinate.split(":")[1];
-
-          var rowDif = this.getDifference(fromRowNumber, toRowNumber);
-          var colDif = this.getDifference(fromColumn, toColumn);
-          var biggestDistance = Math.max(rowDif, colDif);;
 
           //move player for that distance:
-          this.selectedPlayer.movePlayer(biggestDistance*this.square.squareSize);
+          this.selectedPlayer.movePlayer(this.square.currentDistance);
 
           // add player to this square:
           this.square.addPhysical(this.selectedPlayer);

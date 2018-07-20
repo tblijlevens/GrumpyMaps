@@ -94,7 +94,7 @@
 <div id="secondColumn" (click)="hideSettings()">
     <div class="squaredetailcontainer contentBox" id="squareDetails">
         <span class="lead" style="font-weight:bold;">Tile Details:</span>
-        <app-square-detail [_selectedSquares]=selectedSquares [_allCharacters]=allCharacters [selectedPlayer]=selectedPlayer [setStyles]=setStyles (setStylesEvent)="receiveSetStyles($event)" (moveModeEvent)="receiveMoveMode($event)" (setRangeSquaresEvent)="receiveRangeSquares($event)" (setPlayerToMoveEvent)="receivePlayerToMove($event)" (playerAddedEvent)="playerAdded($event)" ></app-square-detail>
+        <app-square-detail [allSquares]=dndMap.squares [_selectedSquares]=selectedSquares [_allCharacters]=allCharacters [selectedPlayer]=selectedPlayer [setStyles]=setStyles (setStylesEvent)="receiveSetStyles($event)" (moveModeEvent)="receiveMoveMode($event)" (setRangeSquaresEvent)="receiveRangeSquares($event)" (setPlayerToMoveEvent)="receivePlayerToMove($event)" (playerAddedEvent)="playerAdded($event)" ></app-square-detail>
     </div>
 </div>
 

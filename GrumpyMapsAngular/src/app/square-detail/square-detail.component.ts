@@ -14,6 +14,7 @@ import * as $ from 'jquery';
 export class SquareDetailComponent implements OnInit {
 
   square: Square;
+  allSquares:Square[] = new Array();
   private selectedSquares:Square[];
   @Input() set _selectedSquares(selectedSquares: Square[]) {
       this.square = selectedSquares[0];
@@ -204,7 +205,7 @@ export class SquareDetailComponent implements OnInit {
       }
   }
   showRange(player:Player){
-      var allRangeSquares = player.getMoveRange(this.square.squareSize);
+      var allRangeSquares = player.getMoveRange(this.square.squareSize, this.allSquares);
       this.setRangeSquaresEvent.emit(allRangeSquares);
   }
 
