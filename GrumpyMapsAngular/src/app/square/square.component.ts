@@ -29,6 +29,7 @@ export class SquareComponent implements OnInit {
       this._squareHeightWidth = squareHeightWidth;
       this.squareStyles['width'] = squareHeightWidth;
       this.setSquareMapCoordinates();
+      //this.setSquareLineHeight();
   }
   @Input() obstructionMode: boolean = false;
   @Input() movementMode: boolean;
@@ -90,6 +91,12 @@ export class SquareComponent implements OnInit {
 
   }
 
+  setSquareLineHeight(){
+      var lineHeight = ((+this._squareHeightWidth.split("%")[0])-1)+"px";
+      //console.log("linehight is " + lineHeight);
+      $(".square").css({"line-height":lineHeight});
+  }
+
   selectSquare() {
     this.mapShareService.setSquare(this.square); //update active square in squareDetail via mapShareService
 
@@ -122,8 +129,9 @@ export class SquareComponent implements OnInit {
 
           // add player to this square:
           this.square.addPhysical(this.selectedPlayer);
+
       }
-      else {
+      else { // set char back on tile it came from
           var movingPlayerSquareID = this.selectedPlayer.mapSquareId;
           for (var j = 0; j < this._inRangeSquares.length; j++) {
               if (movingPlayerSquareID == this._inRangeSquares[j].mapSquareId) {
@@ -135,8 +143,8 @@ export class SquareComponent implements OnInit {
   }
 
   getDifference(num1, num2){
-  return (num1 > num2)? num1-num2 : num2-num1
-}
+      return (num1 > num2)? num1-num2 : num2-num1
+  }
 
   private setObstruction(){
       var isObstructed = this.square.obstructed;
