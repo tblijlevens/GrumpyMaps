@@ -167,6 +167,7 @@ export class MapDetailComponent implements OnInit {
     // }
 
     clickPlayer(player: Player) {
+        this.resetAllDistances();
         this.deselectAllCharacters();
         this.setAllActiveColors();
         player.isSelected = true;
@@ -174,8 +175,12 @@ export class MapDetailComponent implements OnInit {
         this.selectedPlayer = player;
         this.setSelectedSquare();
         this.showRange(player);
-          }
-
+    }
+    resetAllDistances(){
+        for (var i=0 ; i<this.dndMap.squares.length ; i++){
+            this.dndMap.squares[i].currentDistance=9999;
+        }
+    }
     deselectAllCharacters(){
         for (var i=0 ; i<this.allCharacters.length;i++){
             this.allCharacters[i].isSelected=false;

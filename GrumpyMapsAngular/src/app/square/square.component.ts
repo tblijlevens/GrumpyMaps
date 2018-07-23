@@ -17,6 +17,7 @@ import * as $ from 'jquery';
 export class SquareComponent implements OnInit {
 
   @Input()  square: Square;
+  @Input() allSquares:Square[] = new Array();
   @Input() squareIndex:number;
   private rowIndex:number;
   @Input() set _rowIndex(rowIndex: number) {
@@ -97,6 +98,7 @@ export class SquareComponent implements OnInit {
     if (this.movementMode) {
         this.moveObject();
     }
+    this.resetAllDistances()
 
     // after moving the rangeSquares is always set to nothing so it stops showing range
     this.setRangeSquaresEvent.emit([0]);
@@ -139,6 +141,11 @@ export class SquareComponent implements OnInit {
       return (num1 > num2)? num1-num2 : num2-num1
   }
 
+  resetAllDistances(){
+      for (var i=0 ; i<this.allSquares.length ; i++){
+          this.allSquares[i].currentDistance=9999;
+      }
+  }
   private setObstruction(){
       var isObstructed = this.square.obstructed;
       if (!isObstructed) {
@@ -203,6 +210,7 @@ export class SquareComponent implements OnInit {
 
   deselectAll(){
       this.selectedSquaresEvent.emit(new Array());
+      this.resetAllDistances();
   }
 
   // all the mouseevents below make multiSelecting possible

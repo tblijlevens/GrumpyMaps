@@ -14,7 +14,7 @@ import * as $ from 'jquery';
 export class SquareDetailComponent implements OnInit {
 
   square: Square;
-  allSquares:Square[] = new Array();
+  @Input() allSquares:Square[] = new Array();
   private selectedSquares:Square[];
   @Input() set _selectedSquares(selectedSquares: Square[]) {
       this.square = selectedSquares[0];

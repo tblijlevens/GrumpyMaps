@@ -9,7 +9,7 @@
         </div>
         <div *ngFor="let j of rowArray" id="row_{{j}}" class="row" [ngStyle]="rowStyles">
             <div class="square">
-                <app-square *ngFor="let square of dndMap.squares | slice:(j-1)*heightWidth:j*heightWidth; index as i" [squareHeightWidth]=square.squareHeightWidth [square]=square [squareIndex]=i [_rowIndex]=j [obstructionMode]=obstructionMode [inRangeSquares]=rangeSquares [movementMode]=movementMode [selectedPlayer]=selectedPlayer [_squareBorderStyles]=squareBorderStyle [_selectedSquares]=selectedSquares [selecting]=selecting [deselecting]=deselecting [_multiSelect]=multiSelect [setStyles]=setStyles (moveModeEvent)="receiveMoveMode($event)" (setRangeSquaresEvent)="receiveRangeSquares($event)" (selectedSquaresEvent)="receiveSelectedSquares($event)"
+                <app-square *ngFor="let square of dndMap.squares | slice:(j-1)*heightWidth:j*heightWidth; index as i" [squareHeightWidth]=square.squareHeightWidth [square]=square [allSquares]=dndMap.squares [squareIndex]=i [_rowIndex]=j [obstructionMode]=obstructionMode [inRangeSquares]=rangeSquares [movementMode]=movementMode [selectedPlayer]=selectedPlayer [_squareBorderStyles]=squareBorderStyle [_selectedSquares]=selectedSquares [selecting]=selecting [deselecting]=deselecting [_multiSelect]=multiSelect [setStyles]=setStyles (moveModeEvent)="receiveMoveMode($event)" (setRangeSquaresEvent)="receiveRangeSquares($event)" (selectedSquaresEvent)="receiveSelectedSquares($event)"
                 (selectingEvent)="receiveSelecting($event)" (deselectingEvent)="receiveDeselecting($event)" ></app-square>
             </div>
         </div>
