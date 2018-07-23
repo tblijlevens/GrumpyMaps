@@ -101,7 +101,7 @@ export class SquareComponent implements OnInit {
     this.resetAllDistances()
 
     // after moving the rangeSquares is always set to nothing so it stops showing range
-    this.setRangeSquaresEvent.emit([0]);
+    this.setRangeSquaresEvent.emit(new Array());
     if (this.selectedPlayer!=null){
         this.selectedPlayer.isSelected = false;
         this.selectedPlayer.setActiveColor();

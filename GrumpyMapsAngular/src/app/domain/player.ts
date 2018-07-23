@@ -104,7 +104,7 @@ export class Player{
                 if (distance <= this.movementLeft){
                     //set the distance of the square:
                     allSquares[i].currentDistance = +distance.toFixed(1);
-                    moveRange.push(allSquares[i].mapSquareId);
+                    moveRange.push(allSquares[i]);
                 }
             }
         }

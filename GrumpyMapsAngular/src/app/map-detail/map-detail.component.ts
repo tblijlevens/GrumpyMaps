@@ -202,7 +202,9 @@ export class MapDetailComponent implements OnInit {
         }
     }
     showRange(player:Player){
-        this.receiveRangeSquares(player.getMoveRange(+this.mapForm.get('yards').value, this.dndMap.squares));
+
+        this.rangeSquares = player.getMoveRange(+this.mapForm.get('yards').value, this.dndMap.squares);
+
     }
 
     moveCharacter() {
@@ -215,31 +217,7 @@ export class MapDetailComponent implements OnInit {
         this.movementMode = $event;
     }
     public receiveRangeSquares($event){
-        var allRangeSquares = $event;
-        this.rangeSquares = new Array();
-        var allSquares = this.dndMap.squares;
-        var selectedSquares:Square[]=new Array();
-        var playerToMoveColumn;
-        var relativeMoveSpeed;
-        if (this.selectedPlayer!=null){
-            playerToMoveColumn = +this.selectedPlayer.squareMapCoordinate.split(":")[1];
-            relativeMoveSpeed = +(this.selectedPlayer.movementLeft/this.dndMap.squares[0].squareSize).toFixed(0);
-        }
-        for (var i = 0 ; i<allSquares.length ; i++){
-            allSquares[i].inRange = false; //first set everything out of range
-
-            for (var j = 0 ; j<allRangeSquares.length ; j++){
-                if (allSquares[i].mapSquareId == allRangeSquares[j]){
-                    var currentSquareColumn = +allSquares[i].mapCoordinate.split(":")[1];
-
-                    if (!allSquares[i].obstructed && (playerToMoveColumn-currentSquareColumn<=relativeMoveSpeed && playerToMoveColumn-currentSquareColumn>=-relativeMoveSpeed)){ //only add squares if not obstructed AND column number is within movementrange
-                        allSquares[i].inRange = true;
-                        selectedSquares.push(allSquares[i]);
-                    }
-                }
-            }
-        }
-        this.rangeSquares = selectedSquares;
+        this.rangeSquares = $event;
     }
 
     public receivePlayerToMove($event){
