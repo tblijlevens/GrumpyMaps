@@ -101,7 +101,6 @@ export class MapDetailComponent implements OnInit {
         $(".mapcontainer").css({width: mapHeight});
     }
 
-
     toggleSettings(){
         $("#mapSetup").toggle( 500 );
     }

@@ -29,7 +29,6 @@ export class SquareComponent implements OnInit {
       this._squareHeightWidth = squareHeightWidth;
       this.squareStyles['width'] = squareHeightWidth;
       this.setSquareMapCoordinates();
-      //this.setSquareLineHeight();
   }
   @Input() obstructionMode: boolean = false;
   @Input() movementMode: boolean;
@@ -89,12 +88,6 @@ export class SquareComponent implements OnInit {
     }
     this.setObstructionStyle();
 
-  }
-
-  setSquareLineHeight(){
-      var lineHeight = ((+this._squareHeightWidth.split("%")[0])-1)+"px";
-      //console.log("linehight is " + lineHeight);
-      $(".square").css({"line-height":lineHeight});
   }
 
   selectSquare() {

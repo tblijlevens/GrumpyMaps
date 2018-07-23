@@ -20,6 +20,7 @@ export class Square {
     this.squareHeightWidth = squareHeightWidth;
     this.squareSize = squareSize;
     this.mapHeightWidth = heightWidth;
+    //this.addTestPlayer();
   }
 
   setMapId(mapId:number){
@@ -31,6 +32,57 @@ export class Square {
     player.squareMapCoordinate = this.mapCoordinate;
     this.players.push(player);
     this.numberofPlayers=this.players.length;
+  }
+
+  addTestPlayer(){
+      if (this.mapSquareId%2==0){
+          var player:Player = new Player(1, 1, "name", 100, 10, 3, 2, "physical", "green", this.mapSquareId, this.mapHeightWidth, this.mapCoordinate, "", this.mapId);
+          this.addPhysical(player);
+          player= new Player(1, 1, "haha", 100, 10, 3, 2, "physical", "purple", this.mapSquareId, this.mapHeightWidth, this.mapCoordinate, "", this.mapId);
+          this.addPhysical(player);
+          player = new Player(1, 1, "name", 100, 10, 3, 2, "physical", "green", this.mapSquareId, this.mapHeightWidth, this.mapCoordinate, "", this.mapId);
+          this.addPhysical(player);
+          player= new Player(1, 1, "haha", 100, 10, 3, 2, "physical", "purple", this.mapSquareId, this.mapHeightWidth, this.mapCoordinate, "", this.mapId);
+          this.addPhysical(player);
+          player = new Player(1, 1, "name", 100, 10, 3, 2, "physical", "green", this.mapSquareId, this.mapHeightWidth, this.mapCoordinate, "", this.mapId);
+          this.addPhysical(player);
+          player= new Player(1, 1, "haha", 100, 10, 3, 2, "physical", "purple", this.mapSquareId, this.mapHeightWidth, this.mapCoordinate, "", this.mapId);
+          this.addPhysical(player);
+          player = new Player(1, 1, "name", 100, 10, 3, 2, "physical", "green", this.mapSquareId, this.mapHeightWidth, this.mapCoordinate, "", this.mapId);
+          this.addPhysical(player);
+          player= new Player(1, 1, "haha", 100, 10, 3, 2, "physical", "purple", this.mapSquareId, this.mapHeightWidth, this.mapCoordinate, "", this.mapId);
+          this.addPhysical(player);
+          player = new Player(1, 1, "name", 100, 10, 3, 2, "physical", "green", this.mapSquareId, this.mapHeightWidth, this.mapCoordinate, "", this.mapId);
+          this.addPhysical(player);
+          player= new Player(1, 1, "haha", 100, 10, 3, 2, "physical", "purple", this.mapSquareId, this.mapHeightWidth, this.mapCoordinate, "", this.mapId);
+          this.addPhysical(player);
+      }
+      else if (this.mapSquareId%3==0){
+          player = new Player(1, 1, "name", 100, 10, 3, 2, "physical", "green", this.mapSquareId, this.mapHeightWidth, this.mapCoordinate, "", this.mapId);
+          this.addPhysical(player);
+          player= new Player(1, 1, "haha", 100, 10, 3, 2, "physical", "purple", this.mapSquareId, this.mapHeightWidth, this.mapCoordinate, "", this.mapId);
+          this.addPhysical(player);
+          player = new Player(1, 1, "name", 100, 10, 3, 2, "physical", "green", this.mapSquareId, this.mapHeightWidth, this.mapCoordinate, "", this.mapId);
+          this.addPhysical(player);
+          player= new Player(1, 1, "haha", 100, 10, 3, 2, "physical", "purple", this.mapSquareId, this.mapHeightWidth, this.mapCoordinate, "", this.mapId);
+          this.addPhysical(player);
+          player = new Player(1, 1, "name", 100, 10, 3, 2, "physical", "green", this.mapSquareId, this.mapHeightWidth, this.mapCoordinate, "", this.mapId);
+          this.addPhysical(player);
+          player= new Player(1, 1, "haha", 100, 10, 3, 2, "physical", "purple", this.mapSquareId, this.mapHeightWidth, this.mapCoordinate, "", this.mapId);
+          this.addPhysical(player);
+          player = new Player(1, 1, "name", 100, 10, 3, 2, "physical", "green", this.mapSquareId, this.mapHeightWidth, this.mapCoordinate, "", this.mapId);
+          this.addPhysical(player);
+          player= new Player(1, 1, "haha", 100, 10, 3, 2, "physical", "purple", this.mapSquareId, this.mapHeightWidth, this.mapCoordinate, "", this.mapId);
+          this.addPhysical(player);
+      }
+
+      else {
+          player = new Player(1, 1, "name", 100, 10, 3, 2, "physical", "green", this.mapSquareId, this.mapHeightWidth, this.mapCoordinate, "", this.mapId);
+          this.addPhysical(player);
+          player= new Player(1, 1, "haha", 100, 10, 3, 2, "physical", "purple", this.mapSquareId, this.mapHeightWidth, this.mapCoordinate, "", this.mapId);
+          this.addPhysical(player);
+
+      }
   }
 
   removePhysical(id) {
