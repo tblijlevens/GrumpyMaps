@@ -11,6 +11,7 @@ export class Player{
     actionPoints:number;
     movementAmount:number;
     movementLeft:number;
+    initiative:number;
     attacksPerRound:number;
     spellsPerRound:number;
     type:string;
@@ -23,12 +24,13 @@ export class Player{
     squareMapCoordinate:string;
     mapId:number;
 
-    constructor(id, playerSquareId, name, actionPoints, movementAmount, attacksPerRound, spellsPerRound, type, color, mapSquareId, mapHeightWidth, squareMapCoordinate, playerIcon, mapId){
+    constructor(id, playerSquareId, name, actionPoints, movementAmount, initiative, attacksPerRound, spellsPerRound, type, color, mapSquareId, mapHeightWidth, squareMapCoordinate, playerIcon, mapId){
         this.id = id;
         this.name = name;
         this.actionPoints = actionPoints;
         this.movementAmount = movementAmount;
         this.movementLeft = movementAmount;
+        this.initiative = initiative;
         this.isSelected = false;
         this.attacksPerRound = attacksPerRound;
         this.spellsPerRound = spellsPerRound;

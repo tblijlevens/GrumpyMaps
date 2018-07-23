@@ -8,7 +8,7 @@ $(document).ready(function() {
     });
 
     //make right mouse click in map not popup the contextmenu
-    $( ".mapcontainer" ).contextmenu(function(e) {
+    $( ".mapcontainer" ).contextmenu((e)=> {
         e.preventDefault();
     });
 });
@@ -225,8 +225,13 @@ export class MapDetailComponent implements OnInit {
     }
     public playerAdded($event){
         this.allCharacters.push($event);
+        this.orderCharacters();
     }
-
+    orderCharacters(){
+        this.allCharacters.sort(function(a, b) {
+            return b.initiative - a.initiative;
+        });
+    }
     public receiveSelectedSquares($event){
         this.selectedSquares = this.removeDuplicates($event);
 
@@ -459,6 +464,7 @@ export class MapDetailComponent implements OnInit {
                     allPlayers[i]["name"],
                     allPlayers[i]["actionPoints"],
                     allPlayers[i]["movementAmount"],
+                    allPlayers[i]["initiative"],
                     allPlayers[i]["attacksPerRound"],
                     allPlayers[i]["spellsPerRound"],
                     allPlayers[i]["type"],
@@ -485,6 +491,8 @@ export class MapDetailComponent implements OnInit {
                 this.allCharacters.push(newPlayer);
             }
             this.rangeSquares = new Array();
+            this.orderCharacters();
+            
         });
     }
 
@@ -496,6 +504,7 @@ export class MapDetailComponent implements OnInit {
                 resultPlayer["name"],
                 resultPlayer["actionPoints"],
                 resultPlayer["movementAmount"],
+                resultPlayer["initiative"],
                 resultPlayer["attacksPerRound"],
                 resultPlayer["spellsPerRound"],
                 resultPlayer["type"],
