@@ -184,6 +184,7 @@ export class SquareDetailComponent implements OnInit {
   }
 
   clickPlayer(player: Player) {
+      this.resetAllDistances();
       this.deselectAllCharacters();
       this.setAllActiveColors();
       player.isSelected = true;
@@ -194,6 +195,11 @@ export class SquareDetailComponent implements OnInit {
       this.showRange(player);
   }
 
+  resetAllDistances(){
+      for (var i=0 ; i<this.allSquares.length ; i++){
+          this.allSquares[i].currentDistance=9999;
+      }
+  }
   deselectAllCharacters(){
       for (var i=0 ; i<this.allCharacters.length;i++){
           this.allCharacters[i].isSelected=false;
