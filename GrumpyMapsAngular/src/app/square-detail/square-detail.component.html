@@ -2,13 +2,16 @@
     Tile:
     <span *ngIf="selectedSquares.length==0">{{square.mapCoordinate}} </span>
     <span *ngFor="let square of selectedSquares"> {{square.mapCoordinate}} </span><br />
-    Obstructed: {{square.obstructed}}<br />
-    dbId: {{square.id}}<br />
-    <span *ngIf="square.players.length!=0"><span class="lead">Contents: <br></span>
+    <span *ngIf="square.players.length!=0">
+        <span class="lead">Characters: <br></span>
         <span *ngFor="let player of square.players" (click)="clickPlayer(player)">
             <span id="playerDetail{{player.id}}" class="playerNameDetail"[style.color]=player.color> {{player.name}} </span> &nbsp;
             <img width="100" src="{{player.playerIconUrl}}" /><br />
-            {{player.playerIcon}}
+            * Movement: {{player.movementLeft}} / {{player.movementAmount}} <br>
+            * Attacks: {{player.attacksPerRound}} / {{player.attacksPerRound}} <br>
+            * Spells: {{player.spellsPerRound}} / {{player.spellsPerRound}} <br>
+            * Initiativve: {{player.initiative}}
+<br />
         </span>
     </span><br>
 <hr class="my-4">
