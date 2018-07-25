@@ -224,13 +224,4 @@ export class SquareDetailComponent implements OnInit {
       this.setRangeSquaresEvent.emit(allRangeSquares);
   }
 
-
-  moveObject() {
-          if(this.selectedPlayer.isSelected) {
-              this.movementMode = true;
-              this.moveModeEvent.emit(this.movementMode);
-              this.setPlayerToMoveEvent.emit(this.selectedPlayer);
-              this.square.removePhysical(this.selectedPlayer.id);
-          }
-  }
 }

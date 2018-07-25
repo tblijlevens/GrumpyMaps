@@ -173,7 +173,9 @@ export class MapDetailComponent implements OnInit {
         player.isSelected = true;
         player.setActiveColor();
         this.selectedPlayer = player;
-        this.getAndSendPlayerSquare();
+        var playerSquare = this.getPlayerSquare();
+        this.mapShareService.setSquare(playerSquare); //update active square in squareDetail via mapShareService
+
         this.selectedSquares = new Array();
         this.showRange(player);
     }
@@ -194,12 +196,14 @@ export class MapDetailComponent implements OnInit {
             this.allCharacters[i].setActiveColor();
         }
     }
-    getAndSendPlayerSquare(){
+    getPlayerSquare(){
+        var playerSquare:Square=null;
         for (var i = 0 ; i < this.dndMap.squares.length ; i++){
             if (this.dndMap.squares[i].mapSquareId == this.selectedPlayer.mapSquareId){
-                this.mapShareService.setSquare(this.dndMap.squares[i]); //update active square in squareDetail via mapShareService
+                playerSquare = this.dndMap.squares[i];
             }
         }
+        return playerSquare;
     }
     showRange(player:Player){
         this.rangeSquares = player.getMoveRange(+this.mapForm.get('yards').value, this.dndMap.squares);
@@ -209,9 +213,12 @@ export class MapDetailComponent implements OnInit {
     moveCharacter() {
         if(this.selectedPlayer.isSelected) {
             this.movementMode = true;
+            this.selectedSquare = this.getPlayerSquare();
             this.selectedSquare.removePhysical(this.selectedPlayer.id);
         }
     }
+    
+
     public receiveMoveMode($event){
         this.movementMode = $event;
     }
