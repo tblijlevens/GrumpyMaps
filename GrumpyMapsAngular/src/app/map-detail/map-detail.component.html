@@ -1,7 +1,41 @@
 <br />
 
 <div id="completeScreen">
+    <div id="allContent">
 
+    <div id="firstColumn" >
+        <div class="allCharacters contentBox" (click)="hideSettings()">
+            <span class="lead" style="font-weight:bold;">Characters:</span>
+            <p>
+                <span *ngFor="let char of allCharacters" (click)="clickPlayer(char)">
+                    &nbsp;<img width="50" src="{{char.playerIconUrl}}" /> &nbsp; &nbsp;
+                        <span id="playerMap{{char.id}}" class="playerNameMap" [style.color]=char.color>{{char.name}} &nbsp;
+                            <mdb-icon id="move" icon="map-marker" (click)="moveCharacter()"></mdb-icon>&nbsp;
+                            <mdb-icon id="move" icon="remove" (click)="deleteObject()"></mdb-icon>&nbsp;
+
+                        </span><br />
+                </span>
+                <button (click)="moveCharacter()" class="btn btn-success btn-sm">Move character</button><br>
+
+                <button (click)="deleteObject()" class="btn btn-success btn-sm">Delete object</button>
+
+        </div>
+        <div class="mapOptions contentBox">
+            <span class="lead" style="font-weight:bold;">Options:</span>
+
+            <form [formGroup]="mapForm" >
+                <label class="center-block">Multi Select:
+                    <input type="checkbox" formControlName="multiSelectToggle" (change)="setMultiSelect()">
+                </label><br />
+                <label class="center-block">Show grid:
+                    <input type="checkbox" formControlName="gridToggle" (change)="hideGrid()">
+                </label>
+                <br>
+
+                <button (click)="nextTurn()" class="btn btn-primary">Next turn</button>
+            </form>
+        </div>
+    </div>
 <div class="mapcontainer" [ngStyle]="mapBackground" data-toggle="collapse" data-target="#derp" (click)="hideSettings()">
     <div class="rowsContainer">
         <div id='saving'>
@@ -26,19 +60,8 @@
         </div>
     </div>
 </div>
-<div id="logo" (click)="hideSettings()">
-    <h3><img class="img-fuild" src="assets/dnd.png"> GrumpyMaps V1.0</h3><br />
-</div>
-<!--
-<div class="navButtons" style="border:solid 1px red">
-    <button class="btn btn-dark" type="button" data-toggle="collapse" data-target="#mapSetup" aria-expanded="false" aria-controls="mapSetup">
-        Hide map setup
-    </button>
-    <button class="btn btn-dark" type="button" data-toggle="collapse" data-target="#squareDetails" aria-expanded="false" aria-controls="squareDetails">
-        Hide square details
-    </button>
-    <br>
-</div> -->
+
+
 <mdb-icon id="cog" icon="cog" size="3x" (click)="toggleSettings()"></mdb-icon>
 <div id="mapSetup">
 <mdb-icon id="collapse" icon="chevron-circle-right" size="3x" (click)="toggleSettings()"></mdb-icon><br />
@@ -63,38 +86,7 @@
     </div>
 </form>
 </div>
-<div id="firstColumn" >
-    <div class="allCharacters contentBox" (click)="hideSettings()">
-        <span class="lead" style="font-weight:bold;">Characters:</span>
-        <p>
-            <span *ngFor="let char of allCharacters" (click)="clickPlayer(char)">
-                &nbsp;<img width="50" src="{{char.playerIconUrl}}" /> &nbsp; &nbsp;
-                    <span id="playerMap{{char.id}}" class="playerNameMap" [style.color]=char.color>{{char.name}} &nbsp;
-                        <mdb-icon id="move" icon="map-marker" (click)="moveCharacter()"></mdb-icon>&nbsp;
-                        <mdb-icon id="move" icon="remove" (click)="deleteObject()"></mdb-icon>&nbsp;
 
-                    </span><br />
-            </span>
-            <button (click)="moveCharacter()" class="btn btn-success btn-sm">Move character</button><br>
-
-            <button (click)="deleteObject()" class="btn btn-success btn-sm">Delete object</button><br>
-
-            <button (click)="nextTurn()" class="btn btn-primary">Next turn</button><br>
-
-    </div>
-    <div class="mapOptions contentBox">
-        <span class="lead" style="font-weight:bold;">Options:</span>
-
-        <form [formGroup]="mapForm" >
-            <label class="center-block">Multi Select:
-                <input type="checkbox" formControlName="multiSelectToggle" (change)="setMultiSelect()">
-            </label><br />
-            <label class="center-block">Show grid:
-                <input type="checkbox" formControlName="gridToggle" (change)="hideGrid()">
-            </label>
-        </form>
-    </div>
-</div>
 
 <div id="secondColumn" (click)="hideSettings()">
     <div class="squaredetailcontainer contentBox" id="squareDetails">
@@ -167,4 +159,8 @@
     </div>
 </div>
 <!-- <button type="button" (click)="toggleFullScreen()">fullscreen</button> -->
+</div>
+<div id="logo" (click)="hideSettings()">
+    <h3>GrumpyMaps V1.0</h3><img class="img-fuild" src="assets/dnd.png">
+</div>
 </div>

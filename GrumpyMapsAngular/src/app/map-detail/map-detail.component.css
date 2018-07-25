@@ -2,7 +2,12 @@
     width:95%;
     height:95%;
     margin: auto;
+}
 
+#allContent{
+    position: relative;
+    height: 89%;
+    width: 100%;
 }
 .mapcontainer {
     border-width: 2px;
@@ -10,8 +15,9 @@
     border-color: #021744;
     background-color: rgb(255, 255, 255, 0.5);
     background-size: 100% 100%;
-    margin-right: 20px;
-    height: 89%;
+    margin-right: 10px;
+    margin-left: 10px;
+    height: 100%;
     float: left;
 }
 
@@ -39,6 +45,9 @@ input[type=number]{
     padding: 0px;
 }
 #logo {
+    position: absolute;
+    bottom:10px;
+    right:10px;
 }
 #legend{
 }
@@ -71,15 +80,20 @@ mdb-icon{
 }
 #cog {
     position:fixed;
+    z-index: 8;
     top:25px;
     right: 15px;
     cursor: pointer;
+    text-shadow: 0px 0px 5px black;
+
 }
 #collapse {
     position: absolute;
+    z-index: 10;
     top:5px;
     right: 5px;
     cursor: pointer;
+    text-shadow: 0px 0px 5px black;
 }
 .playerNameMap{
     text-shadow: 0px 0px 2px black;
@@ -87,6 +101,7 @@ mdb-icon{
 #mapSetup{
     background-image: url(../../assets/bg.jpg);
     position:fixed;
+    z-index: 8;
     top:25px;
     right: 15px;
     width: 350px;
@@ -98,29 +113,27 @@ mdb-icon{
 }
 #firstColumn{
     width: 20%;
-    height: 88%;
+    height: 100%;
     float:left;
-
 }
 .allCharacters{
-    height: 66%;
+    height: 75%;
     overflow-y: auto;
-    margin-bottom: 5%;
     font-size:1.4vw;
 }
 .mapOptions{
-    height: 20%;
+    /*margin-top: 5%;*/
+    height: 25%;
 }
 
 #secondColumn{
+    position: relative;
     width: 20%;
-    height: 88%;
-    margin-left: 20px;
+    height: 100%;
     float:left;
-    /*border: solid 1px red;*/
 }
 .squaredetailcontainer {
-    height:90%;
+    height:100%;
 }
 
 .form-group {
