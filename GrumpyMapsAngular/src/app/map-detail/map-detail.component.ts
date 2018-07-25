@@ -173,9 +173,12 @@ export class MapDetailComponent implements OnInit {
         player.isSelected = true;
         player.setActiveColor();
         this.selectedPlayer = player;
-        this.setSelectedSquare();
+        this.getAndSendPlayerSquare();
+        this.selectedSquares = new Array();
         this.showRange(player);
     }
+
+
     resetAllDistances(){
         for (var i=0 ; i<this.dndMap.squares.length ; i++){
             this.dndMap.squares[i].currentDistance=9999;
@@ -191,18 +194,14 @@ export class MapDetailComponent implements OnInit {
             this.allCharacters[i].setActiveColor();
         }
     }
-    setSelectedSquare(){
-        var squareId = this.selectedPlayer.squareMapCoordinate;
-        var allSquares = this.dndMap.squares;
-        for (var i = 0 ; i<allSquares.length ; i++){
-            if (allSquares[i].mapCoordinate == squareId){
-                this.selectedSquare = allSquares[i];
-                this.mapShareService.setSquare(this.selectedSquare);
+    getAndSendPlayerSquare(){
+        for (var i = 0 ; i < this.dndMap.squares.length ; i++){
+            if (this.dndMap.squares[i].mapSquareId == this.selectedPlayer.mapSquareId){
+                this.mapShareService.setSquare(this.dndMap.squares[i]); //update active square in squareDetail via mapShareService
             }
         }
     }
     showRange(player:Player){
-
         this.rangeSquares = player.getMoveRange(+this.mapForm.get('yards').value, this.dndMap.squares);
 
     }
@@ -246,7 +245,14 @@ export class MapDetailComponent implements OnInit {
     public receiveSetStyles($event){
         this.setStyles = $event;
     }
-
+    private setSquareStyles(){
+        if (this.setStyles){
+            this.setStyles=false;
+        }
+        else{
+            this.setStyles=true;
+        }
+    }
     public receiveDeselecting($event){
         this.deselecting = $event;
     }
@@ -492,7 +498,7 @@ export class MapDetailComponent implements OnInit {
             }
             this.rangeSquares = new Array();
             this.orderCharacters();
-            
+
         });
     }
 

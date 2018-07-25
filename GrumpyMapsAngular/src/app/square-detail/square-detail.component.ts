@@ -68,7 +68,13 @@ export class SquareDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-      this.mapShareService.squareUpdated.subscribe(square => {this.square =square});
+      this.mapShareService.squareUpdated.subscribe(square => {
+          if (this.selectedSquares.length==0){
+              this.selectedSquares = new Array();
+              this.selectedSquares.push(square);
+          }
+          this.square =square;
+      });
       this.createPlayerForm.get('playerColor').setValue("#ff0000");
       this.createPlayerForm.get('playerMovement').setValue(10);
       this.createPlayerForm.get('playerInitiative').setValue(15);
@@ -195,7 +201,6 @@ export class SquareDetailComponent implements OnInit {
       player.setActiveColor();
       this.selectedPlayer = player;
       this.setPlayerToMoveEvent.emit(player);
-
       this.showRange(player);
   }
 

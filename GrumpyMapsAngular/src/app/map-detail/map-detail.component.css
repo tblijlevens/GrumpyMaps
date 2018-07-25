@@ -100,11 +100,13 @@ mdb-icon{
     width: 20%;
     height: 88%;
     float:left;
+
 }
 .allCharacters{
     height: 66%;
     overflow-y: auto;
     margin-bottom: 5%;
+    font-size:1.4vw;
 }
 .mapOptions{
     height: 20%;

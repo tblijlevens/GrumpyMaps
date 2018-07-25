@@ -125,9 +125,9 @@ export class Player{
 
     setActiveColor(){
         if (this.isSelected){
-            $("#playerMap"+this.id).css({"box-shadow": "0px 0px 15px 3px " + this.color, "border-radius":"5px"});
-            $("#playerDetail"+this.id).css({"box-shadow": "0px 0px 15px 3px " + this.color, "border-radius":"5px"});
-            $("#playerDot"+this.id).css({"box-shadow": "0px 0px 15px 3px " + this.color, "border":"none"});
+            $("#playerMap"+this.id).css({"box-shadow": "0px 0px 5px 3px " + this.color, "border-radius":"5px"});
+            $("#playerDetail"+this.id).css({"box-shadow": "0px 0px 3px 3px " + this.color, "border-radius":"5px"});
+            $("#playerDot"+this.id).css({"box-shadow": "0px 0px 5px 3px " + this.color, "border":"none"});
         }
         else
         {

@@ -37,6 +37,7 @@ export class SquareComponent implements OnInit {
   @Output() setRangeSquaresEvent = new EventEmitter<number[]>();
   _inRangeSquares: Square[] = new Array();
   @Input() set inRangeSquares(squares: Square[]) {
+
       this._inRangeSquares = squares;
       this.setRangeSquareStyles();
   }
@@ -177,25 +178,27 @@ export class SquareComponent implements OnInit {
 
 
   public setRangeSquareStyles() {
+      this.square.inRange = false;
+
       if (this._inRangeSquares.length!=0){
           for(var i=0;i<this._inRangeSquares.length;i++){
               if (this._inRangeSquares[i].mapSquareId == this.square.mapSquareId){
                   this.square.inRange = true;
+
               }
           }
-      }
-      else {
-          this.square.inRange = false;
       }
 
     if (!this.square.obstructed && !this.selectedSquares.includes(this.square)) {
       if (this.square.inRange) {
           this.originalSquareColor = 'rgba(8, 161, 0, 0.5)';
         this.squareStyles['background-color'] = this.originalSquareColor;
+
       }
       else {
           this.originalSquareColor = 'rgba(8, 161, 0, 0)';
         this.squareStyles['background-color'] = this.originalSquareColor;
+
       }
      // this.selectionStyles();
     }
@@ -211,7 +214,6 @@ export class SquareComponent implements OnInit {
 
   deselectAll(){
       this.selectedSquaresEvent.emit(new Array());
-      this.resetAllDistances();
   }
 
   // all the mouseevents below make multiSelecting possible

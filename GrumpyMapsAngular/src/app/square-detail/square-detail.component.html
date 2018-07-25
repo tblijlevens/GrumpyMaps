@@ -1,19 +1,27 @@
-<div class="squaredetail" *ngIf="square" style="font-size:1.15em">
-    Tile:
-    <span *ngIf="selectedSquares.length==0">{{square.mapCoordinate}} </span>
-    <span *ngFor="let square of selectedSquares"> {{square.mapCoordinate}} </span><br />
+<div class="squaredetail" *ngIf="square">
+    <span class="lead" style="font-weight:bold;">Tile Details: <span *ngIf="selectedSquares.length==1">{{square.mapCoordinate}}</span></span><br />
+
+    <!-- <span *ngFor="let square of selectedSquares"> {{square.mapCoordinate}}... </span><br /> -->
     <span *ngIf="square.players.length!=0">
-        <span class="lead">Characters: <br></span>
         <span *ngFor="let player of square.players" (click)="clickPlayer(player)">
-            <span id="playerDetail{{player.id}}" class="playerNameDetail"[style.color]=player.color> {{player.name}} </span> &nbsp;
+            <span id="playerDetail{{player.id}}" class="playerNameDetail"[style.color]=player.color>{{player.name}}: </span> &nbsp;
             <img width="100" src="{{player.playerIconUrl}}" /><br />
-            * Movement: {{player.movementLeft}} / {{player.movementAmount}} <br>
-            * Attacks: {{player.attacksPerRound}} / {{player.attacksPerRound}} <br>
-            * Spells: {{player.spellsPerRound}} / {{player.spellsPerRound}} <br>
-            * Initiativve: {{player.initiative}}
-<br />
+            <ul>
+                <li>
+                    Movement: {{player.movementLeft}} / {{player.movementAmount}}
+                </li>
+                <li>
+                    Attacks: {{player.attacksPerRound}} / {{player.attacksPerRound}}
+                </li>
+                <li>
+                    Spells: {{player.spellsPerRound}} / {{player.spellsPerRound}}
+                </li>
+                <li>
+                    Initiative: {{player.initiative}}
+                </li>
+        </ul>
         </span>
-    </span><br>
+    </span>
 <hr class="my-4">
 <button class="btn btn-success" data-toggle="modal" data-target="#exampleModal">Add object</button><br>
 <button (click)="moveObject()" class="btn btn-success">Move object</button><br>
