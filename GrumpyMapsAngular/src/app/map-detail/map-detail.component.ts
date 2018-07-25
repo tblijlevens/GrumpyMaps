@@ -3,8 +3,17 @@ $(document).ready(function() {
 
     // responsive sizing on resizing the window (e.g. fullscreen)
     $(window).on('resize', function(){
+        var contentWidth = $("#allContent").css('width');
         var mapHeight = $(".mapcontainer").css('height');
+        console.log("content width " + contentWidth);
+        console.log("map width " + mapHeight);
+
+        var columnWidth = (+contentWidth.split("px")[0]-+mapHeight.split("px")[0])/2;
+        columnWidth -= 12;
+        console.log("colwidth is " + columnWidth);
         $(".mapcontainer").css({width: mapHeight});
+        $("#firstColumn").css({width: columnWidth});
+        $("#secondColumn").css({width: columnWidth});
     });
 
     //make right mouse click in map not popup the contextmenu
@@ -97,10 +106,23 @@ export class MapDetailComponent implements OnInit {
         this.dndMap = new DnDMap(0, this.heightWidth, this.mapForm.get('yards').value); //id zero cannot exist in databse, so it will generate a new unique id)
         this.setRows();
         this.calculateMapFeet();
-        var mapHeight = $(".mapcontainer").css('height');
-        $(".mapcontainer").css({width: mapHeight});
+        this.setSizes();
+
     }
 
+    setSizes(){
+        var contentWidth = $("#allContent").css('width');
+        var mapHeight = $(".mapcontainer").css('height');
+        console.log("content width " + contentWidth);
+        console.log("map width " + mapHeight);
+
+        var columnWidth = (+contentWidth.split("px")[0]-+mapHeight.split("px")[0])/2;
+        columnWidth -= 12;
+        console.log("colwidth is " + columnWidth);
+        $(".mapcontainer").css({width: mapHeight});
+        $("#firstColumn").css({width: columnWidth});
+        $("#secondColumn").css({width: columnWidth});
+    }
     toggleSettings(){
         $("#mapSetup").toggle( 500 );
     }

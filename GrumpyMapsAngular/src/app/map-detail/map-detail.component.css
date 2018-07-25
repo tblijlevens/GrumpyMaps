@@ -1,15 +1,70 @@
 #completeScreen{
-    width:95%;
+    position: absolute;
+    width:100%;
     height:95%;
-    margin: auto;
 }
 
 #allContent{
     position: relative;
     height: 89%;
-    width: 100%;
+    width: 95%;
+    margin: auto;
 }
+mdb-icon{
+    color: #0099fb;
+}
+#cog {
+    position:fixed;
+    z-index: 8;
+    top:25px;
+    right: 15px;
+    cursor: pointer;
+    text-shadow: 0px 0px 5px black;
+
+}
+#collapse {
+    position: absolute;
+    z-index: 10;
+    top:5px;
+    right: 5px;
+    cursor: pointer;
+    text-shadow: 0px 0px 5px black;
+}
+.playerNameMap{
+    text-shadow: 0px 0px 2px black;
+}
+#mapSetup{
+    background-image: url(../../assets/bg.jpg);
+    position:fixed;
+    z-index: 8;
+    top:25px;
+    right: 15px;
+    width: 350px;
+    border: solid 3px #888888;
+    border-radius: 10px;
+    padding:20px;
+    box-shadow: 0 4px 8px 0 #888888, 0 6px 20px 0 #888888;
+    display: none;
+}
+
+#firstColumn{
+    /*column width is relative, set in map-detail.componten.ts*/
+    height: 100%;
+    float:left;
+}
+.allCharacters{
+    height: calc(75% - 10px);
+    overflow-y: auto;
+    font-size:1.4vw;
+}
+.mapOptions{
+    margin-top: 10px;
+    height: 25%;
+}
+
 .mapcontainer {
+    /*container height and  width is relative, set in map-detail.componten.ts*/
+    position: relative;
     border-width: 2px;
     border-style: solid;
     border-color: #021744;
@@ -48,6 +103,7 @@ input[type=number]{
     position: absolute;
     bottom:10px;
     right:10px;
+    text-align: right;
 }
 #legend{
 }
@@ -75,60 +131,9 @@ input[type=number]{
 
 }
 
-mdb-icon{
-    color: #0099fb;
-}
-#cog {
-    position:fixed;
-    z-index: 8;
-    top:25px;
-    right: 15px;
-    cursor: pointer;
-    text-shadow: 0px 0px 5px black;
-
-}
-#collapse {
-    position: absolute;
-    z-index: 10;
-    top:5px;
-    right: 5px;
-    cursor: pointer;
-    text-shadow: 0px 0px 5px black;
-}
-.playerNameMap{
-    text-shadow: 0px 0px 2px black;
-}
-#mapSetup{
-    background-image: url(../../assets/bg.jpg);
-    position:fixed;
-    z-index: 8;
-    top:25px;
-    right: 15px;
-    width: 350px;
-    border: solid 3px #888888;
-    border-radius: 10px;
-    padding:20px;
-    box-shadow: 0 4px 8px 0 #888888, 0 6px 20px 0 #888888;
-    display: none;
-}
-#firstColumn{
-    width: 20%;
-    height: 100%;
-    float:left;
-}
-.allCharacters{
-    height: 75%;
-    overflow-y: auto;
-    font-size:1.4vw;
-}
-.mapOptions{
-    /*margin-top: 5%;*/
-    height: 25%;
-}
-
 #secondColumn{
-    position: relative;
-    width: 20%;
+    /*column width is relative, set in map-detail.componten.ts*/
+
     height: 100%;
     float:left;
 }
