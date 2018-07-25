@@ -122,6 +122,10 @@ export class Player{
         this.actionPoints -= +(100*percentageMoved).toFixed(0);
         this.movementLeft = this.movementAmount*(this.actionPoints/100);
     }
+    resetAllStats(){
+        this.actionPoints=100;
+        this.movementLeft = this.movementAmount;
+    }
 
     setActiveColor(){
         if (this.isSelected){

@@ -71,13 +71,15 @@
                 &nbsp;<img width="50" src="{{char.playerIconUrl}}" /> &nbsp; &nbsp;
                     <span id="playerMap{{char.id}}" class="playerNameMap" [style.color]=char.color>{{char.name}} &nbsp;
                         <mdb-icon id="move" icon="map-marker" (click)="moveCharacter()"></mdb-icon>&nbsp;
-                        <mdb-icon id="move" icon="remove" (click)="deleteCharacter()"></mdb-icon>&nbsp;
+                        <mdb-icon id="move" icon="remove" (click)="deleteObject()"></mdb-icon>&nbsp;
 
                     </span><br />
             </span>
-            <button (click)="moveCharacter()" class="btn btn-success">Move character</button><br>
+            <button (click)="moveCharacter()" class="btn btn-success btn-sm">Move character</button><br>
 
-            <button (click)="removeObject()" class="btn btn-success">Delete object</button><br>
+            <button (click)="deleteObject()" class="btn btn-success btn-sm">Delete object</button><br>
+
+            <button (click)="nextTurn()" class="btn btn-primary">Next turn</button><br>
 
     </div>
     <div class="mapOptions contentBox">

@@ -217,7 +217,20 @@ export class MapDetailComponent implements OnInit {
             this.selectedSquare.removePhysical(this.selectedPlayer.id);
         }
     }
-    
+    deleteObject() {
+        if(this.selectedPlayer.isSelected) {
+            this.selectedSquare = this.getPlayerSquare();
+            var index = this.allCharacters.indexOf(this.selectedPlayer);
+            this.allCharacters.splice(index, 1);
+            this.selectedSquare.removePhysical(this.selectedPlayer.id);
+        }
+    }
+    nextTurn() {
+        for (var i = 0 ; i < this.allCharacters.length ; i++){
+            this.allCharacters[i].resetAllStats();
+        }
+    }
+
 
     public receiveMoveMode($event){
         this.movementMode = $event;
