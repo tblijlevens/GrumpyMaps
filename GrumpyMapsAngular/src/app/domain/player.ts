@@ -56,8 +56,6 @@ export class Player{
     }
 
     getMoveRange(currentSquareSize:number, allSquares:Square[]){
-        // calculate movementleft based on actionPoints:
-        this.movementLeft = this.movementAmount*(this.actionPoints/100);
         // calculate relativeMoveSpeed based on tile width
         var relativeMoveSpeed = +(this.movementLeft/currentSquareSize).toFixed(0);
         var moveRange = new Array();
@@ -117,10 +115,10 @@ export class Player{
     return (num1 > num2)? num1-num2 : num2-num1
   }
     movePlayer(yardsMoved:number){
-        this.movementLeft = this.movementAmount*(this.actionPoints/100);
         var percentageMoved = yardsMoved/this.movementAmount;
         this.actionPoints -= +(100*percentageMoved).toFixed(0);
-        this.movementLeft = this.movementAmount*(this.actionPoints/100);
+        this.movementLeft -= yardsMoved;
+        this.movementLeft = +this.movementLeft.toFixed(1);
     }
     resetAllStats(){
         this.actionPoints=100;
