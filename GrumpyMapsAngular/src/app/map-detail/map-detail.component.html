@@ -15,9 +15,11 @@
 
                         </span><br />
                 </span>
-                <button (click)="moveCharacter()" class="btn btn-success btn-sm">Move character</button><br>
+                <span *ngIf="rangeSquares.length!=0">
+                    <button (click)="moveCharacter()" class="btn btn-success btn-sm">Move character</button><br>
 
-                <button (click)="deleteObject()" class="btn btn-success btn-sm">Delete object</button>
+                    <button (click)="deleteObject()" class="btn btn-success btn-sm">Delete object</button>
+                </span>
 
         </div>
         <div class="mapOptions contentBox">
