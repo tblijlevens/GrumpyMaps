@@ -5,12 +5,8 @@ $(document).ready(function() {
     $(window).on('resize', function(){
         var contentWidth = $("#allContent").css('width');
         var mapHeight = $(".mapcontainer").css('height');
-        console.log("content width " + contentWidth);
-        console.log("map width " + mapHeight);
-
         var columnWidth = (+contentWidth.split("px")[0]-+mapHeight.split("px")[0])/2;
         columnWidth -= 12;
-        console.log("colwidth is " + columnWidth);
         $(".mapcontainer").css({width: mapHeight});
         $("#firstColumn").css({width: columnWidth});
         $("#secondColumn").css({width: columnWidth});
@@ -72,6 +68,7 @@ export class MapDetailComponent implements OnInit {
     squareScale: string = '10%';
     heightWidth:number = 10;
     rowArray:number[] = new Array();
+    rowArrayLetters:string[] = new Array();
     mapsLoaded=false;
     allLoadedMapsResult;
     allLoadedMapIds:number[];
@@ -113,12 +110,8 @@ export class MapDetailComponent implements OnInit {
     setSizes(){
         var contentWidth = $("#allContent").css('width');
         var mapHeight = $(".mapcontainer").css('height');
-        console.log("content width " + contentWidth);
-        console.log("map width " + mapHeight);
-
         var columnWidth = (+contentWidth.split("px")[0]-+mapHeight.split("px")[0])/2;
         columnWidth -= 12;
-        console.log("colwidth is " + columnWidth);
         $(".mapcontainer").css({width: mapHeight});
         $("#firstColumn").css({width: columnWidth});
         $("#secondColumn").css({width: columnWidth});
@@ -321,6 +314,7 @@ export class MapDetailComponent implements OnInit {
         this.rowArray = new Array();
         for (var i = 0 ; i< this.heightWidth ; i++){
             this.rowArray.push(i+1);
+            this.rowArrayLetters.push(this.setRowIndexLetter(i+1));
         }
 
         this.rowStyles = {
@@ -577,5 +571,85 @@ export class MapDetailComponent implements OnInit {
 
         });
 
+    }
+
+    private setRowIndexLetter(nr:number){
+        switch(nr) {
+            case 1: {
+                return "A";
+            }
+            case 2: {
+                return "B";
+            }
+            case 3: {
+                return "C";
+            }
+            case 4: {
+                return "D";
+            }
+            case 5: {
+                return "E";
+            }
+            case 6: {
+                return "F";
+            }
+            case 7: {
+                return "G";
+            }
+            case 8: {
+                return "H";
+            }
+            case 9: {
+                return "I";
+            }
+            case 10: {
+                return "J";
+            }
+            case 11: {
+                return "K";
+            }
+            case 12: {
+                return "L";
+            }
+            case 13: {
+                return "M";
+            }
+            case 14: {
+                return "N";
+            }
+            case 15: {
+                return "O";
+            }
+            case 16: {
+                return "P";
+            }
+            case 17: {
+                return "Q";
+            }
+            case 18: {
+                return "R";
+            }
+            case 19: {
+                return "S";
+            }
+            case 20: {
+                return "T";
+            }
+            case 21: {
+                return "U";
+            }
+            case 22: {
+                return "V";
+            }
+            case 23: {
+                return "W";
+            }
+            case 24: {
+                return "X";
+            }
+            case 25: {
+                return "Y";
+            }
+        }
     }
 }

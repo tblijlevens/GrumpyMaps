@@ -75,7 +75,6 @@ mdb-icon{
     height: 100%;
     float: left;
 }
-
 input[type=number]{
     width: 80px;
 }
@@ -85,6 +84,14 @@ input[type=number]{
     width: 100%;
     height: 100%;
     margin: 0px;
+}
+.rowLetter{
+    position: absolute;
+    left: -25px;
+    width: 10px;
+    line-height: 100%;
+    border: solid 1px red;
+    display: inline-block;
 }
 .row{
     margin: 0px;
