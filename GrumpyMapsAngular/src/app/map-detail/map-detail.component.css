@@ -90,6 +90,7 @@ input[type=number]{
     left: -15px;
     width: 15px;
     border: solid 1px red;
+    font-size: 1.1vw;
 }
 .row{
     margin: 0px;
