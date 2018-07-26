@@ -11,10 +11,13 @@
                     Movement: {{player.movementLeft}} / {{player.movementAmount}}
                 </li>
                 <li>
-                    Attacks: {{player.attacksPerRound}} / {{player.attacksPerRound}}
+                    Att: {{player.attacksLeft}} / {{player.attacksPerRound}}&nbsp; <span style="font-size:1vw;">({{player.pointsPerAttack}} AcPo/Att)</span>
                 </li>
                 <li>
-                    Spells: {{player.spellsPerRound}} / {{player.spellsPerRound}}
+                    Spells: {{player.spellsLeft}} / {{player.spellsPerRound}}&nbsp; <span style="font-size:1vw;">({{player.pointsPerSpell}} AcPo/Sp)</span>
+                </li>
+                <li>
+                    Action Points: {{player.actionPoints}}
                 </li>
                 <li>
                     Initiative: {{player.initiative}}

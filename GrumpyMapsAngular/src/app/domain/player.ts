@@ -13,7 +13,11 @@ export class Player{
     movementLeft:number;
     initiative:number;
     attacksPerRound:number;
+    pointsPerAttack:number;
+    attacksLeft:number
     spellsPerRound:number;
+    pointsPerSpell:number;
+    spellsLeft:number
     type:string;
     color:string;
     activeColor:string;
@@ -33,7 +37,11 @@ export class Player{
         this.initiative = initiative;
         this.isSelected = false;
         this.attacksPerRound = attacksPerRound;
+        this.pointsPerAttack = +(this.actionPoints/this.attacksPerRound).toFixed(1);
+        this.attacksLeft = attacksPerRound;
         this.spellsPerRound = spellsPerRound;
+        this.pointsPerSpell = +(this.actionPoints/this.spellsPerRound).toFixed(1);
+        this.spellsLeft = spellsPerRound;
         this.type = type;
         if(this.color != "#00ff00"){
         this.color = color;
@@ -116,13 +124,20 @@ export class Player{
   }
     movePlayer(yardsMoved:number){
         var percentageMoved = yardsMoved/this.movementAmount;
-        this.actionPoints -= +(100*percentageMoved).toFixed(0);
         this.movementLeft -= yardsMoved;
         this.movementLeft = +this.movementLeft.toFixed(1);
+        var actionPointsUsed = +(100*percentageMoved).toFixed(0);
+        this.actionPoints -= actionPointsUsed;
+
+        this.attacksLeft = Math.floor((this.actionPoints/100)*this.attacksPerRound);
+        this.spellsLeft = Math.floor((this.actionPoints/100)*this.spellsPerRound);
     }
+
     resetAllStats(){
         this.actionPoints=100;
         this.movementLeft = this.movementAmount;
+        this.attacksLeft = this.attacksPerRound;
+        this.spellsLeft = this.spellsPerRound;
     }
 
     setActiveColor(){
