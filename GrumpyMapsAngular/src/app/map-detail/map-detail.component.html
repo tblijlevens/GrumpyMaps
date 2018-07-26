@@ -16,7 +16,7 @@
                 </span>
             </div>
                 <div id="moveDeleteBox">
-                    <span class="moveDeleteBox" *ngIf="rangeSquares.length!=0" > 
+                    <span class="moveDeleteBox" *ngIf="rangeSquares.length!=0" >
                         <button (click)="moveCharacter()" class="btn btn-success">Move</button>
 
                         <button (click)="deleteObject()" class="btn btn-success">Delete</button>
@@ -36,7 +36,7 @@
                 </label>
                 <br>
 
-                <button (click)="nextTurn()" class="btn btn-primary btn-sm">Next turn</button>
+                <button (click)="nextTurn()" class="btn btn-primary">Next turn</button>
             </form>
         </div>
     </div>
@@ -72,7 +72,8 @@
 
 <mdb-icon id="cog" icon="cog" size="3x" (click)="toggleSettings()"></mdb-icon>
 <div id="mapSetup">
-<mdb-icon id="collapse" icon="chevron-circle-right" size="3x" (click)="toggleSettings()"></mdb-icon><br />
+    <span class="lead" style="font-weight:bold;">Map Setup:</span><br />
+    <mdb-icon id="collapse" icon="chevron-circle-right" size="3x" (click)="toggleSettings()"></mdb-icon><br />
 <form [formGroup]="mapForm" >
     <div class="form-group">
         <label class="center-block"><b>Map image: </b> Test: <span class="testImage" (click)="setPic('https://i.pinimg.com/736x/f1/b3/f5/f1b3f576513897781c67fe55252ed2a2--maps.jpg')">1</span> | <span class="testImage" (click)="setPic('http://www.umanise.nl/images/dndmaptablet.png')">2</span>  | <span class="testImage" (click)="setPic('http://1zl0mp2pjotb1miw5i17vw1t.wpengine.netdna-cdn.com/wp-content/uploads/2015/12/CA108B-Tenrock-Hold.jpg')">3</span>
@@ -89,7 +90,7 @@
         <br>
         <label class="center-block"><b>Tile size in yards:  </b>
             <br />
-            <input class="inputCustom" formControlName="yards" type="number" min="1" max="100" (change)="setSquareSize()" (click)="setSquareSize()" style="width:65px;">&nbsp; {{dndMap.squares[0].squareSize}}x{{dndMap.squares[0].squareSize}} yd &nbsp;&nbsp;=&nbsp;&nbsp; {{squareFeet}}x{{squareFeet}} ft
+            <input class="inputCustom" formControlName="yards" type="number" min="1" max="100" (change)="setSquareSize()" (click)="setSquareSize()" style="width:65px;">&nbsp; {{dndMap.squares[0].squareSize}}x{{dndMap.squares[0].squareSize}} yd &nbsp;&nbsp;({{squareFeet}}x{{squareFeet}} ft)
         </label>
         <br>
         <br>
@@ -176,6 +177,6 @@
 <!-- <button type="button" (click)="toggleFullScreen()">fullscreen</button> -->
 </div>
 <div id="logo" (click)="hideSettings()">
-    <h5>GrumpyMaps V1.0</h5><img class="img-fuild" src="assets/dnd.png" height="25px">
+    <h5>GrumpyMaps V1.0 <img class="img-fuild" src="assets/dnd.png" height="25px"></h5>
 </div>
 </div>

@@ -10,18 +10,12 @@ $(document).ready(function() {
         columnWidth -= 12;
         var columnWidthFirst = columnWidth-35;
         $(".mapcontainer").css({width: mapHeight});
-        $("#firstColumn").css({width: columnWidthFirst});        $("#secondColumn").css({width: columnWidth});
+        $("#firstColumn").css({width: columnWidthFirst});
+        $("#secondColumn").css({width: columnWidth});
+        $("#firstColumn").css({width: columnWidthFirst});
 
-        // // set moveDeleteBox (buttons) in correct position:
-        // var characterHeightPX = $(".allCharacters").css("height");
-        // var characterHeight = +characterHeightPX.split("px")[0];
-        // var characterTop = $(".allCharacters").offset().top;
-        // var moveBoxHeightPX = $("#moveDeleteBox").css("height");
-        // var moveBoxHeight = +moveBoxHeightPX.split("px")[0];
-        // var characterBottom = characterTop+characterHeight-moveBoxHeight;
-        // $("#moveDeleteBox").css({"width":columnWidthFirst});
-        // $("#moveDeleteBox").css({"top":characterBottom});
-        // $("#moveDeleteBox").css({"left":$(".allCharacters").offset().left});
+        // set setup box width:
+        $("#mapSetup").css({width: columnWidth});
 
         // set rowLetters in correct position:
         var rowHeight = $(".rowLetter").css("height");
@@ -135,18 +129,12 @@ export class MapDetailComponent implements OnInit {
         columnWidth -= 12;
         var columnWidthFirst = columnWidth-35;
         $(".mapcontainer").css({width: mapHeight});
-        $("#firstColumn").css({width: columnWidthFirst});        $("#secondColumn").css({width: columnWidth});
+        $("#firstColumn").css({width: columnWidthFirst});
+        $("#secondColumn").css({width: columnWidth});
+        $("#firstColumn").css({width: columnWidthFirst});
 
-        // // set moveDeleteBox (buttons) in correct position:
-        // var characterHeightPX = $(".allCharacters").css("height");
-        // var characterHeight = +characterHeightPX.split("px")[0];
-        // var characterTop = $(".allCharacters").offset().top;
-        // var moveBoxHeightPX = $("#moveDeleteBox").css("height");
-        // var moveBoxHeight = +moveBoxHeightPX.split("px")[0];
-        // var characterBottom = characterTop+characterHeight-moveBoxHeight;
-        // $("#moveDeleteBox").css({"width":columnWidthFirst});
-        // $("#moveDeleteBox").css({"top":characterBottom});
-        // $("#moveDeleteBox").css({"left":$(".allCharacters").offset().left});
+        // set setup box width:
+        $("#mapSetup").css({width: columnWidth});
 
         // set rowLetters in correct position:
         var rowHeight = $(".rowLetter").css("height");
