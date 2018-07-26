@@ -120,7 +120,7 @@ export class MapDetailComponent implements OnInit {
         var mapHeight = $(".mapcontainer").css('height');
         var columnWidth = (+contentWidth.split("px")[0]-+mapHeight.split("px")[0])/2;
         columnWidth -= 12;
-        var columnWidthFirst = columnWidth-15;
+        var columnWidthFirst = columnWidth-35;
         $(".mapcontainer").css({width: mapHeight});
         $("#firstColumn").css({width: columnWidthFirst});        $("#secondColumn").css({width: columnWidth});
 

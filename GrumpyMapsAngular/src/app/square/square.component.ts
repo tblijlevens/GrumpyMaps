@@ -19,11 +19,6 @@ export class SquareComponent implements OnInit {
   @Input()  square: Square;
   @Input() allSquares:Square[] = new Array();
   @Input() squareIndex:number;
-  // private rowIndex:number;
-  // @Input() set _rowIndex(rowIndex: number) {
-  //     this.rowIndex=rowIndex;
-  //     this.setRowIndexLetter();
-  // }
   @Input() rowIndexAsLetter:string;
   private _squareHeightWidth: string;
   @Input() set squareHeightWidth(squareHeightWidth: string) {

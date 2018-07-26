@@ -15,6 +15,14 @@
     display: inline-block;
     text-align: center;
 }
+.colNumber{
+    position: absolute;
+    left:0px;
+    top: -25px;
+    width: 100%;
+    height: -25px;
+    font-size: 1.1vw;
+}
 #coordinates{
     position: absolute;
     width:100%;
