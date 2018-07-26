@@ -96,10 +96,36 @@ mdb-icon{
     height:100%;
 }
 .mapOptions{
+    position: relative;
     margin-top: 10px;
     height: 25%;
+    width:100%;
 }
-
+.nextTurn{
+    position: absolute;
+    height: 75px;
+    width: 75px;
+    right:0px;
+    top:0px;
+    color: white;
+    background-color: #367DF3;
+    font-size: 12px;
+}
+#reset {
+    position: absolute;
+    top:10px;
+    right: 15px;
+    left:0px;
+    width:100%;
+    cursor: pointer;
+    color: white;
+}
+#nextTurnText {
+    position: absolute;
+    width:100%;
+    left:0px;
+    bottom:10px;
+}
 .mapcontainer {
     /*container height and  width is relative, set in map-detail.componten.ts*/
     position: relative;
@@ -163,6 +189,7 @@ input[type=number]{
 }
 #saving{
     position:fixed;
+    z-index: 7;
     text-align: center;
     width:300px;
     background-color: white;

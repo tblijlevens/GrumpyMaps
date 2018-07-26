@@ -12,10 +12,9 @@ $(document).ready(function() {
         $(".mapcontainer").css({width: mapHeight});
         $("#firstColumn").css({width: columnWidthFirst});
         $("#secondColumn").css({width: columnWidth});
-        $("#firstColumn").css({width: columnWidthFirst});
 
         // set setup box width:
-        $("#mapSetup").css({width: columnWidth});
+        $("#mapSetup").css({width: columnWidth+40});
 
         // set rowLetters in correct position:
         var rowHeight = $(".rowLetter").css("height");
@@ -131,10 +130,9 @@ export class MapDetailComponent implements OnInit {
         $(".mapcontainer").css({width: mapHeight});
         $("#firstColumn").css({width: columnWidthFirst});
         $("#secondColumn").css({width: columnWidth});
-        $("#firstColumn").css({width: columnWidthFirst});
 
         // set setup box width:
-        $("#mapSetup").css({width: columnWidth});
+        $("#mapSetup").css({width: columnWidth+40});
 
         // set rowLetters in correct position:
         var rowHeight = $(".rowLetter").css("height");
@@ -283,6 +281,8 @@ export class MapDetailComponent implements OnInit {
         for (var i = 0 ; i < this.allCharacters.length ; i++){
             this.allCharacters[i].resetAllStats();
         }
+        $('#saving').html("New Turn!");
+        $('#saving').fadeIn(500).delay(1000).fadeOut(500);
     }
 
 

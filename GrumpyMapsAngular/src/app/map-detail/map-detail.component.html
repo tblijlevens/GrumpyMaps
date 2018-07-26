@@ -35,8 +35,18 @@
                     <input type="checkbox" formControlName="gridToggle" (change)="hideGrid()">
                 </label>
                 <br>
-
-                <button (click)="nextTurn()" class="btn btn-primary">Next turn</button>
+                    <div class="btn nextTurn" (click)="nextTurn()">
+                        <mdb-icon id="reset" icon="hourglass-end" size="2x"></mdb-icon><br />
+                        <span id="nextTurnText">
+                            Next Turn
+                        </span>
+                    </div>
+                    <!-- <div class="btn nextTurn" (click)="nextTurn()">
+                        <mdb-icon id="reset" icon="rotate-right" size="2x"></mdb-icon><br />
+                        <span id="nextTurnText">
+                            Next Turn
+                        </span>
+                    </div> -->
             </form>
         </div>
     </div>
