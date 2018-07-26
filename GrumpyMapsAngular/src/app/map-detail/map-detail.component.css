@@ -35,16 +35,34 @@ mdb-icon{
 }
 #mapSetup{
     background-image: url(../../assets/bg.jpg);
-    position:fixed;
+    position:absolute;
     z-index: 8;
-    top:25px;
-    right: 15px;
+    top:0px;
+    right: -20px;
     width: 350px;
+    height: 100%;
     border: solid 3px #888888;
     border-radius: 10px;
     padding:20px;
     box-shadow: 0 4px 8px 0 #888888, 0 6px 20px 0 #888888;
     display: none;
+}
+.inputCustom{
+    border-radius: 5px;
+    border: dashed 1px green;
+    height:40px;
+    padding-left:10px;
+    padding-right:5px;
+}
+.saveLoadBox{
+    position: absolute;
+    border-radius: 5px;
+    border-top: solid 0px red;
+    box-shadow: 0 -1px 1px 0 #0099fb;
+    width: 100%;
+    left:0px;
+    bottom:10px;
+    text-align: center;
 }
 
 #firstColumn{
@@ -54,8 +72,28 @@ mdb-icon{
 }
 .allCharacters{
     height: calc(75% - 10px);
-    overflow-y: auto;
     font-size:1.4vw;
+}
+#characters{
+    position: relative;
+    overflow-y: auto;
+    height: -moz-calc(100% - 60px);
+    height: -webkit-calc(100% - 60px);
+    height: calc(100% - 60px);
+}
+#moveDeleteBox{
+    position: relative;
+    height: 60px;
+    text-align: center;
+    padding-left:0px;
+    magin-left:0px;
+}
+.moveDeleteBox{
+    position: absolute;
+    border-top: solid 1px rgba(26, 143, 0, 0.3);
+    left:0px;
+    width:100%;
+    height:100%;
 }
 .mapOptions{
     margin-top: 10px;

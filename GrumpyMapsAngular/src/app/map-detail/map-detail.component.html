@@ -5,21 +5,23 @@
 
     <div id="firstColumn" >
         <div class="allCharacters contentBox" (click)="hideSettings()">
+            <div id="characters">
             <span class="lead" style="font-weight:bold;">Characters:</span>
             <p>
                 <span *ngFor="let char of allCharacters" (click)="clickPlayer(char)">
                     &nbsp;<img width="50" src="{{char.playerIconUrl}}" /> &nbsp; &nbsp;
-                        <span id="playerMap{{char.id}}" class="playerNameMap" [style.color]=char.color>{{char.name}} &nbsp;
-                            <mdb-icon id="move" icon="map-marker" (click)="moveCharacter()"></mdb-icon>&nbsp;
-                            <mdb-icon id="move" icon="remove" (click)="deleteObject()"></mdb-icon>&nbsp;
+                        <span id="playerMap{{char.id}}" class="playerNameMap" [style.color]=char.color>{{char.name}}
 
                         </span><br />
                 </span>
-                <span *ngIf="rangeSquares.length!=0">
-                    <button (click)="moveCharacter()" class="btn btn-success btn-sm">Move character</button><br>
+            </div>
+                <div id="moveDeleteBox">
+                    <span class="moveDeleteBox" *ngIf="rangeSquares.length!=0" > 
+                        <button (click)="moveCharacter()" class="btn btn-success">Move</button>
 
-                    <button (click)="deleteObject()" class="btn btn-success btn-sm">Delete object</button>
-                </span>
+                        <button (click)="deleteObject()" class="btn btn-success">Delete</button>
+                    </span>
+                </div>
 
         </div>
         <div class="mapOptions contentBox">
@@ -73,22 +75,29 @@
 <mdb-icon id="collapse" icon="chevron-circle-right" size="3x" (click)="toggleSettings()"></mdb-icon><br />
 <form [formGroup]="mapForm" >
     <div class="form-group">
-        <label class="center-block"><b>Map image: </b> Test: <span class="testImage" (click)="setPic('https://i.pinimg.com/736x/f1/b3/f5/f1b3f576513897781c67fe55252ed2a2--maps.jpg')">1</span> | <span class="testImage" (click)="setPic('http://www.umanise.nl/images/dndmaptablet.png')">2</span>
-            <input class="form-control" formControlName="imageUrl" placeholder="Enter url...">
+        <label class="center-block"><b>Map image: </b> Test: <span class="testImage" (click)="setPic('https://i.pinimg.com/736x/f1/b3/f5/f1b3f576513897781c67fe55252ed2a2--maps.jpg')">1</span> | <span class="testImage" (click)="setPic('http://www.umanise.nl/images/dndmaptablet.png')">2</span>  | <span class="testImage" (click)="setPic('http://1zl0mp2pjotb1miw5i17vw1t.wpengine.netdna-cdn.com/wp-content/uploads/2015/12/CA108B-Tenrock-Hold.jpg')">3</span>
+            <br />
+            <input class="inputCustom" formControlName="imageUrl" placeholder="Enter url..." (click)="uploadImage()" (change)="uploadImage()">
         </label>
         <br>
-        <button (click)="uploadImage()" class="btn btn-success">Select image</button><br><br>
-        <label class="center-block"><b>Amount of tiles (grid density): {{heightWidth}}x{{heightWidth}}</b>
-            <input class="form-control" formControlName="heightwidth" type="number" min="5" max="24" (change)="setMapHeightWidth()" (click)="setMapHeightWidth()" >
-        </label>
-        <br>
-        <label class="center-block"><b>In-game square size (yards):</b>
-            <input class="form-control" formControlName="yards" type="number" min="1" max="100" (change)="setSquareSize()"  (click)="setSquareSize()">{{squareFeet}} feet
-        </label>
         <br>
 
-        <button (click)="loadMap()" class="btn btn-success" data-toggle="modal" data-target="#saveModal">Save map</button>
-        <button (click)="loadMap()" class="btn btn-success" data-toggle="modal" data-target="#loadModal">Load map</button><br><br>
+        <label class="center-block"><b>Amount of tiles (grid density):</b><br />
+            <input class="inputCustom" formControlName="heightwidth" type="number" min="5" max="24" (change)="setMapHeightWidth()" (click)="setMapHeightWidth()" style="width:65px;">&nbsp; {{heightWidth}}x{{heightWidth}} = {{heightWidth*heightWidth}} tiles
+        </label>
+        <br>
+        <br>
+        <label class="center-block"><b>Tile size in yards:  </b>
+            <br />
+            <input class="inputCustom" formControlName="yards" type="number" min="1" max="100" (change)="setSquareSize()" (click)="setSquareSize()" style="width:65px;">&nbsp; {{dndMap.squares[0].squareSize}}x{{dndMap.squares[0].squareSize}} yd &nbsp;&nbsp;=&nbsp;&nbsp; {{squareFeet}}x{{squareFeet}} ft
+        </label>
+        <br>
+        <br>
+        <button (click)="toggleSettings()" class="btn btn-success">Done</button>
+        <div class="saveLoadBox">
+            <button (click)="loadMap()" class="btn btn-primary" data-toggle="modal" data-target="#saveModal">Save map</button>
+            <button (click)="loadMap()" class="btn btn-primary" data-toggle="modal" data-target="#loadModal">Load map</button>
+        </div>
     </div>
 </form>
 </div>

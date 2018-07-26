@@ -18,9 +18,9 @@
 .colNumber{
     position: absolute;
     left:0px;
-    top: -25px;
+    top: -20px;
     width: 100%;
-    height: -25px;
+    height: -20px;
     font-size: 1.1vw;
 }
 .squareTexts{
