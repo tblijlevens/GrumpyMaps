@@ -7,15 +7,23 @@ $(document).ready(function() {
         var mapHeight = $(".mapcontainer").css('height');
         var columnWidth = (+contentWidth.split("px")[0]-+mapHeight.split("px")[0])/2;
         columnWidth -= 12;
+        var columnWidthFirst = columnWidth-15;
         $(".mapcontainer").css({width: mapHeight});
-        $("#firstColumn").css({width: columnWidth});
+        $("#firstColumn").css({width: columnWidthFirst});
         $("#secondColumn").css({width: columnWidth});
+
+        var rowHeight = $(".rowLetter").css("height");
+        $(".rowLetter").css({"line-height":rowHeight});
     });
 
     //make right mouse click in map not popup the contextmenu
     $( ".mapcontainer" ).contextmenu((e)=> {
         e.preventDefault();
     });
+
+    //Set line-height of rowLeters so they are vertically alligned to the middle:
+    var rowHeight = $(".rowLetter").css("height");
+    $(".rowLetter").css({"line-height":rowHeight});
 });
 
 
@@ -112,9 +120,12 @@ export class MapDetailComponent implements OnInit {
         var mapHeight = $(".mapcontainer").css('height');
         var columnWidth = (+contentWidth.split("px")[0]-+mapHeight.split("px")[0])/2;
         columnWidth -= 12;
+        var columnWidthFirst = columnWidth-15;
         $(".mapcontainer").css({width: mapHeight});
-        $("#firstColumn").css({width: columnWidth});
-        $("#secondColumn").css({width: columnWidth});
+        $("#firstColumn").css({width: columnWidthFirst});        $("#secondColumn").css({width: columnWidth});
+
+        var rowHeight = $(".rowLetter").css("height");
+        $(".rowLetter").css({"line-height":rowHeight});
     }
     toggleSettings(){
         $("#mapSetup").toggle( 500 );
@@ -320,6 +331,9 @@ export class MapDetailComponent implements OnInit {
         this.rowStyles = {
             'height': this.dndMap.squares[0].squareHeightWidth
         }
+
+        var rowHeight = $(".rowLetter").css("height");
+        $(".rowLetter").css({"line-height":rowHeight});
     }
 
     selectSaveMap(idname){
