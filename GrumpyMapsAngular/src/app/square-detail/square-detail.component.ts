@@ -222,6 +222,22 @@ export class SquareDetailComponent implements OnInit {
   showRange(player:Player){
       var allRangeSquares = player.getMoveRange(this.square.squareSize, this.allSquares);
       this.setRangeSquaresEvent.emit(allRangeSquares);
-  }
+      this.setSquareTextSize();
 
+  }
+  setSquareTextSize(){
+      $(".squareTexts").css({"font-size":"1vw"});
+      if (this.square.mapHeightWidth > 16) {
+          $(".squareTexts").css({"font-size":"0.9vw"});
+          if (this.square.mapHeightWidth > 18) {
+              $(".squareTexts").css({"font-size":"0.8vw"});
+              if (this.square.mapHeightWidth > 20) {
+                  $(".squareTexts").css({"font-size":"0.7vw"});
+                  if (this.square.mapHeightWidth > 22) {
+                      $(".squareTexts").css({"font-size":"0.6vw"});
+                  }
+              }
+          }
+      }
+  }
 }

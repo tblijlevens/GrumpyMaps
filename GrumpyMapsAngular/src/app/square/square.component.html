@@ -2,10 +2,12 @@
     <span *ngIf="rowIndexAsLetter=='A'" class="colNumber" >
         {{squareIndex+1}}
     </span>
-    <span id="coordinates" *ngIf="square.currentDistance!=9999">{{square.mapCoordinate}}<br></span>
-    <div id="objectsInSquare" *ngIf="square.players.length!=0">
-        <div class="playerDot" *ngFor="let player of square.players" [style.background-color]=player.color id="playerDot{{player.id}}"></div>
-    </div>
-    <span id="distance" *ngIf="square.currentDistance!=9999">{{square.currentDistance}} y</span><br>
+    <span class="squareTexts">
+        <span class="coordinates" *ngIf="square.currentDistance!=9999">{{square.mapCoordinate}}<br></span>
+        <div id="objectsInSquare" *ngIf="square.players.length!=0">
+            <div class="playerDot" *ngFor="let player of square.players" [style.background-color]=player.color id="playerDot{{player.id}}"></div>
+        </div>
+        <span class="distance" *ngIf="square.currentDistance!=9999">{{square.currentDistance}}</span>
+    </span>
 
 </div>

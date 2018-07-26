@@ -153,6 +153,7 @@ export class MapDetailComponent implements OnInit {
             this.heightWidth = 25;
             // alert("Map gridsize can't be bigger than 25x25. Therefore gridsize is set to 25x25.");
         }
+
         var squareSize = +this.mapForm.get('yards').value;
         this.dndMap = new DnDMap(0, this.heightWidth, squareSize); //id zero cannot exist in databse, so it will generate a new unique id)
         var imageUrl = this.mapForm.get('imageUrl').value;
@@ -233,9 +234,23 @@ export class MapDetailComponent implements OnInit {
     }
     showRange(player:Player){
         this.rangeSquares = player.getMoveRange(+this.mapForm.get('yards').value, this.dndMap.squares);
-
+        this.setSquareTextSize();
     }
-
+    setSquareTextSize(){
+        $(".squareTexts").css({"font-size":"1vw"});
+        if (this.heightWidth > 16) {
+            $(".squareTexts").css({"font-size":"0.9vw"});
+            if (this.heightWidth > 18) {
+                $(".squareTexts").css({"font-size":"0.8vw"});
+                if (this.heightWidth > 20) {
+                    $(".squareTexts").css({"font-size":"0.7vw"});
+                    if (this.heightWidth > 22) {
+                        $(".squareTexts").css({"font-size":"0.6vw"});
+                    }
+                }
+            }
+        }
+    }
     moveCharacter() {
         if(this.selectedPlayer.isSelected) {
             this.movementMode = true;

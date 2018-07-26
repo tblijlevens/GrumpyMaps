@@ -23,19 +23,21 @@
     height: -25px;
     font-size: 1.1vw;
 }
-#coordinates{
-    position: absolute;
-    width:100%;
-    top:4%;
-    display: grid;
-    font-size:0.9vw;
+.squareTexts{
+    font-size:1vw;
 }
-#distance{
+.coordinates{
     position: absolute;
     width:100%;
-    bottom:4%;
+    top:2%;
     display: grid;
-    font-size:0.9vw;
+    font-size: inherit;
+}
+.distance{
+    position: absolute;
+    width:100%;
+    bottom:2%;
+    display: grid;
 }
 #objectsInSquare{
     position: absolute;
