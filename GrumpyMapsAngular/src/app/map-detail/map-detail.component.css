@@ -198,13 +198,18 @@ input[type=number]{
     margin-top: 5px;
     margin-bottom: 3px;
 }
-#saving{
+#infoBox{
     position:fixed;
     z-index: 7;
-    text-align: center;
     width:300px;
-    background-color: white;
+    height: 60px;
+    line-height: 50px;
+    background-image: url(../../assets/bg.jpg);
+    text-align: center;
     font-size: 20px;
+    border-radius: 5px;
+    border: solid 3px #888888;
+    box-shadow: 0 4px 8px 0 #888888, 0 6px 20px 0 #888888;
     display: none;
 }
 .contentBox{

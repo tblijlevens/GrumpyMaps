@@ -5,11 +5,11 @@ $(document).ready(function() {
     $(window).on('resize', function(){
         // set three column widths:
         var contentWidth = $("#allContent").css('width');
-        var mapHeight = $(".mapcontainer").css('height');
-        var columnWidth = (+contentWidth.split("px")[0]-+mapHeight.split("px")[0])/2;
+        var mapHeightPX = $(".mapcontainer").css('height');
+        var columnWidth = (+contentWidth.split("px")[0]-+mapHeightPX.split("px")[0])/2;
         columnWidth -= 12;
         var columnWidthFirst = columnWidth-35;
-        $(".mapcontainer").css({width: mapHeight});
+        $(".mapcontainer").css({width: mapHeightPX});
         $("#firstColumn").css({width: columnWidthFirst});
         $("#secondColumn").css({width: columnWidth});
 
@@ -19,6 +19,16 @@ $(document).ready(function() {
         // set rowLetters in correct position:
         var rowHeight = $(".rowLetter").css("height");
         $(".rowLetter").css({"line-height":rowHeight});
+
+        // set infoBox to right position
+        var mapPos = $(".mapcontainer").offset();
+        var mapHeight = +mapHeightPX.split("px")[0];
+        var infoBoxHeight = +$("#infoBox").css('height').split("px")[0];
+        var infoBoxWidth = +$("#infoBox").css('width').split("px")[0];
+        $("#infoBox").css({
+            "top":mapPos.top+((mapHeight/2)-(infoBoxHeight/2)),
+            "left":mapPos.left+((mapHeight/2)-(infoBoxWidth/2))
+        });
     });
 
     //make right mouse click in map not popup the contextmenu
@@ -155,11 +165,11 @@ export class MapDetailComponent implements OnInit {
     setSizes(){
         // set three column widths:
         var contentWidth = $("#allContent").css('width');
-        var mapHeight = $(".mapcontainer").css('height');
-        var columnWidth = (+contentWidth.split("px")[0]-+mapHeight.split("px")[0])/2;
+        var mapHeightPX = $(".mapcontainer").css('height');
+        var columnWidth = (+contentWidth.split("px")[0]-+mapHeightPX.split("px")[0])/2;
         columnWidth -= 12;
         var columnWidthFirst = columnWidth-35;
-        $(".mapcontainer").css({width: mapHeight});
+        $(".mapcontainer").css({width: mapHeightPX});
         $("#firstColumn").css({width: columnWidthFirst});
         $("#secondColumn").css({width: columnWidth});
 
@@ -169,6 +179,16 @@ export class MapDetailComponent implements OnInit {
         // set rowLetters in correct position:
         var rowHeight = $(".rowLetter").css("height");
         $(".rowLetter").css({"line-height":rowHeight});
+
+        // set infoBox to right position
+        var mapPos = $(".mapcontainer").offset();
+        var mapHeight = +mapHeightPX.split("px")[0];
+        var infoBoxHeight = +$("#infoBox").css('height').split("px")[0];
+        var infoBoxWidth = +$("#infoBox").css('width').split("px")[0];
+        $("#infoBox").css({
+            "top":mapPos.top+((mapHeight/2)-(infoBoxHeight/2)),
+            "left":mapPos.left+((mapHeight/2)-(infoBoxWidth/2))
+        });
     }
     toggleSettings(){
         $("#mapSetup").toggle( 500 );
@@ -422,20 +442,41 @@ export class MapDetailComponent implements OnInit {
         }
     }
     attack() {
-        if(this.selectedPlayer.isSelected && this.selectedPlayer.attacksLeft!=0) {
-            this.selectedPlayer.attack()
+        if(this.selectedPlayer.isSelected ) {
+            if(this.selectedPlayer.attacksLeft!=0){
+                this.selectedPlayer.attack()
+
+                $('#infoBox').html(this.selectedPlayer.name + " attacks!");
+                $('#infoBox').fadeIn(500).delay(500).fadeOut(500);
+
+            }
+            else {
+                $('#infoBox').html(this.selectedPlayer.name + " can't attack.");
+                $('#infoBox').fadeIn(500).delay(500).fadeOut(500);
+            }
         }
+
     }
     cast() {
-        if(this.selectedPlayer.isSelected && this.selectedPlayer.spellsLeft!=0) {
-            this.selectedPlayer.cast()
+        if(this.selectedPlayer.isSelected) {
+            if(this.selectedPlayer.spellsLeft!=0){
+                this.selectedPlayer.cast()
+
+                $('#infoBox').html(this.selectedPlayer.name + " casts a spell!");
+                $('#infoBox').fadeIn(500).delay(500).fadeOut(500);
+            }
+            else {
+                $('#infoBox').html(this.selectedPlayer.name + " can't cast.");
+                $('#infoBox').fadeIn(500).delay(500).fadeOut(500);
+            }
         }
     }
     moveCharacter() {
-        if(this.selectedPlayer.isSelected && this.selectedPlayer.movementLeft!=0) {
+        if(this.selectedPlayer.isSelected) {
             this.movementMode = true;
             this.selectedSquare = this.getPlayerSquare();
             this.selectedSquare.removePhysical(this.selectedPlayer.id);
+
         }
     }
     deleteObject() {
@@ -450,8 +491,8 @@ export class MapDetailComponent implements OnInit {
         for (var i = 0 ; i < this.allCharacters.length ; i++){
             this.allCharacters[i].resetAllStats();
         }
-        $('#saving').html("New Turn!");
-        $('#saving').fadeIn(500).delay(1000).fadeOut(500);
+        $('#infoBox').html("New Turn!");
+        $('#infoBox').fadeIn(500).delay(500).fadeOut(500);
     }
 
 
@@ -548,8 +589,8 @@ export class MapDetailComponent implements OnInit {
     public saveMap() {
         // var date = new Date().toLocaleDateString();
         // var time = new Date().toLocaleTimeString();
-        $('#saving').html("Saving...");
-        $('#saving').fadeIn(500);
+        $('#infoBox').html("Saving...");
+        $('#infoBox').fadeIn(500);
 
         this.saveMapWithSquares();
     }
@@ -576,7 +617,7 @@ export class MapDetailComponent implements OnInit {
                             if (this.resultCounter == this.dndMap.squares.length){ //save players only when all squares have gotten their database Id
                                 this.savePlayersOnSquares();
                                 console.log("done saving everything");
-                                $('#saving').html("Saving... Succes!").delay( 500 ).fadeOut(2000);
+                                $('#infoBox').html("Saving... Succes!").delay( 500 ).fadeOut(2000);
                             }
                         }
                     }
@@ -637,8 +678,8 @@ export class MapDetailComponent implements OnInit {
     }
 
     loadSelectedMap(){
-        $('#saving').html("Loading...");
-        $('#saving').fadeIn(500);
+        $('#infoBox').html("Loading...");
+        $('#infoBox').fadeIn(500);
         for (var i=0 ; i< this.allLoadedMapsResult.length ; i++){
             if (this.selectedLoadMap == this.allLoadedMapsResult[i]["id"]){
                 this.heightWidth = this.allLoadedMapsResult[i]["heightWidth"];
@@ -695,7 +736,7 @@ export class MapDetailComponent implements OnInit {
                     this.findPlayerByRealSquareId(sqId);
                 }
             }*/
-            $('#saving').html("Loading... Succes!").delay( 500 ).fadeOut(2000);
+            $('#infoBox').html("Loading... Succes!").delay( 500 ).fadeOut(2000);
         });
     }
 
