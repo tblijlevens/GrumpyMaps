@@ -148,7 +148,7 @@
                     </span>
                 </div>
                 <br />
-                <div class="btn addObstruct" id="multiSelect"(click)="setMultiSelect()">
+                <div class="btn addObstruct" id="multiSelect"(click)="setMultiSelect()" (mouseover)="mouseOverMultiSelect()" (mouseout)="mouseOutMultiSelect()">
                     <mdb-icon class="buttonIcon" icon="clone"></mdb-icon><br />
                     <span class="buttonText">
                         Multi select

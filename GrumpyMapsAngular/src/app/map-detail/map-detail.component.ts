@@ -269,6 +269,14 @@ export class MapDetailComponent implements OnInit {
         }
         this.selectedSquares = new Array();
     }
+    mouseOverMultiSelect(){
+        $('#infoBox').html("Perform an action on multiple tiles at once." );
+        $('#infoBox').show();
+
+    }
+    mouseOutMultiSelect(){
+        $('#infoBox').hide();
+    }
 
     setPlayerIconUrl(player:Player){
       //   var reader = new FileReader();
