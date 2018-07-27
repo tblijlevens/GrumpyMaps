@@ -139,12 +139,9 @@ export class Player{
     movePlayer(yardsMoved:number){
         this.actionPoints -= (yardsMoved*this.pointsPerYard);
         this.movementLeft -= yardsMoved;
-        this.movementLeft = +this.movementLeft.toFixed(1);
 
         this.updateAttacks();
         this.updateSpells();
-        // this.attacksLeft = Math.floor((this.actionPoints/100)*this.attacksPerRound);
-        // this.spellsLeft = Math.floor((this.actionPoints/100)*this.spellsPerRound);
     }
     updateAttacks(){
         this.attacksLeft = Math.floor((this.actionPoints/this.pointsPerAttack));

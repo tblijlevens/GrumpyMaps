@@ -12,3 +12,7 @@ button {
     padding: 3px;
     /*border: solid 1px blue;*/
 }
+ul{
+    margin: 0px;
+    padding-left: 20px;
+}
