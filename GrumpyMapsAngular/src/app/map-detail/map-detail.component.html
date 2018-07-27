@@ -18,7 +18,7 @@
         </div>
         <div class="characterOptions contentBox">
             <div id="characterOptionsBox">
-                <span class="characterOptionsBox"  ><!--*ngIf="rangeSquares.length!=0"-->
+                <span class="characterOptionsBox"  *ngIf="rangeSquares.length!=0">
                     <span class="lead" style="font-weight:bold;">Character options</span><br />
 
                     <div class="btn attackCastMove" (click)="attack()">
@@ -161,7 +161,8 @@
                     </span>
                 </div>
                 <div class="btn nextTurn" (click)="nextTurn()">
-                    <mdb-icon id="resetIcon" icon="step-forward" size="2x"></mdb-icon><br />
+                    <mdb-icon id="resetIcon" icon="step-forward"></mdb-icon>
+                    <br />
                     <span id="nextTurnText">
                         Next Turn
                     </span>

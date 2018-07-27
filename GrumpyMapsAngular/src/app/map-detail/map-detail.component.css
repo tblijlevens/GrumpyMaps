@@ -79,9 +79,7 @@ mdb-icon{
 #characters{
     position: relative;
     overflow-y: auto;
-    height: -moz-calc(100% - 130px);
-    height: -webkit-calc(100% - 130px);
-    height: calc(100% - 130px);
+    height: 100%;
 }
 .characterOptions{
     position: relative;
@@ -236,12 +234,12 @@ input[type=number]{
     position: relative;
     height: 100%;
     text-align: center;
-    border: solid 1px red;
+    /*border: solid 1px red;*/
 }
 .addObstruct{
     position: relative;
-    height: 40px;
-    width: 70px;
+    height: 35px;
+    width: 80px;
     right:0px;
     top:0px;
     color: white;
@@ -253,18 +251,18 @@ input[type=number]{
     box-shadow: 0 0 4px 2px #2A74F2;
 }
 .nextTurn{
-    position: absolute;
-    height: 65px;
-    width: 65px;
+    position: relative;
+    height: 35px;
+    width: 150px;
     right:0px;
     bottom:0px;
     color: white;
     background-color: #367DF3;
-    font-size: 12px;
+    font-size: 10px;
 }
 #resetIcon {
     position: absolute;
-    top:10px;
+    top:5px;
     right: 15px;
     left:0px;
     width:100%;
@@ -275,7 +273,7 @@ input[type=number]{
     position: absolute;
     width:100%;
     left:0px;
-    bottom:10px;
+    bottom:0px;
 }
 .form-group {
     float: left;
