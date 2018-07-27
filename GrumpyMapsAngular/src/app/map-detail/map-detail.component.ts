@@ -422,17 +422,17 @@ export class MapDetailComponent implements OnInit {
         }
     }
     attack() {
-        if(this.selectedPlayer.isSelected) {
+        if(this.selectedPlayer.isSelected && this.selectedPlayer.attacksLeft!=0) {
             this.selectedPlayer.attack()
         }
     }
     cast() {
-        if(this.selectedPlayer.isSelected) {
+        if(this.selectedPlayer.isSelected && this.selectedPlayer.spellsLeft!=0) {
             this.selectedPlayer.cast()
         }
     }
     moveCharacter() {
-        if(this.selectedPlayer.isSelected) {
+        if(this.selectedPlayer.isSelected && this.selectedPlayer.movementLeft!=0) {
             this.movementMode = true;
             this.selectedSquare = this.getPlayerSquare();
             this.selectedSquare.removePhysical(this.selectedPlayer.id);
