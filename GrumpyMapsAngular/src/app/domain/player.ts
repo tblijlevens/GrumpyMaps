@@ -10,6 +10,7 @@ export class Player{
     playerIconUrl:string;
     actionPoints:number;
     movementAmount:number;
+    pointsPerYard:number;
     movementLeft:number;
     initiative:number;
     attacksPerRound:number;
@@ -33,14 +34,15 @@ export class Player{
         this.name = name;
         this.actionPoints = actionPoints;
         this.movementAmount = movementAmount;
+        this.pointsPerYard = +(this.actionPoints/this.movementAmount);
         this.movementLeft = movementAmount;
         this.initiative = initiative;
         this.isSelected = false;
         this.attacksPerRound = attacksPerRound;
-        this.pointsPerAttack = +(this.actionPoints/this.attacksPerRound).toFixed(1);
+        this.pointsPerAttack = +(this.actionPoints/this.attacksPerRound);
         this.attacksLeft = attacksPerRound;
         this.spellsPerRound = spellsPerRound;
-        this.pointsPerSpell = +(this.actionPoints/this.spellsPerRound).toFixed(1);
+        this.pointsPerSpell = +(this.actionPoints/this.spellsPerRound);
         this.spellsLeft = spellsPerRound;
         this.type = type;
         if(this.color != "#00ff00"){
@@ -122,15 +124,36 @@ export class Player{
     getDifference(num1, num2){
     return (num1 > num2)? num1-num2 : num2-num1
   }
+    attack(){
+        this.actionPoints -= this.pointsPerAttack;
+        this.attacksLeft -= 1;
+        this.updateMovement();
+        this.updateSpells();
+    }
+    cast(){
+        this.actionPoints -= this.pointsPerSpell;
+        this.spellsLeft -= 1;
+        this.updateAttacks();
+        this.updateMovement();
+    }
     movePlayer(yardsMoved:number){
-        var percentageMoved = yardsMoved/this.movementAmount;
+        this.actionPoints -= (yardsMoved*this.pointsPerYard);
         this.movementLeft -= yardsMoved;
         this.movementLeft = +this.movementLeft.toFixed(1);
-        var actionPointsUsed = +(100*percentageMoved).toFixed(0);
-        this.actionPoints -= actionPointsUsed;
 
-        this.attacksLeft = Math.floor((this.actionPoints/100)*this.attacksPerRound);
-        this.spellsLeft = Math.floor((this.actionPoints/100)*this.spellsPerRound);
+        this.updateAttacks();
+        this.updateSpells();
+        // this.attacksLeft = Math.floor((this.actionPoints/100)*this.attacksPerRound);
+        // this.spellsLeft = Math.floor((this.actionPoints/100)*this.spellsPerRound);
+    }
+    updateAttacks(){
+        this.attacksLeft = Math.floor((this.actionPoints/this.pointsPerAttack));
+    }
+    updateSpells(){
+        this.spellsLeft = Math.floor((this.actionPoints/this.pointsPerSpell));
+    }
+    updateMovement(){
+        this.movementLeft = +(this.actionPoints/this.pointsPerYard).toFixed(1);
     }
 
     resetAllStats(){

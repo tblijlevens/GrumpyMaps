@@ -421,6 +421,16 @@ export class MapDetailComponent implements OnInit {
             }
         }
     }
+    attack() {
+        if(this.selectedPlayer.isSelected) {
+            this.selectedPlayer.attack()
+        }
+    }
+    cast() {
+        if(this.selectedPlayer.isSelected) {
+            this.selectedPlayer.cast()
+        }
+    }
     moveCharacter() {
         if(this.selectedPlayer.isSelected) {
             this.movementMode = true;

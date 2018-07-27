@@ -8,16 +8,16 @@
             <img width="100" src="{{player.playerIconUrl}}" /><br />
             <ul>
                 <li>
-                    Movement: {{player.movementLeft}} / {{player.movementAmount}}
+                    Move: {{player.movementLeft}} / {{player.movementAmount}}&nbsp; <span style="font-size:1vw;">({{player.pointsPerYard.toFixed(1)}} AP/yd)</span>
                 </li>
                 <li>
-                    Att: {{player.attacksLeft}} / {{player.attacksPerRound}}&nbsp; <span style="font-size:1vw;">({{player.pointsPerAttack}} AcPo/Att)</span>
+                    Att: {{player.attacksLeft}} / {{player.attacksPerRound}}&nbsp; <span style="font-size:1vw;">({{player.pointsPerAttack.toFixed(1)}} AP/Att)</span>
                 </li>
                 <li>
-                    Spells: {{player.spellsLeft}} / {{player.spellsPerRound}}&nbsp; <span style="font-size:1vw;">({{player.pointsPerSpell}} AcPo/Sp)</span>
+                    Spells: {{player.spellsLeft}} / {{player.spellsPerRound}}&nbsp; <span style="font-size:1vw;">({{player.pointsPerSpell.toFixed(1)}} AP/Sp)</span>
                 </li>
                 <li>
-                    Action Points: {{player.actionPoints}}
+                    Action Points: {{player.actionPoints.toFixed(1)}}
                 </li>
                 <li>
                     Initiative: {{player.initiative}}
