@@ -15,11 +15,124 @@
                         </span><br />
                 </span>
             </div>
-                <div id="moveDeleteBox">
-                    <span class="moveDeleteBox" *ngIf="rangeSquares.length!=0" >
-                        <button (click)="moveCharacter()" class="btn btn-success">Move</button>
+                <div id="actionsBox">
+                    <span class="actionsBox"  ><!--*ngIf="rangeSquares.length!=0"-->
 
-                        <button (click)="deleteObject()" class="btn btn-success">Delete</button>
+                        <div class="btn attackCastMove" (click)="attack()">
+                            <mdb-icon class="attackCastMoveIcon" icon="crosshairs"></mdb-icon><br />
+                            <span class="attackCastMoveText">
+                                Attack
+                            </span>
+                        </div>
+                        <div class="btn attackCastMove" (click)="attack()">
+                            <mdb-icon class="attackCastMoveIcon" icon="hand-rock-o"></mdb-icon><br />
+                            <span class="attackCastMoveText">
+                                Attack
+                            </span>
+                        </div>
+                        <div class="btn attackCastMove" (click)="attack()">
+                            <mdb-icon class="attackCastMoveIcon" icon="bullseye"></mdb-icon><br />
+                            <span class="attackCastMoveText">
+                                Attack
+                            </span>
+                        </div>
+                        <div class="btn attackCastMove" (click)="cast()">
+                            <mdb-icon class="attackCastMoveIcon" icon="flash"></mdb-icon><br />
+                            <span class="attackCastMoveText">
+                                Cast
+                            </span>
+                        </div>
+                        <div class="btn attackCastMove" (click)="cast()">
+                            <mdb-icon class="attackCastMoveIcon" icon="magic"></mdb-icon><br />
+                            <span class="attackCastMoveText">
+                                Cast
+                            </span>
+                        </div>
+                        <div class="btn attackCastMove" (click)="cast()">
+                            <mdb-icon class="attackCastMoveIcon" icon="star"></mdb-icon><br />
+                            <span class="attackCastMoveText">
+                                Cast
+                            </span>
+                        </div>
+                        <div class="btn attackCastMove" (click)="cast()">
+                            <mdb-icon class="attackCastMoveIcon" icon="bolt"></mdb-icon><br />
+                            <span class="attackCastMoveText">
+                                Cast
+                            </span>
+                        </div>
+                        <div class="btn attackCastMove" (click)="moveCharacter()">
+                            <mdb-icon class="attackCastMoveIcon" icon="mail-forward"></mdb-icon><br />
+                            <span class="attackCastMoveText">
+                                Move
+                            </span>
+                        </div>
+                        <div class="btn attackCastMove" (click)="moveCharacter()">
+                            <mdb-icon class="attackCastMoveIcon" icon="map-marker"></mdb-icon><br />
+                            <span class="attackCastMoveText">
+                                Move
+                            </span>
+                        </div>
+                        <div class="btn attackCastMove" (click)="moveCharacter()">
+                            <mdb-icon class="attackCastMoveIcon" icon="arrows"></mdb-icon><br />
+                            <span class="attackCastMoveText">
+                                Move
+                            </span>
+                        </div>
+                        <div class="btn attackCastMove" (click)="moveCharacter()">
+                            <mdb-icon class="attackCastMoveIcon" icon="arrows-alt"></mdb-icon><br />
+                            <span class="attackCastMoveText">
+                                Move
+                            </span>
+                        </div>
+                        <div class="btn attackCastMove" (click)="moveCharacter()">
+                            <mdb-icon class="attackCastMoveIcon" icon="map-signs"></mdb-icon><br />
+                            <span class="attackCastMoveText">
+                                Move
+                            </span>
+                        </div>
+                        <div class="btn attackCastMove" (click)="moveCharacter()">
+                            <mdb-icon class="attackCastMoveIcon" icon="share"></mdb-icon><br />
+                            <span class="attackCastMoveText">
+                                Move
+                            </span>
+                        </div>
+                        <br />
+                        <div class="btn deleteEdit" (click)="deleteObject()">
+                            <mdb-icon class="deleteEditIcon" icon="close"></mdb-icon><br />
+                            <span class="deleteEditText">
+                                Delete
+                            </span>
+                        </div>
+                        <div class="btn deleteEdit" (click)="deleteObject()">
+                            <mdb-icon class="deleteEditIcon" icon="times"></mdb-icon><br />
+                            <span class="deleteEditText">
+                                Delete
+                            </span>
+                        </div>
+                        <div class="btn deleteEdit" (click)="deleteObject()">
+                            <mdb-icon class="deleteEditIcon" icon="user-times"></mdb-icon><br />
+                            <span class="deleteEditText">
+                                Delete
+                            </span>
+                        </div>
+                        <div class="btn deleteEdit" (click)="deleteObject()">
+                            <mdb-icon class="deleteEditIcon" icon="remove"></mdb-icon><br />
+                            <span class="deleteEditText">
+                                Delete
+                            </span>
+                        </div>
+                        <div class="btn deleteEdit" (click)="edit()">
+                            <mdb-icon class="deleteEditIcon" icon="edit"></mdb-icon><br />
+                            <span class="deleteEditText">
+                                Edit
+                            </span>
+                        </div>
+                        <div class="btn deleteEdit" (click)="edit()">
+                            <mdb-icon class="deleteEditIcon" icon="wrench"></mdb-icon><br />
+                            <span class="deleteEditText">
+                                Edit
+                            </span>
+                        </div>
                     </span>
                 </div>
 
@@ -36,13 +149,13 @@
                 </label>
                 <br>
                     <div class="btn nextTurn" (click)="nextTurn()">
-                        <mdb-icon id="reset" icon="hourglass-end" size="2x"></mdb-icon><br />
+                        <mdb-icon id="resetIcon" icon="hourglass-end" size="2x"></mdb-icon><br />
                         <span id="nextTurnText">
                             Next Turn
                         </span>
                     </div>
                     <!-- <div class="btn nextTurn" (click)="nextTurn()">
-                        <mdb-icon id="reset" icon="rotate-right" size="2x"></mdb-icon><br />
+                        <mdb-icon id="reset" icon="fast-forward" size="2x"></mdb-icon><br />
                         <span id="nextTurnText">
                             Next Turn
                         </span>
