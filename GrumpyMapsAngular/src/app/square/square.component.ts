@@ -118,7 +118,8 @@ export class SquareComponent implements OnInit {
 
           //move player for that distance:
           this.selectedPlayer.movePlayer(this.square.currentDistance);
-
+          $('#infoBox').css({"color":"black"})
+          
           $('#infoBox').html(this.selectedPlayer.name + " moves " + this.square.currentDistance + " yards!" );
           $('#infoBox').fadeIn(500).delay(500).fadeOut(500);
 
@@ -127,6 +128,8 @@ export class SquareComponent implements OnInit {
 
       }
       else { // set char back on tile it came from
+          $('#infoBox').css({"color":"red"})
+          
           $('#infoBox').html(this.selectedPlayer.name + " can't move there." );
           $('#infoBox').fadeIn(500).delay(500).fadeOut(500);
           var movingPlayerSquareID = this.selectedPlayer.mapSquareId;

@@ -270,6 +270,7 @@ export class MapDetailComponent implements OnInit {
         this.selectedSquares = new Array();
     }
     mouseOverMultiSelect(){
+        $('#infoBox').css({"color":"black"})
         $('#infoBox').html("Perform an action on multiple tiles at once." );
         $('#infoBox').show();
 
@@ -453,12 +454,13 @@ export class MapDetailComponent implements OnInit {
         if(this.selectedPlayer.isSelected ) {
             if(this.selectedPlayer.attacksLeft!=0){
                 this.selectedPlayer.attack()
-
+                $('#infoBox').css({"color":"black"})
                 $('#infoBox').html(this.selectedPlayer.name + " attacks!");
                 $('#infoBox').fadeIn(500).delay(500).fadeOut(500);
 
             }
             else {
+                $('#infoBox').css({"color":"red"})
                 $('#infoBox').html(this.selectedPlayer.name + " can't attack.");
                 $('#infoBox').fadeIn(500).delay(500).fadeOut(500);
             }
@@ -469,11 +471,12 @@ export class MapDetailComponent implements OnInit {
         if(this.selectedPlayer.isSelected) {
             if(this.selectedPlayer.spellsLeft!=0){
                 this.selectedPlayer.cast()
-
+                $('#infoBox').css({"color":"black"})
                 $('#infoBox').html(this.selectedPlayer.name + " casts a spell!");
                 $('#infoBox').fadeIn(500).delay(500).fadeOut(500);
             }
             else {
+                $('#infoBox').css({"color":"red"})
                 $('#infoBox').html(this.selectedPlayer.name + " can't cast.");
                 $('#infoBox').fadeIn(500).delay(500).fadeOut(500);
             }
@@ -499,6 +502,7 @@ export class MapDetailComponent implements OnInit {
         for (var i = 0 ; i < this.allCharacters.length ; i++){
             this.allCharacters[i].resetAllStats();
         }
+        $('#infoBox').css({"color":"black"})
         $('#infoBox').html("New Turn!");
         $('#infoBox').fadeIn(500).delay(500).fadeOut(500);
     }
@@ -597,6 +601,7 @@ export class MapDetailComponent implements OnInit {
     public saveMap() {
         // var date = new Date().toLocaleDateString();
         // var time = new Date().toLocaleTimeString();
+        $('#infoBox').css({"color":"black"})
         $('#infoBox').html("Saving...");
         $('#infoBox').fadeIn(500);
 
@@ -625,6 +630,8 @@ export class MapDetailComponent implements OnInit {
                             if (this.resultCounter == this.dndMap.squares.length){ //save players only when all squares have gotten their database Id
                                 this.savePlayersOnSquares();
                                 console.log("done saving everything");
+                                $('#infoBox').css({"color":"black"})
+
                                 $('#infoBox').html("Saving... Succes!").delay( 500 ).fadeOut(2000);
                             }
                         }
@@ -686,6 +693,8 @@ export class MapDetailComponent implements OnInit {
     }
 
     loadSelectedMap(){
+        $('#infoBox').css({"color":"black"})
+
         $('#infoBox').html("Loading...");
         $('#infoBox').fadeIn(500);
         for (var i=0 ; i< this.allLoadedMapsResult.length ; i++){
@@ -744,6 +753,7 @@ export class MapDetailComponent implements OnInit {
                     this.findPlayerByRealSquareId(sqId);
                 }
             }*/
+            $('#infoBox').css({"color":"black"})
             $('#infoBox').html("Loading... Succes!").delay( 500 ).fadeOut(2000);
         });
     }
