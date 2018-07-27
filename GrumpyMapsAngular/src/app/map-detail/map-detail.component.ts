@@ -33,7 +33,7 @@ $(document).ready(function() {
 
 
 import { Component, Input, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
 //import  $ from 'jquery';
 //import $ = require("jquery");
 import * as $ from 'jquery';
@@ -66,14 +66,31 @@ export class MapDetailComponent implements OnInit {
     mapForm = new FormGroup({
         heightwidth: new FormControl(),
         yards: new FormControl(),
-        imageUrl: new FormControl(),
-        gridToggle: new FormControl(),
-        obstructToggle: new FormControl(),
-        multiSelectToggle: new FormControl()
+        imageUrl: new FormControl()
+    });
+    createPlayerForm = new FormGroup({
+      playerName: new FormControl(),
+      playerColor: new FormControl(),
+      playerInitiative: new FormControl(),
+      playerMovement: new FormControl(),
+      playerAttacks: new FormControl(),
+      playerSpells: new FormControl()
+    });
+
+    createItemForm = new FormGroup({
+      itemName: new FormControl(),
+      itemColor: new FormControl(),
+      itemAmount: new FormControl()
+    });
+
+    getObjectForm = new FormGroup({
+        playerMovement: new FormControl(),
+        objectAmount: new FormControl()
     });
     saveForm = new FormGroup({
         mapName: new FormControl()
     });
+    imageForm:FormGroup;
 
     dndMap: DnDMap;
     mapBackground = {};
@@ -97,6 +114,7 @@ export class MapDetailComponent implements OnInit {
     rowStyles = {};
     mapFeet:number;
     squareFeet:number;
+    showGrid:boolean=true;
     multiSelect:boolean=false;
     selecting:boolean=false;
     deselecting:boolean=false;
@@ -105,15 +123,29 @@ export class MapDetailComponent implements OnInit {
     selectedFile: File;
     allCharacters:Player[] = new Array();
     setStyles:boolean = false;
+    iconUrl;
+    fileName;
+    fileType;
+    fileValue;
+    playerIdCreator: number = 1;
+    playerIdGenerator:number=0;
 
-    constructor(private dndMapService: DnDMapService, private mapShareService: MapShareService) { }
+    constructor(private dndMapService: DnDMapService, private mapShareService: MapShareService, private fb: FormBuilder) {
+        this.createImageForm();
+    }
 
     ngOnInit() {
         this.loadMap();
         this.mapForm.get('heightwidth').setValue(10);
         this.mapForm.get('yards').setValue(5);
-        this.mapForm.get('gridToggle').setValue(true);
         this.dndMap = new DnDMap(0, this.heightWidth, this.mapForm.get('yards').value); //id zero cannot exist in databse, so it will generate a new unique id)
+
+        this.createPlayerForm.get('playerColor').setValue("#ff0000");
+        this.createPlayerForm.get('playerInitiative').setValue(15);
+        this.createPlayerForm.get('playerMovement').setValue(15);
+        this.createPlayerForm.get('playerAttacks').setValue(1);
+        this.createPlayerForm.get('playerSpells').setValue(1);
+
         this.setRows();
         this.calculateMapFeet();
         this.setSizes();
@@ -193,12 +225,139 @@ export class MapDetailComponent implements OnInit {
         this.legendSquare['width'] = this.dndMap.squares[0].squareHeightWidth;
     }
 
+    public hideGrid() {
+        // var gridToggle = this.mapForm.get('gridToggle').value;
+        if(this.showGrid){
+            this.showGrid=false;
+            this.squareBorderStyle= 'dotted 1px rgb(162, 162, 162, 0)';
+            $("#showGrid").css({"box-shadow":"none"})
+        }
+        else {
+            this.showGrid=true;
+            this.squareBorderStyle = 'dotted 1px rgb(162, 162, 162, 0.7)';
+            $("#showGrid").css({"box-shadow":"0 0 4px 2px #2A74F2"});
+        }
+    }
     public setMultiSelect(){
-        this.multiSelect = this.mapForm.get('multiSelectToggle').value;
+        if (this.multiSelect){
+            this.multiSelect = false;
+            $("#multiSelect").css({"box-shadow":"none"})
+        }
+        else {
+            this.multiSelect = true;
+            $("#multiSelect").css({"box-shadow":"0 0 4px 2px #2A74F2"})
+        }
         this.selectedSquares = new Array();
     }
 
+    setPlayerIconUrl(player:Player){
+      //   var reader = new FileReader();
+      //   reader.onload = ()=>{
+      //       player.playerIconUrl = reader.result;
+      //   };
+      //   reader.readAsDataURL(player.playerIcon);
 
+      player.playerIconUrl = this.iconUrl;
+      //console.log("players iconUrl set to: " + player.playerIconUrl);
+    }
+
+    createImageForm() {
+        this.imageForm = this.fb.group({
+          image: null
+        });
+      }
+
+    // TODO try sending it as FormData: https://nehalist.io/uploading-files-in-angular2/
+    onFileChanged(event) {
+        // This grabs the file contents when the file changes
+        this.selectedFile = event.target.files[0];
+
+        // Instantiate FileReader
+        var reader = new FileReader();
+        reader.onload = ()=> {
+            this.iconUrl = reader.result;
+            // Update the output to include the <img> tag with the data URL as the source
+            $("#showPic").html("<img width='100' src='"+this.iconUrl+"' />");
+            this.fileName = this.selectedFile.name;
+            this.fileType = this.selectedFile.type;
+            this.fileValue = reader.result.split(',')[1];
+            console.log(this.fileName);
+            console.log(this.fileType);
+            //console.log(this.fileValue);
+        };
+        // Produce a data URL (base64 encoded string of the data in the file)
+        // We are retrieving the first file from the FileList object
+        reader.readAsDataURL(this.selectedFile);
+
+        //might only need the following:
+        if(event.target.files.length > 0) {
+       let file = event.target.files[0];
+       this.imageForm.get('image').setValue(file);
+     }
+    }
+
+    private prepareSave(): any {
+        let input = new FormData();
+        input.append('image', this.imageForm.get('image').value);
+        return input;
+      }
+    obstructSelection(){
+        for (var i = 0 ; i < this.selectedSquares.length ; i++){
+            if (this.selectedSquares[i].obstructed ==false){
+                this.selectedSquares[i].obstructed = true;
+            }
+            else{
+                this.selectedSquares[i].obstructed = false;
+            }
+        }
+        this.selectedSquares = new Array();
+
+        // make all squares set their styles:
+        this.setSquareStyles();
+    }
+
+    addPlayer(){
+        const name = this.createPlayerForm.get('playerName').value;
+        const color = this.createPlayerForm.get('playerColor').value;
+        const initiative = +this.createPlayerForm.get('playerInitiative').value;
+        const movement = +this.createPlayerForm.get('playerMovement').value;
+        const attacks = +this.createPlayerForm.get('playerAttacks').value;
+        const spells = +this.createPlayerForm.get('playerSpells').value;
+        const imageFormModel = this.prepareSave();
+        console.log("imageFormModel: " + imageFormModel);
+        if (this.selectedSquares.length>1){
+            for (var i = 0 ; i < this.selectedSquares.length ; i++){
+                var player:Player = new Player(this.playerIdGenerator--, this.playerIdCreator++, name+" "+i, 100, movement, initiative, attacks, spells, "physical", color, this.selectedSquares[i].mapSquareId, this.selectedSquares[i].mapHeightWidth, this.selectedSquares[i].mapCoordinate, this.selectedFile, this.selectedSquares[i].mapId);
+                if (player.playerIcon!=null){
+                    this.setPlayerIconUrl(player);
+                }
+                this.selectedSquares[i].addPhysical(player);
+                this.playerAdded(player);
+            }
+            this.selectedSquares = new Array();
+            this.setSquareStyles();
+        }
+        else{
+            var player:Player = new Player(this.playerIdGenerator--, this.playerIdCreator++, name, 100, movement, initiative, attacks, spells, "physical", color, this.selectedSquares[0].mapSquareId, this.selectedSquares[0].mapHeightWidth, this.selectedSquares[0].mapCoordinate, this.selectedFile, this.selectedSquares[0].mapId);
+            if (player.playerIcon!=null){
+                this.setPlayerIconUrl(player);
+            }
+            this.selectedSquares[0].addPhysical(player);
+            this.playerAdded(player);
+        }
+
+        this.clearAllFields();
+    }
+
+    clearAllFields(){
+        this.createPlayerForm.get('playerName').setValue("");
+        this.createPlayerForm.get('playerInitiative').setValue(15);
+        this.createPlayerForm.get('playerMovement').setValue(15);
+        this.createPlayerForm.get('playerAttacks').setValue(1);
+        this.createPlayerForm.get('playerSpells').setValue(1);
+        this.createItemForm.get('itemName').setValue("");
+        this.createItemForm.get('itemAmount').setValue(1);
+    }
     // public toggleFullScreen() {
     //     $('body').fullscreen();
     //     return false;
@@ -296,8 +455,8 @@ export class MapDetailComponent implements OnInit {
     public receivePlayerToMove($event){
         this.selectedPlayer = $event;
     }
-    public playerAdded($event){
-        this.allCharacters.push($event);
+    public playerAdded(player){
+        this.allCharacters.push(player);
         this.orderCharacters();
     }
     orderCharacters(){
@@ -340,14 +499,7 @@ export class MapDetailComponent implements OnInit {
             this.selectedSquares = new Array();
         }
     }
-    public hideGrid() {
-        var gridToggle = this.mapForm.get('gridToggle').value;
-        this.squareBorderStyle= 'dotted 1px rgb(162, 162, 162, 0)';
-        if (gridToggle) {
-            // grid off
-            this.squareBorderStyle = 'dotted 1px rgb(162, 162, 162, 0.7)';
-        }
-    }
+
 
     private setRows(){
         this.rowArray = new Array();

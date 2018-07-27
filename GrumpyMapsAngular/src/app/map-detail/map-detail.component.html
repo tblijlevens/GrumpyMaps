@@ -6,7 +6,7 @@
     <div id="firstColumn" >
         <div class="allCharacters contentBox" (click)="hideSettings()">
             <div id="characters">
-            <span class="lead" style="font-weight:bold;">Characters:</span>
+            <span class="lead" style="font-weight:bold;">Characters</span>
             <p>
                 <span *ngFor="let char of allCharacters" (click)="clickPlayer(char)">
                     &nbsp;<img width="50" src="{{char.playerIconUrl}}" /> &nbsp; &nbsp;
@@ -15,72 +15,50 @@
                         </span><br />
                 </span>
             </div>
-                <div id="actionsBox">
-                    <span class="actionsBox"  ><!--*ngIf="rangeSquares.length!=0"-->
-
-                        <div class="btn attackCastMove" (click)="attack()">
-                            <mdb-icon class="attackCastMoveIcon" icon="crosshairs"></mdb-icon><br />
-                            <span class="attackCastMoveText">
-                                Attack
-                            </span>
-                        </div>
-
-                        <div class="btn attackCastMove" (click)="cast()">
-                            <mdb-icon class="attackCastMoveIcon" icon="magic"></mdb-icon><br />
-                            <span class="attackCastMoveText">
-                                Cast
-                            </span>
-                        </div>
-
-                        <div class="btn attackCastMove" (click)="moveCharacter()">
-                            <mdb-icon class="attackCastMoveIcon" icon="arrows"></mdb-icon><br />
-                            <span class="attackCastMoveText">
-                                Move
-                            </span>
-                        </div>
-
-                        <br />
-
-                        <div class="btn deleteEdit" (click)="deleteObject()">
-                            <mdb-icon class="deleteEditIcon" icon="remove"></mdb-icon><br />
-                            <span class="deleteEditText">
-                                Delete
-                            </span>
-                        </div>
-                        <div class="btn deleteEdit" (click)="edit()">
-                            <mdb-icon class="deleteEditIcon" icon="wrench"></mdb-icon><br />
-                            <span class="deleteEditText">
-                                Edit
-                            </span>
-                        </div>
-                    </span>
-                </div>
-
         </div>
-        <div class="mapOptions contentBox">
-            <span class="lead" style="font-weight:bold;">Options:</span>
+        <div class="characterOptions contentBox">
+            <div id="characterOptionsBox">
+                <span class="characterOptionsBox"  ><!--*ngIf="rangeSquares.length!=0"-->
+                    <span class="lead" style="font-weight:bold;">Character options</span><br />
 
-            <form [formGroup]="mapForm" >
-                <label class="center-block">Multi Select:
-                    <input type="checkbox" formControlName="multiSelectToggle" (change)="setMultiSelect()">
-                </label><br />
-                <label class="center-block">Show grid:
-                    <input type="checkbox" formControlName="gridToggle" (change)="hideGrid()">
-                </label>
-                <br>
-                    <!-- <div class="btn nextTurn" (click)="nextTurn()">
-                        <mdb-icon id="resetIcon" icon="hourglass-end" size="2x"></mdb-icon><br />
-                        <span id="nextTurnText">
-                            Next Turn
-                        </span>
-                    </div> -->
-                    <div class="btn nextTurn" (click)="nextTurn()">
-                        <mdb-icon id="resetIcon" icon="step-forward" size="2x"></mdb-icon><br />
-                        <span id="nextTurnText">
-                            Next Turn
+                    <div class="btn attackCastMove" (click)="attack()">
+                        <mdb-icon class="buttonIcon" icon="crosshairs"></mdb-icon><br />
+                        <span class="buttonText">
+                            Attack
                         </span>
                     </div>
-            </form>
+
+                    <div class="btn attackCastMove" (click)="cast()">
+                        <mdb-icon class="buttonIcon" icon="magic"></mdb-icon><br />
+                        <span class="buttonText">
+                            Cast
+                        </span>
+                    </div>
+
+                    <div class="btn attackCastMove" (click)="moveCharacter()">
+                        <mdb-icon class="buttonIcon" icon="arrows"></mdb-icon><br />
+                        <span class="buttonText">
+                            Move
+                        </span>
+                    </div>
+
+                    <br />
+
+                    <div class="btn deleteEdit" (click)="deleteObject()">
+                        <mdb-icon class="buttonIcon" icon="remove"></mdb-icon><br />
+                        <span class="buttonText">
+                            Delete
+                        </span>
+                    </div>
+                    <div class="btn deleteEdit" (click)="edit()">
+                        <mdb-icon class="buttonIcon" icon="wrench"></mdb-icon><br />
+                        <span class="buttonText">
+                            Edit
+                        </span>
+                    </div>
+                </span>
+            </div>
+
         </div>
     </div>
 <div class="mapcontainer" [ngStyle]="mapBackground" data-toggle="collapse" data-target="#derp" (click)="hideSettings()">
@@ -151,9 +129,160 @@
     <div class="squaredetailcontainer contentBox" id="squareDetails">
         <app-square-detail [allSquares]=dndMap.squares [_selectedSquares]=selectedSquares [_allCharacters]=allCharacters [selectedPlayer]=selectedPlayer [setStyles]=setStyles (setStylesEvent)="receiveSetStyles($event)" (moveModeEvent)="receiveMoveMode($event)" (setRangeSquaresEvent)="receiveRangeSquares($event)" (setPlayerToMoveEvent)="receivePlayerToMove($event)" (playerAddedEvent)="playerAdded($event)" ></app-square-detail>
     </div>
+
+    <div class="mapOptions contentBox">
+        <div id="mapOptionsBox">
+            <span class="mapOptionsBox"  ><!--*ngIf="rangeSquares.length!=0"-->
+                <span class="lead" style="font-weight:bold;">Map options</span><br />
+
+                <div class="btn addObstruct" data-toggle="modal" data-target="#addModal" *ngIf="selectedSquares.length!=0">
+                    <mdb-icon class="buttonIcon" icon="plus"></mdb-icon><br />
+                    <span class="buttonText">
+                        Add object
+                    </span>
+                </div>
+                <div class="btn addObstruct" (click)="obstructSelection()" *ngIf="selectedSquares.length!=0">
+                    <mdb-icon class="buttonIcon" icon="plus"></mdb-icon><br />
+                    <span class="buttonText">
+                        Obstruct
+                    </span>
+                </div>
+                <br />
+                <div class="btn addObstruct" id="multiSelect"(click)="setMultiSelect()">
+                    <mdb-icon class="buttonIcon" icon="plus"></mdb-icon><br />
+                    <span class="buttonText">
+                        Multi select
+                    </span>
+                </div>
+                <div class="btn addObstruct" id="showGrid" (click)="hideGrid()">
+                    <mdb-icon class="buttonIcon" icon="plus"></mdb-icon><br />
+                    <span class="buttonText">
+                        Show grid
+                    </span>
+                </div>
+                <div class="btn nextTurn" (click)="nextTurn()">
+                    <mdb-icon id="resetIcon" icon="step-forward" size="2x"></mdb-icon><br />
+                    <span id="nextTurnText">
+                        Next Turn
+                    </span>
+                </div>
+            </span>
+
+        </div>
+
+
+    </div>
 </div>
 
+<!-- Add Object Modal -->
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <!-- HEADER -->
+                <ul class="nav nav-pills" id="modal-tab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="pills-create-player-tab" data-toggle="pill" href="#pills-create-player" role="tab" aria-controls="pills-create-player" aria-selected="true">Create Player</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="pills-item-tab" data-toggle="pill" href="#pills-item" role="tab" aria-controls="pills-item" aria-selected="false">Create Item</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="pills-database-tab" data-toggle="pill" href="#pills-database" role="tab" aria-controls="pills-database" aria-selected="false">Select from saves</a>
+                    </li>
+                </ul>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- CREATE PLAYER FORM -->
+                <div class="tab-content" id="pills-tabContent">
+                    <div class="tab-pane fade show active" id="pills-create-player" role="tabpanel" aria-labelledby="pills-create-player-tab">
+                        <form [formGroup]="createPlayerForm">
+                            <div class="form-group" id="objectMap">
+                                <label class="center-block">Player Name:
+                                    <input class="form-control" formControlName="playerName" type="text" >
+                                </label>
+                                <br>
+                                <label class="center-block">Player color:
+                                    <input formControlName="playerColor" type="color">
+                                </label>
+                                <br>
+                                <label class="center-block">Player icon:
+                                    <input
+                                    style="display: none"
+                                    type="file" (change)="onFileChanged($event)"
+                                    #fileInput>
+                                    <button (click)="fileInput.click()">Select File</button>
+                                </label>
+                                <div id="showPic">
 
+                                </div>
+                                <br>
+                                <label class="center-block">Initiative:
+                                    <input class="form-control" formControlName="playerInitiative" type="number">
+                                </label>
+                                <br>
+                                <label class="center-block">Movement speed (yards/round):
+                                    <input class="form-control" formControlName="playerMovement" type="number">
+                                </label>
+                                <br>
+                                <label class="center-block">Attacks per round:
+                                    <input class="form-control" formControlName="playerAttacks" type="number">
+                                </label>
+                                <br>
+                                <label class="center-block">Spells per round:
+                                    <input class="form-control" formControlName="playerSpells" type="number">
+                                </label>
+                                <br><br>
+                            </div>
+                        </form>
+                        <button type="button" class="btn btn-primary" (click)="addPlayer()" data-dismiss="modal">Save/Add player</button>
+                    </div>
+                    <!-- CREATE ITEM FORM  -->
+                    <div class="tab-pane fade" id="pills-item" role="tabpanel" aria-labelledby="pills-profile-tab">
+                        <form [formGroup]="createItemForm">
+                            <div class="form-group" id="objectMap">
+                                <label class="center-block">Item Name:
+                                    <input class="form-control" formControlName="itemName" type="text">
+                                </label>
+                                <br>
+                                <label class="center-block">Item color:
+                                    <input formControlName="itemColor" type="color">
+                                </label>
+                                <br>
+                                <label class="center-block">Item Amount:
+                                    <input class="form-control" formControlName="itemAmount" type="number">
+                                </label>
+                                <br>
+                            </div>
+                        </form>
+                        <!-- <button type="button" class="btn btn-primary" (click)="addItem()" data-dismiss="modal">Save/Add item</button> -->
+                    </div>
+                    <!-- SELECT FROM DATABASE FORM -->
+                    <div class="tab-pane fade" id="pills-database" role="tabpanel" aria-labelledby="pills-databse-tab">
+                        <form [formGroup]="getObjectForm">
+                            <div class="form-group" id="objectMap">
+                                <label class="center-block">Select Object:
+                                    <input class="form-control" formControlName="playerMovement" type="text">
+                                </label>
+                                <br>
+                                <label class="center-block">Object Amount:
+                                    <input formControlName="objectAmount" type="number">
+                                </label>
+                                <br>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- Save Modal -->
 <div class="modal fade" id="saveModal" tabindex="-1" role="dialog" aria-labelledby="loadModalLabel" aria-hidden="true">
