@@ -45,7 +45,7 @@
                     <br />
 
                     <div class="btn deleteEdit" (click)="deleteObject()">
-                        <mdb-icon class="buttonIcon" icon="remove"></mdb-icon><br />
+                        <mdb-icon class="buttonIcon" icon="trash"></mdb-icon><br />
                         <span class="buttonText">
                             Delete
                         </span>
@@ -142,20 +142,20 @@
                     </span>
                 </div>
                 <div class="btn addObstruct" (click)="obstructSelection()" *ngIf="selectedSquares.length!=0">
-                    <mdb-icon class="buttonIcon" icon="plus"></mdb-icon><br />
+                    <mdb-icon class="buttonIcon" icon="eraser"></mdb-icon><br />
                     <span class="buttonText">
                         Obstruct
                     </span>
                 </div>
                 <br />
                 <div class="btn addObstruct" id="multiSelect"(click)="setMultiSelect()">
-                    <mdb-icon class="buttonIcon" icon="plus"></mdb-icon><br />
+                    <mdb-icon class="buttonIcon" icon="clone"></mdb-icon><br />
                     <span class="buttonText">
                         Multi select
                     </span>
                 </div>
                 <div class="btn addObstruct" id="showGrid" (click)="hideGrid()">
-                    <mdb-icon class="buttonIcon" icon="plus"></mdb-icon><br />
+                    <mdb-icon class="buttonIcon" icon="th"></mdb-icon><br />
                     <span class="buttonText">
                         Show grid
                     </span>
