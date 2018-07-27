@@ -46,8 +46,10 @@ export class SquareDetailComponent implements OnInit {
   createPlayerForm = new FormGroup({
     playerName: new FormControl(),
     playerColor: new FormControl(),
+    playerInitiative: new FormControl(),
     playerMovement: new FormControl(),
-    playerInitiative: new FormControl()
+    playerAttacks: new FormControl(),
+    playerSpells: new FormControl()
   });
 
   createItemForm = new FormGroup({
@@ -76,8 +78,10 @@ export class SquareDetailComponent implements OnInit {
           this.square =square;
       });
       this.createPlayerForm.get('playerColor').setValue("#ff0000");
-      this.createPlayerForm.get('playerMovement').setValue(10);
       this.createPlayerForm.get('playerInitiative').setValue(15);
+      this.createPlayerForm.get('playerMovement').setValue(15);
+      this.createPlayerForm.get('playerAttacks').setValue(1);
+      this.createPlayerForm.get('playerSpells').setValue(1);
   }
   createImageForm() {
       this.imageForm = this.fb.group({
@@ -157,13 +161,15 @@ export class SquareDetailComponent implements OnInit {
   addPlayer(){
       const name = this.createPlayerForm.get('playerName').value;
       const color = this.createPlayerForm.get('playerColor').value;
-      const movement = +this.createPlayerForm.get('playerMovement').value;
       const initiative = +this.createPlayerForm.get('playerInitiative').value;
+      const movement = +this.createPlayerForm.get('playerMovement').value;
+      const attacks = +this.createPlayerForm.get('playerAttacks').value;
+      const spells = +this.createPlayerForm.get('playerSpells').value;
       const imageFormModel = this.prepareSave();
       console.log("imageFormModel: " + imageFormModel);
       if (this.selectedSquares.length>1){
           for (var i = 0 ; i < this.selectedSquares.length ; i++){
-              var player:Player = new Player(this.playerIdGenerator--, this.playerIdCreator++, name+" "+i, 100, movement, initiative, 3, 2, "physical", color, this.square.mapSquareId, this.square.mapHeightWidth, this.square.mapCoordinate, this.selectedFile, this.square.mapId);
+              var player:Player = new Player(this.playerIdGenerator--, this.playerIdCreator++, name+" "+i, 100, movement, initiative, attacks, spells, "physical", color, this.square.mapSquareId, this.square.mapHeightWidth, this.square.mapCoordinate, this.selectedFile, this.square.mapId);
               if (player.playerIcon!=null){
                   this.setPlayerIconUrl(player);
               }
@@ -174,7 +180,7 @@ export class SquareDetailComponent implements OnInit {
           this.setSquareStyles();
       }
       else{
-          var player:Player = new Player(this.playerIdGenerator--, this.playerIdCreator++, name, 100, movement, initiative, 3, 2, "physical", color, this.square.mapSquareId, this.square.mapHeightWidth, this.square.mapCoordinate, this.selectedFile, this.square.mapId);
+          var player:Player = new Player(this.playerIdGenerator--, this.playerIdCreator++, name, 100, movement, initiative, attacks, spells, "physical", color, this.square.mapSquareId, this.square.mapHeightWidth, this.square.mapCoordinate, this.selectedFile, this.square.mapId);
           if (player.playerIcon!=null){
               this.setPlayerIconUrl(player);
           }
@@ -187,8 +193,10 @@ export class SquareDetailComponent implements OnInit {
 
   clearAllFields(){
       this.createPlayerForm.get('playerName').setValue("");
-      this.createPlayerForm.get('playerMovement').setValue(10);
       this.createPlayerForm.get('playerInitiative').setValue(15);
+      this.createPlayerForm.get('playerMovement').setValue(15);
+      this.createPlayerForm.get('playerAttacks').setValue(1);
+      this.createPlayerForm.get('playerSpells').setValue(1);
       this.createItemForm.get('itemName').setValue("");
       this.createItemForm.get('itemAmount').setValue(1);
   }
