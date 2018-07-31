@@ -97,6 +97,11 @@ export class MapDetailComponent implements OnInit {
         playerMovement: new FormControl(),
         objectAmount: new FormControl()
     });
+    addZoneForm = new FormGroup({
+        zoneRadius: new FormControl(),
+        zoneDuration: new FormControl(),
+        zoneLabel: new FormControl()
+    });
     saveForm = new FormGroup({
         mapName: new FormControl()
     });
@@ -155,6 +160,9 @@ export class MapDetailComponent implements OnInit {
         this.createPlayerForm.get('playerMovement').setValue(15);
         this.createPlayerForm.get('playerAttacks').setValue(1);
         this.createPlayerForm.get('playerSpells').setValue(1);
+
+        this.addZoneForm.get('zoneRadius').setValue(10);
+        this.addZoneForm.get('zoneDuration').setValue(1);
 
         this.setRows();
         this.calculateMapFeet();
@@ -384,8 +392,12 @@ export class MapDetailComponent implements OnInit {
         this.createPlayerForm.get('playerMovement').setValue(15);
         this.createPlayerForm.get('playerAttacks').setValue(1);
         this.createPlayerForm.get('playerSpells').setValue(1);
+
         this.createItemForm.get('itemName').setValue("");
         this.createItemForm.get('itemAmount').setValue(1);
+
+        this.addZoneForm.get('zoneRadius').setValue(10);
+        this.addZoneForm.get('zoneDuration').setValue(1);
     }
     // public toggleFullScreen() {
     //     $('body').fullscreen();
@@ -489,6 +501,28 @@ export class MapDetailComponent implements OnInit {
             this.selectedSquare.removePhysical(this.selectedPlayer.id);
 
         }
+    }
+    addStasis(){
+
+    }
+    addZone(){
+        if(this.selectedPlayer.isSelected) {
+            var label = this.addZoneForm.get('zoneLabel').value;
+            var radius = this.addZoneForm.get('zoneRadius').value;
+            var duration = this.addZoneForm.get('zoneDuration').value;
+
+            this.selectedPlayer.zoneLabel.push(label);
+            this.selectedPlayer.zoneRadius.push(radius);
+            this.selectedPlayer.zoneDuration.push(duration);
+
+            for (var i = 0 ; i < this.selectedPlayer.zoneLabel.length ; i++){
+                console.log("Zone: " + this.selectedPlayer.zoneLabel[i] + " with radius " + this.selectedPlayer.zoneRadius[i] + " y for " + this.selectedPlayer.zoneDuration[i] + " rounds.");
+
+            }
+        }
+    }
+    edit(){
+
     }
     deleteObject() {
         if(this.selectedPlayer.isSelected) {

@@ -18,7 +18,7 @@
         </div>
         <div class="characterOptions contentBox">
             <div id="characterOptionsBox">
-                <span class="characterOptionsBox"  *ngIf="rangeSquares.length!=0">
+                <span class="characterOptionsBox"  ><!--*ngIf="rangeSquares.length!=0"-->
                     <span class="lead" style="font-weight:bold;">Character options</span><br />
 
                     <div class="btn attackCastMove" (click)="attack()">
@@ -44,6 +44,19 @@
 
                     <br />
 
+                    <div class="btn deleteEdit" (click)="addStasis()">
+                        <mdb-icon class="buttonIcon" icon="heartbeat"></mdb-icon><br />
+                        <span class="buttonText">
+                            Stasis
+                        </span>
+                    </div>
+                    <div class="btn deleteEdit" data-toggle="modal" data-target="#addZoneForm">
+                        <mdb-icon class="buttonIcon" icon="dot-circle-o"></mdb-icon><br />
+                        <span class="buttonText">
+                            Zone
+                        </span>
+                    </div>
+                    <br />
                     <div class="btn deleteEdit" (click)="deleteObject()">
                         <mdb-icon class="buttonIcon" icon="trash"></mdb-icon><br />
                         <span class="buttonText">
@@ -284,6 +297,48 @@
         </div>
     </div>
 </div>
+
+<!-- addZone Modal -->
+<div class="modal fade" id="addZoneForm" tabindex="-1" role="dialog" aria-labelledby="addZoneLabel" aria-hidden="true">
+
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5>Add Zone to Player:</h5>
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="addZoneForm">
+                    <div class="form-group" id="objectMap">
+                        <label class="center-block">Zone label:
+                            <input class="form-control" formControlName="zoneLabel" type="text" >
+                        </label>
+                        <br>
+
+                        <label class="center-block">Zone radius in yards:
+                            <input class="form-control" formControlName="zoneRadius" type="number">
+                        </label>
+                        <br>
+                        <label class="center-block">Zone duration in rounds:
+                            <input class="form-control" formControlName="zoneDuration" type="number">
+                        </label>
+
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" (click)="addZone()" data-dismiss="modal">addZone</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 
 <!-- Save Modal -->
 <div class="modal fade" id="saveModal" tabindex="-1" role="dialog" aria-labelledby="loadModalLabel" aria-hidden="true">
