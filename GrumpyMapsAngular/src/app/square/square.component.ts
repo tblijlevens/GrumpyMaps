@@ -17,6 +17,7 @@ import * as $ from 'jquery';
 export class SquareComponent implements OnInit {
 
   @Input()  square: Square;
+  @Input()  squareSize: number;
   @Input() allSquares:Square[] = new Array();
   @Input() squareIndex:number;
   @Input() rowIndexAsLetter:string;
@@ -119,7 +120,7 @@ export class SquareComponent implements OnInit {
           //move player for that distance:
           this.selectedPlayer.movePlayer(this.square.currentDistance);
           $('#infoBox').css({"color":"black"})
-          
+
           $('#infoBox').html(this.selectedPlayer.name + " moves " + this.square.currentDistance + " yards!" );
           $('#infoBox').fadeIn(500).delay(500).fadeOut(500);
 
@@ -129,7 +130,7 @@ export class SquareComponent implements OnInit {
       }
       else { // set char back on tile it came from
           $('#infoBox').css({"color":"red"})
-          
+
           $('#infoBox').html(this.selectedPlayer.name + " can't move there." );
           $('#infoBox').fadeIn(500).delay(500).fadeOut(500);
           var movingPlayerSquareID = this.selectedPlayer.mapSquareId;
@@ -145,7 +146,25 @@ export class SquareComponent implements OnInit {
   getDifference(num1, num2){
       return (num1 > num2)? num1-num2 : num2-num1
   }
+  setPlayerZoneSize(){
+      var squareSize = +$("#squarecontainer").css("height").split("px")[0];
+      var playerDotSize = +$("#playerDot"+this.selectedPlayer.id).css("height").split("px")[0];
+      for (var i = 0 ; i < this.selectedPlayer.zoneLabel.length ; i++){
+          var label = this.selectedPlayer.zoneLabel[i];
+          var radius = this.selectedPlayer.zoneRadius[i];
+          var zoneHeightWidth = +(radius / this.squareSize).toFixed(1);
 
+          var zoneHeightWidth = (zoneHeightWidth*squareSize);
+          var zoneHeightWidthScale = zoneHeightWidth+"px";
+          $("#playerZone"+label).css({
+              "width":zoneHeightWidthScale,
+              "height":zoneHeightWidthScale,
+              "top":-(zoneHeightWidth/2)+(playerDotSize/2),
+              "left":-(zoneHeightWidth/2)+(playerDotSize/2)
+          });
+      }
+
+  }
   resetAllDistances(){
       for (var i=0 ; i<this.allSquares.length ; i++){
           this.allSquares[i].currentDistance=9999;

@@ -111,6 +111,7 @@ export class MapDetailComponent implements OnInit {
     mapBackground = {};
     legendSquare = {};
     squareScale: string = '10%';
+    squareSize:number = 5;
     heightWidth:number = 10;
     rowArray:number[] = new Array();
     rowArrayLetters:string[] = new Array();
@@ -153,7 +154,7 @@ export class MapDetailComponent implements OnInit {
         this.loadMap();
         this.mapForm.get('heightwidth').setValue(10);
         this.mapForm.get('yards').setValue(5);
-        this.dndMap = new DnDMap(0, this.heightWidth, this.mapForm.get('yards').value); //id zero cannot exist in databse, so it will generate a new unique id)
+        this.dndMap = new DnDMap(0, this.heightWidth, this.squareSize); //id zero cannot exist in databse, so it will generate a new unique id)
 
         this.createPlayerForm.get('playerColor').setValue("#ff0000");
         this.createPlayerForm.get('playerInitiative').setValue(15);
@@ -225,8 +226,7 @@ export class MapDetailComponent implements OnInit {
             // alert("Map gridsize can't be bigger than 25x25. Therefore gridsize is set to 25x25.");
         }
 
-        var squareSize = +this.mapForm.get('yards').value;
-        this.dndMap = new DnDMap(0, this.heightWidth, squareSize); //id zero cannot exist in databse, so it will generate a new unique id)
+        this.dndMap = new DnDMap(0, this.heightWidth, this.squareSize); //id zero cannot exist in databse, so it will generate a new unique id)
         var imageUrl = this.mapForm.get('imageUrl').value;
         this.dndMap.setImage(imageUrl);
 
@@ -234,14 +234,10 @@ export class MapDetailComponent implements OnInit {
         this.calculateMapFeet();
     }
     setSquareSize(){
-        var squareSize = +this.mapForm.get('yards').value;
-        if (!squareSize) {
-            squareSize = 3;
-            // alert("Square size wasn't set and is now defaulted to 3.");
-        }
+        this.squareSize = +this.mapForm.get('yards').value;
          var squares = this.dndMap.squares;
         for (var i = 0 ; i < squares.length ; i++){
-            squares[i].squareSize = squareSize;
+            squares[i].squareSize = this.squareSize;
         }
         this.calculateMapFeet();
 
@@ -416,6 +412,8 @@ export class MapDetailComponent implements OnInit {
 
         this.selectedSquares = new Array();
         this.showRange(player);
+        this.setPlayerZoneSize()
+
     }
 
 
@@ -444,7 +442,7 @@ export class MapDetailComponent implements OnInit {
         return playerSquare;
     }
     showRange(player:Player){
-        this.rangeSquares = player.getMoveRange(+this.mapForm.get('yards').value, this.dndMap.squares);
+        this.rangeSquares = player.getMoveRange(this.squareSize, this.dndMap.squares);
         this.setSquareTextSize();
     }
     setSquareTextSize(){
@@ -515,11 +513,27 @@ export class MapDetailComponent implements OnInit {
             this.selectedPlayer.zoneRadius.push(radius);
             this.selectedPlayer.zoneDuration.push(duration);
 
-            for (var i = 0 ; i < this.selectedPlayer.zoneLabel.length ; i++){
-                console.log("Zone: " + this.selectedPlayer.zoneLabel[i] + " with radius " + this.selectedPlayer.zoneRadius[i] + " y for " + this.selectedPlayer.zoneDuration[i] + " rounds.");
-
-            }
+            this.clickPlayer(this.selectedPlayer)
         }
+    }
+    setPlayerZoneSize(){
+        var squareSize = +$("#squarecontainer").css("height").split("px")[0];
+        var playerDotSize = +$("#playerDot"+this.selectedPlayer.id).css("height").split("px")[0];
+        for (var i = 0 ; i < this.selectedPlayer.zoneLabel.length ; i++){
+            var label = this.selectedPlayer.zoneLabel[i];
+            var radius = this.selectedPlayer.zoneRadius[i];
+            var zoneHeightWidth = +(radius / this.squareSize).toFixed(1);
+
+            var zoneHeightWidth = (zoneHeightWidth*squareSize);
+            var zoneHeightWidthScale = zoneHeightWidth+"px";
+            $("#playerZone"+label).css({
+                "width":zoneHeightWidthScale,
+                "height":zoneHeightWidthScale,
+                "top":-(zoneHeightWidth/2)+(playerDotSize/2),
+                "left":-(zoneHeightWidth/2)+(playerDotSize/2)
+            });
+        }
+
     }
     edit(){
 

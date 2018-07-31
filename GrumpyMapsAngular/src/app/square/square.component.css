@@ -56,8 +56,11 @@
 }
 .playerZone{
     position: absolute;
-    width:100px;
-    height:100px;
+    z-index: 6;
+    left:-50px;
+    top:-50px;
+    width:30px;
+    height:30px;
     border: solid 1px red;
     border-radius: 50%;
     background-color: transparent;

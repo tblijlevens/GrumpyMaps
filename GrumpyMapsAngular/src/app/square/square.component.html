@@ -6,8 +6,10 @@
         <span class="coordinates" *ngIf="square.currentDistance!=9999">{{square.mapCoordinate}}<br></span>
         <div id="objectsInSquare" *ngIf="square.players.length!=0">
             <div id="playerContainer">
-                <div class="playerDot" *ngFor="let player of square.players" [style.background-color]=player.color id="playerDot{{player.id}}"></div>
-                <div class="playerZone" *ngFor="let player of square.players" id="playerZone{{player.id}}"></div>
+                <div class="playerDot" *ngFor="let player of square.players" [style.background-color]=player.color id="playerDot{{player.id}}">
+                    <div class="playerZone" *ngFor="let label of player.zoneLabel" id="playerZone{{label}}"></div>
+                </div>
+
             </div>
         </div>
         <span class="distance" *ngIf="square.currentDistance!=9999">{{square.currentDistance}}</span>
