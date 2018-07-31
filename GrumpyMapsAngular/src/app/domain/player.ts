@@ -8,6 +8,17 @@ export class Player{
     name:string;
     playerIcon:File;
     playerIconUrl:string;
+    type:string;
+    color:string;
+    activeColor:string;
+    mapHeightWidth:number
+    isSelected:boolean;
+    mapSquareId:number;
+    realSquareId:number;
+    squareMapCoordinate:string;
+    mapId:number;
+
+// character stats:
     actionPoints:number;
     movementAmount:number;
     pointsPerYard:number;
@@ -19,15 +30,15 @@ export class Player{
     spellsPerRound:number;
     pointsPerSpell:number;
     spellsLeft:number
-    type:string;
-    color:string;
-    activeColor:string;
-    mapHeightWidth:number
-    isSelected:boolean;
-    mapSquareId:number;
-    realSquareId:number;
-    squareMapCoordinate:string;
-    mapId:number;
+
+    lowLightVisionRadius:number;
+    hidden:boolean=false;
+    zoneRadius:number[] = new Array();
+    zoneDuration:number[] = new Array();
+    zoneLabel:string[] = new Array();
+    stasisIcon:string[] = new Array();
+    stasisDuration:number[] = new Array();
+    stasisLabel:string[] = new Array();
 
     constructor(id, playerSquareId, name, actionPoints, movementAmount, initiative, attacksPerRound, spellsPerRound, type, color, mapSquareId, mapHeightWidth, squareMapCoordinate, playerIcon, mapId){
         this.id = id;
