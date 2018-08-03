@@ -15,6 +15,7 @@ export class SquareDetailComponent implements OnInit {
 
   square: Square;
   @Input() allSquares:Square[] = new Array();
+  @Input() squareSize:number;
   private selectedSquares:Square[];
   @Input() set _selectedSquares(selectedSquares: Square[]) {
       this.square = selectedSquares[0];
@@ -47,7 +48,36 @@ export class SquareDetailComponent implements OnInit {
           }
           this.square =square;
       });
+      this.mapShareService.zonesUpdated.subscribe(booleanValue => {
+         this.setAllPlayerZones();
+      });
 
+  }
+
+  setPlayerZoneSize(player:Player){
+      var squareSize = +$("#squarecontainer").css("height").split("px")[0];
+      var playerDotSize = +$("#playerDot"+player.id).css("height").split("px")[0];
+      for (var i = 0 ; i < player.zoneLabel.length ; i++){
+          var label = player.zoneLabel[i];
+          var radius = player.zoneRadius[i];
+          var zoneHeightWidth = +(radius / this.squareSize).toFixed(1);
+
+          var zoneHeightWidth = (zoneHeightWidth*squareSize);
+          var zoneHeightWidthScale = zoneHeightWidth+"px";
+          $("#playerZone"+label).css({
+              "width":zoneHeightWidthScale,
+              "height":zoneHeightWidthScale,
+              "top":-(zoneHeightWidth/2)+(playerDotSize/2),
+              "left":-(zoneHeightWidth/2)+(playerDotSize/2)
+          });
+      }
+
+  }
+
+  setAllPlayerZones(){
+      for (var i = 0 ; i < this.allCharacters.length ; i++){
+          this.setPlayerZoneSize(this.allCharacters[i]);
+      }
   }
 
 }

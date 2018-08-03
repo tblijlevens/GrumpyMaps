@@ -140,6 +140,7 @@ export class SquareComponent implements OnInit {
               }
           }
       }
+      this.mapShareService.setZones(); // makes the playerZones move with the character
       this.moveModeEvent.emit(false);
   }
 

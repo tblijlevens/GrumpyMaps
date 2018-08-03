@@ -14,6 +14,7 @@ export class MapShareService {
   private rangeSquares:Square[] = new Array();
   private dndMap:DnDMap;
   @Output() squareUpdated: EventEmitter<Square> = new EventEmitter(true);
+  @Output() zonesUpdated: EventEmitter<boolean> = new EventEmitter(true);
 
   constructor() { }
 
@@ -22,6 +23,12 @@ export class MapShareService {
     this.squareUpdated.emit(square);
   }
   getSquare(): Square {
+    return this.square;
+  }
+  setZones() {
+    this.zonesUpdated.emit(true);
+  }
+  getZones(): Square {
     return this.square;
   }
 

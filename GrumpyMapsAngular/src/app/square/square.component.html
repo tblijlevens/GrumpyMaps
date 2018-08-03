@@ -7,8 +7,11 @@
         <div id="objectsInSquare" *ngIf="square.players.length!=0">
             <div id="playerContainer">
                 <div class="playerDot" *ngFor="let player of square.players" [style.background-color]=player.color id="playerDot{{player.id}}">
-                    <div class="playerZone" *ngFor="let label of player.zoneLabel" id="playerZone{{label}}"></div>
+                    <div *ngIf="player.zoneLabel.length!=0">
+                        <div class="playerZone" *ngFor="let label of player.zoneLabel" id="playerZone{{label}}"></div>
+                    </div>
                 </div>
+                        
 
             </div>
         </div>

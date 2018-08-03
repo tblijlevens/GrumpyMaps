@@ -412,7 +412,6 @@ export class MapDetailComponent implements OnInit {
 
         this.selectedSquares = new Array();
         this.showRange(player);
-        this.setPlayerZoneSize()
 
     }
 
@@ -513,28 +512,10 @@ export class MapDetailComponent implements OnInit {
             this.selectedPlayer.zoneRadius.push(radius);
             this.selectedPlayer.zoneDuration.push(duration);
 
-            this.clickPlayer(this.selectedPlayer)
+            this.mapShareService.setZones(); // sets the zone sizes in the correct position
         }
     }
-    setPlayerZoneSize(){
-        var squareSize = +$("#squarecontainer").css("height").split("px")[0];
-        var playerDotSize = +$("#playerDot"+this.selectedPlayer.id).css("height").split("px")[0];
-        for (var i = 0 ; i < this.selectedPlayer.zoneLabel.length ; i++){
-            var label = this.selectedPlayer.zoneLabel[i];
-            var radius = this.selectedPlayer.zoneRadius[i];
-            var zoneHeightWidth = +(radius / this.squareSize).toFixed(1);
 
-            var zoneHeightWidth = (zoneHeightWidth*squareSize);
-            var zoneHeightWidthScale = zoneHeightWidth+"px";
-            $("#playerZone"+label).css({
-                "width":zoneHeightWidthScale,
-                "height":zoneHeightWidthScale,
-                "top":-(zoneHeightWidth/2)+(playerDotSize/2),
-                "left":-(zoneHeightWidth/2)+(playerDotSize/2)
-            });
-        }
-
-    }
     edit(){
 
     }
