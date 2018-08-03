@@ -25,6 +25,9 @@
                 <li>
                     Initiative: {{player.initiative}}
                 </li>
+                <li *ngFor="let zone of player.zones">
+                    {{zone.label}}: {{zone.duration}} rounds
+                </li>
         </ul>
         </span>
     </span>
