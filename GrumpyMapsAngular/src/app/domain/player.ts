@@ -33,12 +33,9 @@ export class Player{
 
     lowLightVisionRadius:number;
     hidden:boolean=false;
-    zoneRadius:number[] = new Array();
-    zoneDuration:number[] = new Array();
-    zoneLabel:string[] = new Array();
-    stasisIcon:string[] = new Array();
-    stasisDuration:number[] = new Array();
-    stasisLabel:string[] = new Array();
+    zones:any[] = new Array();
+    stasis:any[] = new Array();
+
 
     constructor(id, playerSquareId, name, actionPoints, movementAmount, initiative, attacksPerRound, spellsPerRound, type, color, mapSquareId, mapHeightWidth, squareMapCoordinate, playerIcon, mapId){
         this.id = id;
@@ -169,6 +166,40 @@ export class Player{
         this.movementLeft = this.movementAmount;
         this.attacksLeft = this.attacksPerRound;
         this.spellsLeft = this.spellsPerRound;
+        this.reduceDurations();
+    }
+    reduceDurations(){
+
+        // ZONES
+        var toRemove:any[] = new Array();
+        for (var i = 0 ; i < this.zones.length ; i++){
+            if (this.zones[i].duration>0){
+                this.zones[i].duration--; // reduce duration
+            }
+            if (this.zones[i].duration==0){ //add zone to remove if duration is 0
+                toRemove.push(this.zones[i]);
+            }
+        }
+        for (var i = 0 ; i < toRemove.length ; i++){ // remove all selected zones
+            var index = this.zones.indexOf(toRemove[i]);
+            this.zones.splice(index, 1);
+        }
+
+        // STASIS
+        toRemove = new Array();
+        for (var i = 0 ; i < this.stasis.length ; i++){
+            if (this.stasis[i].duration>0){
+                this.stasis[i].duration--; // reduce duration
+            }
+            if (this.stasis[i].duration==0){
+                toRemove.push(this.stasis[i]);
+            }
+        }
+
+        for (var i = 0 ; i < toRemove.length ; i++){ // remove all selected stasis
+            var index = this.stasis.indexOf(toRemove[i]);
+            this.stasis.splice(index, 1);
+        }
     }
 
     setActiveColor(){

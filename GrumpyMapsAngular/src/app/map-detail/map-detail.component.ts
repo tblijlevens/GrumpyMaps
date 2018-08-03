@@ -507,10 +507,24 @@ export class MapDetailComponent implements OnInit {
             var label = this.addZoneForm.get('zoneLabel').value;
             var radius = this.addZoneForm.get('zoneRadius').value;
             var duration = this.addZoneForm.get('zoneDuration').value;
+            var zoneObject:any ={};
 
-            this.selectedPlayer.zoneLabel.push(label);
-            this.selectedPlayer.zoneRadius.push(radius);
-            this.selectedPlayer.zoneDuration.push(duration);
+            if (duration==0){
+                zoneObject ={
+                    label:label,
+                    radius:radius,
+                    duration:-1
+                };
+            }
+            else {
+                zoneObject ={
+                    label:label,
+                    radius:radius,
+                    duration:duration
+                };
+            }
+            console.log(zoneObject.label);
+            this.selectedPlayer.zones.push(zoneObject);
 
             this.mapShareService.setZones(); // sets the zone sizes in the correct position
         }
