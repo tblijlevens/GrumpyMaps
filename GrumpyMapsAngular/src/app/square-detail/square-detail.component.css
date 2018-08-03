@@ -16,3 +16,8 @@ ul{
     margin: 0px;
     padding-left: 20px;
 }
+.links{
+    color: #367DF3;
+    cursor: pointer;
+    text-decoration: underline;
+}

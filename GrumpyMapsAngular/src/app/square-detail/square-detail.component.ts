@@ -79,4 +79,20 @@ export class SquareDetailComponent implements OnInit {
       }
   }
 
+  selectZone(zone:any, player:Player){
+      var index = player.zones.indexOf(zone);
+      var zoneHeight = +$("#playerZone"+player.id+index).css("height").split("px")[0];
+      zoneHeight = zoneHeight/2;
+
+      $("#playerZone"+player.id+index).animate({
+          borderWidth: zoneHeight
+      }, 400).animate({
+          borderWidth: 1
+      }, 400).animate({
+          borderWidth: zoneHeight
+      }, 400).animate({
+          borderWidth: 1
+      }, 400);
+  }
+
 }

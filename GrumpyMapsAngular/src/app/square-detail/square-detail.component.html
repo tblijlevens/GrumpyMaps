@@ -3,7 +3,7 @@
 
     <!-- <span *ngFor="let square of selectedSquares"> {{square.mapCoordinate}}... </span><br /> -->
     <span *ngIf="square.players.length!=0">
-        <span *ngFor="let player of square.players" (click)="clickPlayer(player)">
+        <span *ngFor="let player of square.players">
             <span id="playerDetail{{player.id}}" class="playerNameDetail"[style.color]=player.color>{{player.name}}: </span> &nbsp;
             <img width="100" src="{{player.playerIconUrl}}" /><br />
             <ul>
@@ -25,8 +25,8 @@
                 <li>
                     Initiative: {{player.initiative}}
                 </li>
-                <li *ngFor="let zone of player.zones">
-                    {{zone.label}}: {{zone.duration}} rounds
+                <li *ngFor="let zone of player.zones" (click)="selectZone(zone, player)">
+                    <span class="links">{{zone.label}}:</span> {{zone.duration}} rounds
                 </li>
         </ul>
         </span>
