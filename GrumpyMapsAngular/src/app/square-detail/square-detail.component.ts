@@ -64,14 +64,13 @@ export class SquareDetailComponent implements OnInit {
 
           var zoneHeightWidth = (zoneHeightWidth*squareSize);
           var zoneHeightWidthScale = zoneHeightWidth+"px";
-          $("#playerZone"+label).css({
+          $("#playerZone"+player.id+i).css({
               "width":zoneHeightWidthScale,
               "height":zoneHeightWidthScale,
               "top":-(zoneHeightWidth/2)+(playerDotSize/2),
               "left":-(zoneHeightWidth/2)+(playerDotSize/2)
           });
       }
-
   }
 
   setAllPlayerZones(){
