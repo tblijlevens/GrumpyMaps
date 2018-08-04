@@ -166,7 +166,6 @@ export class Player{
         this.movementLeft = this.movementAmount;
         this.attacksLeft = this.attacksPerRound;
         this.spellsLeft = this.spellsPerRound;
-        this.reduceDurations();
     }
     reduceDurations(){
         // ZONES

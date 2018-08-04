@@ -8,7 +8,7 @@
                 <span *ngIf="zone.duration==-1">&#x221e; rnds</span>
                 <span *ngIf="zone.duration==1">{{zone.duration}} rnd </span>
                 <span *ngIf="zone.duration>1">{{zone.duration}} rnds </span>
-            <mdb-icon class="buttonIcon floatRight" icon="remove" (click)="removeZone(zone, player)" alt="Remove Zone" title="Remove Zone"></mdb-icon> &nbsp;
+            <mdb-icon class="buttonIcon floatRight" icon="remove" (click)="removeTileZone(zone, square)" alt="Remove Zone" title="Remove Zone"></mdb-icon> &nbsp;
             <mdb-icon class="buttonIcon floatRight" icon="pencil"  (click)="setZoneValues(zone)" data-toggle="modal" data-target="#editZoneForm" alt="Edit Zone" title="Edit Zone"></mdb-icon>
         </li>
     </ul>
@@ -43,7 +43,7 @@
                         <span *ngIf="zone.duration==-1">&#x221e; rnds</span>
                         <span *ngIf="zone.duration==1">{{zone.duration}} rnd </span>
                         <span *ngIf="zone.duration>1">{{zone.duration}} rnds </span>
-                    <mdb-icon class="buttonIcon floatRight" icon="remove" (click)="removeZone(zone, player)" alt="Remove Zone" title="Remove Zone"></mdb-icon> &nbsp;
+                    <mdb-icon class="buttonIcon floatRight" icon="remove" (click)="removePlayerZone(zone, player)" alt="Remove Zone" title="Remove Zone"></mdb-icon> &nbsp;
                     <mdb-icon class="buttonIcon floatRight" icon="pencil"  (click)="setZoneValues(zone)" data-toggle="modal" data-target="#editZoneForm" alt="Edit Zone" title="Edit Zone"></mdb-icon>
                 </li>
         </ul>

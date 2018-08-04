@@ -103,8 +103,35 @@ export class SquareDetailComponent implements OnInit {
           borderWidth: 1
       }, 400);
   }
-  removeZone(zone:any, player:Player){
+  removePlayerZone(zone:any, player:Player){
       player.removeZone(zone);
+  }
+
+  setTileZoneSize(square:Square){
+      var squareSize = +$("#squarecontainer").css("height").split("px")[0];
+      for (var i = 0 ; i < square.zones.length ; i++){
+          var label = square.zones[i].label;
+          var radius = square.zones[i].radius;
+          var zoneHeightWidth = +(radius / this.squareSize).toFixed(1);
+          var zoneHeightWidth = (zoneHeightWidth*squareSize);
+          var zoneHeightWidthScale = zoneHeightWidth+"px";
+          console.log("radius " + radius + ". top: " + -(squareSize/2));
+          $("#tileZone"+square.mapSquareId+i).css({
+              "width":zoneHeightWidthScale,
+              "height":zoneHeightWidthScale,
+              "top":-(zoneHeightWidth/2)+(squareSize/2),
+              "left":-(zoneHeightWidth/2)+(squareSize/2)
+          });
+      }
+  }
+
+  setAllTileZones(){
+      for (var i = 0 ; i < this.allSquares.length ; i++){
+          this.setTileZoneSize(this.allSquares[i]);
+      }
+  }
+  removeTileZone(zone:any, square:Square){
+      square.removeZone(zone);
   }
   setZoneValues(zone:any){
       this.zoneToEdit=zone;
@@ -123,27 +150,5 @@ export class SquareDetailComponent implements OnInit {
       this.mapShareService.setTileZones();
   }
 
-  setTileZoneSize(square:Square){
-      var squareSize = +$("#squarecontainer").css("height").split("px")[0];
-      for (var i = 0 ; i < square.zones.length ; i++){
-          var label = square.zones[i].label;
-          var radius = square.zones[i].radius;
-          var zoneHeightWidth = +(radius / this.squareSize).toFixed(1);
-          var zoneHeightWidth = (zoneHeightWidth*squareSize);
-          var zoneHeightWidthScale = zoneHeightWidth+"px";
-          console.log("radius " + radius + ". top: " + -(squareSize/2));
-          $("#tileZone"+square.id+i).css({
-              "width":zoneHeightWidthScale,
-              "height":zoneHeightWidthScale,
-              "top":-(zoneHeightWidth/2)+(squareSize/2),
-              "left":-(zoneHeightWidth/2)+(squareSize/2)
-          });
-      }
-  }
 
-  setAllTileZones(){
-      for (var i = 0 ; i < this.allSquares.length ; i++){
-          this.setTileZoneSize(this.allSquares[i]);
-      }
-  }
 }

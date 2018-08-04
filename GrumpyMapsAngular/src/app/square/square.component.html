@@ -14,7 +14,7 @@
             </div>
         </div>
         <div id="zonesInSquare" *ngIf="square.zones.length!=0">
-            <div class="tileZone" *ngFor="let zoneObject of square.zones; index as i" id="tileZone{{square.id}}{{i}}"></div>
+            <div class="tileZone" *ngFor="let zoneObject of square.zones; index as i" id="tileZone{{square.mapSquareId}}{{i}}"></div>
         </div>
         <span class="distance" *ngIf="square.currentDistance!=9999">{{square.currentDistance}}</span>
     </span>

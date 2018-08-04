@@ -556,6 +556,10 @@ export class MapDetailComponent implements OnInit {
     nextTurn() {
         for (var i = 0 ; i < this.allCharacters.length ; i++){
             this.allCharacters[i].resetAllStats();
+            this.allCharacters[i].reduceDurations();
+        }
+        for (var i = 0 ; i < this.dndMap.squares.length ; i++){
+            this.dndMap.squares[i].reduceDurations();
         }
         $('#infoBox').css({"color":"black"})
         $('#infoBox').html("New Turn!");
