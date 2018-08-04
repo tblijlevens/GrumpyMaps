@@ -36,6 +36,12 @@ export class SquareDetailComponent implements OnInit {
       this.allCharacters = allCharacters;
   }
 
+  zoneToEdit:any;
+  editZoneForm = new FormGroup({
+      zoneRadius: new FormControl(),
+      zoneDuration: new FormControl(),
+      zoneLabel: new FormControl()
+  });
 
   constructor(private mapShareService: MapShareService) {
   }
@@ -79,7 +85,7 @@ export class SquareDetailComponent implements OnInit {
       }
   }
 
-  selectZone(zone:any, player:Player){
+  clickZone(zone:any, player:Player){
       var index = player.zones.indexOf(zone);
       var zoneHeight = +$("#playerZone"+player.id+index).css("height").split("px")[0];
       zoneHeight = zoneHeight/2;
@@ -94,5 +100,22 @@ export class SquareDetailComponent implements OnInit {
           borderWidth: 1
       }, 400);
   }
-
+  removeZone(zone:any, player:Player){
+      player.removeZone(zone);
+  }
+  setZoneValues(zone:any){
+      this.zoneToEdit=zone;
+      this.editZoneForm.get('zoneLabel').setValue(zone.label);
+      this.editZoneForm.get('zoneRadius').setValue(zone.radius);
+      this.editZoneForm.get('zoneDuration').setValue(zone.duration);
+  }
+  editZone(){
+      this.zoneToEdit.label = this.editZoneForm.get('zoneLabel').value;
+      this.zoneToEdit.radius = this.editZoneForm.get('zoneRadius').value;
+      this.zoneToEdit.duration = this.editZoneForm.get('zoneDuration').value;
+      if (this.zoneToEdit.duration == 0){
+          this.zoneToEdit.duration = -1;
+      }
+      this.mapShareService.setZones();
+  }
 }

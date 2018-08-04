@@ -25,10 +25,50 @@
                 <li>
                     Initiative: {{player.initiative}}
                 </li>
-                <li *ngFor="let zone of player.zones" (click)="selectZone(zone, player)">
-                    <span class="links">{{zone.label}}:</span> {{zone.duration}} rounds
+                <li *ngFor="let zone of player.zones" (click)="clickZone(zone, player)">
+                    <span class="links">{{zone.label}}:</span> {{zone.duration}} rnd &nbsp;<mdb-icon class="buttonIcon" icon="remove" (click)="removeZone(zone, player)"></mdb-icon> &nbsp; <mdb-icon class="buttonIcon" icon="pencil"  (click)="setZoneValues(zone)" data-toggle="modal" data-target="#editZoneForm"></mdb-icon>
                 </li>
         </ul>
         </span>
     </span>
+</div>
+
+
+<!-- editZone Modal -->
+<div class="modal fade" id="editZoneForm" tabindex="-1" role="dialog" aria-labelledby="editZoneLabel" aria-hidden="true">
+
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5>Edit Zone:</h5>
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="editZoneForm">
+                    <div class="form-group" id="objectMap">
+                        <label class="center-block">Zone label:
+                            <input class="form-control" formControlName="zoneLabel" type="text" >
+                        </label>
+                        <br>
+
+                        <label class="center-block">Zone radius in yards:
+                            <input class="form-control" formControlName="zoneRadius" type="number">
+                        </label>
+                        <br>
+                        <label class="center-block">Zone duration in rounds: (0=permanent)
+                            <input class="form-control" formControlName="zoneDuration" type="number">
+                        </label>
+
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" (click)="editZone()" data-dismiss="modal">Save Zone</button>
+            </div>
+        </div>
+    </div>
 </div>
