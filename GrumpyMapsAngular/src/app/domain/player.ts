@@ -169,7 +169,6 @@ export class Player{
         this.reduceDurations();
     }
     reduceDurations(){
-
         // ZONES
         var toRemove:any[] = new Array();
         for (var i = 0 ; i < this.zones.length ; i++){
@@ -181,8 +180,7 @@ export class Player{
             }
         }
         for (var i = 0 ; i < toRemove.length ; i++){ // remove all selected zones
-            var index = this.zones.indexOf(toRemove[i]);
-            this.zones.splice(index, 1);
+            this.removeZone(toRemove[i]);
         }
 
         // STASIS
@@ -197,11 +195,18 @@ export class Player{
         }
 
         for (var i = 0 ; i < toRemove.length ; i++){ // remove all selected stasis
-            var index = this.stasis.indexOf(toRemove[i]);
-            this.stasis.splice(index, 1);
+            this.removeZone(toRemove[i]);
         }
     }
 
+    removeZone(zone){
+        var index = this.zones.indexOf(zone);
+        this.zones.splice(index, 1);
+    }
+    removeStasis(stasis){
+        var index = this.stasis.indexOf(stasis);
+        this.stasis.splice(index, 1);
+    }
     setActiveColor(){
         if (this.isSelected){
             $("#playerMap"+this.id).css({"box-shadow": "0px 0px 5px 3px " + this.color, "border-radius":"5px"});
