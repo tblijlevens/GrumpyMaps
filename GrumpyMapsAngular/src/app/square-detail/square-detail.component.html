@@ -4,7 +4,7 @@
     <!-- <span *ngFor="let square of selectedSquares"> {{square.mapCoordinate}}... </span><br /> -->
     <span *ngIf="square.players.length!=0">
         <span *ngFor="let player of square.players">
-            <span id="playerDetail{{player.id}}" class="playerNameDetail"[style.color]=player.color>{{player.name}}: </span> &nbsp;
+            <span id="playerDetail{{player.id}}" class="playerNameDetail" [style.color]=player.color>{{player.name}}: </span> &nbsp;
             <img width="100" src="{{player.playerIconUrl}}" /><br />
             <ul>
                 <li *ngIf="player.movementLeft % 1 == 0">
@@ -25,8 +25,14 @@
                 <li>
                     Initiative: {{player.initiative}}
                 </li>
-                <li *ngFor="let zone of player.zones" (click)="clickZone(zone, player)">
-                    <span class="links">{{zone.label}}:</span> {{zone.duration}} rnd &nbsp;<mdb-icon class="buttonIcon" icon="remove" (click)="removeZone(zone, player)"></mdb-icon> &nbsp; <mdb-icon class="buttonIcon" icon="pencil"  (click)="setZoneValues(zone)" data-toggle="modal" data-target="#editZoneForm"></mdb-icon>
+                <li *ngFor="let zone of player.zones">
+                    <span class="links" (click)="clickZone(zone, player)">
+                        <mdb-icon class="buttonIcon" icon="dot-circle-o"></mdb-icon> {{zone.label}}</span>:
+                        <span *ngIf="zone.duration==-1">&#x221e; rnds</span>
+                        <span *ngIf="zone.duration==1">{{zone.duration}} rnd </span>
+                        <span *ngIf="zone.duration>1">{{zone.duration}} rnds </span>
+                    <mdb-icon class="buttonIcon floatRight" icon="remove" (click)="removeZone(zone, player)" alt="Remove Zone" title="Remove Zone"></mdb-icon> &nbsp;
+                    <mdb-icon class="buttonIcon floatRight" icon="pencil"  (click)="setZoneValues(zone)" data-toggle="modal" data-target="#editZoneForm" alt="Edit Zone" title="Edit Zone"></mdb-icon>
                 </li>
         </ul>
         </span>

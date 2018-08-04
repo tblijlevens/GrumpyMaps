@@ -19,9 +19,13 @@ ul{
 .links{
     color: #367DF3;
     cursor: pointer;
-    text-decoration: underline;
 }
 mdb-icon{
     color: #367DF3;
     cursor: pointer;
+}
+.floatRight{
+    position: relative;
+    float:right;
+    margin-left:10px;
 }
