@@ -140,14 +140,14 @@ export class SquareComponent implements OnInit {
               }
           }
       }
-      this.mapShareService.setZones(); // makes the playerZones move with the character
+      this.mapShareService.setPlayerZones(); // makes the playerZones move with the character
       this.moveModeEvent.emit(false);
   }
 
   getDifference(num1, num2){
       return (num1 > num2)? num1-num2 : num2-num1
   }
-  
+
   resetAllDistances(){
       for (var i=0 ; i<this.allSquares.length ; i++){
           this.allSquares[i].currentDistance=9999;
