@@ -1,6 +1,18 @@
 <div class="squaredetail" *ngIf="square">
     <span class="lead" style="font-weight:bold;">Tile Details: <span *ngIf="selectedSquares.length==1">{{square.mapCoordinate}}</span></span><br />
 
+    <ul>
+        <li *ngFor="let zone of square.zones">
+            <span class="links" (click)="clickTileZone(zone)">
+                <mdb-icon class="buttonIcon" icon="dot-circle-o"></mdb-icon> {{zone.label}}</span>:
+                <span *ngIf="zone.duration==-1">&#x221e; rnds</span>
+                <span *ngIf="zone.duration==1">{{zone.duration}} rnd </span>
+                <span *ngIf="zone.duration>1">{{zone.duration}} rnds </span>
+            <mdb-icon class="buttonIcon floatRight" icon="remove" (click)="removeZone(zone, player)" alt="Remove Zone" title="Remove Zone"></mdb-icon> &nbsp;
+            <mdb-icon class="buttonIcon floatRight" icon="pencil"  (click)="setZoneValues(zone)" data-toggle="modal" data-target="#editZoneForm" alt="Edit Zone" title="Edit Zone"></mdb-icon>
+        </li>
+    </ul>
+
     <!-- <span *ngFor="let square of selectedSquares"> {{square.mapCoordinate}}... </span><br /> -->
     <span *ngIf="square.players.length!=0">
         <span *ngFor="let player of square.players">
@@ -26,7 +38,7 @@
                     Initiative: {{player.initiative}}
                 </li>
                 <li *ngFor="let zone of player.zones">
-                    <span class="links" (click)="clickZone(zone, player)">
+                    <span class="links" (click)="clickPlayerZone(zone, player)">
                         <mdb-icon class="buttonIcon" icon="dot-circle-o"></mdb-icon> {{zone.label}}</span>:
                         <span *ngIf="zone.duration==-1">&#x221e; rnds</span>
                         <span *ngIf="zone.duration==1">{{zone.duration}} rnd </span>

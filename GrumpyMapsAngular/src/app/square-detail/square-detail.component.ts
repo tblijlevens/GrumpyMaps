@@ -54,8 +54,11 @@ export class SquareDetailComponent implements OnInit {
           }
           this.square =square;
       });
-      this.mapShareService.zonesUpdated.subscribe(booleanValue => {
+      this.mapShareService.playerZonesUpdated.subscribe(booleanValue => {
          this.setAllPlayerZones();
+      });
+      this.mapShareService.tileZonesUpdated.subscribe(booleanValue => {
+         this.setAllTileZones();
       });
 
   }
@@ -85,7 +88,7 @@ export class SquareDetailComponent implements OnInit {
       }
   }
 
-  clickZone(zone:any, player:Player){
+  clickPlayerZone(zone:any, player:Player){
       var index = player.zones.indexOf(zone);
       var zoneHeight = +$("#playerZone"+player.id+index).css("height").split("px")[0];
       zoneHeight = zoneHeight/2;
@@ -116,6 +119,31 @@ export class SquareDetailComponent implements OnInit {
       if (this.zoneToEdit.duration == 0){
           this.zoneToEdit.duration = -1;
       }
-      this.mapShareService.setZones();
+      this.mapShareService.setPlayerZones();
+      this.mapShareService.setTileZones();
+  }
+
+  setTileZoneSize(square:Square){
+      var squareSize = +$("#squarecontainer").css("height").split("px")[0];
+      for (var i = 0 ; i < square.zones.length ; i++){
+          var label = square.zones[i].label;
+          var radius = square.zones[i].radius;
+          var zoneHeightWidth = +(radius / this.squareSize).toFixed(1);
+          var zoneHeightWidth = (zoneHeightWidth*squareSize);
+          var zoneHeightWidthScale = zoneHeightWidth+"px";
+          console.log("radius " + radius + ". top: " + -(squareSize/2));
+          $("#tileZone"+square.id+i).css({
+              "width":zoneHeightWidthScale,
+              "height":zoneHeightWidthScale,
+              "top":-(zoneHeightWidth/2)+(squareSize/2),
+              "left":-(zoneHeightWidth/2)+(squareSize/2)
+          });
+      }
+  }
+
+  setAllTileZones(){
+      for (var i = 0 ; i < this.allSquares.length ; i++){
+          this.setTileZoneSize(this.allSquares[i]);
+      }
   }
 }

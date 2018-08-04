@@ -279,6 +279,7 @@ export class MapDetailComponent implements OnInit {
             $("#multiSelect").css({"box-shadow":"0 0 4px 2px #2A74F2"})
         }
         this.selectedSquares = new Array();
+        this.mapShareService.setTileZones();
     }
     mouseOverMultiSelect(){
         $('#infoBox').css({"color":"black"})
@@ -422,7 +423,7 @@ export class MapDetailComponent implements OnInit {
             console.log(zoneObject.label);
             this.selectedPlayer.zones.push(zoneObject);
 
-            this.mapShareService.setZones(); // sets the zone sizes in the correct position
+            this.mapShareService.setPlayerZones(); // sets the zone sizes in the correct position
         }
     }
 
@@ -584,7 +585,7 @@ export class MapDetailComponent implements OnInit {
         console.log(zoneObject.label);
         this.selectedSquares[0].zones.push(zoneObject);
 
-        this.mapShareService.setZonesTile(); // sets the zone sizes in the correct position
+        this.mapShareService.setTileZones(); // sets the zone sizes in the correct position
     }
 
     public receiveMoveMode($event){

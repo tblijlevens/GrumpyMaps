@@ -195,7 +195,7 @@ export class Player{
         }
 
         for (var i = 0 ; i < toRemove.length ; i++){ // remove all selected stasis
-            this.removeZone(toRemove[i]);
+            this.removeStasis(toRemove[i]);
         }
     }
 
