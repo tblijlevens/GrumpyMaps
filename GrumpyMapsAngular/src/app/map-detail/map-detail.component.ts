@@ -279,7 +279,6 @@ export class MapDetailComponent implements OnInit {
             $("#multiSelect").css({"box-shadow":"0 0 4px 2px #2A74F2"})
         }
         this.selectedSquares = new Array();
-        this.mapShareService.setTileZones();
     }
     mouseOverMultiSelect(){
         $('#infoBox').css({"color":"black"})
