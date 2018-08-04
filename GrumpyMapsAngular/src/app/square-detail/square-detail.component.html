@@ -3,7 +3,7 @@
 
     <ul>
         <li *ngFor="let zone of square.zones">
-            <span class="links" (click)="clickTileZone(zone)">
+            <span class="links" (click)="clickTileZone(zone, square)">
                 <mdb-icon class="buttonIcon" icon="dot-circle-o"></mdb-icon> {{zone.label}}</span>:
                 <span *ngIf="zone.duration==-1">&#x221e; rnds</span>
                 <span *ngIf="zone.duration==1">{{zone.duration}} rnd </span>

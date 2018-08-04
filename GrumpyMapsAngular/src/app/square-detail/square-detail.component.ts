@@ -130,6 +130,22 @@ export class SquareDetailComponent implements OnInit {
           this.setTileZoneSize(this.allSquares[i]);
       }
   }
+  clickTileZone(zone:any, square:Square){
+      var index = square.zones.indexOf(zone);
+      var zoneHeight = +$("#tileZone"+square.mapSquareId+index).css("height").split("px")[0];
+      zoneHeight = zoneHeight/2;
+
+      $("#tileZone"+square.mapSquareId+index).animate({
+          borderWidth: zoneHeight
+      }, 400).animate({
+          borderWidth: 1
+      }, 400).animate({
+          borderWidth: zoneHeight
+      }, 400).animate({
+          borderWidth: 1
+      }, 400);
+  }
+
   removeTileZone(zone:any, square:Square){
       square.removeZone(zone);
   }
