@@ -7,13 +7,14 @@
         <div id="objectsInSquare" *ngIf="square.players.length!=0">
             <div id="playerContainer">
                 <div class="playerDot" *ngFor="let player of square.players" [style.background-color]=player.color id="playerDot{{player.id}}">
-                    <!-- <div *ngIf="player.zone.length!=0"> -->
                         <div class="playerZone" *ngFor="let zoneObject of player.zones; index as i" id="playerZone{{player.id}}{{i}}" [style.border-color]=player.color></div>
-                    <!-- </div> -->
                 </div>
 
 
             </div>
+        </div>
+        <div id="zonesInSquare" *ngIf="square.zones.length!=0">
+            <div class="tileZone" *ngFor="let zoneObject of square.zones; index as i" id="tileZone{{square.id}}{{i}}"></div>
         </div>
         <span class="distance" *ngIf="square.currentDistance!=9999">{{square.currentDistance}}</span>
     </span>

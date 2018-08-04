@@ -97,7 +97,12 @@ export class MapDetailComponent implements OnInit {
         playerMovement: new FormControl(),
         objectAmount: new FormControl()
     });
-    addZoneForm = new FormGroup({
+    addZonePlayerForm = new FormGroup({
+        zoneRadius: new FormControl(),
+        zoneDuration: new FormControl(),
+        zoneLabel: new FormControl()
+    });
+    addZoneTileForm = new FormGroup({
         zoneRadius: new FormControl(),
         zoneDuration: new FormControl(),
         zoneLabel: new FormControl()
@@ -162,8 +167,10 @@ export class MapDetailComponent implements OnInit {
         this.createPlayerForm.get('playerAttacks').setValue(1);
         this.createPlayerForm.get('playerSpells').setValue(1);
 
-        this.addZoneForm.get('zoneRadius').setValue(10);
-        this.addZoneForm.get('zoneDuration').setValue(1);
+        this.addZonePlayerForm.get('zoneRadius').setValue(10);
+        this.addZonePlayerForm.get('zoneDuration').setValue(1);
+        this.addZoneTileForm.get('zoneRadius').setValue(10);
+        this.addZoneTileForm.get('zoneDuration').setValue(1);
 
         this.setRows();
         this.calculateMapFeet();
@@ -283,6 +290,154 @@ export class MapDetailComponent implements OnInit {
         $('#infoBox').hide();
     }
 
+
+    // public toggleFullScreen() {
+    //     $('body').fullscreen();
+    //     return false;
+    // }
+
+    clickPlayer(player: Player) {
+        this.resetAllDistances();
+        this.deselectAllCharacters();
+        this.setAllActiveColors();
+        player.isSelected = true;
+        player.setActiveColor();
+        this.selectedPlayer = player;
+        var playerSquare = this.getPlayerSquare();
+        this.mapShareService.setSquare(playerSquare); //update active square in squareDetail via mapShareService
+
+        this.selectedSquares = new Array();
+        this.showRange(player);
+
+    }
+
+
+    resetAllDistances(){
+        for (var i=0 ; i<this.dndMap.squares.length ; i++){
+            this.dndMap.squares[i].currentDistance=9999;
+        }
+    }
+    deselectAllCharacters(){
+        for (var i=0 ; i<this.allCharacters.length;i++){
+            this.allCharacters[i].isSelected=false;
+        }
+    }
+    setAllActiveColors(){
+        for (var i=0 ; i<this.allCharacters.length;i++){
+            this.allCharacters[i].setActiveColor();
+        }
+    }
+    getPlayerSquare(){
+        var playerSquare:Square=null;
+        for (var i = 0 ; i < this.dndMap.squares.length ; i++){
+            if (this.dndMap.squares[i].mapSquareId == this.selectedPlayer.mapSquareId){
+                playerSquare = this.dndMap.squares[i];
+            }
+        }
+        return playerSquare;
+    }
+    showRange(player:Player){
+        this.rangeSquares = player.getMoveRange(this.squareSize, this.dndMap.squares);
+        this.setSquareTextSize();
+    }
+    setSquareTextSize(){
+        $(".squareTexts").css({"font-size":"1vw"});
+        if (this.heightWidth > 16) {
+            $(".squareTexts").css({"font-size":"0.9vw"});
+            if (this.heightWidth > 18) {
+                $(".squareTexts").css({"font-size":"0.8vw"});
+                if (this.heightWidth > 20) {
+                    $(".squareTexts").css({"font-size":"0.7vw"});
+                    if (this.heightWidth > 22) {
+                        $(".squareTexts").css({"font-size":"0.6vw"});
+                    }
+                }
+            }
+        }
+    }
+    attack() {
+        if(this.selectedPlayer.isSelected ) {
+            if(this.selectedPlayer.attacksLeft!=0){
+                this.selectedPlayer.attack()
+                $('#infoBox').css({"color":"black"})
+                $('#infoBox').html(this.selectedPlayer.name + " attacks!");
+                $('#infoBox').fadeIn(500).delay(500).fadeOut(500);
+
+            }
+            else {
+                $('#infoBox').css({"color":"red"})
+                $('#infoBox').html(this.selectedPlayer.name + " can't attack.");
+                $('#infoBox').fadeIn(500).delay(500).fadeOut(500);
+            }
+        }
+
+    }
+    cast() {
+        if(this.selectedPlayer.isSelected) {
+            if(this.selectedPlayer.spellsLeft!=0){
+                this.selectedPlayer.cast()
+                $('#infoBox').css({"color":"black"})
+                $('#infoBox').html(this.selectedPlayer.name + " casts a spell!");
+                $('#infoBox').fadeIn(500).delay(500).fadeOut(500);
+            }
+            else {
+                $('#infoBox').css({"color":"red"})
+                $('#infoBox').html(this.selectedPlayer.name + " can't cast.");
+                $('#infoBox').fadeIn(500).delay(500).fadeOut(500);
+            }
+        }
+    }
+    moveCharacter() {
+        if(this.selectedPlayer.isSelected) {
+            this.movementMode = true;
+            this.selectedSquare = this.getPlayerSquare();
+            this.selectedSquare.removePhysical(this.selectedPlayer.id);
+
+        }
+    }
+    addStasis(){
+
+    }
+    addZonePlayer(){
+        if(this.selectedPlayer.isSelected) {
+            var label = this.addZonePlayerForm.get('zoneLabel').value;
+            var radius = this.addZonePlayerForm.get('zoneRadius').value;
+            var duration = this.addZonePlayerForm.get('zoneDuration').value;
+            var zoneObject:any ={};
+
+            if (duration==0){
+                zoneObject ={
+                    label:label,
+                    radius:radius,
+                    duration:-1
+                };
+            }
+            else {
+                zoneObject ={
+                    label:label,
+                    radius:radius,
+                    duration:duration
+                };
+            }
+            console.log(zoneObject.label);
+            this.selectedPlayer.zones.push(zoneObject);
+
+            this.mapShareService.setZones(); // sets the zone sizes in the correct position
+        }
+    }
+
+    editCharacter(){
+
+    }
+    deleteObject() {
+        if(this.selectedPlayer.isSelected) {
+            this.selectedSquare = this.getPlayerSquare();
+            var index = this.allCharacters.indexOf(this.selectedPlayer);
+            this.allCharacters.splice(index, 1);
+            this.selectedSquare.removePhysical(this.selectedPlayer.id);
+        }
+    }
+
     setPlayerIconUrl(player:Player){
       //   var reader = new FileReader();
       //   reader.onload = ()=>{
@@ -392,154 +547,10 @@ export class MapDetailComponent implements OnInit {
         this.createItemForm.get('itemName').setValue("");
         this.createItemForm.get('itemAmount').setValue(1);
 
-        this.addZoneForm.get('zoneRadius').setValue(10);
-        this.addZoneForm.get('zoneDuration').setValue(1);
-    }
-    // public toggleFullScreen() {
-    //     $('body').fullscreen();
-    //     return false;
-    // }
-
-    clickPlayer(player: Player) {
-        this.resetAllDistances();
-        this.deselectAllCharacters();
-        this.setAllActiveColors();
-        player.isSelected = true;
-        player.setActiveColor();
-        this.selectedPlayer = player;
-        var playerSquare = this.getPlayerSquare();
-        this.mapShareService.setSquare(playerSquare); //update active square in squareDetail via mapShareService
-
-        this.selectedSquares = new Array();
-        this.showRange(player);
-
-    }
-
-
-    resetAllDistances(){
-        for (var i=0 ; i<this.dndMap.squares.length ; i++){
-            this.dndMap.squares[i].currentDistance=9999;
-        }
-    }
-    deselectAllCharacters(){
-        for (var i=0 ; i<this.allCharacters.length;i++){
-            this.allCharacters[i].isSelected=false;
-        }
-    }
-    setAllActiveColors(){
-        for (var i=0 ; i<this.allCharacters.length;i++){
-            this.allCharacters[i].setActiveColor();
-        }
-    }
-    getPlayerSquare(){
-        var playerSquare:Square=null;
-        for (var i = 0 ; i < this.dndMap.squares.length ; i++){
-            if (this.dndMap.squares[i].mapSquareId == this.selectedPlayer.mapSquareId){
-                playerSquare = this.dndMap.squares[i];
-            }
-        }
-        return playerSquare;
-    }
-    showRange(player:Player){
-        this.rangeSquares = player.getMoveRange(this.squareSize, this.dndMap.squares);
-        this.setSquareTextSize();
-    }
-    setSquareTextSize(){
-        $(".squareTexts").css({"font-size":"1vw"});
-        if (this.heightWidth > 16) {
-            $(".squareTexts").css({"font-size":"0.9vw"});
-            if (this.heightWidth > 18) {
-                $(".squareTexts").css({"font-size":"0.8vw"});
-                if (this.heightWidth > 20) {
-                    $(".squareTexts").css({"font-size":"0.7vw"});
-                    if (this.heightWidth > 22) {
-                        $(".squareTexts").css({"font-size":"0.6vw"});
-                    }
-                }
-            }
-        }
-    }
-    attack() {
-        if(this.selectedPlayer.isSelected ) {
-            if(this.selectedPlayer.attacksLeft!=0){
-                this.selectedPlayer.attack()
-                $('#infoBox').css({"color":"black"})
-                $('#infoBox').html(this.selectedPlayer.name + " attacks!");
-                $('#infoBox').fadeIn(500).delay(500).fadeOut(500);
-
-            }
-            else {
-                $('#infoBox').css({"color":"red"})
-                $('#infoBox').html(this.selectedPlayer.name + " can't attack.");
-                $('#infoBox').fadeIn(500).delay(500).fadeOut(500);
-            }
-        }
-
-    }
-    cast() {
-        if(this.selectedPlayer.isSelected) {
-            if(this.selectedPlayer.spellsLeft!=0){
-                this.selectedPlayer.cast()
-                $('#infoBox').css({"color":"black"})
-                $('#infoBox').html(this.selectedPlayer.name + " casts a spell!");
-                $('#infoBox').fadeIn(500).delay(500).fadeOut(500);
-            }
-            else {
-                $('#infoBox').css({"color":"red"})
-                $('#infoBox').html(this.selectedPlayer.name + " can't cast.");
-                $('#infoBox').fadeIn(500).delay(500).fadeOut(500);
-            }
-        }
-    }
-    moveCharacter() {
-        if(this.selectedPlayer.isSelected) {
-            this.movementMode = true;
-            this.selectedSquare = this.getPlayerSquare();
-            this.selectedSquare.removePhysical(this.selectedPlayer.id);
-
-        }
-    }
-    addStasis(){
-
-    }
-    addZone(){
-        if(this.selectedPlayer.isSelected) {
-            var label = this.addZoneForm.get('zoneLabel').value;
-            var radius = this.addZoneForm.get('zoneRadius').value;
-            var duration = this.addZoneForm.get('zoneDuration').value;
-            var zoneObject:any ={};
-
-            if (duration==0){
-                zoneObject ={
-                    label:label,
-                    radius:radius,
-                    duration:-1
-                };
-            }
-            else {
-                zoneObject ={
-                    label:label,
-                    radius:radius,
-                    duration:duration
-                };
-            }
-            console.log(zoneObject.label);
-            this.selectedPlayer.zones.push(zoneObject);
-
-            this.mapShareService.setZones(); // sets the zone sizes in the correct position
-        }
-    }
-
-    edit(){
-
-    }
-    deleteObject() {
-        if(this.selectedPlayer.isSelected) {
-            this.selectedSquare = this.getPlayerSquare();
-            var index = this.allCharacters.indexOf(this.selectedPlayer);
-            this.allCharacters.splice(index, 1);
-            this.selectedSquare.removePhysical(this.selectedPlayer.id);
-        }
+        this.addZonePlayerForm.get('zoneRadius').setValue(10);
+        this.addZonePlayerForm.get('zoneDuration').setValue(1);
+        this.addZoneTileForm.get('zoneRadius').setValue(10);
+        this.addZoneTileForm.get('zoneDuration').setValue(1);
     }
     nextTurn() {
         for (var i = 0 ; i < this.allCharacters.length ; i++){
@@ -550,6 +561,31 @@ export class MapDetailComponent implements OnInit {
         $('#infoBox').fadeIn(500).delay(500).fadeOut(500);
     }
 
+    addZoneTile(){
+        var label = this.addZoneTileForm.get('zoneLabel').value;
+        var radius = this.addZoneTileForm.get('zoneRadius').value;
+        var duration = this.addZoneTileForm.get('zoneDuration').value;
+        var zoneObject:any ={};
+
+        if (duration==0){
+            zoneObject ={
+                label:label,
+                radius:radius,
+                duration:-1
+            };
+        }
+        else {
+            zoneObject ={
+                label:label,
+                radius:radius,
+                duration:duration
+            };
+        }
+        console.log(zoneObject.label);
+        this.selectedSquares[0].zones.push(zoneObject);
+
+        this.mapShareService.setZonesTile(); // sets the zone sizes in the correct position
+    }
 
     public receiveMoveMode($event){
         this.movementMode = $event;
@@ -572,7 +608,6 @@ export class MapDetailComponent implements OnInit {
     }
     public receiveSelectedSquares($event){
         this.selectedSquares = this.removeDuplicates($event);
-
     }
 
     private removeDuplicates(arr){

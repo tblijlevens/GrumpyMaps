@@ -13,6 +13,8 @@ export class Square {
   mapId:number;
   players: Player[] = new Array();
   numberofPlayers:number;
+  zones:any[] = new Array();
+
 
   constructor(id:number, mapSquareId: number, squareSize: number, squareHeightWidth: string, heightWidth: number) {
     this.id = id;
@@ -32,6 +34,27 @@ export class Square {
     player.squareMapCoordinate = this.mapCoordinate;
     this.players.push(player);
     this.numberofPlayers=this.players.length;
+  }
+
+  reduceDurations(){
+      // ZONES
+      var toRemove:any[] = new Array();
+      for (var i = 0 ; i < this.zones.length ; i++){
+          if (this.zones[i].duration>0){
+              this.zones[i].duration--; // reduce duration
+          }
+          if (this.zones[i].duration==0){ //add zone to remove if duration is 0
+              toRemove.push(this.zones[i]);
+          }
+      }
+      for (var i = 0 ; i < toRemove.length ; i++){ // remove all selected zones
+          this.removeZone(toRemove[i]);
+      }
+  }
+
+  removeZone(zone){
+      var index = this.zones.indexOf(zone);
+      this.zones.splice(index, 1);
   }
 
   addTestPlayer(){

@@ -50,7 +50,7 @@
                             Stasis
                         </span>
                     </div>
-                    <div class="btn deleteEdit" data-toggle="modal" data-target="#addZoneForm">
+                    <div class="btn deleteEdit" data-toggle="modal" data-target="#addZonePlayerForm">
                         <mdb-icon class="buttonIcon" icon="dot-circle-o"></mdb-icon><br />
                         <span class="buttonText">
                             Zone
@@ -158,6 +158,12 @@
                     <mdb-icon class="buttonIcon" icon="eraser"></mdb-icon><br />
                     <span class="buttonText">
                         Obstruct
+                    </span>
+                </div>
+                <div class="btn deleteEdit" data-toggle="modal" data-target="#addZoneTileForm">
+                    <mdb-icon class="buttonIcon" icon="dot-circle-o"></mdb-icon><br />
+                    <span class="buttonText">
+                        Zone
                     </span>
                 </div>
                 <br />
@@ -298,8 +304,8 @@
     </div>
 </div>
 
-<!-- addZone Modal -->
-<div class="modal fade" id="addZoneForm" tabindex="-1" role="dialog" aria-labelledby="addZoneLabel" aria-hidden="true">
+<!-- addZonePlayer Modal -->
+<div class="modal fade" id="addZonePlayerForm" tabindex="-1" role="dialog" aria-labelledby="addZonePlayerLabel" aria-hidden="true">
 
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -311,7 +317,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form [formGroup]="addZoneForm">
+                <form [formGroup]="addZonePlayerForm">
                     <div class="form-group" id="objectMap">
                         <label class="center-block">Zone label:
                             <input class="form-control" formControlName="zoneLabel" type="text" >
@@ -331,7 +337,46 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" (click)="addZone()" data-dismiss="modal">addZone</button>
+                <button type="button" class="btn btn-primary" (click)="addZonePlayer()" data-dismiss="modal">addZone</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- addZoneTile Modal -->
+<div class="modal fade" id="addZoneTileForm" tabindex="-1" role="dialog" aria-labelledby="addZoneTileLabel" aria-hidden="true">
+
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5>Add Zone to Tile:</h5>
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="addZoneTileForm">
+                    <div class="form-group" id="objectMap">
+                        <label class="center-block">Zone label:
+                            <input class="form-control" formControlName="zoneLabel" type="text" >
+                        </label>
+                        <br>
+
+                        <label class="center-block">Zone radius in yards:
+                            <input class="form-control" formControlName="zoneRadius" type="number">
+                        </label>
+                        <br>
+                        <label class="center-block">Zone duration in rounds: (0=permanent)
+                            <input class="form-control" formControlName="zoneDuration" type="number">
+                        </label>
+
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" (click)="addZoneTile()" data-dismiss="modal">addZone</button>
             </div>
         </div>
     </div>
