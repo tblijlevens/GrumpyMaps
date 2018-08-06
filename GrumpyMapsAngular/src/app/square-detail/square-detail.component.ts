@@ -162,8 +162,8 @@ export class SquareDetailComponent implements OnInit {
       if (this.zoneToEdit.duration == 0){
           this.zoneToEdit.duration = -1;
       }
-      this.mapShareService.setPlayerZones();
-      this.mapShareService.setTileZones();
+      this.setAllPlayerZones();
+      this.setAllTileZones();
   }
 
 

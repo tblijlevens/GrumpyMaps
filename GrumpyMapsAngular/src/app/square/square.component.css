@@ -84,7 +84,7 @@
     top:-50px;
     width:30px;
     height:30px;
-    border: solid 1px red;
+    border: solid 1px orange;
     border-radius: 50%;
     background-color: transparent;
 }
@@ -101,6 +101,7 @@
 
 .playerDot{
     position: relative;
+    z-index: 6;
     top:30%;
     width:25%;
     height: 25%;
