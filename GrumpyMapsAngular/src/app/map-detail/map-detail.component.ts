@@ -308,6 +308,7 @@ export class MapDetailComponent implements OnInit {
 
         this.selectedSquares = new Array();
         this.showRange(player);
+        this.showPlayerDot();
 
     }
 
@@ -339,6 +340,11 @@ export class MapDetailComponent implements OnInit {
     showRange(player:Player){
         this.rangeSquares = player.getMoveRange(this.squareSize, this.dndMap.squares);
         this.setSquareTextSize();
+    }
+    showPlayerDot(){
+        $("#playerDot"+this.selectedPlayer.id).
+        fadeOut(400).fadeIn(400).
+        fadeOut(400).fadeIn(400);
     }
     setSquareTextSize(){
         $(".squareTexts").css({"font-size":"1vw"});
