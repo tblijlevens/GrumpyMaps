@@ -3,7 +3,7 @@
 
     <ul>
         <li *ngFor="let zone of square.zones">
-            <span class="links" (click)="clickPlayerZone(zone, square)">
+            <span class="links" (click)="clickTileZone(zone, square)">
                 <mdb-icon *ngIf="zone.radius!=0" class="buttonIcon" icon="dot-circle-o"></mdb-icon>
                 <mdb-icon *ngIf="zone.radius==0"class="buttonIcon" icon="flag"></mdb-icon> {{zone.label}}</span>:
 

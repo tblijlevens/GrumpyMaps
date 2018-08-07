@@ -160,7 +160,7 @@
                         Obstruct
                     </span>
                 </div>
-                <div class="btn deleteEdit" data-toggle="modal" data-target="#addZoneTileForm">
+                <div class="btn deleteEdit" data-toggle="modal" data-target="#addZoneTileForm" *ngIf="selectedSquares.length!=0">
                     <mdb-icon class="buttonDoubleIcon" icon="dot-circle-o"></mdb-icon>/<mdb-icon class="buttonDoubleIcon" icon="flag"></mdb-icon><br />
                     <span class="buttonText">
                         Zone/Flag
