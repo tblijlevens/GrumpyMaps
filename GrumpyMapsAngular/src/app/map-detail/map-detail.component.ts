@@ -21,14 +21,23 @@ $(document).ready(function() {
         $(".rowLetter").css({"line-height":rowHeight});
 
         // set infoBox to right position
-        var mapPos = $(".mapcontainer").offset();
+        var mapOffset = $(".mapcontainer").offset();
         var mapHeight = +mapHeightPX.split("px")[0];
         var infoBoxHeight = +$("#infoBox").css('height').split("px")[0];
         var infoBoxWidth = +$("#infoBox").css('width').split("px")[0];
         $("#infoBox").css({
-            "top":mapPos.top+((mapHeight/2)-(infoBoxHeight/2)),
-            "left":mapPos.left+((mapHeight/2)-(infoBoxWidth/2))
+            "top":mapOffset.top+((mapHeight/2)-(infoBoxHeight/2)),
+            "left":mapOffset.left+((mapHeight/2)-(infoBoxWidth/2))
         });
+
+        //set legend size and position:
+        var mapPos = $(".mapcontainer").position();
+        $("#legend").css({
+            width: mapHeightPX,
+            top: mapHeight,
+            left: mapPos.left
+        });
+
     });
 
     //make right mouse click in map not popup the contextmenu
@@ -189,6 +198,7 @@ export class MapDetailComponent implements OnInit {
         $("#firstColumn").css({width: columnWidthFirst});
         $("#secondColumn").css({width: columnWidth});
 
+
         // set setup box width:
         $("#mapSetup").css({width: columnWidth+40});
 
@@ -197,14 +207,23 @@ export class MapDetailComponent implements OnInit {
         $(".rowLetter").css({"line-height":rowHeight});
 
         // set infoBox to right position
-        var mapPos = $(".mapcontainer").offset();
+        var mapOffset = $(".mapcontainer").offset();
         var mapHeight = +mapHeightPX.split("px")[0];
         var infoBoxHeight = +$("#infoBox").css('height').split("px")[0];
         var infoBoxWidth = +$("#infoBox").css('width').split("px")[0];
         $("#infoBox").css({
-            "top":mapPos.top+((mapHeight/2)-(infoBoxHeight/2)),
-            "left":mapPos.left+((mapHeight/2)-(infoBoxWidth/2))
+            "top":mapOffset.top+((mapHeight/2)-(infoBoxHeight/2)),
+            "left":mapOffset.left+((mapHeight/2)-(infoBoxWidth/2))
         });
+
+        //set legend size and position:
+        var mapPos = $(".mapcontainer").position();
+        $("#legend").css({
+            width: mapHeightPX,
+            top: mapHeight,
+            left: mapPos.left
+        });
+
     }
     toggleSettings(){
         $("#mapSetup").toggle( 500 );
