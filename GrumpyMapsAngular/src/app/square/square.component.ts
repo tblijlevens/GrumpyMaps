@@ -99,16 +99,17 @@ export class SquareComponent implements OnInit {
 
     // after moving the rangeSquares is always set to nothing so it stops showing range
     this.setRangeSquaresEvent.emit(new Array());
-
-    if (this.selectedPlayer!=null){
-        this.selectedPlayer.isSelected = false;
-        this.selectedPlayer.setActiveColor();
-        this.setSelectedPlayerEvent.emit(null);
-    }
+    this.resetPlayer();
 
   }
 
-
+  resetPlayer(){
+      if (this.selectedPlayer!=null){
+          this.selectedPlayer.isSelected = false;
+          this.selectedPlayer.setActiveColor();
+          this.setSelectedPlayerEvent.emit(null);
+      }
+  }
   private moveObject(){
       var squareIdInRange = false;
       for (var i = 0; i < this._inRangeSquares.length; i++) {
@@ -266,6 +267,7 @@ export class SquareComponent implements OnInit {
 
   deselectAll(){
       this.selectedSquaresEvent.emit(new Array());
+      this.resetPlayer();
       this.setSelectedPlayerEvent.emit(null);
       this.moveModeEvent.emit(false);
       this.setRangeSquaresEvent.emit(new Array());
