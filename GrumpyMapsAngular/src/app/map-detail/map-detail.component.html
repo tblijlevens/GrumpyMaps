@@ -148,22 +148,22 @@
             <span class="mapOptionsBox"  ><!--*ngIf="rangeSquares.length!=0"-->
                 <span class="lead" style="font-weight:bold;">Map options</span><br />
 
-                <div class="btn addObstruct" data-toggle="modal" data-target="#addModal" *ngIf="selectedSquares.length!=0">
+                <div class="btn deleteEdit" data-toggle="modal" data-target="#addModal" *ngIf="selectedSquares.length!=0">
                     <mdb-icon class="buttonIcon" icon="plus"></mdb-icon><br />
                     <span class="buttonText">
                         Add object
                     </span>
                 </div>
-                <div class="btn addObstruct" (click)="obstructSelection()" *ngIf="selectedSquares.length!=0">
+                <div class="btn deleteEdit" (click)="obstructSelection()" *ngIf="selectedSquares.length!=0">
                     <mdb-icon class="buttonIcon" icon="eraser"></mdb-icon><br />
                     <span class="buttonText">
                         Obstruct
                     </span>
                 </div>
                 <div class="btn deleteEdit" data-toggle="modal" data-target="#addZoneTileForm">
-                    <mdb-icon class="buttonIcon" icon="dot-circle-o"></mdb-icon><br />
+                    <mdb-icon class="buttonDoubleIcon" icon="dot-circle-o"></mdb-icon>/<mdb-icon class="buttonDoubleIcon" icon="flag"></mdb-icon><br />
                     <span class="buttonText">
-                        Zone
+                        Zone/Flag
                     </span>
                 </div>
                 <br />
@@ -310,7 +310,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5>Add Zone to Player:</h5>
+                <h5>Add Zone or Stasis to Player:</h5>
 
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -319,16 +319,16 @@
             <div class="modal-body">
                 <form [formGroup]="addZonePlayerForm">
                     <div class="form-group" id="objectMap">
-                        <label class="center-block">Zone label:
+                        <label class="center-block">Label:
                             <input class="form-control" formControlName="zoneLabel" type="text" >
                         </label>
                         <br>
 
-                        <label class="center-block">Zone radius in yards (0 = just stasis):
+                        <label class="center-block">Radius in yards (0 = just stasis):
                             <input class="form-control" formControlName="zoneRadius" type="number">
                         </label>
                         <br>
-                        <label class="center-block">Zone duration in rounds: (0 = permanent)
+                        <label class="center-block">Duration in rounds: (0 = permanent)
                             <input class="form-control" formControlName="zoneDuration" type="number">
                         </label>
 
@@ -349,7 +349,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5>Add Zone to Tile:</h5>
+                <h5>Add Zone or Flag to Tile:</h5>
 
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -358,16 +358,16 @@
             <div class="modal-body">
                 <form [formGroup]="addZoneTileForm">
                     <div class="form-group" id="objectMap">
-                        <label class="center-block">Zone label:
+                        <label class="center-block">Label:
                             <input class="form-control" formControlName="zoneLabel" type="text" >
                         </label>
                         <br>
 
-                        <label class="center-block">Zone radius in yards:
+                        <label class="center-block">Radius in yards (0 = flag):
                             <input class="form-control" formControlName="zoneRadius" type="number">
                         </label>
                         <br>
-                        <label class="center-block">Zone duration in rounds: (0=permanent)
+                        <label class="center-block">Duration in rounds: (0 = permanent)
                             <input class="form-control" formControlName="zoneDuration" type="number">
                         </label>
 
