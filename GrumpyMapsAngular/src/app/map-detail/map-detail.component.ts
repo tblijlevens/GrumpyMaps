@@ -167,9 +167,9 @@ export class MapDetailComponent implements OnInit {
         this.createPlayerForm.get('playerAttacks').setValue(1);
         this.createPlayerForm.get('playerSpells').setValue(1);
 
-        this.addZonePlayerForm.get('zoneRadius').setValue(10);
+        this.addZonePlayerForm.get('zoneRadius').setValue(0);
         this.addZonePlayerForm.get('zoneDuration').setValue(1);
-        this.addZoneTileForm.get('zoneRadius').setValue(10);
+        this.addZoneTileForm.get('zoneRadius').setValue(0);
         this.addZoneTileForm.get('zoneDuration').setValue(1);
 
         this.setRows();
@@ -548,9 +548,9 @@ export class MapDetailComponent implements OnInit {
         this.createItemForm.get('itemName').setValue("");
         this.createItemForm.get('itemAmount').setValue(1);
 
-        this.addZonePlayerForm.get('zoneRadius').setValue(10);
+        this.addZonePlayerForm.get('zoneRadius').setValue(0);
         this.addZonePlayerForm.get('zoneDuration').setValue(1);
-        this.addZoneTileForm.get('zoneRadius').setValue(10);
+        this.addZoneTileForm.get('zoneRadius').setValue(0);
         this.addZoneTileForm.get('zoneDuration').setValue(1);
     }
     nextTurn() {
