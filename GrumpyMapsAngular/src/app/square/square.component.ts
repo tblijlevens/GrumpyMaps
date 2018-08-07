@@ -121,35 +121,42 @@ export class SquareComponent implements OnInit {
 
           //move player for that distance:
           this.selectedPlayer.movePlayer(this.square.currentDistance);
-          $('#infoBox').css({"color":"black"})
 
-          $('#infoBox').html(this.selectedPlayer.name + " moves " + this.square.currentDistance + " yards!" );
-          $('#infoBox').fadeIn(500).delay(500).fadeOut(500);
+          //remove object from old square
+          var oldSquare = this.getPlayerSquare();
+          oldSquare.removePhysical(this.selectedPlayer.id);
 
-          // add player to this square:
+          // add object to this square:
           this.square.addPhysical(this.selectedPlayer);
 
-      }
-      else { // set char back on tile it came from
-          $('#infoBox').css({"color":"red"})
+          //show message it moved.
+          this.showMessage(this.selectedPlayer.name + " moves " + this.square.currentDistance + " yards!", "black", 500 );
 
-          $('#infoBox').html(this.selectedPlayer.name + " can't move there." );
-          $('#infoBox').fadeIn(500).delay(500).fadeOut(500);
-          var movingPlayerSquareID = this.selectedPlayer.mapSquareId;
-          for (var j = 0; j < this._inRangeSquares.length; j++) {
-              if (movingPlayerSquareID == this._inRangeSquares[j].mapSquareId) {
-                  this._inRangeSquares[j].addPhysical(this.selectedPlayer);
-              }
-          }
+      }
+      else { // show message it can't move there
+         this.showMessage(this.selectedPlayer.name + " can't move there.", "red", 500 );
       }
       this.mapShareService.setPlayerZones(); // makes the playerZones move with the character
       this.moveModeEvent.emit(false);
   }
-
+  getPlayerSquare(){
+      var playerSquare:Square=null;
+      for (var i = 0 ; i < this.allSquares.length ; i++){
+          if (this.allSquares[i].mapSquareId == this.selectedPlayer.mapSquareId){
+              playerSquare = this.allSquares[i];
+          }
+      }
+      return playerSquare;
+  }
   getDifference(num1, num2){
       return (num1 > num2)? num1-num2 : num2-num1
   }
 
+  showMessage(message:string, color:string, duration:number){
+      $('#infoBox').css({"color":color})
+      $('#infoBox').html(message);
+      $('#infoBox').fadeIn(500).delay(duration).fadeOut(500);
+  }
   resetAllDistances(){
       for (var i=0 ; i<this.allSquares.length ; i++){
           this.allSquares[i].currentDistance=9999;
@@ -222,7 +229,7 @@ export class SquareComponent implements OnInit {
   deselectAll(){
       this.selectedSquaresEvent.emit(new Array());
       this.setSelectedPlayerEvent.emit(null);
-      
+
   }
 
   // all the mouseevents below make multiSelecting possible

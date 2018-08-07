@@ -359,19 +359,20 @@ export class MapDetailComponent implements OnInit {
             }
         }
     }
+    showMessage(message:string, color:string, duration:number){
+        $('#infoBox').css({"color":color})
+        $('#infoBox').html(message);
+        $('#infoBox').fadeIn(500).delay(duration).fadeOut(500);
+    }
     attack() {
         if(this.selectedPlayer.isSelected ) {
             if(this.selectedPlayer.attacksLeft!=0){
                 this.selectedPlayer.attack()
-                $('#infoBox').css({"color":"black"})
-                $('#infoBox').html(this.selectedPlayer.name + " attacks!");
-                $('#infoBox').fadeIn(500).delay(500).fadeOut(500);
+                this.showMessage(this.selectedPlayer.name + " attacks!", "black", 500);
 
             }
             else {
-                $('#infoBox').css({"color":"red"})
-                $('#infoBox').html(this.selectedPlayer.name + " can't attack.");
-                $('#infoBox').fadeIn(500).delay(500).fadeOut(500);
+                this.showMessage(this.selectedPlayer.name + " can't attack.", "red", 500);
             }
         }
 
@@ -380,14 +381,10 @@ export class MapDetailComponent implements OnInit {
         if(this.selectedPlayer.isSelected) {
             if(this.selectedPlayer.spellsLeft!=0){
                 this.selectedPlayer.cast()
-                $('#infoBox').css({"color":"black"})
-                $('#infoBox').html(this.selectedPlayer.name + " casts a spell!");
-                $('#infoBox').fadeIn(500).delay(500).fadeOut(500);
+                this.showMessage(this.selectedPlayer.name + " casts a spell!", "black", 500);
             }
             else {
-                $('#infoBox').css({"color":"red"})
-                $('#infoBox').html(this.selectedPlayer.name + " can't cast.");
-                $('#infoBox').fadeIn(500).delay(500).fadeOut(500);
+                this.showMessage(this.selectedPlayer.name + " can't cast.", "red", 500);
             }
         }
     }
@@ -396,8 +393,6 @@ export class MapDetailComponent implements OnInit {
             this.showRange(this.selectedPlayer);
             this.movementMode = true;
             this.selectedSquare = this.getPlayerSquare();
-            this.selectedSquare.removePhysical(this.selectedPlayer.id);
-
         }
     }
     addStasis(){
@@ -565,9 +560,7 @@ export class MapDetailComponent implements OnInit {
         for (var i = 0 ; i < this.dndMap.squares.length ; i++){
             this.dndMap.squares[i].reduceDurations();
         }
-        $('#infoBox').css({"color":"black"})
-        $('#infoBox').html("New Turn!");
-        $('#infoBox').fadeIn(500).delay(500).fadeOut(500);
+        this.showMessage("New Turn!", "black", 500);
     }
 
     addZoneTile(){
@@ -720,9 +713,7 @@ export class MapDetailComponent implements OnInit {
                             if (this.resultCounter == this.dndMap.squares.length){ //save players only when all squares have gotten their database Id
                                 this.savePlayersOnSquares();
                                 console.log("done saving everything");
-                                $('#infoBox').css({"color":"black"})
-
-                                $('#infoBox').html("Saving... Succes!").delay( 500 ).fadeOut(2000);
+                                this.showMessage("Saving... Succes!", "black", 1000);
                             }
                         }
                     }
@@ -844,7 +835,7 @@ export class MapDetailComponent implements OnInit {
                 }
             }*/
             $('#infoBox').css({"color":"black"})
-            $('#infoBox').html("Loading... Succes!").delay( 500 ).fadeOut(2000);
+            this.showMessage("Loading... Succes!", "black", 1000);
         });
     }
 
