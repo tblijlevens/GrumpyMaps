@@ -247,7 +247,8 @@ export class MapDetailComponent implements OnInit {
             squares[i].squareSize = this.squareSize;
         }
         this.calculateMapFeet();
-
+        this.mapShareService.setTileZones();
+        this.mapShareService.setPlayerZones();
     }
 
     private calculateMapFeet(){
