@@ -119,6 +119,14 @@ mdb-icon{
     width:100%;
     color: white;
 }
+.buttonDoubleIcon {
+    position: relative;
+    top:0px;
+    left:0px;
+    margin-left:3px;
+    margin-right:3px;
+    color: white;
+}
 .buttonText {
     position: absolute;
     width:100%;
