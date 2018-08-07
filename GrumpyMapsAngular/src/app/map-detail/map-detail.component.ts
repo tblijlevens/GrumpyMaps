@@ -307,9 +307,7 @@ export class MapDetailComponent implements OnInit {
         this.mapShareService.setSquare(playerSquare); //update active square in squareDetail via mapShareService
 
         this.selectedSquares = new Array();
-        this.showRange(player);
         this.showPlayerDot();
-
     }
 
 
@@ -395,6 +393,7 @@ export class MapDetailComponent implements OnInit {
     }
     moveCharacter() {
         if(this.selectedPlayer.isSelected) {
+            this.showRange(this.selectedPlayer);
             this.movementMode = true;
             this.selectedSquare = this.getPlayerSquare();
             this.selectedSquare.removePhysical(this.selectedPlayer.id);
@@ -615,6 +614,9 @@ export class MapDetailComponent implements OnInit {
         this.allCharacters.sort(function(a, b) {
             return b.initiative - a.initiative;
         });
+    }
+    public receiveSelectedPlayer(player){
+        this.selectedPlayer=player;
     }
     public receiveSelectedSquares($event){
         this.selectedSquares = this.removeDuplicates($event);

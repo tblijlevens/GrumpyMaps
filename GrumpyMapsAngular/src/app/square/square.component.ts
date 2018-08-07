@@ -43,6 +43,7 @@ export class SquareComponent implements OnInit {
       this.squareStyles['border'] = squareBorderStyle;
   }
   @Input() selectedPlayer: Player;
+  @Output() setSelectedPlayerEvent = new EventEmitter<Player>();
 
   originalSquareColor:string = 'rgba(8, 161, 0, 0)';
   @Output() selectingEvent = new EventEmitter<boolean>();
@@ -103,6 +104,7 @@ export class SquareComponent implements OnInit {
     if (this.selectedPlayer!=null){
         this.selectedPlayer.isSelected = false;
         this.selectedPlayer.setActiveColor();
+        this.setSelectedPlayerEvent.emit(null);
     }
 
   }
@@ -219,6 +221,8 @@ export class SquareComponent implements OnInit {
 
   deselectAll(){
       this.selectedSquaresEvent.emit(new Array());
+      this.setSelectedPlayerEvent.emit(null);
+      
   }
 
   // all the mouseevents below make multiSelecting possible
