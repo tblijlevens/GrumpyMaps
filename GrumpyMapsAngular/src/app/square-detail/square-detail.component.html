@@ -1,18 +1,6 @@
 <div class="squaredetail" *ngIf="square">
     <span class="lead" style="font-weight:bold;">Tile Details: <span *ngIf="selectedSquares.length==1">{{square.mapCoordinate}}</span></span><br />
 
-    <ul>
-        <li *ngFor="let zone of square.zones">
-            <span class="links" (click)="clickTileZone(zone, square)">
-                <mdb-icon class="buttonIcon" icon="dot-circle-o"></mdb-icon> {{zone.label}}</span>:
-                <span *ngIf="zone.duration==-1">&#x221e; rnds</span>
-                <span *ngIf="zone.duration==1">{{zone.duration}} rnd </span>
-                <span *ngIf="zone.duration>1">{{zone.duration}} rnds </span>
-            <mdb-icon class="buttonIcon floatRight" icon="remove" (click)="removeTileZone(zone, square)" alt="Remove Zone" title="Remove Zone"></mdb-icon> &nbsp;
-            <mdb-icon class="buttonIcon floatRight" icon="pencil"  (click)="setZoneValues(zone)" data-toggle="modal" data-target="#editZoneForm" alt="Edit Zone" title="Edit Zone"></mdb-icon>
-        </li>
-    </ul>
-
     <!-- <span *ngFor="let square of selectedSquares"> {{square.mapCoordinate}}... </span><br /> -->
     <span *ngIf="square.players.length!=0">
         <span *ngFor="let player of square.players">
@@ -39,12 +27,25 @@
                 </li>
                 <li *ngFor="let zone of player.zones">
                     <span class="links" (click)="clickPlayerZone(zone, player)">
-                        <mdb-icon class="buttonIcon" icon="dot-circle-o"></mdb-icon> {{zone.label}}</span>:
+                        <mdb-icon *ngIf="zone.radius!=0" class="buttonIcon" icon="dot-circle-o"></mdb-icon>
+                        <mdb-icon *ngIf="zone.radius==0"class="buttonIcon" icon="heartbeat"></mdb-icon> {{zone.label}}</span>:
                         <span *ngIf="zone.duration==-1">&#x221e; rnds</span>
-                        <span *ngIf="zone.duration==1">{{zone.duration}} rnd </span>
-                        <span *ngIf="zone.duration>1">{{zone.duration}} rnds </span>
+
                     <mdb-icon class="buttonIcon floatRight" icon="remove" (click)="removePlayerZone(zone, player)" alt="Remove Zone" title="Remove Zone"></mdb-icon> &nbsp;
                     <mdb-icon class="buttonIcon floatRight" icon="pencil"  (click)="setZoneValues(zone)" data-toggle="modal" data-target="#editZoneForm" alt="Edit Zone" title="Edit Zone"></mdb-icon>
+
+                    <ul>
+                        <li>
+                            Duration:
+                            <span *ngIf="zone.duration==-1">&#x221e; rnds</span>
+                            <span *ngIf="zone.duration==1">{{zone.duration}} rnd </span>
+                            <span *ngIf="zone.duration>1">{{zone.duration}} rnds </span>
+                        </li>
+                        <li *ngIf="zone.radius!=0">
+                            Radius:
+                            <span>{{zone.radius}} yards</span>
+                        </li>
+                    </ul>
                 </li>
         </ul>
         </span>
@@ -72,11 +73,11 @@
                         </label>
                         <br>
 
-                        <label class="center-block">Zone radius in yards:
+                        <label class="center-block">Zone radius in yards (0 = just stasis):
                             <input class="form-control" formControlName="zoneRadius" type="number">
                         </label>
                         <br>
-                        <label class="center-block">Zone duration in rounds: (0=permanent)
+                        <label class="center-block">Zone duration in rounds: (0 = permanent)
                             <input class="form-control" formControlName="zoneDuration" type="number">
                         </label>
 
