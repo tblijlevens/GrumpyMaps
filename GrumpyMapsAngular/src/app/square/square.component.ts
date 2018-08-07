@@ -95,7 +95,7 @@ export class SquareComponent implements OnInit {
     if (this.movementMode) {
         this.moveObject();
     }
-    this.resetAllDistances()
+    this.resetAllDistances();
 
     // after moving the rangeSquares is always set to nothing so it stops showing range
     this.setRangeSquaresEvent.emit(new Array());
@@ -217,8 +217,8 @@ export class SquareComponent implements OnInit {
         if (isObstructed) {
             this.squareStyles['background-color'] = 'rgba(8, 161, 0, 0)';
             this.originalSquareColor = 'rgba(161, 0, 0, 0.35)';
-          //this.squareStyles['background-color'] = this.originalSquareColor;
-          this.squareStyles['background'] = 'repeating-linear-gradient(          135deg, rgba(161, 0, 0, 0.6), rgba(161, 0, 0, 0.6) 8px, rgba(0, 0, 0, 0.0) 8px, rgba(0, 0, 0, 0.0) 16px)'
+          this.squareStyles['background-color'] = this.originalSquareColor;
+        //   this.squareStyles['background'] = 'repeating-linear-gradient(          135deg, rgba(161, 0, 0, 0.6), rgba(161, 0, 0, 0.6) 8px, rgba(0, 0, 0, 0.0) 8px, rgba(0, 0, 0, 0.0) 16px)'
           //this.squareStyles['background'] = 'repeating-radial-gradient(circle, rgba(235, 199, 9, 0.6), rgba(235, 199, 9, 0.6) 5px, rgba(235, 199, 9, 0) 5px,  rgba(235, 199, 9, 0) 10px)'
 
         }
@@ -267,6 +267,9 @@ export class SquareComponent implements OnInit {
   deselectAll(){
       this.selectedSquaresEvent.emit(new Array());
       this.setSelectedPlayerEvent.emit(null);
+      this.moveModeEvent.emit(false);
+      this.setRangeSquaresEvent.emit(new Array());
+      this.resetAllDistances();
 
   }
 
