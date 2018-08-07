@@ -110,6 +110,7 @@ export class SquareDetailComponent implements OnInit {
   setTileZoneSize(square:Square){
       var squareSize = +$("#squarecontainer").css("height").split("px")[0];
       for (var i = 0 ; i < square.zones.length ; i++){
+
           var label = square.zones[i].label;
           var radius = square.zones[i].radius;
           var zoneHeightWidth = +(radius / this.squareSize).toFixed(1);

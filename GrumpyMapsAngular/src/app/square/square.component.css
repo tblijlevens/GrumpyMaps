@@ -28,6 +28,7 @@
 }
 .coordinates{
     position: absolute;
+    z-index: 6;
     width:100%;
     top:2%;
     display: grid;
@@ -89,6 +90,13 @@
     background-color: transparent;
 }
 
+.flag{
+    z-index: 4;
+    float:left;
+    margin-left: 3px;
+    color:orange;
+    
+}
 .noselect {
   -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */
