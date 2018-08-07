@@ -169,7 +169,7 @@ export class MapDetailComponent implements OnInit {
 
         this.addZonePlayerForm.get('zoneRadius').setValue(0);
         this.addZonePlayerForm.get('zoneDuration').setValue(1);
-        this.addZoneTileForm.get('zoneRadius').setValue(0);
+        this.addZoneTileForm.get('zoneRadius').setValue(10);
         this.addZoneTileForm.get('zoneDuration').setValue(1);
 
         this.setRows();
@@ -550,7 +550,7 @@ export class MapDetailComponent implements OnInit {
 
         this.addZonePlayerForm.get('zoneRadius').setValue(0);
         this.addZonePlayerForm.get('zoneDuration').setValue(1);
-        this.addZoneTileForm.get('zoneRadius').setValue(0);
+        this.addZoneTileForm.get('zoneRadius').setValue(10);
         this.addZoneTileForm.get('zoneDuration').setValue(1);
     }
     nextTurn() {
@@ -584,8 +584,10 @@ export class MapDetailComponent implements OnInit {
                 duration:duration
             };
         }
-        console.log(zoneObject.label);
-        this.selectedSquares[0].zones.push(zoneObject);
+
+        for (var i = 0 ; i < this.selectedSquares.length ; i++){
+            this.selectedSquares[i].zones.push(zoneObject);
+        }
 
         this.mapShareService.setTileZones(); // sets the zone sizes in the correct position
     }
