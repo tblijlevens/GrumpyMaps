@@ -130,7 +130,7 @@ export class MapDetailComponent implements OnInit {
     obstructionMode:boolean=false;
     movementMode:boolean=false; //received from squaredetail component
     rangeSquares:Square[] = new Array();
-    selectedPlayer:Player;
+    selectedPlayer:Player=null;
     squareBorderStyle = {};
     rowStyles = {};
     mapFeet:number;
