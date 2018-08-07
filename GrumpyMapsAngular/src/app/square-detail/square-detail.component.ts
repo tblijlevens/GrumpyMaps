@@ -89,6 +89,8 @@ export class SquareDetailComponent implements OnInit {
   }
 
   clickPlayerZone(zone:any, player:Player){
+      this.setAllPlayerZones();
+      this.setAllTileZones();
       var index = player.zones.indexOf(zone);
       var zoneHeight = +$("#playerZone"+player.id+index).css("height").split("px")[0];
       zoneHeight = zoneHeight/2;
@@ -102,6 +104,7 @@ export class SquareDetailComponent implements OnInit {
       }, 400).animate({
           borderWidth: 1
       }, 400);
+
   }
   removePlayerZone(zone:any, player:Player){
       player.removeZone(zone);
@@ -132,6 +135,8 @@ export class SquareDetailComponent implements OnInit {
       }
   }
   clickTileZone(zone:any, square:Square){
+      this.setAllPlayerZones();
+      this.setAllTileZones();
       var index = square.zones.indexOf(zone);
       var zoneHeight = +$("#tileZone"+square.mapSquareId+index).css("height").split("px")[0];
       zoneHeight = zoneHeight/2;
