@@ -75,8 +75,7 @@ export class SquareComponent implements OnInit {
       this.setObstructionStyle();
       this.setRangeSquareStyles();
   }
-
-
+  distance:number=9999;
 
   constructor(private mapShareService: MapShareService) { }
 
@@ -150,6 +149,45 @@ export class SquareComponent implements OnInit {
   }
   getDifference(num1, num2){
       return (num1 > num2)? num1-num2 : num2-num1
+  }
+
+  getTileDistance(){
+      if (this.selectedPlayer!=null){
+          //get row and column of players current position coordinates:
+          var rowNumber = this.selectedPlayer.squareMapCoordinate.split(":")[0].charCodeAt(0);
+          var column = +this.selectedPlayer.squareMapCoordinate.split(":")[1];
+
+          var targetRowNumber = this.square.mapCoordinate.split(":")[0].charCodeAt(0);
+          var targetColumn = +this.square.mapCoordinate.split(":")[1];
+
+          var rowDif = this.getDifference(rowNumber, targetRowNumber);
+          var colDif = this.getDifference(column, targetColumn);
+          var distance = 0;
+          if (rowDif == 0){
+              distance = colDif*this.squareSize
+          }
+          if (colDif == 0 && rowDif!=0){
+              distance = rowDif*this.squareSize
+          }
+
+          // when diagonal movement calc distance based on a^2+b^2=c^2
+          // just a diagonal line:
+          if (colDif == rowDif && colDif !=0){
+              var squaredTileSize = Math.pow(this.squareSize,2);
+              distance = colDif * Math.sqrt(squaredTileSize+squaredTileSize);
+          }
+
+          // combination of diagonal and vertical/horizontal line
+          if (colDif!=rowDif && colDif>0 && rowDif>0){
+              var minimum = Math.min(colDif,rowDif);
+              var maximum = Math.max(colDif,rowDif);
+              var squaredTileSize = Math.pow(this.squareSize,2);
+              var diagonal = minimum * Math.sqrt(squaredTileSize+squaredTileSize);
+              var straight = (maximum-minimum)*this.squareSize;
+              distance=diagonal+straight;
+          }
+          this.distance=+distance.toFixed(1);
+      }
   }
 
   showMessage(message:string, color:string, duration:number){
@@ -259,6 +297,7 @@ export class SquareComponent implements OnInit {
       }
       this.squareStyles['background-color'] = 'rgba(0, 112, 161, 0.3)';
       this.selectionStyles();
+      this.getTileDistance();
 
   }
   mouseUpSquare(){
@@ -276,6 +315,8 @@ export class SquareComponent implements OnInit {
           }
           this.selectionStyles();
       }
+      this.distance=9999;
+
   }
   addToSelection(){
       if(this.deselecting && this.selectedSquares.includes(this.square)){

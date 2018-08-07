@@ -40,6 +40,13 @@
     bottom:2%;
     display: grid;
 }
+.distanceMouseOver{
+    position: absolute;
+    width:100%;
+    bottom:2%;
+    display: grid;
+    pointer-events: none;
+}
 #objectsInSquare{
     position: absolute;
     top:0px;
@@ -95,7 +102,7 @@
     float:left;
     margin-left: 3px;
     color:orange;
-    
+
 }
 .noselect {
   -webkit-touch-callout: none; /* iOS Safari */

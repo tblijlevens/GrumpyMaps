@@ -23,6 +23,7 @@
         </div>
 
         <span class="distance" *ngIf="square.currentDistance!=9999">{{square.currentDistance}}</span>
+        <span class="distanceMouseOver" *ngIf="distance!=9999 && !square.inRange">{{distance}}</span>
     </span>
 
 </div>
