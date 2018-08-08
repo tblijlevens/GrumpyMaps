@@ -356,9 +356,69 @@ export class MapDetailComponent implements OnInit {
         return playerSquare;
     }
     showRange(player:Player){
-        this.rangeSquares = player.getMoveRange(this.squareSize, this.dndMap.squares);
+        this.rangeSquares = this.getMoveRange(player, this.dndMap.squares);
         this.setSquareTextSize();
     }
+
+    getMoveRange(player:Player, allSquares:Square[]){
+        // calculate relativeMoveSpeed based on tile width
+        var relativeMoveSpeed = +(player.movementLeft/this.squareSize).toFixed(0);
+        var moveRange = new Array();
+
+        //get row and column of players current position coordinates:
+        var rowNumber = player.squareMapCoordinate.split(":")[0].charCodeAt(0);
+        var column = +player.squareMapCoordinate.split(":")[1];
+
+        // calculate distance of elligable tiles:
+        for (var i = 0 ; i < allSquares.length ; i++){
+            var targetRowNumber = allSquares[i].mapCoordinate.split(":")[0].charCodeAt(0);
+            var targetColumn = +allSquares[i].mapCoordinate.split(":")[1];
+
+            var rowDif = this.getDifference(rowNumber, targetRowNumber);
+            var colDif = this.getDifference(column, targetColumn);
+
+            // make selection of tiles to do calculations on smaller:
+            if (rowDif<=relativeMoveSpeed && colDif<=relativeMoveSpeed){
+
+                var distance = 0;
+                if (rowDif == 0){
+                    distance = colDif*this.squareSize
+                }
+                if (colDif == 0 && rowDif!=0){
+                    distance = rowDif*this.squareSize
+                }
+
+                // when diagonal movement calc distance based on a^2+b^2=c^2
+                // just a diagonal line:
+                if (colDif == rowDif && colDif !=0){
+                    var squaredTileSize = Math.pow(this.squareSize,2);
+                    distance = colDif * Math.sqrt(squaredTileSize+squaredTileSize);
+                }
+
+                // combination of diagonal and vertical/horizontal line
+                if (colDif!=rowDif && colDif>0 && rowDif>0){
+                    var minimum = Math.min(colDif,rowDif);
+                    var maximum = Math.max(colDif,rowDif);
+                    var squaredTileSize = Math.pow(this.squareSize,2);
+                    var diagonal = minimum * Math.sqrt(squaredTileSize+squaredTileSize);
+                    var straight = (maximum-minimum)*this.squareSize;
+                    distance=diagonal+straight;
+                }
+
+                // put in range tiles in the moveRange variable to return:
+                if (distance <= player.movementLeft){
+                    //set the distance of the square:
+                    allSquares[i].currentDistance = +distance.toFixed(1);
+                    moveRange.push(allSquares[i]);
+                }
+            }
+        }
+
+        return moveRange;
+    }
+    getDifference(num1, num2){
+    return (num1 > num2)? num1-num2 : num2-num1
+  }
     showPlayerDot(){
         $("#playerDot"+this.selectedPlayer.id).
         fadeOut(400).fadeIn(400).
