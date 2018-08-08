@@ -195,6 +195,7 @@ export class SquareComponent implements OnInit {
       $('#infoBox').css({"color":color})
       $('#infoBox').html(message);
       $('#infoBox').fadeIn(500).delay(duration).fadeOut(500);
+      $('#hiddenClose').fadeIn(500).delay(duration).fadeOut(500);
   }
   resetAllDistances(){
       for (var i=0 ; i<this.allSquares.length ; i++){

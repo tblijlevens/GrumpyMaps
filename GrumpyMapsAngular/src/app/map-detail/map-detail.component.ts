@@ -26,10 +26,13 @@ $(document).ready(function() {
         var infoBoxHeight = +$("#infoBox").css('height').split("px")[0];
         var infoBoxWidth = +$("#infoBox").css('width').split("px")[0];
         $("#infoBox").css({
-            "top":mapOffset.top+((mapHeight/2)-(infoBoxHeight/2)),
+            "top":mapOffset.top+((mapHeight/2)-50),
             "left":mapOffset.left+((mapHeight/2)-(infoBoxWidth/2))
         });
-
+        $("#hiddenClose").css({
+            "top":mapOffset.top+((mapHeight/2)-45),
+            "left":mapOffset.left+((mapHeight/2)+(infoBoxWidth/2))-20
+        });
         //set legend size and position:
         var mapPos = $(".mapcontainer").position();
         $("#legend").css({
@@ -212,10 +215,13 @@ export class MapDetailComponent implements OnInit {
         var infoBoxHeight = +$("#infoBox").css('height').split("px")[0];
         var infoBoxWidth = +$("#infoBox").css('width').split("px")[0];
         $("#infoBox").css({
-            "top":mapOffset.top+((mapHeight/2)-(infoBoxHeight/2)),
+            "top":mapOffset.top+((mapHeight/2)-50),
             "left":mapOffset.left+((mapHeight/2)-(infoBoxWidth/2))
         });
-
+        $("#hiddenClose").css({
+            "top":mapOffset.top+((mapHeight/2)-45),
+            "left":mapOffset.left+((mapHeight/2)+(infoBoxWidth/2))-20
+        });
         //set legend size and position:
         var mapPos = $(".mapcontainer").position();
         $("#legend").css({
@@ -287,15 +293,7 @@ export class MapDetailComponent implements OnInit {
         }
         this.selectedSquares = new Array();
     }
-    mouseOverMultiSelect(){
-        $('#infoBox').css({"color":"black"})
-        $('#infoBox').html("Perform an action on multiple tiles at once." );
-        $('#infoBox').show();
 
-    }
-    mouseOutMultiSelect(){
-        $('#infoBox').hide();
-    }
     public hideGrid() {
         // var gridToggle = this.mapForm.get('gridToggle').value;
         if(this.showGrid){
@@ -332,16 +330,20 @@ export class MapDetailComponent implements OnInit {
 
         // show a message:
         var message="";
-        if (madeVisible!=""){
-            message+= "These tiles were made visible:<br>" + madeVisible;
-        }
         if (madeInvisible!=""){
-            if (madeVisible!=""){
+            message+= "These tiles were made invisible. <B>Write these down</b>:<br>" + madeInvisible;
+        }
+        if (madeVisible!=""){
+            if (madeInvisible!=""){
                 message+= "<br>";
             }
-            message+= "These tiles were made invisible:<br>" + madeInvisible;
+            message+= "These tiles were made visible:<br>" + madeVisible;
         }
-        this.showMessage(message, "black", 3000);
+        $('#infoBox').css({"color":"black"})
+        $('#infoBox').html(message);
+        $('#infoBox').fadeIn(500)
+        $('#hiddenClose').fadeIn(500);
+
     }
 
 
@@ -479,6 +481,11 @@ export class MapDetailComponent implements OnInit {
         $('#infoBox').css({"color":color})
         $('#infoBox').html(message);
         $('#infoBox').fadeIn(500).delay(duration).fadeOut(500);
+        $('#hiddenClose').fadeIn(500).delay(duration).fadeOut(500);
+    }
+    hideInfoBox(){
+        $('#infoBox').fadeOut(300);
+        $('#hiddenClose').fadeOut(300);
     }
     attack() {
         if(this.selectedPlayer.isSelected ) {
@@ -805,6 +812,7 @@ export class MapDetailComponent implements OnInit {
         $('#infoBox').css({"color":"black"})
         $('#infoBox').html("Saving...");
         $('#infoBox').fadeIn(500);
+        $('#hiddenClose').fadeIn(500);
 
         this.saveMapWithSquares();
     }
@@ -896,6 +904,7 @@ export class MapDetailComponent implements OnInit {
 
         $('#infoBox').html("Loading...");
         $('#infoBox').fadeIn(500);
+        $('#hiddenClose').fadeIn(500);
         for (var i=0 ; i< this.allLoadedMapsResult.length ; i++){
             if (this.selectedLoadMap == this.allLoadedMapsResult[i]["id"]){
                 this.heightWidth = this.allLoadedMapsResult[i]["heightWidth"];

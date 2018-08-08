@@ -144,7 +144,11 @@ mdb-icon{
     font-size: 10px;
     display: inline-block;
 }
-
+.floatRight{
+    position: relative;
+    float:right;
+    margin-left:10px;
+}
 .mapcontainer {
     /*container height and  width is relative, set in map-detail.componten.ts*/
     position: relative;
@@ -212,7 +216,9 @@ input[type=number]{
 #infoBox{
     position:fixed;
     z-index: 7;
-    width:300px;
+    width:400px;
+    min-height: 50px;
+    padding:5px;
     background-image: url(../../assets/bg.jpg);
     text-align: center;
     font-size: 15px;
@@ -220,6 +226,12 @@ input[type=number]{
     border: solid 3px #888888;
     box-shadow: 0 4px 8px 0 #888888, 0 6px 20px 0 #888888;
     display: none;
+}
+#hiddenClose{
+    z-index: 7;
+    position: fixed;
+    display: none;
+    cursor: pointer;
 }
 .contentBox{
     padding:5px;
