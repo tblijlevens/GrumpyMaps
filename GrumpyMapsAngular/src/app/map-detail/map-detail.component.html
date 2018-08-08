@@ -151,19 +151,19 @@
             <span class="mapOptionsBox"  ><!--*ngIf="rangeSquares.length!=0"-->
                 <span class="lead" style="font-weight:bold;">Map options</span><br />
 
-                <div class="btn deleteEdit" data-toggle="modal" data-target="#addModal" *ngIf="selectedSquares.length!=0">
+                <div class="btn addObstruct" data-toggle="modal" data-target="#addModal" *ngIf="selectedSquares.length!=0">
                     <mdb-icon class="buttonIcon" icon="plus"></mdb-icon><br />
                     <span class="buttonText">
-                        Add object
+                        Add<br />object
                     </span>
                 </div>
-                <div class="btn deleteEdit" (click)="obstructSelection()" *ngIf="selectedSquares.length!=0">
+                <div class="btn addObstruct" (click)="obstructSelection()" *ngIf="selectedSquares.length!=0">
                     <mdb-icon class="buttonIcon" icon="eraser"></mdb-icon><br />
                     <span class="buttonText">
                         Obstruct
                     </span>
                 </div>
-                <div class="btn deleteEdit" data-toggle="modal" data-target="#addZoneTileForm" *ngIf="selectedSquares.length!=0">
+                <div class="btn addObstruct" data-toggle="modal" data-target="#addZoneTileForm" *ngIf="selectedSquares.length!=0">
                     <mdb-icon class="buttonDoubleIcon" icon="dot-circle-o"></mdb-icon>/<mdb-icon class="buttonDoubleIcon" icon="flag"></mdb-icon><br />
                     <span class="buttonText">
                         Zone/Flag
@@ -173,7 +173,7 @@
                 <div class="btn addObstruct" id="multiSelect"(click)="setMultiSelect()">
                     <mdb-icon class="buttonIcon" icon="clone"></mdb-icon><br />
                     <span class="buttonText">
-                        Multi select
+                        Multi<BR />select
                     </span>
                 </div>
                 <div class="btn addObstruct" id="showGrid" (click)="hideGrid()">
@@ -182,10 +182,10 @@
                         Show grid
                     </span>
                 </div>
-                <div class="btn addObstruct" (click)="toggleVisibility()">
+                <div class="btn addObstruct" (click)="toggleVisibility()" *ngIf="selectedSquares.length!=0">
                     <mdb-icon class="buttonIcon" icon="eye"></mdb-icon><br />
                     <span class="buttonText">
-                        Visibility
+                        Tile <br />visibility
                     </span>
                 </div>
                 <div class="btn nextTurn" (click)="nextTurn()">

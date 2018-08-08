@@ -71,9 +71,9 @@ mdb-icon{
     float:left;
 }
 .allCharacters{
-    height: -moz-calc(70% - 10px);
-    height: -webkit-calc(70% - 10px);
-    height: calc(70% - 10px);
+    height: -moz-calc(65% - 10px);
+    height: -webkit-calc(65% - 10px);
+    height: calc(65% - 10px);
     font-size:1.4vw;
 }
 #characters{
@@ -84,7 +84,7 @@ mdb-icon{
 .characterOptions{
     position: relative;
     margin-top: 10px;
-    height: 30%;
+    height: 35%;
     width:100%;
 }
 #characterOptionsBox{
@@ -131,7 +131,7 @@ mdb-icon{
     position: absolute;
     width:100%;
     left:0px;
-    bottom:0px;
+    bottom:2px;
 }
 .deleteEdit{
     position: relative;
@@ -246,14 +246,14 @@ input[type=number]{
     float:left;
 }
 .squaredetailcontainer {
-    height: -moz-calc(70% - 10px);
-    height: -webkit-calc(70% - 10px);
-    height: calc(70% - 10px);
+    height: -moz-calc(65% - 10px);
+    height: -webkit-calc(65% - 10px);
+    height: calc(65% - 10px);
 }
 .mapOptions{
     position: relative;
     margin-top: 10px;
-    height: 30%;
+    height: 35%;
     width:100%;
 }
 #mapOptionsBox{
@@ -264,8 +264,9 @@ input[type=number]{
 }
 .addObstruct{
     position: relative;
-    height: 35px;
-    width: 80px;
+    height: 48px;
+    width: 63px;
+    line-height: 12px;
     right:0px;
     top:0px;
     color: white;
@@ -273,6 +274,7 @@ input[type=number]{
     font-size: 10px;
     display: inline-block;
 }
+
 #showGrid{
     box-shadow: 0 0 4px 2px #2A74F2;
 }
