@@ -21,14 +21,8 @@ export class SquareDetailComponent implements OnInit {
       this.square = selectedSquares[0];
       this.selectedSquares = selectedSquares;
   }
-  playerIdCreator: number = 1;
-  movementMode: boolean = false;
-  @Output() moveModeEvent = new EventEmitter<boolean>();
-  @Output() setRangeSquaresEvent = new EventEmitter<number[]>();
   @Output() setPlayerToMoveEvent = new EventEmitter<Player>();
-  @Output() playerAddedEvent = new EventEmitter<Player>();
-  @Output() setStylesEvent = new EventEmitter<boolean>();
-  @Input() setStyles:boolean;
+ 
   @Input() selectedPlayer:Player;
 
   allCharacters: Player[] = new Array();
