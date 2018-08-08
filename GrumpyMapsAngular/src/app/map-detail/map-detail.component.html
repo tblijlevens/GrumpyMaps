@@ -9,10 +9,12 @@
             <span class="lead" style="font-weight:bold;">Characters</span>
             <p>
                 <span *ngFor="let char of allCharacters" (click)="clickPlayer(char)">
+                    <span *ngIf="!getPlayerSquare(char).hidden">
                     &nbsp;<img width="50" src="{{char.playerIconUrl}}" /> &nbsp; &nbsp;
                         <span id="playerMap{{char.id}}" class="playerNameMap" [style.color]=char.color>{{char.name}}
 
                         </span><br />
+                    </span>
                 </span>
             </div>
         </div>

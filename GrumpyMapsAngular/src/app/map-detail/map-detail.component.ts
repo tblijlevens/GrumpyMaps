@@ -357,7 +357,7 @@ export class MapDetailComponent implements OnInit {
         player.isSelected = true;
         player.setActiveColor();
         this.selectedPlayer = player;
-        var playerSquare = this.getPlayerSquare();
+        var playerSquare = this.getPlayerSquare(this.selectedPlayer);
         this.mapShareService.setSquare(playerSquare); //update active square in squareDetail via mapShareService
 
         this.selectedSquares = new Array();
@@ -382,10 +382,10 @@ export class MapDetailComponent implements OnInit {
             this.allCharacters[i].setActiveColor();
         }
     }
-    getPlayerSquare(){
+    getPlayerSquare(player:Player){
         var playerSquare:Square=null;
         for (var i = 0 ; i < this.dndMap.squares.length ; i++){
-            if (this.dndMap.squares[i].mapSquareId == this.selectedPlayer.mapSquareId){
+            if (this.dndMap.squares[i].mapSquareId == player.mapSquareId){
                 playerSquare = this.dndMap.squares[i];
             }
         }
@@ -508,7 +508,7 @@ export class MapDetailComponent implements OnInit {
         if(this.selectedPlayer.isSelected) {
             this.showRange(this.selectedPlayer);
             this.movementMode = true;
-            this.selectedSquare = this.getPlayerSquare();
+            this.selectedSquare = this.getPlayerSquare(this.selectedPlayer);
         }
     }
     addStasis(){
@@ -547,7 +547,7 @@ export class MapDetailComponent implements OnInit {
     }
     deleteObject() {
         if(this.selectedPlayer.isSelected) {
-            this.selectedSquare = this.getPlayerSquare();
+            this.selectedSquare = this.getPlayerSquare(this.selectedPlayer);
             var index = this.allCharacters.indexOf(this.selectedPlayer);
             this.allCharacters.splice(index, 1);
             this.selectedSquare.removePhysical(this.selectedPlayer.id);
