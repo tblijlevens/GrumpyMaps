@@ -327,6 +327,8 @@ export class MapDetailComponent implements OnInit {
         this.mapShareService.setSquare(playerSquare); //update active square in squareDetail via mapShareService
 
         this.selectedSquares = new Array();
+        this.rangeSquares = new Array();
+        this.movementMode = false;
         this.showPlayerDot();
     }
 
