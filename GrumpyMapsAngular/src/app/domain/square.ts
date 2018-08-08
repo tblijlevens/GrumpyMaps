@@ -14,6 +14,7 @@ export class Square {
   players: Player[] = new Array();
   numberofPlayers:number;
   zones:any[] = new Array();
+  hidden:boolean=false;
 
 
   constructor(id:number, mapSquareId: number, squareSize: number, squareHeightWidth: string, heightWidth: number) {

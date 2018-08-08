@@ -1,5 +1,6 @@
 <div class="squaredetail" *ngIf="square">
-    <span class="lead" style="font-weight:bold;">Tile Details: <span *ngIf="selectedSquares.length==1">{{square.mapCoordinate}}</span></span><br />
+    <span class="lead" style="font-weight:bold;">Tile Details: <span *ngIf="selectedSquares.length==1">{{square.mapCoordinate}}</span></span>
+    <br />
 
     <ul>
         <li *ngFor="let zone of square.zones">
@@ -26,7 +27,7 @@
 </ul>
 
     <!-- <span *ngFor="let square of selectedSquares"> {{square.mapCoordinate}}... </span><br /> -->
-    <span *ngIf="square.players.length!=0">
+    <span *ngIf="square.players.length!=0 && !square.hidden">
         <span *ngFor="let player of square.players">
             <span id="playerDetail{{player.id}}" class="playerNameDetail" [style.color]=player.color>{{player.name}}: </span> &nbsp;
             <img width="100" src="{{player.playerIconUrl}}" /><br />

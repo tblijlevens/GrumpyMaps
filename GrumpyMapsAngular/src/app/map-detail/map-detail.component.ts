@@ -276,19 +276,6 @@ export class MapDetailComponent implements OnInit {
         this.legendSquare['width'] = this.dndMap.squares[0].squareHeightWidth;
     }
 
-    public hideGrid() {
-        // var gridToggle = this.mapForm.get('gridToggle').value;
-        if(this.showGrid){
-            this.showGrid=false;
-            this.squareBorderStyle= 'dotted 1px rgb(162, 162, 162, 0)';
-            $("#showGrid").css({"box-shadow":"none"})
-        }
-        else {
-            this.showGrid=true;
-            this.squareBorderStyle = 'dotted 1px rgb(162, 162, 162, 0.7)';
-            $("#showGrid").css({"box-shadow":"0 0 4px 2px #2A74F2"});
-        }
-    }
     public setMultiSelect(){
         if (this.multiSelect){
             this.multiSelect = false;
@@ -308,6 +295,53 @@ export class MapDetailComponent implements OnInit {
     }
     mouseOutMultiSelect(){
         $('#infoBox').hide();
+    }
+    public hideGrid() {
+        // var gridToggle = this.mapForm.get('gridToggle').value;
+        if(this.showGrid){
+            this.showGrid=false;
+            this.squareBorderStyle= 'dotted 1px rgb(162, 162, 162, 0)';
+            $("#showGrid").css({"box-shadow":"none"})
+        }
+        else {
+            this.showGrid=true;
+            this.squareBorderStyle = 'dotted 1px rgb(162, 162, 162, 0.7)';
+            $("#showGrid").css({"box-shadow":"0 0 4px 2px #2A74F2"});
+        }
+    }
+    toggleVisibility(){
+        // tgogle the squares hidden field:
+        var madeVisible = "";
+        var madeInvisible = "";
+        for (var i = 0 ; i < this.selectedSquares.length ; i++){
+            if (this.selectedSquares[i].hidden){
+                this.selectedSquares[i].hidden=false;
+                if (madeVisible!=""){
+                    madeVisible+= ", ";
+                }
+                madeVisible+=this.selectedSquares[i].mapCoordinate;
+            }
+            else {
+                this.selectedSquares[i].hidden=true;
+                if (madeInvisible!=""){
+                    madeInvisible+= ", ";
+                }
+                madeInvisible+=this.selectedSquares[i].mapCoordinate;
+            }
+        }
+
+        // show a message:
+        var message="";
+        if (madeVisible!=""){
+            message+= "These tiles were made visible:<br>" + madeVisible;
+        }
+        if (madeInvisible!=""){
+            if (madeVisible!=""){
+                message+= "<br>";
+            }
+            message+= "These tiles were made invisible:<br>" + madeInvisible;
+        }
+        this.showMessage(message, "black", 2000);
     }
 
 
