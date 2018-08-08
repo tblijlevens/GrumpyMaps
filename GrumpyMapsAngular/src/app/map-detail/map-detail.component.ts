@@ -328,6 +328,9 @@ export class MapDetailComponent implements OnInit {
             }
         }
 
+        // update zone sizes
+        this.mapShareService.setPlayerZones();
+
         // show a message:
         var message="";
         if (madeInvisible!=""){
@@ -542,7 +545,6 @@ export class MapDetailComponent implements OnInit {
                     duration:duration
                 };
             }
-            console.log(zoneObject.label);
             this.selectedPlayer.zones.push(zoneObject);
 
             this.mapShareService.setPlayerZones(); // sets the zone sizes in the correct position
@@ -635,7 +637,6 @@ export class MapDetailComponent implements OnInit {
         const attacks = +this.createPlayerForm.get('playerAttacks').value;
         const spells = +this.createPlayerForm.get('playerSpells').value;
         const imageFormModel = this.prepareSave();
-        console.log("imageFormModel: " + imageFormModel);
         if (this.selectedSquares.length>1){
             for (var i = 0 ; i < this.selectedSquares.length ; i++){
                 var player:Player = new Player(this.playerIdGenerator--, this.playerIdCreator++, name+" "+i, 100, movement, initiative, attacks, spells, "physical", color, this.selectedSquares[i].mapSquareId, this.selectedSquares[i].mapHeightWidth, this.selectedSquares[i].mapCoordinate, this.selectedFile, this.selectedSquares[i].mapId);
