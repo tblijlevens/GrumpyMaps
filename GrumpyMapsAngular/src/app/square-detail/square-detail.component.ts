@@ -77,7 +77,9 @@ export class SquareDetailComponent implements OnInit {
 
   setAllPlayerZones(){
       for (var i = 0 ; i < this.allCharacters.length ; i++){
-          this.setPlayerZoneSize(this.allCharacters[i]);
+          if (!this.getPlayerSquare(this.allCharacters[i]).hidden){
+              this.setPlayerZoneSize(this.allCharacters[i]);
+          }
       }
   }
 
@@ -112,7 +114,6 @@ export class SquareDetailComponent implements OnInit {
           var zoneHeightWidth = +(radius / this.squareSize).toFixed(1);
           var zoneHeightWidth = (zoneHeightWidth*squareSize);
           var zoneHeightWidthScale = zoneHeightWidth+"px";
-          console.log("radius " + radius + ". top: " + -(squareSize/2));
           $("#tileZone"+square.mapSquareId+i).css({
               "width":zoneHeightWidthScale,
               "height":zoneHeightWidthScale,
@@ -164,6 +165,14 @@ export class SquareDetailComponent implements OnInit {
       this.setAllPlayerZones();
       this.setAllTileZones();
   }
-
+  getPlayerSquare(player:Player){
+      var playerSquare:Square=null;
+      for (var i = 0 ; i < this.allSquares.length ; i++){
+          if (this.allSquares[i].mapSquareId == player.mapSquareId){
+              playerSquare = this.allSquares[i];
+          }
+      }
+      return playerSquare;
+  }
 
 }
