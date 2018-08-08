@@ -341,7 +341,7 @@ export class MapDetailComponent implements OnInit {
             }
             message+= "These tiles were made invisible:<br>" + madeInvisible;
         }
-        this.showMessage(message, "black", 2000);
+        this.showMessage(message, "black", 3000);
     }
 
 
