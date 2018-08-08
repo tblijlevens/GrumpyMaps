@@ -119,6 +119,7 @@ export class MapDetailComponent implements OnInit {
         zoneDuration: new FormControl(),
         zoneLabel: new FormControl()
     });
+    radius:number;
     saveForm = new FormGroup({
         mapName: new FormControl()
     });

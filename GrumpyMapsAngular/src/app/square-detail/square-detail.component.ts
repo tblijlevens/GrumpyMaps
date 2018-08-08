@@ -31,7 +31,12 @@ export class SquareDetailComponent implements OnInit {
   }
 
   zoneToEdit:any;
-  editZoneForm = new FormGroup({
+  editPlayerZoneForm = new FormGroup({
+      zoneRadius: new FormControl(),
+      zoneDuration: new FormControl(),
+      zoneLabel: new FormControl()
+  });
+  editTileZoneForm = new FormGroup({
       zoneRadius: new FormControl(),
       zoneDuration: new FormControl(),
       zoneLabel: new FormControl()
@@ -151,14 +156,27 @@ export class SquareDetailComponent implements OnInit {
   }
   setZoneValues(zone:any){
       this.zoneToEdit=zone;
-      this.editZoneForm.get('zoneLabel').setValue(zone.label);
-      this.editZoneForm.get('zoneRadius').setValue(zone.radius);
-      this.editZoneForm.get('zoneDuration').setValue(zone.duration);
+      this.editTileZoneForm.get('zoneLabel').setValue(zone.label);
+      this.editTileZoneForm.get('zoneRadius').setValue(zone.radius);
+      this.editTileZoneForm.get('zoneDuration').setValue(zone.duration);
+      this.editPlayerZoneForm.get('zoneLabel').setValue(zone.label);
+      this.editPlayerZoneForm.get('zoneRadius').setValue(zone.radius);
+      this.editPlayerZoneForm.get('zoneDuration').setValue(zone.duration);
   }
-  editZone(){
-      this.zoneToEdit.label = this.editZoneForm.get('zoneLabel').value;
-      this.zoneToEdit.radius = this.editZoneForm.get('zoneRadius').value;
-      this.zoneToEdit.duration = this.editZoneForm.get('zoneDuration').value;
+  editTileZone(){
+      this.zoneToEdit.label = this.editTileZoneForm.get('zoneLabel').value;
+      this.zoneToEdit.radius = this.editTileZoneForm.get('zoneRadius').value;
+      this.zoneToEdit.duration = this.editTileZoneForm.get('zoneDuration').value;
+      if (this.zoneToEdit.duration == 0){
+          this.zoneToEdit.duration = -1;
+      }
+      this.setAllPlayerZones();
+      this.setAllTileZones();
+  }
+  editPlayerZone(){
+      this.zoneToEdit.label = this.editPlayerZoneForm.get('zoneLabel').value;
+      this.zoneToEdit.radius = this.editPlayerZoneForm.get('zoneRadius').value;
+      this.zoneToEdit.duration = this.editPlayerZoneForm.get('zoneDuration').value;
       if (this.zoneToEdit.duration == 0){
           this.zoneToEdit.duration = -1;
       }

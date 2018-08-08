@@ -334,7 +334,7 @@
                         <br>
 
                         <label class="center-block">Radius in yards (0 = just stasis):
-                            <input class="form-control" formControlName="zoneRadius" type="number" min="0">
+                            <input class="form-control" formControlName="zoneRadius" type="number" min="0" >
                         </label>
                         <br>
                         <label class="center-block">Duration in rounds: (0 = permanent)
@@ -346,7 +346,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" (click)="addZonePlayer()" data-dismiss="modal">addZone</button>
+                <button type="button" class="btn btn-primary" (click)="addZonePlayer()" data-dismiss="modal">Add <span *ngIf="this.addZonePlayerForm.get('zoneRadius').value>0">Zone</span><span *ngIf="this.addZonePlayerForm.get('zoneRadius').value==0">Stasis</span></button>
             </div>
         </div>
     </div>
@@ -385,7 +385,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" (click)="addZoneTile()" data-dismiss="modal">addZone</button>
+                <button type="button" class="btn btn-primary" (click)="addZoneTile()" data-dismiss="modal">add <span *ngIf="this.addZoneTileForm.get('zoneRadius').value>0">Zone</span><span *ngIf="this.addZoneTileForm.get('zoneRadius').value==0">Flag</span></button>
             </div>
         </div>
     </div>

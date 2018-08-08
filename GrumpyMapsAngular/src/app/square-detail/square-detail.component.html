@@ -9,7 +9,7 @@
                 <mdb-icon *ngIf="zone.radius==0"class="buttonIcon" icon="flag"></mdb-icon> {{zone.label}}</span>:
 
             <mdb-icon class="buttonIcon floatRight" icon="remove" (click)="removePlayerZone(zone, square)" alt="Remove Zone" title="Remove Zone"></mdb-icon> &nbsp;
-            <mdb-icon class="buttonIcon floatRight" icon="pencil"  (click)="setZoneValues(zone)" data-toggle="modal" data-target="#editZoneForm" alt="Edit Zone" title="Edit Zone"></mdb-icon>
+            <mdb-icon class="buttonIcon floatRight" icon="pencil"  (click)="setZoneValues(zone)" data-toggle="modal" data-target="#editTileZoneForm" alt="Edit Zone" title="Edit Zone"></mdb-icon>
 
             <ul>
                 <li>
@@ -56,7 +56,7 @@
                         <mdb-icon *ngIf="zone.radius==0"class="buttonIcon" icon="heartbeat"></mdb-icon> {{zone.label}}</span>:
 
                     <mdb-icon class="buttonIcon floatRight" icon="remove" (click)="removePlayerZone(zone, player)" alt="Remove Zone" title="Remove Zone"></mdb-icon> &nbsp;
-                    <mdb-icon class="buttonIcon floatRight" icon="pencil"  (click)="setZoneValues(zone)" data-toggle="modal" data-target="#editZoneForm" alt="Edit Zone" title="Edit Zone"></mdb-icon>
+                    <mdb-icon class="buttonIcon floatRight" icon="pencil"  (click)="setZoneValues(zone)" data-toggle="modal" data-target="#editPlayerZoneForm" alt="Edit Zone" title="Edit Zone"></mdb-icon>
 
                     <ul>
                         <li>
@@ -77,20 +77,20 @@
 </div>
 
 
-<!-- editZone Modal -->
-<div class="modal fade" id="editZoneForm" tabindex="-1" role="dialog" aria-labelledby="editZoneLabel" aria-hidden="true">
+<!-- editPlayerZone Modal -->
+<div class="modal fade" id="editPlayerZoneForm" tabindex="-1" role="dialog" aria-labelledby="editPlayerZoneLabel" aria-hidden="true">
 
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5>Edit Zone:</h5>
+                <h5>Edit Zone or Stasis:</h5>
 
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form [formGroup]="editZoneForm">
+                <form [formGroup]="editPlayerZoneForm">
                     <div class="form-group" id="objectMap">
                         <label class="center-block">Zone label:
                             <input class="form-control" formControlName="zoneLabel" type="text" >
@@ -110,7 +110,45 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" (click)="editZone()" data-dismiss="modal">Save Zone</button>
+                <button type="button" class="btn btn-primary" (click)="editPlayerZone()" data-dismiss="modal">Save <span *ngIf="this.editPlayerZoneForm.get('zoneRadius').value>0">Zone</span><span *ngIf="this.editPlayerZoneForm.get('zoneRadius').value==0">Stasis</span></button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- editTileZone Modal -->
+<div class="modal fade" id="editTileZoneForm" tabindex="-1" role="dialog" aria-labelledby="editTileZoneLabel" aria-hidden="true">
+
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5>Edit Zone or Flag:</h5>
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="editTileZoneForm">
+                    <div class="form-group" id="objectMap">
+                        <label class="center-block">Zone label:
+                            <input class="form-control" formControlName="zoneLabel" type="text" >
+                        </label>
+                        <br>
+
+                        <label class="center-block">Zone radius in yards (0 = just stasis):
+                            <input class="form-control" formControlName="zoneRadius" type="number" min="0">
+                        </label>
+                        <br>
+                        <label class="center-block">Zone duration in rounds: (0 = permanent)
+                            <input class="form-control" formControlName="zoneDuration" type="number" min="0">
+                        </label>
+
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" (click)="editTileZone()" data-dismiss="modal">Save <span *ngIf="this.editTileZoneForm.get('zoneRadius').value>0">Zone</span><span *ngIf="this.editTileZoneForm.get('zoneRadius').value==0">Flag</span></button>
             </div>
         </div>
     </div>
