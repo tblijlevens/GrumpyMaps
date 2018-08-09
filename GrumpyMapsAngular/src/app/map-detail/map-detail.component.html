@@ -78,7 +78,9 @@
     </div>
 
     <div id="columnNumbers">
-        <!-- colcol -->
+        <span *ngFor="let i of columnArray" class="colNumber" [style.width]=dndMap.squares[0].squareHeightWidth>
+                {{i}}
+        </span>
     </div>
 
     <div id="rowLetters">

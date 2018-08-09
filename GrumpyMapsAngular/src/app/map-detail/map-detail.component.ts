@@ -23,6 +23,10 @@ $(document).ready(function() {
             height:mapInnerHeight,
             left: mapPos.left
         });
+        $("#columnNumbers").css({
+            width:mapInnerHeight,
+            left: mapPos.left
+        });
 
         // set rowLetters in correct position:
         var rowHeight = $(".rowLetter").css("height");
@@ -139,6 +143,7 @@ export class MapDetailComponent implements OnInit {
     squareScale: string = '10%';
     squareSize:number = 5;
     heightWidth:number = 10;
+    columnArray:number[] = new Array();
     rowArray:number[] = new Array();
     rowArrayLetters:string[] = new Array();
     mapsLoaded=false;
@@ -218,6 +223,10 @@ export class MapDetailComponent implements OnInit {
         // set rowletters and colnumbers size and position:
         $("#rowLetters").css({
             height:mapInnerHeight,
+            left: mapPos.left
+        });
+        $("#columnNumbers").css({
+            width:mapInnerHeight,
             left: mapPos.left
         });
 
@@ -791,15 +800,16 @@ export class MapDetailComponent implements OnInit {
 
     private setRows(){
         this.rowArray = new Array();
+        this.columnArray = new Array();
         for (var i = 0 ; i< this.heightWidth ; i++){
             this.rowArray.push(i+1);
             this.rowArrayLetters.push(this.setRowIndexLetter(i+1));
+            this.columnArray.push(i+1);
         }
 
         this.rowStyles = {
             'height': this.dndMap.squares[0].squareHeightWidth
         }
-
         var rowHeight = $(".rowLetter").css("height");
         $(".rowLetter").css({"line-height":rowHeight});
     }
