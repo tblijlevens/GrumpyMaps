@@ -1,7 +1,4 @@
 <div id='squarecontainer' class="square noselect" [ngStyle]="squareStyles" (click)=selectSquare() (mousedown)="mouseDownSquare($event)" (mouseup)="mouseUpSquare()"   (mouseover)="mouseOverSquare()" (mouseout)="mouseOutSquare()" (contextmenu)="deselectAll()">
-    <span *ngIf="rowIndexAsLetter=='A'" class="colNumber" >
-        {{squareIndex+1}}
-    </span>
     <span class="squareTexts">
         <span class="coordinates" *ngIf="square.currentDistance!=9999">{{square.mapCoordinate}}<br></span>
         <div id="objectsInSquare" *ngIf="square.players.length!=0 && !square.hidden">

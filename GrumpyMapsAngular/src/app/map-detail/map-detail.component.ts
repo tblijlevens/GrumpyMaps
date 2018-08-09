@@ -158,7 +158,6 @@ export class MapDetailComponent implements OnInit {
     rangeSquares:Square[] = new Array();
     selectedPlayer:Player=null;
     squareBorderStyle = {};
-    rowStyles = {};
     mapFeet:number;
     squareFeet:number;
     showGrid:boolean=true;
@@ -807,9 +806,6 @@ export class MapDetailComponent implements OnInit {
             this.columnArray.push(i+1);
         }
 
-        this.rowStyles = {
-            'height': this.dndMap.squares[0].squareHeightWidth
-        }
         var rowHeight = $(".rowLetter").css("height");
         $(".rowLetter").css({"line-height":rowHeight});
     }
