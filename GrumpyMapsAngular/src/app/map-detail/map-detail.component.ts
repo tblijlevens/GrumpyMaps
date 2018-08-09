@@ -6,6 +6,8 @@ $(document).ready(function() {
         // set three column widths:
         var contentWidth = $("#allContent").css('width');
         var mapHeightPX = $(".mapcontainer").css('height');
+        var mapHeight = +mapHeightPX.split("px")[0];
+        var mapInnerHeight = $(".mapcontainer").innerHeight();
         var columnWidth = (+contentWidth.split("px")[0]-+mapHeightPX.split("px")[0])/2;
         columnWidth -= 12;
         var columnWidthFirst = columnWidth-35;
@@ -13,16 +15,23 @@ $(document).ready(function() {
         $("#firstColumn").css({width: columnWidthFirst});
         $("#secondColumn").css({width: columnWidth});
 
-        // set setup box width:
-        $("#mapSetup").css({width: columnWidth+40});
+        var mapOffset = $(".mapcontainer").offset();
+        var mapPos = $(".mapcontainer").position();
+
+        // set rowletters and colnumbers size and position:
+        $("#rowLetters").css({
+            height:mapInnerHeight,
+            left: mapPos.left
+        });
 
         // set rowLetters in correct position:
         var rowHeight = $(".rowLetter").css("height");
-        $(".rowLetter").css({"line-height":rowHeight});
+         $(".rowLetter").css({"line-height":rowHeight});
+
+        // set setup box width:
+        $("#mapSetup").css({width: columnWidth+40});
 
         // set infoBox to right position
-        var mapOffset = $(".mapcontainer").offset();
-        var mapHeight = +mapHeightPX.split("px")[0];
         var infoBoxHeight = +$("#infoBox").css('height').split("px")[0];
         var infoBoxWidth = +$("#infoBox").css('width').split("px")[0];
         $("#infoBox").css({
@@ -34,7 +43,6 @@ $(document).ready(function() {
             "left":mapOffset.left+((mapHeight/2)+(infoBoxWidth/2))-20
         });
         //set legend size and position:
-        var mapPos = $(".mapcontainer").position();
         $("#legend").css({
             width: mapHeightPX,
             top: mapHeight,
@@ -195,6 +203,8 @@ export class MapDetailComponent implements OnInit {
         // set three column widths:
         var contentWidth = $("#allContent").css('width');
         var mapHeightPX = $(".mapcontainer").css('height');
+        var mapHeight = +mapHeightPX.split("px")[0];
+        var mapInnerHeight = $(".mapcontainer").innerHeight();
         var columnWidth = (+contentWidth.split("px")[0]-+mapHeightPX.split("px")[0])/2;
         columnWidth -= 12;
         var columnWidthFirst = columnWidth-35;
@@ -202,17 +212,23 @@ export class MapDetailComponent implements OnInit {
         $("#firstColumn").css({width: columnWidthFirst});
         $("#secondColumn").css({width: columnWidth});
 
+        var mapOffset = $(".mapcontainer").offset();
+        var mapPos = $(".mapcontainer").position();
+
+        // set rowletters and colnumbers size and position:
+        $("#rowLetters").css({
+            height:mapInnerHeight,
+            left: mapPos.left
+        });
+
+        // set rowLetters in correct position:
+        var rowHeight = $(".rowLetter").css("height");
+         $(".rowLetter").css({"line-height":rowHeight});
 
         // set setup box width:
         $("#mapSetup").css({width: columnWidth+40});
 
-        // set rowLetters in correct position:
-        var rowHeight = $(".rowLetter").css("height");
-        $(".rowLetter").css({"line-height":rowHeight});
-
         // set infoBox to right position
-        var mapOffset = $(".mapcontainer").offset();
-        var mapHeight = +mapHeightPX.split("px")[0];
         var infoBoxHeight = +$("#infoBox").css('height').split("px")[0];
         var infoBoxWidth = +$("#infoBox").css('width').split("px")[0];
         $("#infoBox").css({
@@ -224,7 +240,6 @@ export class MapDetailComponent implements OnInit {
             "left":mapOffset.left+((mapHeight/2)+(infoBoxWidth/2))-20
         });
         //set legend size and position:
-        var mapPos = $(".mapcontainer").position();
         $("#legend").css({
             width: mapHeightPX,
             top: mapHeight,

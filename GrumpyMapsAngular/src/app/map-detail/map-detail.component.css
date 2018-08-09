@@ -149,6 +149,28 @@ mdb-icon{
     float:right;
     margin-left:10px;
 }
+
+#columnNumbers{
+    position: absolute;
+    font-size: 1.1vw;
+}
+#rowLetters{
+    position: absolute;
+    font-size: 1.1vw;
+    top: 2px;
+    margin-left: 12px;
+    height: 400px;
+    width: 13px;
+    text-align: center;
+    /*border: solid 1px blue;*/
+}
+.rowLetter{
+    position: relative;
+    left:0px;
+    width:100%;
+    display: inline-block;
+    float: left;
+}
 .mapcontainer {
     /*container height and  width is relative, set in map-detail.componten.ts*/
     position: relative;
@@ -173,12 +195,7 @@ input[type=number]{
     height: 100%;
     margin: 0px;
 }
-.rowLetter{
-    position: absolute;
-    left: -15px;
-    width: 15px;
-    font-size: 1.1vw;
-}
+
 .row{
     margin: 0px;
     width:100%;
