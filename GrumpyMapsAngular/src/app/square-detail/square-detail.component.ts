@@ -193,4 +193,5 @@ export class SquareDetailComponent implements OnInit {
       return playerSquare;
   }
 
+
 }

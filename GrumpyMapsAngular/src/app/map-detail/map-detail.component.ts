@@ -575,8 +575,24 @@ export class MapDetailComponent implements OnInit {
         }
     }
 
+    setCharacterValues(){
+        this.createPlayerForm.get('playerName').setValue(this.selectedPlayer.name);
+        this.createPlayerForm.get('playerColor').setValue(this.selectedPlayer.color);
+        this.createPlayerForm.get('playerInitiative').setValue(this.selectedPlayer.initiative);
+        this.createPlayerForm.get('playerMovement').setValue(this.selectedPlayer.movementAmount);
+        this.createPlayerForm.get('playerAttacks').setValue(this.selectedPlayer.attacksPerRound);
+        this.createPlayerForm.get('playerSpells').setValue(this.selectedPlayer.spellsPerRound);
+    }
     editCharacter(){
-
+        this.selectedPlayer.name = this.createPlayerForm.get('playerName').value;
+        this.selectedPlayer.color = this.createPlayerForm.get('playerColor').value;
+        this.selectedPlayer.initiative = this.createPlayerForm.get('playerInitiative').value;
+        this.selectedPlayer.movementAmount = this.createPlayerForm.get('playerMovement').value;
+        this.selectedPlayer.movementLeft = this.createPlayerForm.get('playerMovement').value;
+        this.selectedPlayer.attacksPerRound = this.createPlayerForm.get('playerAttacks').value;
+        this.selectedPlayer.attacksLeft = this.createPlayerForm.get('playerAttacks').value;
+        this.selectedPlayer.spellsPerRound = this.createPlayerForm.get('playerSpells').value;
+        this.selectedPlayer.spellsLeft = this.createPlayerForm.get('playerSpells').value;
     }
     deleteObject() {
         if(this.selectedPlayer.isSelected) {
