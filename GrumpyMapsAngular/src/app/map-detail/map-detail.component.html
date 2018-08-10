@@ -142,6 +142,19 @@
         </label>
         <br>
         <br>
+        <label class="center-block"><b>Cut-off mechanic: </b> <mdb-icon class="" icon="info-circle" (click)="clickCutOffInfo"></mdb-icon> &nbsp;&nbsp; <input class="checkCustom" type="checkbox" formControlName="moveCutCheck">
+            <br />
+            <span class= "moveMechanic">
+                <span *ngIf="mapForm.get('moveCutCheck').value" >
+                    <input type="range" class="rangeCustom" formControlName="moveCutRange" min="1" max="100" >
+                    &nbsp;&nbsp; {{mapForm.get('moveCutRange').value}} %
+                </span>
+        </span>
+        </label>
+        <br>
+        <br>
+        <br>
+        <br>
         <button (click)="toggleSettings()" class="btn btn-success">Done</button>
         <div class="saveLoadBox">
             <button (click)="loadMap()" class="btn btn-primary" data-toggle="modal" data-target="#saveModal">Save map</button>

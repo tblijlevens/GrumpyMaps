@@ -100,7 +100,9 @@ export class MapDetailComponent implements OnInit {
     mapForm = new FormGroup({
         heightwidth: new FormControl(),
         yards: new FormControl(),
-        imageUrl: new FormControl()
+        imageUrl: new FormControl(),
+        moveCutCheck: new FormControl(),
+        moveCutRange: new FormControl()
     });
     createPlayerForm = new FormGroup({
       playerName: new FormControl(),
@@ -184,6 +186,8 @@ export class MapDetailComponent implements OnInit {
         this.loadMap();
         this.mapForm.get('heightwidth').setValue(10);
         this.mapForm.get('yards').setValue(5);
+        this.mapForm.get('moveCutCheck').setValue(false);
+        this.mapForm.get('moveCutRange').setValue(50);
         this.dndMap = new DnDMap(0, this.heightWidth, this.squareSize); //id zero cannot exist in databse, so it will generate a new unique id)
 
         this.createPlayerForm.get('playerColor').setValue("#ff0000");
@@ -306,6 +310,9 @@ export class MapDetailComponent implements OnInit {
         this.legendSquare['width'] = this.dndMap.squares[0].squareHeightWidth;
     }
 
+    clickCutOffInfo(){
+        
+    }
     public setMultiSelect(){
         if (this.multiSelect){
             this.multiSelect = false;
