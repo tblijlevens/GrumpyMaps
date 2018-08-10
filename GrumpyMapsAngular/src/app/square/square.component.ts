@@ -30,6 +30,8 @@ export class SquareComponent implements OnInit {
   @Input() obstructionMode: boolean = false;
   @Input() movementMode: boolean;
   @Output() moveModeEvent = new EventEmitter<boolean>();
+  @Input() freeMove: boolean;
+  @Output() freeMoveEvent = new EventEmitter<boolean>();
   @Output() setRangeSquaresEvent = new EventEmitter<number[]>();
   _inRangeSquares: Square[] = new Array();
   @Input() set inRangeSquares(squares: Square[]) {
@@ -119,8 +121,10 @@ export class SquareComponent implements OnInit {
       }
       if (squareIdInRange) {
 
-          //move player for that distance:
-          this.selectedPlayer.movePlayer(this.square.currentDistance);
+          //move player for that distance if freeMove is not on:
+          if (!this.freeMove){
+              this.selectedPlayer.movePlayer(this.square.currentDistance);
+          }
 
           //remove object from old square
           var oldSquare = this.getPlayerSquare();
@@ -138,6 +142,7 @@ export class SquareComponent implements OnInit {
       }
       this.mapShareService.setPlayerZones(); // makes the playerZones move with the character
       this.moveModeEvent.emit(false);
+      this.freeMoveEvent.emit(false);
   }
   getPlayerSquare(){
       var playerSquare:Square=null;
@@ -289,6 +294,7 @@ export class SquareComponent implements OnInit {
       this.resetPlayer();
       this.setSelectedPlayerEvent.emit(null);
       this.moveModeEvent.emit(false);
+      this.freeMoveEvent.emit(false);
       this.setRangeSquaresEvent.emit(new Array());
       this.resetAllDistances();
 
