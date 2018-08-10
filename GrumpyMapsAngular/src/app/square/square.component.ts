@@ -192,11 +192,29 @@ export class SquareComponent implements OnInit {
   }
 
   showMessage(message:string, color:string, duration:number){
-      $('#infoBox').css({"color":color})
+
+      var mapHeightPX = $(".mapcontainer").css('height');
+      var mapHeight = +mapHeightPX.split("px")[0];
+      var mapOffset = $(".mapcontainer").offset();
+      var mapPos = $(".mapcontainer").position();
+
       $('#infoBox').html(message);
+      var infoBoxHeight = +$("#infoBox").css('height').split("px")[0];
+      var infoBoxWidth = +$("#infoBox").css('width').split("px")[0];
+      $("#infoBox").css({
+          "top":mapOffset.top+((mapHeight/2)-(infoBoxHeight/2)),
+          "left":mapOffset.left+((mapHeight/2)-(infoBoxWidth/2)),
+          "color":color
+      });
+      $("#hiddenClose").css({
+          "top":mapOffset.top+((mapHeight/2)-(infoBoxHeight/2)),
+          "left":mapOffset.left+((mapHeight/2)+(infoBoxWidth/2))-20
+      });
+
       $('#infoBox').fadeIn(500).delay(duration).fadeOut(500);
       $('#hiddenClose').fadeIn(500).delay(duration).fadeOut(500);
   }
+
   resetAllDistances(){
       for (var i=0 ; i<this.allSquares.length ; i++){
           this.allSquares[i].currentDistance=9999;

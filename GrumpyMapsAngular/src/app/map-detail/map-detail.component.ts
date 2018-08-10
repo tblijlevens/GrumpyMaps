@@ -35,17 +35,9 @@ $(document).ready(function() {
         // set setup box width:
         $("#mapSetup").css({width: columnWidth+40});
 
-        // set infoBox to right position
-        var infoBoxHeight = +$("#infoBox").css('height').split("px")[0];
-        var infoBoxWidth = +$("#infoBox").css('width').split("px")[0];
-        $("#infoBox").css({
-            "top":mapOffset.top+((mapHeight/2)-50),
-            "left":mapOffset.left+((mapHeight/2)-(infoBoxWidth/2))
-        });
-        $("#hiddenClose").css({
-            "top":mapOffset.top+((mapHeight/2)-45),
-            "left":mapOffset.left+((mapHeight/2)+(infoBoxWidth/2))-20
-        });
+        //set infobox width
+        $("#infoBox").css({"width":(mapHeight-40)});
+
         //set legend size and position:
         $("#legend").css({
             width: mapHeightPX,
@@ -240,17 +232,9 @@ export class MapDetailComponent implements OnInit {
         // set setup box width:
         $("#mapSetup").css({width: columnWidth+40});
 
-        // set infoBox to right position
-        var infoBoxHeight = +$("#infoBox").css('height').split("px")[0];
-        var infoBoxWidth = +$("#infoBox").css('width').split("px")[0];
-        $("#infoBox").css({
-            "top":mapOffset.top+((mapHeight/2)-50),
-            "left":mapOffset.left+((mapHeight/2)-(infoBoxWidth/2))
-        });
-        $("#hiddenClose").css({
-            "top":mapOffset.top+((mapHeight/2)-45),
-            "left":mapOffset.left+((mapHeight/2)+(infoBoxWidth/2))-20
-        });
+        //set infobox width
+        $("#infoBox").css({"width":(mapHeight-40)});
+
         //set legend size and position:
         $("#legend").css({
             width: mapHeightPX,
@@ -295,6 +279,7 @@ export class MapDetailComponent implements OnInit {
     }
     setSquareSize(){
         this.squareSize = +this.mapForm.get('yards').value;
+        this.mapForm.get('yards').setValue(this.squareSize);
          var squares = this.dndMap.squares;
         for (var i = 0 ; i < squares.length ; i++){
             squares[i].squareSize = this.squareSize;
@@ -311,7 +296,17 @@ export class MapDetailComponent implements OnInit {
     }
 
     clickCutOffInfo(){
-        
+        var message = "When checked you will use the Cut-Off Mechanic as oposed " +
+        "to the Action Point Mechanic <br><br>" +
+        "<b>Action Point Mechanic:</b><br>" +
+        "Each character starts with 100 action points each turn. Each combat action (move, attack, cast spell) cost action points. The remainder of action points determine how much of each combat action can still be performed. Example: a character can perform 3 attacks/turn and move 15 yards/turn. When the character attacks once (33%) the character has 10 yards movement left (67%).<br><br>" +
+        "<b>Cut-Off Mechanic:</b><br>" +
+        "Some Game Masters like to give their players some movement without losing attacks or spells. Let's say you set the cut-off slider to 40%. It means any character can move up to 40% of its movement amount without losing attacks or spells that turn. However, when spending more than 40% of its movement amount, the character loses all its attacks and spells for that round. More concrete, in cut-off mode a character can do one of the three options below:<br><ol>" +
+        "<li> Start the turn with performing all or a part of the attacks/spells and then move up to 40% of the movement amount.<br>" +
+        "<li> Start the turn with moving up to 40% of the movement amount and then perform all or a part of the attacks/spells.<br>" +
+        "<li> Start the turn with moving more than 40% of the movement amount and lose all Attacks/spells this turn.</ol>";
+
+        this.showInfoBox(message,"black");
     }
     public setMultiSelect(){
         if (this.multiSelect){
@@ -373,11 +368,7 @@ export class MapDetailComponent implements OnInit {
             }
             message+= "These tiles were made visible:<br>" + madeVisible;
         }
-        $('#infoBox').css({"color":"black"})
-        $('#infoBox').html(message);
-        $('#infoBox').fadeIn(500)
-        $('#hiddenClose').fadeIn(500);
-
+        this.showInfoBox(message,"black");
     }
 
 
@@ -512,10 +503,48 @@ export class MapDetailComponent implements OnInit {
         }
     }
     showMessage(message:string, color:string, duration:number){
-        $('#infoBox').css({"color":color})
+
+        var mapHeightPX = $(".mapcontainer").css('height');
+        var mapHeight = +mapHeightPX.split("px")[0];
+        var mapOffset = $(".mapcontainer").offset();
+        var mapPos = $(".mapcontainer").position();
+
         $('#infoBox').html(message);
+        var infoBoxHeight = +$("#infoBox").css('height').split("px")[0];
+        var infoBoxWidth = +$("#infoBox").css('width').split("px")[0];
+        $("#infoBox").css({
+            "top":mapOffset.top+((mapHeight/2)-(infoBoxHeight/2)),
+            "left":mapOffset.left+((mapHeight/2)-(infoBoxWidth/2)),
+            "color":color
+        });
+        $("#hiddenClose").css({
+            "top":mapOffset.top+((mapHeight/2)-(infoBoxHeight/2)),
+            "left":mapOffset.left+((mapHeight/2)+(infoBoxWidth/2))-20
+        });
+
         $('#infoBox').fadeIn(500).delay(duration).fadeOut(500);
         $('#hiddenClose').fadeIn(500).delay(duration).fadeOut(500);
+    }
+    showInfoBox(message:string, color:string){
+        var mapHeightPX = $(".mapcontainer").css('height');
+        var mapHeight = +mapHeightPX.split("px")[0];
+        var mapOffset = $(".mapcontainer").offset();
+        var mapPos = $(".mapcontainer").position();
+
+        $('#infoBox').html(message);
+        var infoBoxHeight = +$("#infoBox").css('height').split("px")[0];
+        var infoBoxWidth = +$("#infoBox").css('width').split("px")[0];
+        $("#infoBox").css({
+            "top":mapOffset.top+((mapHeight/2)-(infoBoxHeight/2)),
+            "left":mapOffset.left+((mapHeight/2)-(infoBoxWidth/2)),
+            "color":color
+        });
+        $("#hiddenClose").css({
+            "top":mapOffset.top+((mapHeight/2)-(infoBoxHeight/2)),
+            "left":mapOffset.left+((mapHeight/2)+(infoBoxWidth/2))-20
+        });
+        $('#infoBox').fadeIn(500);
+        $('#hiddenClose').fadeIn(500);
     }
     hideInfoBox(){
         $('#infoBox').fadeOut(300);
@@ -855,10 +884,7 @@ export class MapDetailComponent implements OnInit {
     public saveMap() {
         // var date = new Date().toLocaleDateString();
         // var time = new Date().toLocaleTimeString();
-        $('#infoBox').css({"color":"black"})
-        $('#infoBox').html("Saving...");
-        $('#infoBox').fadeIn(500);
-        $('#hiddenClose').fadeIn(500);
+        this.showInfoBox("Saving...", "black");
 
         this.saveMapWithSquares();
     }
@@ -946,11 +972,7 @@ export class MapDetailComponent implements OnInit {
     }
 
     loadSelectedMap(){
-        $('#infoBox').css({"color":"black"})
-
-        $('#infoBox').html("Loading...");
-        $('#infoBox').fadeIn(500);
-        $('#hiddenClose').fadeIn(500);
+        this.showInfoBox("Loading...", "black");
         for (var i=0 ; i< this.allLoadedMapsResult.length ; i++){
             if (this.selectedLoadMap == this.allLoadedMapsResult[i]["id"]){
                 this.heightWidth = this.allLoadedMapsResult[i]["heightWidth"];
@@ -1007,7 +1029,6 @@ export class MapDetailComponent implements OnInit {
                     this.findPlayerByRealSquareId(sqId);
                 }
             }*/
-            $('#infoBox').css({"color":"black"})
             this.showMessage("Loading... Succes!", "black", 1000);
         });
     }
