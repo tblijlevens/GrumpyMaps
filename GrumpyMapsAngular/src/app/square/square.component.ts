@@ -32,6 +32,8 @@ export class SquareComponent implements OnInit {
   @Output() moveModeEvent = new EventEmitter<boolean>();
   @Input() freeMove: boolean;
   @Output() freeMoveEvent = new EventEmitter<boolean>();
+  @Input() chargeMode: boolean;
+  @Output() chargeModeEvent = new EventEmitter<boolean>();
   @Output() setRangeSquaresEvent = new EventEmitter<number[]>();
   _inRangeSquares: Square[] = new Array();
   @Input() set inRangeSquares(squares: Square[]) {
@@ -134,7 +136,22 @@ export class SquareComponent implements OnInit {
           this.square.addPhysical(this.selectedPlayer);
 
           //show message it moved.
-          this.showMessage(this.selectedPlayer.name + " moves " + this.square.currentDistance + " yards!", "black", 500 );
+          if (this.chargeMode){
+              this.selectedPlayer.movementLeft=0;
+              this.selectedPlayer.attacksLeft=0;
+              this.selectedPlayer.spellsLeft=0;
+              this.selectedPlayer.actionPoints=0;
+              var advantageStasis={
+                  label:"advantage",
+                  radius:0,
+                  duration:2
+              }
+              this.selectedPlayer.zones.push(advantageStasis);
+              this.showMessage(this.selectedPlayer.name + " charges " + this.square.currentDistance + " yards! " + this.selectedPlayer.name + " is done for this turn, but gains advantage next turn.", "black", 3000 );
+          }
+          else{
+              this.showMessage(this.selectedPlayer.name + " moves " + this.square.currentDistance + " yards!", "black", 500 );
+          }
 
       }
       else { // show message it can't move there
@@ -143,6 +160,7 @@ export class SquareComponent implements OnInit {
       this.mapShareService.setPlayerZones(); // makes the playerZones move with the character
       this.moveModeEvent.emit(false);
       this.freeMoveEvent.emit(false);
+      this.chargeModeEvent.emit(false);
   }
   getPlayerSquare(){
       var playerSquare:Square=null;
@@ -295,6 +313,7 @@ export class SquareComponent implements OnInit {
       this.setSelectedPlayerEvent.emit(null);
       this.moveModeEvent.emit(false);
       this.freeMoveEvent.emit(false);
+      this.chargeModeEvent.emit(false);
       this.setRangeSquaresEvent.emit(new Array());
       this.resetAllDistances();
 

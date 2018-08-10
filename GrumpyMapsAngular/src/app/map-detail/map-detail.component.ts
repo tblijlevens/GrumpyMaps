@@ -150,6 +150,7 @@ export class MapDetailComponent implements OnInit {
     obstructionMode:boolean=false;
     movementMode:boolean=false;
     freeMove:boolean=false;
+    chargeMode:boolean=false;
     rangeSquares:Square[] = new Array();
     selectedPlayer:Player=null;
     squareBorderStyle = {};
@@ -379,23 +380,27 @@ export class MapDetailComponent implements OnInit {
     // }
 
     clickPlayer(player: Player) {
-        this.resetAllDistances();
-        this.deselectAllCharacters();
-        this.setAllActiveColors();
+        this.deselectAll();
+
         player.isSelected = true;
         player.setActiveColor();
         this.selectedPlayer = player;
         var playerSquare = this.getPlayerSquare(this.selectedPlayer);
         this.mapShareService.setSquare(playerSquare); //update active square in squareDetail via mapShareService
-
-        this.selectedSquares = new Array();
-        this.rangeSquares = new Array();
-        this.movementMode = false;
-        this.freeMove = false;
         this.showPlayerDot();
     }
 
-
+    deselectAll(){
+        this.resetAllDistances();
+        this.deselectAllCharacters();
+        this.setAllActiveColors();
+        this.selectedSquares = new Array();
+        this.selectedPlayer=null;
+        this.movementMode = false;
+        this.freeMove = false;
+        this.chargeMode = false;
+        this.rangeSquares = new Array();
+    }
     resetAllDistances(){
         for (var i=0 ; i<this.dndMap.squares.length ; i++){
             this.dndMap.squares[i].currentDistance=9999;
@@ -427,6 +432,10 @@ export class MapDetailComponent implements OnInit {
         else{
             this.rangeSquares = this.getMoveRange(player, this.dndMap.squares);
         }
+        this.setSquareTextSize();
+    }
+    showChargeRange(player:Player){
+        this.rangeSquares = this.getChargeRange(player, this.dndMap.squares);
         this.setSquareTextSize();
     }
 
@@ -533,6 +542,63 @@ export class MapDetailComponent implements OnInit {
         }
         return moveRange;
     }
+    getChargeRange(player:Player, allSquares:Square[]){
+        // calculate relativeMoveSpeed based on tile width
+        var relativeMoveSpeed = +((player.movementAmount*1.5)/this.squareSize).toFixed(0);
+
+        var moveRange = new Array();
+
+        //get row and column of players current position coordinates:
+        var rowNumber = player.squareMapCoordinate.split(":")[0].charCodeAt(0);
+        var column = +player.squareMapCoordinate.split(":")[1];
+
+        // calculate distance of elligable tiles:
+        for (var i = 0 ; i < allSquares.length ; i++){
+            var targetRowNumber = allSquares[i].mapCoordinate.split(":")[0].charCodeAt(0);
+            var targetColumn = +allSquares[i].mapCoordinate.split(":")[1];
+
+            var rowDif = this.getDifference(rowNumber, targetRowNumber);
+            var colDif = this.getDifference(column, targetColumn);
+            var distance = 0;
+
+            // make selection of tiles to do calculations on smaller:
+            if (rowDif<=relativeMoveSpeed && colDif<=relativeMoveSpeed){
+
+                if (rowDif == 0){
+                    distance = colDif*this.squareSize
+                }
+                if (colDif == 0 && rowDif!=0){
+                    distance = rowDif*this.squareSize
+                }
+
+                // when diagonal movement calc distance based on a^2+b^2=c^2
+                // just a diagonal line:
+                if (colDif == rowDif && colDif !=0){
+                    var squaredTileSize = Math.pow(this.squareSize,2);
+                    distance = colDif * Math.sqrt(squaredTileSize+squaredTileSize);
+                }
+
+                // combination of diagonal and vertical/horizontal line
+                if (colDif!=rowDif && colDif>0 && rowDif>0){
+                    var minimum = Math.min(colDif,rowDif);
+                    var maximum = Math.max(colDif,rowDif);
+                    var squaredTileSize = Math.pow(this.squareSize,2);
+                    var diagonal = minimum * Math.sqrt(squaredTileSize+squaredTileSize);
+                    var straight = (maximum-minimum)*this.squareSize;
+                    distance=diagonal+straight;
+                }
+
+                // put in range tiles in the moveRange variable to return:
+                if (distance <= (player.movementAmount*1.5)){
+                    //set the distance of the square:
+                    allSquares[i].currentDistance = +distance.toFixed(1);
+                    moveRange.push(allSquares[i]);
+                }
+            }
+        }
+
+        return moveRange;
+    }
     getDifference(num1, num2){
     return (num1 > num2)? num1-num2 : num2-num1
   }
@@ -630,12 +696,27 @@ export class MapDetailComponent implements OnInit {
     }
     moveCharacter() {
         if(this.selectedPlayer.isSelected) {
+            this.resetAllDistances();
             this.movementMode = true;
             if ((<KeyboardEvent>window.event).ctrlKey || (<KeyboardEvent>window.event).metaKey){
                 this.freeMove=true
             }
             this.showRange(this.selectedPlayer);
             this.selectedSquare = this.getPlayerSquare(this.selectedPlayer);
+        }
+    }
+    charge() {
+        if(this.selectedPlayer.isSelected) {
+            if (this.selectedPlayer.movementLeft == this.selectedPlayer.movementAmount){
+                this.resetAllDistances();
+                this.movementMode = true;
+                this.chargeMode = true;
+                this.showChargeRange(this.selectedPlayer);
+                this.selectedSquare = this.getPlayerSquare(this.selectedPlayer);
+            }
+            else{
+                this.showMessage(this.selectedPlayer.name + " does not have enough movement left to charge. Need full movement amount.", "red", 1500);
+            }
         }
     }
     addStasis(){
@@ -853,6 +934,9 @@ export class MapDetailComponent implements OnInit {
     }
     public receiveFreeMove($event){
         this.freeMove = $event;
+    }
+    public receiveChargeMode($event){
+        this.chargeMode = $event;
     }
     public receiveRangeSquares($event){
         this.rangeSquares = $event;
