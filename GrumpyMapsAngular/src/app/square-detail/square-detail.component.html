@@ -44,7 +44,7 @@
                 <li>
                     Spells: {{player.spellsLeft}} / {{player.spellsPerRound}}&nbsp; <span style="font-size:1vw;" *ngIf="!cutOffMechanic">({{player.pointsPerSpell.toFixed(1)}} AP/Sp)</span>
                 </li>
-                <li>
+                <li *ngIf="!cutOffMechanic">
                     Action Points: {{player.actionPoints.toFixed(1)}}
                 </li>
                 <li>
