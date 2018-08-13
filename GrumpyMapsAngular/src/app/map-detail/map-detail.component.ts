@@ -152,6 +152,7 @@ export class MapDetailComponent implements OnInit {
     freeMove:boolean=false;
     chargeMode:boolean=false;
     rangeSquares:Square[] = new Array();
+    rangeCutOffSquares:Square[] = new Array();
     selectedPlayer:Player=null;
     squareBorderStyle = {};
     mapFeet:number;
@@ -408,6 +409,7 @@ export class MapDetailComponent implements OnInit {
         this.freeMove = false;
         this.chargeMode = false;
         this.rangeSquares = new Array();
+        this.rangeCutOffSquares = new Array();
     }
     resetAllDistances(){
         for (var i=0 ; i<this.dndMap.squares.length ; i++){
@@ -439,6 +441,9 @@ export class MapDetailComponent implements OnInit {
         }
         else{
             this.rangeSquares = this.getMoveRange(player, this.dndMap.squares);
+            if (this.cutOffMechanic){
+                this.rangeCutOffSquares = this.getCutOffRange();
+            }
         }
         this.setSquareTextSize();
     }
@@ -503,6 +508,23 @@ export class MapDetailComponent implements OnInit {
         }
 
         return moveRange;
+    }
+    getCutOffRange(){
+        var cutOffSquares = new Array();
+        var cutOffRange = this.selectedPlayer.movementAmount/2;
+        if (this.selectedPlayer.movementLeft != this.selectedPlayer.movementAmount && this.selectedPlayer.movementLeft >= cutOffRange){
+            var alreadyMoved = this.selectedPlayer.movementAmount - this.selectedPlayer.movementLeft;
+            cutOffRange -= alreadyMoved;
+        }
+        else if (this.selectedPlayer.movementLeft != this.selectedPlayer.movementAmount && this.selectedPlayer.movementLeft < cutOffRange){
+            cutOffRange = 0;
+        }
+        for (var i = 0 ; i < this.rangeSquares.length ; i++){
+            if (this.rangeSquares[i].currentDistance <= cutOffRange && this.selectedPlayer.movementLeft >= this.selectedPlayer.movementAmount/2){
+                cutOffSquares.push(this.rangeSquares[i]);
+            }
+        }
+        return cutOffSquares;
     }
     getMoveRangeFree(player:Player, allSquares:Square[]){
         var moveRange = new Array();
@@ -718,6 +740,7 @@ export class MapDetailComponent implements OnInit {
         if(this.selectedPlayer.isSelected) {
             this.resetAllDistances();
             this.movementMode = true;
+            this.chargeMode = false;            
             if ((<KeyboardEvent>window.event).ctrlKey || (<KeyboardEvent>window.event).metaKey){
                 this.freeMove=true
             }
@@ -963,6 +986,7 @@ export class MapDetailComponent implements OnInit {
     }
     public receiveRangeSquares($event){
         this.rangeSquares = $event;
+        this.rangeCutOffSquares = new Array();
     }
 
     public receivePlayerToMove($event){
@@ -1238,6 +1262,7 @@ export class MapDetailComponent implements OnInit {
                 this.allCharacters.push(newPlayer);
             }
             this.rangeSquares = new Array();
+            this.rangeCutOffSquares = new Array();
             this.orderCharacters();
 
         });
@@ -1270,6 +1295,7 @@ export class MapDetailComponent implements OnInit {
                 if (mapSquares[i].id == player.realSquareId){
                     mapSquares[i].addPhysical(player);
                     this.rangeSquares = new Array();
+                    this.rangeCutOffSquares = new Array();
                 }
             }
 

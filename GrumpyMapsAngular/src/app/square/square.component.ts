@@ -37,11 +37,14 @@ export class SquareComponent implements OnInit {
   @Output() setRangeSquaresEvent = new EventEmitter<number[]>();
   _inRangeSquares: Square[] = new Array();
   @Input() set inRangeSquares(squares: Square[]) {
-
       this._inRangeSquares = squares;
       this.setRangeSquareStyles();
   }
-
+ rangeCutOffSquares:Square[] = new Array();
+ @Input() set _rangeCutOffSquares(squares: Square[]) {
+     this.rangeCutOffSquares = squares;
+     this.setRangeSquareStyles();
+ }
   squareStyles = {};
   @Input() set _squareBorderStyles(squareBorderStyle: string) {
       this.squareStyles['border'] = squareBorderStyle;
@@ -294,8 +297,15 @@ export class SquareComponent implements OnInit {
 
     if (!this.square.obstructed && !this.selectedSquares.includes(this.square)) {
       if (this.square.inRange) {
-          this.originalSquareColor = 'rgba(8, 161, 0, 0.5)';
-        this.squareStyles['background-color'] = this.originalSquareColor;
+          if (this.rangeCutOffSquares.includes(this.square)) {
+              this.originalSquareColor = 'rgba(0, 161, 161, 0.5)';
+              this.squareStyles['background-color'] = this.originalSquareColor;
+          }
+          else
+          {
+              this.originalSquareColor = 'rgba(8, 161, 0, 0.5)';
+              this.squareStyles['background-color'] = this.originalSquareColor;
+          }
 
       }
       else {
