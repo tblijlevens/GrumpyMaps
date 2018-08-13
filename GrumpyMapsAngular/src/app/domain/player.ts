@@ -36,21 +36,19 @@ export class Player{
     zones:any[] = new Array();
     stasis:any[] = new Array();
 
+    actions:any[] = new Array();
 
     constructor(id, playerSquareId, name, actionPoints, movementAmount, initiative, attacksPerRound, spellsPerRound, type, color, mapSquareId, mapHeightWidth, squareMapCoordinate, playerIcon, mapId){
         this.id = id;
         this.name = name;
         this.actionPoints = actionPoints;
         this.movementAmount = movementAmount;
-        this.pointsPerYard = +(this.actionPoints/this.movementAmount);
         this.movementLeft = movementAmount;
         this.initiative = initiative;
         this.isSelected = false;
         this.attacksPerRound = attacksPerRound;
-        this.pointsPerAttack = +(this.actionPoints/this.attacksPerRound);
         this.attacksLeft = attacksPerRound;
         this.spellsPerRound = spellsPerRound;
-        this.pointsPerSpell = +(this.actionPoints/this.spellsPerRound);
         this.spellsLeft = spellsPerRound;
         this.type = type;
         if(this.color != "#00ff00"){
@@ -64,7 +62,14 @@ export class Player{
         this.squareMapCoordinate = squareMapCoordinate;
         this.playerIcon = playerIcon;
         this.mapId = mapId;
+        this.setActionPointCosts();
         this.setActiveColor();
+    }
+    setActionPointCosts(){
+        this.pointsPerYard = +(this.actionPoints/this.movementAmount);
+        this.pointsPerAttack = +(this.actionPoints/this.attacksPerRound);
+        this.pointsPerSpell = +(this.actionPoints/this.spellsPerRound);
+
     }
     getName(){
         return this.name;
@@ -92,6 +97,38 @@ export class Player{
         this.updateAttacks();
         this.updateSpells();
     }
+
+
+    attackCutOff(cutOffNumber:number){
+        this.attacksLeft -= 1;
+        if (this.actions[0] != "move"){
+            this.movementLeft = this.movementAmount*cutOffNumber;
+        }
+        else {
+            this.movementLeft = 0;
+        }
+        this.actions.push("attack");
+
+    }
+    castCutOff(cutOffNumber:number){
+        this.spellsLeft -= 1;
+        if (this.actions[0] != "move"){
+            this.movementLeft = this.movementAmount*cutOffNumber;
+        }
+        else {
+            this.movementLeft = 0;
+        }
+        this.actions.push("attack");
+
+    }
+    movePlayerCutOff(yardsMoved:number, cutOffNumber:number){
+        this.movementLeft -= yardsMoved;
+        if (this.movementLeft < (this.movementAmount*cutOffNumber) || this.actions[0] == "attack"){
+            this.attacksLeft = 0;
+            this.spellsLeft = 0;
+        }
+        this.actions.push("move");
+    }
     updateAttacks(){
         this.attacksLeft = Math.floor((this.actionPoints/this.pointsPerAttack));
     }
@@ -107,6 +144,7 @@ export class Player{
         this.movementLeft = this.movementAmount;
         this.attacksLeft = this.attacksPerRound;
         this.spellsLeft = this.spellsPerRound;
+        this.actions = new Array();
     }
     reduceDurations(){
         // ZONES

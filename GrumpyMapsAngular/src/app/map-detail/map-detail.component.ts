@@ -171,6 +171,8 @@ export class MapDetailComponent implements OnInit {
     fileValue;
     playerIdCreator: number = 1;
     playerIdGenerator:number=0;
+    cutOffMechanic:boolean=false;
+    cutOffNumber:number;
 
     constructor(private dndMapService: DnDMapService, private mapShareService: MapShareService, private fb: FormBuilder) {
         this.createImageForm();
@@ -310,6 +312,12 @@ export class MapDetailComponent implements OnInit {
 
         this.showInfoBox(message,"black");
     }
+
+    setCutOffRange(){
+        this.cutOffMechanic = this.mapForm.get('moveCutCheck').value;
+        this.cutOffNumber = +this.mapForm.get('moveCutRange').value/100;
+    }
+
     public setMultiSelect(){
         if (this.multiSelect){
             this.multiSelect = false;
@@ -673,7 +681,13 @@ export class MapDetailComponent implements OnInit {
     attack() {
         if(this.selectedPlayer.isSelected ) {
             if(this.selectedPlayer.attacksLeft!=0){
-                this.selectedPlayer.attack()
+                if (this.cutOffMechanic){
+                    this.selectedPlayer.attackCutOff(this.cutOffNumber);
+                }
+                else{
+                    this.selectedPlayer.attack()
+                }
+
                 this.showMessage(this.selectedPlayer.name + " attacks!", "black", 500);
 
             }
@@ -686,7 +700,13 @@ export class MapDetailComponent implements OnInit {
     cast() {
         if(this.selectedPlayer.isSelected) {
             if(this.selectedPlayer.spellsLeft!=0){
-                this.selectedPlayer.cast()
+                if (this.cutOffMechanic){
+                    this.selectedPlayer.castCutOff(this.cutOffNumber);
+                }
+                else{
+                    this.selectedPlayer.cast()
+                }
+
                 this.showMessage(this.selectedPlayer.name + " casts a spell!", "black", 500);
             }
             else {
@@ -705,6 +725,7 @@ export class MapDetailComponent implements OnInit {
             this.selectedSquare = this.getPlayerSquare(this.selectedPlayer);
         }
     }
+
     charge() {
         if(this.selectedPlayer.isSelected) {
             if (this.selectedPlayer.movementLeft == this.selectedPlayer.movementAmount){
@@ -767,6 +788,8 @@ export class MapDetailComponent implements OnInit {
         this.selectedPlayer.attacksLeft = this.createPlayerForm.get('playerAttacks').value;
         this.selectedPlayer.spellsPerRound = this.createPlayerForm.get('playerSpells').value;
         this.selectedPlayer.spellsLeft = this.createPlayerForm.get('playerSpells').value;
+        this.selectedPlayer.setActionPointCosts();
+
     }
     deleteObject() {
         if(this.selectedPlayer.isSelected) {

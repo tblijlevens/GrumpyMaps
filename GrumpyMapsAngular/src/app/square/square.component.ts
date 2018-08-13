@@ -80,6 +80,9 @@ export class SquareComponent implements OnInit {
       this.setRangeSquareStyles();
   }
   distance:number=9999;
+  @Input() cutOffMechanic:boolean=false;
+  @Input() cutOffNumber:number;
+
 
   constructor(private mapShareService: MapShareService) { }
 
@@ -125,7 +128,12 @@ export class SquareComponent implements OnInit {
 
           //move player for that distance if freeMove is not on:
           if (!this.freeMove){
-              this.selectedPlayer.movePlayer(this.square.currentDistance);
+              if (this.cutOffMechanic){
+                  this.selectedPlayer.movePlayerCutOff(this.square.currentDistance, this.cutOffNumber);
+              }
+              else{
+                  this.selectedPlayer.movePlayer(this.square.currentDistance);
+              }
           }
 
           //remove object from old square

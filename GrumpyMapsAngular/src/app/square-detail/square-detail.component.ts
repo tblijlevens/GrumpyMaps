@@ -29,6 +29,7 @@ export class SquareDetailComponent implements OnInit {
   @Input() set _allCharacters(allCharacters: Player[]) {
       this.allCharacters = allCharacters;
   }
+  @Input() cutOffMechanic:boolean=false;
 
   zoneToEdit:any;
   editPlayerZoneForm = new FormGroup({
