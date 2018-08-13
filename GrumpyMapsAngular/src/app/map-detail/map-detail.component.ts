@@ -511,7 +511,7 @@ export class MapDetailComponent implements OnInit {
     }
     getCutOffRange(){
         var cutOffSquares = new Array();
-        var cutOffRange = this.selectedPlayer.movementAmount/2;
+        var cutOffRange = this.selectedPlayer.movementAmount*this.cutOffNumber;
         if (this.selectedPlayer.movementLeft != this.selectedPlayer.movementAmount && this.selectedPlayer.movementLeft >= cutOffRange){
             var alreadyMoved = this.selectedPlayer.movementAmount - this.selectedPlayer.movementLeft;
             cutOffRange -= alreadyMoved;
@@ -520,7 +520,7 @@ export class MapDetailComponent implements OnInit {
             cutOffRange = 0;
         }
         for (var i = 0 ; i < this.rangeSquares.length ; i++){
-            if (this.rangeSquares[i].currentDistance <= cutOffRange && this.selectedPlayer.movementLeft >= this.selectedPlayer.movementAmount/2){
+            if (this.rangeSquares[i].currentDistance <= cutOffRange && this.selectedPlayer.movementLeft >= this.selectedPlayer.movementAmount*this.cutOffNumber){
                 cutOffSquares.push(this.rangeSquares[i]);
             }
         }
@@ -740,7 +740,7 @@ export class MapDetailComponent implements OnInit {
         if(this.selectedPlayer.isSelected) {
             this.resetAllDistances();
             this.movementMode = true;
-            this.chargeMode = false;            
+            this.chargeMode = false;
             if ((<KeyboardEvent>window.event).ctrlKey || (<KeyboardEvent>window.event).metaKey){
                 this.freeMove=true
             }
