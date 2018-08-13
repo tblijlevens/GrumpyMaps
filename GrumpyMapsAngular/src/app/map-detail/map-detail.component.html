@@ -23,14 +23,14 @@
                 <span class="characterOptionsBox"  *ngIf="selectedPlayer">
                     <span class="lead" style="font-weight:bold;">Character options</span><br />
 
-                    <div class="btn attackCastMove" (click)="attack()">
+                    <div class="btn attackCastMove" (click)="attack()" *ngIf="selectedPlayer.attacksLeft!=0">
                         <mdb-icon class="buttonIcon" icon="crosshairs"></mdb-icon><br />
                         <span class="buttonText">
                             Attack
                         </span>
                     </div>
 
-                    <div class="btn attackCastMove" (click)="cast()">
+                    <div class="btn attackCastMove" (click)="cast()" *ngIf="selectedPlayer.spellsLeft!=0">
                         <mdb-icon class="buttonIcon" icon="magic"></mdb-icon><br />
                         <span class="buttonText">
                             Cast
@@ -52,7 +52,7 @@
                         </span>
                     </div>
 
-                    <div class="btn deleteEdit" (click)="charge()">
+                    <div class="btn deleteEdit" (click)="charge()" *ngIf="selectedPlayer.movementLeft==selectedPlayer.movementAmount">
                         <mdb-icon class="buttonIcon" icon="mixcloud"></mdb-icon><br />
                         <span class="buttonText">
                             Charge
