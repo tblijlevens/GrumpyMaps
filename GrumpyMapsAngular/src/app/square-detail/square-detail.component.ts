@@ -21,7 +21,7 @@ export class SquareDetailComponent implements OnInit {
       this.square = selectedSquares[0];
       this.selectedSquares = selectedSquares;
   }
-  @Output() setPlayerToMoveEvent = new EventEmitter<Player>();
+  @Output() selectPlayerEvent = new EventEmitter<Player>();
 
   @Input() selectedPlayer:Player;
 
@@ -60,6 +60,10 @@ export class SquareDetailComponent implements OnInit {
       this.mapShareService.tileZonesUpdated.subscribe(booleanValue => {
          this.setAllTileZones();
       });
+  }
+
+  clickPlayer(player: Player) {
+      this.selectPlayerEvent.emit(player);
   }
 
   setPlayerZoneSize(player:Player){

@@ -989,9 +989,6 @@ export class MapDetailComponent implements OnInit {
         this.rangeCutOffSquares = new Array();
     }
 
-    public receivePlayerToMove($event){
-        this.selectedPlayer = $event;
-    }
     public playerAdded(player){
         this.allCharacters.push(player);
         this.orderCharacters();
@@ -1002,7 +999,7 @@ export class MapDetailComponent implements OnInit {
         });
     }
     public receiveSelectedPlayer(player){
-        this.selectedPlayer=player;
+        this.clickPlayer(player);        
     }
     public receiveSelectedSquares($event){
         this.selectedSquares = this.removeDuplicates($event);

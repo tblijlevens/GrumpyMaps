@@ -168,7 +168,7 @@
 
 <div id="secondColumn" (click)="hideSettings()">
     <div class="squaredetailcontainer contentBox" id="squareDetails">
-        <app-square-detail [allSquares]=dndMap.squares [squareSize]=squareSize [cutOffMechanic]=cutOffMechanic [_selectedSquares]=selectedSquares [_allCharacters]=allCharacters [selectedPlayer]=selectedPlayer (setPlayerToMoveEvent)="receivePlayerToMove($event)"></app-square-detail>
+        <app-square-detail [allSquares]=dndMap.squares [squareSize]=squareSize [cutOffMechanic]=cutOffMechanic [_selectedSquares]=selectedSquares [_allCharacters]=allCharacters [selectedPlayer]=selectedPlayer (selectPlayerEvent)="receiveSelectedPlayer($event)"></app-square-detail>
     </div>
 
     <div class="mapOptions contentBox">
