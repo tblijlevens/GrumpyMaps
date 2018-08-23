@@ -40,6 +40,7 @@ export class SquareDetailComponent implements OnInit {
   editTileZoneForm = new FormGroup({
       zoneRadius: new FormControl(),
       zoneDuration: new FormControl(),
+      tileZoneColor: new FormControl(),
       zoneLabel: new FormControl()
   });
 
@@ -121,6 +122,7 @@ export class SquareDetailComponent implements OnInit {
 
           var label = square.zones[i].label;
           var radius = square.zones[i].radius;
+          var color = square.zones[i].color;
           var zoneHeightWidth = +(radius / this.squareSize).toFixed(1);
           var zoneHeightWidth = (zoneHeightWidth*squareSize);
           var zoneHeightWidthScale = zoneHeightWidth+"px";
@@ -128,7 +130,8 @@ export class SquareDetailComponent implements OnInit {
               "width":zoneHeightWidthScale,
               "height":zoneHeightWidthScale,
               "top":-(zoneHeightWidth/2)+(squareSize/2),
-              "left":-(zoneHeightWidth/2)+(squareSize/2)
+              "left":-(zoneHeightWidth/2)+(squareSize/2),
+              "borderColor": color
           });
       }
   }
@@ -163,6 +166,7 @@ export class SquareDetailComponent implements OnInit {
       this.zoneToEdit=zone;
       this.editTileZoneForm.get('zoneLabel').setValue(zone.label);
       this.editTileZoneForm.get('zoneRadius').setValue(zone.radius);
+      this.editTileZoneForm.get('tileZoneColor').setValue(zone.color);
       this.editTileZoneForm.get('zoneDuration').setValue(zone.duration);
       this.editPlayerZoneForm.get('zoneLabel').setValue(zone.label);
       this.editPlayerZoneForm.get('zoneRadius').setValue(zone.radius);
@@ -171,6 +175,7 @@ export class SquareDetailComponent implements OnInit {
   editTileZone(){
       this.zoneToEdit.label = this.editTileZoneForm.get('zoneLabel').value;
       this.zoneToEdit.radius = this.editTileZoneForm.get('zoneRadius').value;
+      this.zoneToEdit.color = this.editTileZoneForm.get('tileZoneColor').value;
       this.zoneToEdit.duration = this.editTileZoneForm.get('zoneDuration').value;
       if (this.zoneToEdit.duration == 0){
           this.zoneToEdit.duration = -1;

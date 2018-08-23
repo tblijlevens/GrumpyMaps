@@ -130,16 +130,19 @@
             <div class="modal-body">
                 <form [formGroup]="editTileZoneForm">
                     <div class="form-group" id="objectMap">
-                        <label class="center-block">Zone label:
+                        <label class="center-block">Label:
                             <input class="form-control" formControlName="zoneLabel" type="text" >
                         </label>
                         <br>
-
-                        <label class="center-block">Zone radius in yards (0 = just stasis):
+                        <label class="center-block">Color:
+                            <input formControlName="tileZoneColor" type="color">
+                        </label>
+                        <br>
+                        <label class="center-block">Radius in yards (0 = just stasis):
                             <input class="form-control" formControlName="zoneRadius" type="number" min="0">
                         </label>
                         <br>
-                        <label class="center-block">Zone duration in rounds: (0 = permanent)
+                        <label class="center-block">Duration in rounds: (0 = permanent)
                             <input class="form-control" formControlName="zoneDuration" type="number" min="0">
                         </label>
 

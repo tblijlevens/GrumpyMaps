@@ -123,6 +123,7 @@ export class MapDetailComponent implements OnInit {
     addZoneTileForm = new FormGroup({
         zoneRadius: new FormControl(),
         zoneDuration: new FormControl(),
+        tileZoneColor: new FormControl(),
         zoneLabel: new FormControl()
     });
     radius:number;
@@ -197,6 +198,7 @@ export class MapDetailComponent implements OnInit {
         this.addZonePlayerForm.get('zoneDuration').setValue(1);
         this.addZoneTileForm.get('zoneRadius').setValue(10);
         this.addZoneTileForm.get('zoneDuration').setValue(1);
+        this.addZoneTileForm.get('tileZoneColor').setValue("#ffa100");
 
         this.setRows();
         this.calculateMapFeet();
@@ -935,6 +937,8 @@ export class MapDetailComponent implements OnInit {
         this.addZonePlayerForm.get('zoneDuration').setValue(1);
         this.addZoneTileForm.get('zoneRadius').setValue(10);
         this.addZoneTileForm.get('zoneDuration').setValue(1);
+        this.addZoneTileForm.get('tileZoneColor').setValue("#ffa100");
+
     }
     nextTurn() {
         for (var i = 0 ; i < this.allCharacters.length ; i++){
@@ -951,12 +955,15 @@ export class MapDetailComponent implements OnInit {
         var label = this.addZoneTileForm.get('zoneLabel').value;
         var radius = this.addZoneTileForm.get('zoneRadius').value;
         var duration = this.addZoneTileForm.get('zoneDuration').value;
+        var color = this.addZoneTileForm.get('tileZoneColor').value;
+
         var zoneObject:any ={};
 
         if (duration==0){
             zoneObject ={
                 label:label,
                 radius:radius,
+                color: color,
                 duration:-1
             };
         }
@@ -964,6 +971,7 @@ export class MapDetailComponent implements OnInit {
             zoneObject ={
                 label:label,
                 radius:radius,
+                color: color,
                 duration:duration
             };
         }
@@ -999,7 +1007,7 @@ export class MapDetailComponent implements OnInit {
         });
     }
     public receiveSelectedPlayer(player){
-        this.clickPlayer(player);        
+        this.clickPlayer(player);
     }
     public receiveSelectedSquares($event){
         this.selectedSquares = this.removeDuplicates($event);
