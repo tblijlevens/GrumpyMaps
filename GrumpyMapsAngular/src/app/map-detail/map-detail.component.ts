@@ -1007,7 +1007,9 @@ export class MapDetailComponent implements OnInit {
         });
     }
     public receiveSelectedPlayer(player){
-        this.clickPlayer(player);
+        if (player!=null){
+            this.clickPlayer(player);
+        }
     }
     public receiveSelectedSquares($event){
         this.selectedSquares = this.removeDuplicates($event);
