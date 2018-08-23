@@ -1127,7 +1127,7 @@ export class MapDetailComponent implements OnInit {
 
         var mapSquares = this.dndMap.squares;
         var zones = new Array();
-        // get all the players in the map:
+        // get all the tileZones in the map:
         for (var i = 0 ; i<mapSquares.length ; i++){
             var square = mapSquares[i];
             if (square.zones.length!=0){
@@ -1154,6 +1154,7 @@ export class MapDetailComponent implements OnInit {
             });
         }
     }
+
     private savePlayersOnSquares(){
 
         var mapSquares = this.dndMap.squares;
@@ -1172,19 +1173,58 @@ export class MapDetailComponent implements OnInit {
             }
         }
         if (players.length!=0){
+            this.resultCounter=0;
             // save all players at once:
             this.dndMapService.savePlayers(players).subscribe((playerResult:number[]) => {
                 // give each player its real database id:
                 for (var j = 0 ; j<players.length ; j++){
+                    this.resultCounter++;
                     for (var k = 0 ; k<players.length ; k++){
                         if (players[j].playerSquareId == playerResult[k]["playerSquareId"]){
                             players[j].id = playerResult[k]["id"];
+                            if (this.resultCounter == players.length){ //save zones only when all players have gotten their database Id
+                                this.saveZonesOnPlayers();
+                            }
                         }
                     }
                 }
             });
         }
     }
+
+    private saveZonesOnPlayers(){
+
+        var allCharacters = this.allCharacters;
+        var zones = new Array();
+        // get all the playerZones in the map:
+        for (var i = 0 ; i<allCharacters.length ; i++){
+            var char = allCharacters[i];
+            if (char.zones.length!=0){
+                for (var h = 0 ; h<char.zones.length ; h++){
+                    //give zone the player database Id and database mapId so they can be retrieved on the right player when loading:
+                    char.zones[h].realCharId = char.id;
+                    char.zones[h].mapId = char.mapId;
+                    zones.push(char.zones[h]);
+                    console.log("playericon: " + char.zones[h].playerIcon);
+                }
+            }
+        }
+
+        if (zones.length!=0){
+            // save all zones at once:
+            this.dndMapService.saveCharZones(zones).subscribe((zoneResult:number[]) => {
+                // give each zone its real database id:
+                for (var j = 0 ; j<zones.length ; j++){
+                    for (var k = 0 ; k<zones.length ; k++){
+                        if (zones[j].realCharId == zoneResult[k]["realCharId"]){
+                            zones[j].id = zoneResult[k]["id"];
+                        }
+                    }
+                }
+            });
+        }
+    }
+
 
     loadMap(){
         this.allLoadedMapIds = new Array();

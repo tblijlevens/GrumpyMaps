@@ -28,13 +28,18 @@ export class DnDMapService {
 }
 
   saveTileZones(zones : any[]){
-      console.log("sending zones");
+      console.log("sending tile zones");
       return this.http.post('http://localhost:8080/squareZones', zones);
 }
 
   savePlayers(players : Player[]){
       console.log("sending players");
       return this.http.post('http://localhost:8080/players', players);
+}
+
+saveCharZones(zones : any[]){
+    console.log("sending character zones");
+    return this.http.post('http://localhost:8080/charZones', zones);
 }
 
 

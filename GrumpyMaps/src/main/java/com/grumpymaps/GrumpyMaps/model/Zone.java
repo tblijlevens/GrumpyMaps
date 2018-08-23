@@ -21,6 +21,7 @@ public class Zone implements Serializable{
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private int realSquareId;
+    private int realCharId;
     private int mapId;
 
     private String label;
@@ -73,6 +74,22 @@ public class Zone implements Serializable{
 	*/
 	public void setRealSquareId(int realSquareId) {
 		this.realSquareId = realSquareId;
+	}
+
+	/**
+	* Returns value of realCharId
+	* @return
+	*/
+	public int getRealCharId() {
+		return realCharId;
+	}
+
+	/**
+	* Sets new value of realCharId
+	* @param
+	*/
+	public void setRealCharId(int realCharId) {
+		this.realCharId = realCharId;
 	}
 
 	/**

@@ -68,7 +68,7 @@ public class MapController {
 
 	  @ResponseBody
 	  @RequestMapping(value = "/squareZones", method = RequestMethod.POST)
-	  public  ArrayList<ZoneIds> createZone(@RequestBody ArrayList<Zone> zones) {
+	  public  ArrayList<ZoneIds> createTileZone(@RequestBody ArrayList<Zone> zones) {
 		  ArrayList<ZoneIds> zoneIds = new ArrayList<>();
 		  System.out.println("Saving " + zones.size() + " zones");
 		  for (Zone z : zones){
@@ -97,6 +97,18 @@ public class MapController {
 			 playerIds.add(new PlayerIds(retour.getId(), retour.getPlayerSquareId()));
 		 }
 		return playerIds;
+	  }
+
+	  @ResponseBody
+	  @RequestMapping(value = "/charZones", method = RequestMethod.POST)
+	  public  ArrayList<ZoneIds> createCharZone(@RequestBody ArrayList<Zone> zones) {
+		  ArrayList<ZoneIds> zoneIds = new ArrayList<>();
+		  System.out.println("Saving " + zones.size() + " zones");
+		  for (Zone z : zones){
+			  Zone retour = zoneService.save(z);
+			  zoneIds.add(new ZoneIds(retour.getId(), retour.getRealCharId()));
+		  }
+		  return zoneIds;
 	  }
 
 	  @ResponseBody
