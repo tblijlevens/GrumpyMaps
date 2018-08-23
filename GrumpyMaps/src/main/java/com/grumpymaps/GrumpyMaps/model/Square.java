@@ -34,7 +34,8 @@ public class Square implements Serializable{
 
     @Transient
     private ArrayList<Player> players;
-    private ArrayList<Zone> zones;
+    @Transient
+    private ArrayList<TileZone> zones;
     private int numberofPlayers;
 
 

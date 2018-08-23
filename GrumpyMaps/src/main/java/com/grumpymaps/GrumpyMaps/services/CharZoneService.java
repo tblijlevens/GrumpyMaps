@@ -4,12 +4,12 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 import java.util.List;
 
-import com.grumpymaps.GrumpyMaps.model.Zone;
+import com.grumpymaps.GrumpyMaps.model.CharZone;
 
 
 @Repository
-public interface ZoneService extends CrudRepository<Zone, Long>{
+public interface CharZoneService extends CrudRepository<CharZone, Long>{
 
-    public List<Zone> findByMapId(Integer mapId);
+    public List<CharZone> findByMapId(Integer mapId);
 
 }

@@ -1,5 +1,8 @@
 package com.grumpymaps.GrumpyMaps.model;
 
+import java.util.ArrayList;
+import javax.persistence.Transient;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -36,7 +39,8 @@ public class Player implements Physical{
     private Integer realSquareId;
     private String squareMapCoordinate;
     private int mapId;
-
+    @Transient
+    private ArrayList<CharZone> zones;
 
 	/**
 	* Returns value of id

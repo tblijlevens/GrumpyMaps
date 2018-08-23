@@ -17,12 +17,14 @@ import com.grumpymaps.GrumpyMaps.model.DndMap;
 import com.grumpymaps.GrumpyMaps.model.Square;
 import com.grumpymaps.GrumpyMaps.model.SquareIds;
 import com.grumpymaps.GrumpyMaps.model.ZoneIds;
-import com.grumpymaps.GrumpyMaps.model.Zone;
+import com.grumpymaps.GrumpyMaps.model.TileZone;
+import com.grumpymaps.GrumpyMaps.model.CharZone;
 import com.grumpymaps.GrumpyMaps.model.PlayerIds;
 import com.grumpymaps.GrumpyMaps.model.Player;
 import com.grumpymaps.GrumpyMaps.services.MapService;
 import com.grumpymaps.GrumpyMaps.services.SquareService;
-import com.grumpymaps.GrumpyMaps.services.ZoneService;
+import com.grumpymaps.GrumpyMaps.services.TileZoneService;
+import com.grumpymaps.GrumpyMaps.services.CharZoneService;
 import com.grumpymaps.GrumpyMaps.services.PlayerService;
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -35,7 +37,9 @@ public class MapController {
 	@Autowired
 	private SquareService squareService;
 	@Autowired
-	private ZoneService zoneService;
+	private TileZoneService tilezoneService;
+	@Autowired
+	private CharZoneService charzoneService;
 	@Autowired
 	private PlayerService playerService;
 
@@ -68,11 +72,11 @@ public class MapController {
 
 	  @ResponseBody
 	  @RequestMapping(value = "/squareZones", method = RequestMethod.POST)
-	  public  ArrayList<ZoneIds> createTileZone(@RequestBody ArrayList<Zone> zones) {
+	  public  ArrayList<ZoneIds> createTileZone(@RequestBody ArrayList<TileZone> zones) {
 		  ArrayList<ZoneIds> zoneIds = new ArrayList<>();
 		  System.out.println("Saving " + zones.size() + " zones");
-		  for (Zone z : zones){
-			  Zone retour = zoneService.save(z);
+		  for (TileZone z : zones){
+			  TileZone retour = tilezoneService.save(z);
 			  zoneIds.add(new ZoneIds(retour.getId(), retour.getRealSquareId()));
 		  }
 		 return zoneIds;
@@ -101,11 +105,11 @@ public class MapController {
 
 	  @ResponseBody
 	  @RequestMapping(value = "/charZones", method = RequestMethod.POST)
-	  public  ArrayList<ZoneIds> createCharZone(@RequestBody ArrayList<Zone> zones) {
+	  public  ArrayList<ZoneIds> createCharZone(@RequestBody ArrayList<CharZone> zones) {
 		  ArrayList<ZoneIds> zoneIds = new ArrayList<>();
 		  System.out.println("Saving " + zones.size() + " zones");
-		  for (Zone z : zones){
-			  Zone retour = zoneService.save(z);
+		  for (CharZone z : zones){
+			  CharZone retour = charzoneService.save(z);
 			  zoneIds.add(new ZoneIds(retour.getId(), retour.getRealCharId()));
 		  }
 		  return zoneIds;
@@ -128,9 +132,9 @@ public class MapController {
 
 	  @ResponseBody
 	  @RequestMapping(value = "/squareZones/{mapId}", method = RequestMethod.GET)
-	  public List<Zone> findMapZones(@PathVariable("mapId") Integer mapId) {
-		  List<Zone> mapZones = (List<Zone>)zoneService.findByMapId(mapId);
-		  System.out.println("Loading " + mapZones.size() + " zones for map " + mapId);
+	  public List<TileZone> findMapZones(@PathVariable("mapId") Integer mapId) {
+		  List<TileZone> mapZones = (List<TileZone>)tilezoneService.findByMapId(mapId);
+		  System.out.println("Loading " + mapZones.size() + " tile zones for map " + mapId);
 	    return mapZones;
 	  }
 
@@ -140,6 +144,14 @@ public class MapController {
 		  List<Player> mapPlayers = (List<Player>)playerService.findByMapId(mapId);
 		  System.out.println("Loading " + mapPlayers.size() + " characters for map " + mapId);
 	    return mapPlayers;
+	  }
+
+	  @ResponseBody
+	  @RequestMapping(value = "/charZones/{mapId}", method = RequestMethod.GET)
+	  public List<CharZone> findCharZones(@PathVariable("mapId") Integer mapId) {
+		  List<CharZone> charZones = (List<CharZone>)charzoneService.findByMapId(mapId);
+		  System.out.println("Loading " + charZones.size() + " character zones for map " + mapId);
+		  return charZones;
 	  }
 
 	  @ResponseBody

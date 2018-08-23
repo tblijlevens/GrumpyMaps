@@ -1334,6 +1334,7 @@ export class MapDetailComponent implements OnInit {
                 for (var j = 0 ; j < allSquares.length ; j++){
                     if (newZone.realSquareId == allSquares[j].id){
                         allSquares[j].zones.push(newZone);
+                        this.mapShareService.setTileZones();
                     }
                 }
             }
@@ -1380,7 +1381,35 @@ export class MapDetailComponent implements OnInit {
             this.rangeSquares = new Array();
             this.rangeCutOffSquares = new Array();
             this.orderCharacters();
+            this.getCharZones();
 
+
+        });
+    }
+
+
+    getCharZones(){
+        this.dndMapService.getAllCharZones(this.selectedLoadMap).subscribe(allZones => {
+            // create a zone for each retreived zone
+            for (var i = 0 ; i < allZones.length ; i++){
+                var newZone = {
+                    id: allZones[i]["id"],
+                    realCharId: allZones[i]["realCharId"],
+                    mapId: allZones[i]["mapId"],
+                    label:allZones[i]["label"],
+                    radius:allZones[i]["radius"],
+                    duration:allZones[i]["duration"]
+                };
+
+                // get the right player, put the zone in that player's zones-list
+                var allCharacters = this.allCharacters;
+                for (var j = 0 ; j < allCharacters.length ; j++){
+                    if (newZone.realCharId == allCharacters[j].id){
+                        allCharacters[j].zones.push(newZone);
+                        this.mapShareService.setPlayerZones();
+                    }
+                }
+            }
         });
     }
 
