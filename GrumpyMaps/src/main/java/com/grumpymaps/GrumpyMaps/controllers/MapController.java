@@ -54,6 +54,9 @@ public class MapController {
 	  @RequestMapping(value = "/dndmap", method = RequestMethod.POST)
 	  public  Long  createMap(@RequestBody DndMap dndMap) {
 		System.out.println("Saving map " + dndMap.getId());
+
+		charzoneService.deleteByMapId(dndMap.getId());
+		
 	    return mapService.save(dndMap).getId();
 	  }
 
