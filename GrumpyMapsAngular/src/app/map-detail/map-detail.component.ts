@@ -1211,6 +1211,7 @@ export class MapDetailComponent implements OnInit {
                 theSquare.mapCoordinate= mapSquares[i]["mapCoordinate"];
                 theSquare.numberofPlayers= mapSquares[i]["numberofPlayers"];
                 theSquare.obstructed= mapSquares[i]["obstructed"];
+                theSquare.hidden= mapSquares[i]["hidden"];
 
                 allMapSquares.push(theSquare);
             }

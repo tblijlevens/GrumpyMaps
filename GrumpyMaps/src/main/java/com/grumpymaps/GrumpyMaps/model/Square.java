@@ -27,6 +27,8 @@ public class Square implements Serializable{
     private boolean obstructed;
     private int mapHeightWidth;
     private boolean inRange;
+    private boolean hidden;
+
 
     private Integer mapId;
 
@@ -161,6 +163,22 @@ public class Square implements Serializable{
 	*/
 	public void setInRange(boolean inRange) {
 		this.inRange = inRange;
+	}
+    
+	/**
+	* Returns value of hidden
+	* @return
+	*/
+	public boolean isHidden() {
+		return hidden;
+	}
+
+	/**
+	* Sets new value of hidden
+	* @param
+	*/
+	public void setHidden(boolean hidden) {
+		this.hidden = hidden;
 	}
 
 	/**
