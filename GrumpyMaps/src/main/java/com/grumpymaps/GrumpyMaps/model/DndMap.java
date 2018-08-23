@@ -22,6 +22,9 @@ public class DndMap {
     private String name;
     private int heightWidth;
     private int numberOfSquares;
+    private boolean cutOffMechanic;
+    private double cutOffNumber;
+
 
     @Transient
     private ArrayList<Square> squares;
@@ -89,6 +92,36 @@ public class DndMap {
 	*/
 	public void setNumberOfSquares(int numberOfSquares) {
 		this.numberOfSquares = numberOfSquares;
+	}
+	/**
+	* Returns value of cutOffMechanic
+	* @return
+	*/
+	public boolean getCutOffMechanic() {
+		return cutOffMechanic;
+	}
+
+	/**
+	* Sets new value of cutOffMechanic
+	* @param
+	*/
+	public void setCutOffMechanic(boolean cutOffMechanic) {
+		this.cutOffMechanic = cutOffMechanic;
+	}
+	/**
+	* Returns value of cutOffNumber
+	* @return
+	*/
+	public double getCutOffNumber() {
+		return cutOffNumber;
+	}
+
+	/**
+	* Sets new value of cutOffNumber
+	* @param
+	*/
+	public void setCutOffNumber(double cutOffNumber) {
+		this.cutOffNumber = cutOffNumber;
 	}
 
 	/**

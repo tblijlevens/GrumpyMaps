@@ -173,8 +173,6 @@ export class MapDetailComponent implements OnInit {
     fileValue;
     playerIdCreator: number = 1;
     playerIdGenerator:number=0;
-    cutOffMechanic:boolean=false;
-    cutOffNumber:number;
 
     constructor(private dndMapService: DnDMapService, private mapShareService: MapShareService, private fb: FormBuilder) {
         this.createImageForm();
@@ -317,8 +315,8 @@ export class MapDetailComponent implements OnInit {
     }
 
     setCutOffRange(){
-        this.cutOffMechanic = this.mapForm.get('moveCutCheck').value;
-        this.cutOffNumber = +this.mapForm.get('moveCutRange').value/100;
+        this.dndMap.cutOffMechanic = this.mapForm.get('moveCutCheck').value;
+        this.dndMap.cutOffNumber = +this.mapForm.get('moveCutRange').value/100;
     }
 
     public setMultiSelect(){
@@ -443,7 +441,7 @@ export class MapDetailComponent implements OnInit {
         }
         else{
             this.rangeSquares = this.getMoveRange(player, this.dndMap.squares);
-            if (this.cutOffMechanic){
+            if (this.dndMap.cutOffMechanic){
                 this.rangeCutOffSquares = this.getCutOffRange();
             }
         }
@@ -513,7 +511,7 @@ export class MapDetailComponent implements OnInit {
     }
     getCutOffRange(){
         var cutOffSquares = new Array();
-        var cutOffRange = this.selectedPlayer.movementAmount*this.cutOffNumber;
+        var cutOffRange = this.selectedPlayer.movementAmount*this.dndMap.cutOffNumber;
         if (this.selectedPlayer.movementLeft != this.selectedPlayer.movementAmount && this.selectedPlayer.movementLeft >= cutOffRange){
             var alreadyMoved = this.selectedPlayer.movementAmount - this.selectedPlayer.movementLeft;
             cutOffRange -= alreadyMoved;
@@ -522,7 +520,7 @@ export class MapDetailComponent implements OnInit {
             cutOffRange = 0;
         }
         for (var i = 0 ; i < this.rangeSquares.length ; i++){
-            if (this.rangeSquares[i].currentDistance <= cutOffRange && this.selectedPlayer.movementLeft >= this.selectedPlayer.movementAmount*this.cutOffNumber){
+            if (this.rangeSquares[i].currentDistance <= cutOffRange && this.selectedPlayer.movementLeft >= this.selectedPlayer.movementAmount*this.dndMap.cutOffNumber){
                 cutOffSquares.push(this.rangeSquares[i]);
             }
         }
@@ -705,8 +703,8 @@ export class MapDetailComponent implements OnInit {
     attack() {
         if(this.selectedPlayer.isSelected ) {
             if(this.selectedPlayer.attacksLeft!=0){
-                if (this.cutOffMechanic){
-                    this.selectedPlayer.attackCutOff(this.cutOffNumber);
+                if (this.dndMap.cutOffMechanic){
+                    this.selectedPlayer.attackCutOff(this.dndMap.cutOffNumber);
                 }
                 else{
                     this.selectedPlayer.attack()
@@ -724,8 +722,8 @@ export class MapDetailComponent implements OnInit {
     cast() {
         if(this.selectedPlayer.isSelected) {
             if(this.selectedPlayer.spellsLeft!=0){
-                if (this.cutOffMechanic){
-                    this.selectedPlayer.castCutOff(this.cutOffNumber);
+                if (this.dndMap.cutOffMechanic){
+                    this.selectedPlayer.castCutOff(this.dndMap.cutOffNumber);
                 }
                 else{
                     this.selectedPlayer.cast()
@@ -1176,10 +1174,16 @@ export class MapDetailComponent implements OnInit {
                 this.heightWidth = this.allLoadedMapsResult[i]["heightWidth"];
                 var image = this.allLoadedMapsResult[i]["imageUrl"];
                 var name = this.allLoadedMapsResult[i]["name"];
+                var cutOffMechanic = this.allLoadedMapsResult[i]["cutOffMechanic"];
+                var cutOffNumber = this.allLoadedMapsResult[i]["cutOffNumber"];
 
                 this.dndMap = new DnDMap(this.selectedLoadMap,this.heightWidth, 5);
                 this.dndMap.name = name;
+                this.dndMap.cutOffMechanic = cutOffMechanic
+                this.dndMap.cutOffNumber = cutOffNumber
                 this.mapForm.get('heightwidth').setValue(this.heightWidth);
+                this.mapForm.get('moveCutCheck').setValue(cutOffMechanic);
+                this.mapForm.get('moveCutRange').setValue(cutOffNumber*100);
                 this.mapForm.get('yards').setValue(5);
                 this.mapForm.get('imageUrl').setValue(image);
                 this.uploadImage();
