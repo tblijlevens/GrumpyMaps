@@ -1136,7 +1136,6 @@ export class MapDetailComponent implements OnInit {
                     square.zones[h].realSquareId = square.id;
                     square.zones[h].mapId = square.mapId;
                     zones.push(square.zones[h]);
-                    console.log("saving zone: " + square.zones[h].label);
                 }
             }
         }
@@ -1146,7 +1145,7 @@ export class MapDetailComponent implements OnInit {
                 // give each zone its real database id:
                 for (var j = 0 ; j<zones.length ; j++){
                     for (var k = 0 ; k<zones.length ; k++){
-                        if (zones[j].realSquareId == zoneResult[k]["realSquareId"]){
+                        if (zones[j].realSquareId == zoneResult[k]["realSquareCharId"]){
                             zones[j].id = zoneResult[k]["id"];
                         }
                     }
@@ -1205,7 +1204,6 @@ export class MapDetailComponent implements OnInit {
                     char.zones[h].realCharId = char.id;
                     char.zones[h].mapId = char.mapId;
                     zones.push(char.zones[h]);
-                    console.log("playericon: " + char.zones[h].playerIcon);
                 }
             }
         }
@@ -1216,7 +1214,7 @@ export class MapDetailComponent implements OnInit {
                 // give each zone its real database id:
                 for (var j = 0 ; j<zones.length ; j++){
                     for (var k = 0 ; k<zones.length ; k++){
-                        if (zones[j].realCharId == zoneResult[k]["realCharId"]){
+                        if (zones[j].realCharId == zoneResult[k]["realSquareCharId"]){
                             zones[j].id = zoneResult[k]["id"];
                         }
                     }

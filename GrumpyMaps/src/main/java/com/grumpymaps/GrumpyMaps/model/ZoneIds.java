@@ -3,16 +3,16 @@ package com.grumpymaps.GrumpyMaps.model;
 public class ZoneIds {
 
     private long id;
-    private int zoneSquareId;
+    private int realSquareCharId;
 
 
 	/**
 	* Default SquareId constructor
 	*/
-	public ZoneIds(long id, int zoneSquareId) {
+	public ZoneIds(long id, int realSquareCharId) {
 		super();
 		this.id = id;
-		this.zoneSquareId = zoneSquareId;
+		this.realSquareCharId = realSquareCharId;
 	}
 
 
@@ -33,18 +33,18 @@ public class ZoneIds {
 	}
 
 	/**
-	* Returns value of zoneSquareId
+	* Returns value of realSquareCharId
 	* @return
 	*/
-	public int getZoneSquareId() {
-		return zoneSquareId;
+	public int getrealSquareCharId() {
+		return realSquareCharId;
 	}
 
 	/**
-	* Sets new value of zoneSquareId
+	* Sets new value of realSquareCharId
 	* @param
 	*/
-	public void setZoneSquareId(int zoneSquareId) {
-		this.zoneSquareId = zoneSquareId;
+	public void setrealSquareCharId(int realSquareCharId) {
+		this.realSquareCharId = realSquareCharId;
 	}
 }
