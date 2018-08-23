@@ -27,7 +27,7 @@ export class DnDMapService {
       return this.http.post('http://localhost:8080/squares', squares);
 }
 
-  saveZones(zones : any[]){
+  saveTileZones(zones : any[]){
       console.log("sending zones");
       return this.http.post('http://localhost:8080/squareZones', zones);
 }
@@ -47,6 +47,11 @@ findAllMaps(): Observable<DnDMap[]>  {
 getMapSquares(mapId:number): Observable<Square[]>  {
     console.log("getting all squares from map " + mapId);
     return <Observable<Square[]>>this.http.get('http://localhost:8080/square/'+mapId);
+}
+
+getAllSquareZones(mapId:number): Observable<any[]>  {
+    console.log("getting all zones from map " + mapId);
+    return <Observable<any[]>>this.http.get('http://localhost:8080/squareZones/'+mapId);
 }
 
 getAllPlayers(mapId:number): Observable<Player[]>  {

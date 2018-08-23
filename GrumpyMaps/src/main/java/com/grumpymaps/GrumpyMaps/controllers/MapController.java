@@ -115,6 +115,14 @@ public class MapController {
 	  }
 
 	  @ResponseBody
+	  @RequestMapping(value = "/squareZones/{mapId}", method = RequestMethod.GET)
+	  public List<Zone> findMapZones(@PathVariable("mapId") Integer mapId) {
+		  List<Zone> mapZones = (List<Zone>)zoneService.findByMapId(mapId);
+		  System.out.println("Loading " + mapZones.size() + " zones for map " + mapId);
+	    return mapZones;
+	  }
+
+	  @ResponseBody
 	  @RequestMapping(value = "/players/{mapId}", method = RequestMethod.GET)
 	  public List<Player> findMapPlayers(@PathVariable("mapId") Integer mapId) {
 		  List<Player> mapPlayers = (List<Player>)playerService.findByMapId(mapId);

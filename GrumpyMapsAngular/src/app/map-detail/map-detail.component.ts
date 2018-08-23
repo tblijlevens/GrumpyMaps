@@ -1142,7 +1142,7 @@ export class MapDetailComponent implements OnInit {
         }
         if (zones.length!=0){
             // save all zones at once:
-            this.dndMapService.saveZones(zones).subscribe((zoneResult:number[]) => {
+            this.dndMapService.saveTileZones(zones).subscribe((zoneResult:number[]) => {
                 // give each zone its real database id:
                 for (var j = 0 ; j<zones.length ; j++){
                     for (var k = 0 ; k<zones.length ; k++){
@@ -1261,6 +1261,7 @@ export class MapDetailComponent implements OnInit {
             this.setSquareSize();
             this.setRows();
 
+            this.getTileZones();
             this.getPlayers();
 
             /*for (var i = 0 ; i < this.dndMap.squares.length ; i++){
@@ -1271,6 +1272,31 @@ export class MapDetailComponent implements OnInit {
                 }
             }*/
             this.showMessage("Loading... Succes!", "black", 1000);
+        });
+    }
+
+    getTileZones(){
+        this.dndMapService.getAllSquareZones(this.selectedLoadMap).subscribe(allZones => {
+            // create a zone for each retreived zone
+            for (var i = 0 ; i < allZones.length ; i++){
+                var newZone = {
+                    id: allZones[i]["id"],
+                    realSquareId: allZones[i]["realSquareId"],
+                    mapId: allZones[i]["mapId"],
+                    label:allZones[i]["label"],
+                    color:allZones[i]["color"],
+                    radius:allZones[i]["radius"],
+                    duration:allZones[i]["duration"]
+                };
+
+                // get the right square, put the zone in that square's zones-list
+                var allSquares = this.dndMap.squares;
+                for (var j = 0 ; j < allSquares.length ; j++){
+                    if (newZone.realSquareId == allSquares[j].id){
+                        allSquares[j].zones.push(newZone);
+                    }
+                }
+            }
         });
     }
 

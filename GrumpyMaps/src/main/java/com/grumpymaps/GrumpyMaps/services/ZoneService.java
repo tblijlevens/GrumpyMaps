@@ -10,5 +10,6 @@ import com.grumpymaps.GrumpyMaps.model.Zone;
 @Repository
 public interface ZoneService extends CrudRepository<Zone, Long>{
 
+    public List<Zone> findByMapId(Integer mapId);
 
 }

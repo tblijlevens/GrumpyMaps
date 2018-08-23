@@ -16,7 +16,7 @@ export class SquareDetailComponent implements OnInit {
   square: Square;
   @Input() allSquares:Square[] = new Array();
   @Input() squareSize:number;
-  private selectedSquares:Square[];
+  private selectedSquares:Square[] = new Array();
   @Input() set _selectedSquares(selectedSquares: Square[]) {
       this.square = selectedSquares[0];
       this.selectedSquares = selectedSquares;
