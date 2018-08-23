@@ -16,10 +16,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import com.grumpymaps.GrumpyMaps.model.DndMap;
 import com.grumpymaps.GrumpyMaps.model.Square;
 import com.grumpymaps.GrumpyMaps.model.SquareIds;
+import com.grumpymaps.GrumpyMaps.model.ZoneIds;
+import com.grumpymaps.GrumpyMaps.model.Zone;
 import com.grumpymaps.GrumpyMaps.model.PlayerIds;
 import com.grumpymaps.GrumpyMaps.model.Player;
 import com.grumpymaps.GrumpyMaps.services.MapService;
 import com.grumpymaps.GrumpyMaps.services.SquareService;
+import com.grumpymaps.GrumpyMaps.services.ZoneService;
 import com.grumpymaps.GrumpyMaps.services.PlayerService;
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -31,6 +34,8 @@ public class MapController {
 	private MapService mapService;
 	@Autowired
 	private SquareService squareService;
+	@Autowired
+	private ZoneService zoneService;
 	@Autowired
 	private PlayerService playerService;
 
@@ -59,6 +64,18 @@ public class MapController {
 			  squareIds.add(new SquareIds(retour.getId(), retour.getMapSquareId()));
 		  }
 	     return squareIds;
+	  }
+
+	  @ResponseBody
+	  @RequestMapping(value = "/squareZones", method = RequestMethod.POST)
+	  public  ArrayList<ZoneIds> createZone(@RequestBody ArrayList<Zone> zones) {
+		  ArrayList<ZoneIds> zoneIds = new ArrayList<>();
+		  System.out.println("Saving " + zones.size() + " zones");
+		  for (Zone z : zones){
+			  Zone retour = zoneService.save(z);
+			  zoneIds.add(new ZoneIds(retour.getId(), retour.getRealSquareId()));
+		  }
+		 return zoneIds;
 	  }
 
 	  @ResponseBody

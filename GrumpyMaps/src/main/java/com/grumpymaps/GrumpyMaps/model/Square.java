@@ -34,6 +34,7 @@ public class Square implements Serializable{
 
     @Transient
     private ArrayList<Player> players;
+    private ArrayList<Zone> zones;
     private int numberofPlayers;
 
 
@@ -164,7 +165,7 @@ public class Square implements Serializable{
 	public void setInRange(boolean inRange) {
 		this.inRange = inRange;
 	}
-    
+
 	/**
 	* Returns value of hidden
 	* @return

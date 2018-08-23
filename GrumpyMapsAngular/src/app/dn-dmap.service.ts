@@ -27,6 +27,11 @@ export class DnDMapService {
       return this.http.post('http://localhost:8080/squares', squares);
 }
 
+  saveZones(zones : any[]){
+      console.log("sending zones");
+      return this.http.post('http://localhost:8080/squareZones', zones);
+}
+
   savePlayers(players : Player[]){
       console.log("sending players");
       return this.http.post('http://localhost:8080/players', players);

@@ -173,6 +173,8 @@ export class MapDetailComponent implements OnInit {
     fileValue;
     playerIdCreator: number = 1;
     playerIdGenerator:number=0;
+    zoneIdCreator: number = 1;
+    zoneIdGenerator:number=0;
 
     constructor(private dndMapService: DnDMapService, private mapShareService: MapShareService, private fb: FormBuilder) {
         this.createImageForm();
@@ -775,6 +777,7 @@ export class MapDetailComponent implements OnInit {
 
             if (duration==0){
                 zoneObject ={
+                    id: this.zoneIdGenerator--,
                     label:label,
                     radius:radius,
                     duration:-1
@@ -782,6 +785,7 @@ export class MapDetailComponent implements OnInit {
             }
             else {
                 zoneObject ={
+                    id: this.zoneIdGenerator--,
                     label:label,
                     radius:radius,
                     duration:duration
@@ -959,6 +963,7 @@ export class MapDetailComponent implements OnInit {
 
         if (duration==0){
             zoneObject ={
+                id: this.zoneIdGenerator--,
                 label:label,
                 radius:radius,
                 color: color,
@@ -967,6 +972,7 @@ export class MapDetailComponent implements OnInit {
         }
         else {
             zoneObject ={
+                id: this.zoneIdGenerator--,
                 label:label,
                 radius:radius,
                 color: color,
@@ -1105,6 +1111,7 @@ export class MapDetailComponent implements OnInit {
                         if (mapSquares[j].mapSquareId == result[i]["mapSquareId"]){
                             mapSquares[j].id = result[i]["id"];
                             if (this.resultCounter == this.dndMap.squares.length){ //save players only when all squares have gotten their database Id
+                                this.saveZonesOnSquares();
                                 this.savePlayersOnSquares();
                                 console.log("done saving everything");
                                 this.showMessage("Saving... Succes!", "black", 1000);
@@ -1116,6 +1123,37 @@ export class MapDetailComponent implements OnInit {
         }); //saveMap end
     }
 
+    private saveZonesOnSquares(){
+
+        var mapSquares = this.dndMap.squares;
+        var zones = new Array();
+        // get all the players in the map:
+        for (var i = 0 ; i<mapSquares.length ; i++){
+            var square = mapSquares[i];
+            if (square.zones.length!=0){
+                for (var h = 0 ; h<square.zones.length ; h++){
+                    //give zone the square database Id and database mapId so they can be retrieved on the right square when loading:
+                    square.zones[h].realSquareId = square.id;
+                    square.zones[h].mapId = square.mapId;
+                    zones.push(square.zones[h]);
+                    console.log("saving zone: " + square.zones[h].label);
+                }
+            }
+        }
+        if (zones.length!=0){
+            // save all zones at once:
+            this.dndMapService.saveZones(zones).subscribe((zoneResult:number[]) => {
+                // give each zone its real database id:
+                for (var j = 0 ; j<zones.length ; j++){
+                    for (var k = 0 ; k<zones.length ; k++){
+                        if (zones[j].realSquareId == zoneResult[k]["realSquareId"]){
+                            zones[j].id = zoneResult[k]["id"];
+                        }
+                    }
+                }
+            });
+        }
+    }
     private savePlayersOnSquares(){
 
         var mapSquares = this.dndMap.squares;
