@@ -392,13 +392,16 @@ export class MapDetailComponent implements OnInit {
 
     clickPlayer(player: Player) {
         this.deselectAll();
-
-        player.isSelected = true;
-        player.setActiveColor();
+        if (player!=null){
+            player.isSelected = true;
+            player.setActiveColor();
+        }
         this.selectedPlayer = player;
-        var playerSquare = this.getPlayerSquare(this.selectedPlayer);
-        this.mapShareService.setSquare(playerSquare); //update active square in squareDetail via mapShareService
-        this.showPlayerDot();
+        if (player!=null){
+            var playerSquare = this.getPlayerSquare(this.selectedPlayer);
+            this.mapShareService.setSquare(playerSquare); //update active square in squareDetail via mapShareService
+            this.showPlayerDot();
+        }
     }
 
     deselectAll(){
@@ -1011,9 +1014,7 @@ export class MapDetailComponent implements OnInit {
         });
     }
     public receiveSelectedPlayer(player){
-        if (player!=null){
             this.clickPlayer(player);
-        }
     }
     public receiveSelectedSquares($event){
         this.selectedSquares = this.removeDuplicates($event);
