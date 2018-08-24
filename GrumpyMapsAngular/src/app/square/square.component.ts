@@ -49,7 +49,7 @@ export class SquareComponent implements OnInit {
   @Input() set _squareBorderStyles(squareBorderStyle: string) {
       this.squareStyles['border'] = squareBorderStyle;
   }
-  @Input() selectedPlayer: Player;
+  @Input() selectedPlayer: Player = null;
   @Output() setSelectedPlayerEvent = new EventEmitter<Player>();
 
   originalSquareColor:string = 'rgba(8, 161, 0, 0)';

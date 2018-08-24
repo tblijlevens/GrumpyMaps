@@ -23,7 +23,7 @@ export class SquareDetailComponent implements OnInit {
   }
   @Output() selectPlayerEvent = new EventEmitter<Player>();
 
-  @Input() selectedPlayer:Player;
+  @Input() selectedPlayer:Player = null;
 
   allCharacters: Player[] = new Array();
   @Input() set _allCharacters(allCharacters: Player[]) {
