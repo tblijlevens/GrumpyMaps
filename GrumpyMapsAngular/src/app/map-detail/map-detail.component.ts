@@ -819,6 +819,7 @@ export class MapDetailComponent implements OnInit {
         this.selectedPlayer.spellsPerRound = this.createPlayerForm.get('playerSpells').value;
         this.selectedPlayer.spellsLeft = this.createPlayerForm.get('playerSpells').value;
         this.selectedPlayer.setActionPointCosts();
+        this.orderCharacters();
 
     }
     deleteObject() {
@@ -1010,7 +1011,7 @@ export class MapDetailComponent implements OnInit {
     }
     orderCharacters(){
         this.allCharacters.sort(function(a, b) {
-            return b.initiative - a.initiative;
+            return b.initiative - a.initiative || b.movementAmount - a.movementAmount;
         });
     }
     public receiveSelectedPlayer(player){
