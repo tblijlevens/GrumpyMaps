@@ -504,7 +504,7 @@
                 </form>
                 <div *ngIf="mapsLoaded==true">
                     <label class="center-block"><b>Your maps:</b></label><br>
-                    <span *ngFor="let name of allLoadedMapNames" [style.color]="" (click)="selectSaveMapClick(name)">
+                    <span *ngFor="let name of allLoadedMapNames" style="cursor:pointer;" (click)="selectSaveMapClick(name)">
                         {{name.split(": ")[1]}}<br />
                     </span>
                 </div>
@@ -537,7 +537,7 @@
             <div class="modal-body">
                 <div *ngIf="mapsLoaded==true">
                     <label class="center-block"><b>Your maps:</b></label><br>
-                    <span *ngFor="let name of allLoadedMapNames" [style.color]="" (click)="selectLoadMap(name)">
+                    <span *ngFor="let name of allLoadedMapNames" style="cursor:pointer;" (click)="selectLoadMap(name)">
                         {{name.split(": ")[1]}}<br />
                     </span>
                     <br />
