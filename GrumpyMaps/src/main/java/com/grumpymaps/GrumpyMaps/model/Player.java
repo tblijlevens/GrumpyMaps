@@ -28,9 +28,9 @@ public class Player implements Physical{
     //private String playerIconUrl;
 
     private int initiative;
-    private double actionPoints;
-    private double movementAmount;
-    private double movementLeft;
+    private int actionPoints;
+    private int movementAmount;
+    private int movementLeft;
     private int attacksPerRound;
     private int attacksLeft;
     private int spellsPerRound;
@@ -148,7 +148,7 @@ public class Player implements Physical{
 	* Returns value of actionPoints
 	* @return
 	*/
-	public double getActionPoints() {
+	public int getActionPoints() {
 		return actionPoints;
 	}
 
@@ -156,7 +156,7 @@ public class Player implements Physical{
 	* Sets new value of actionPoints
 	* @param
 	*/
-	public void setActionPoints(double actionPoints) {
+	public void setActionPoints(int actionPoints) {
 		this.actionPoints = actionPoints;
 	}
 
@@ -164,7 +164,7 @@ public class Player implements Physical{
 	* Returns value of movementAmount
 	* @return
 	*/
-	public double getMovementAmount() {
+	public int getMovementAmount() {
 		return movementAmount;
 	}
 
@@ -172,7 +172,7 @@ public class Player implements Physical{
 	* Sets new value of movementAmount
 	* @param
 	*/
-	public void setMovementAmount(double movementAmount) {
+	public void setMovementAmount(int movementAmount) {
 		this.movementAmount = movementAmount;
 	}
 
@@ -180,7 +180,7 @@ public class Player implements Physical{
 	* Returns value of movementLeft
 	* @return
 	*/
-	public double getMovementLeft() {
+	public int getMovementLeft() {
 		return movementLeft;
 	}
 
@@ -188,7 +188,7 @@ public class Player implements Physical{
 	* Sets new value of movementLeft
 	* @param
 	*/
-	public void setMovementLeft(double movementLeft) {
+	public void setMovementLeft(int movementLeft) {
 		this.movementLeft = movementLeft;
 	}
 

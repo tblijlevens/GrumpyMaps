@@ -1166,8 +1166,12 @@ export class MapDetailComponent implements OnInit {
                     //give player the square database Id and database mapId so they can be retrieved on the right square when loading:
                     square.players[h].realSquareId = square.id;
                     square.players[h].mapId = square.mapId;
+
+                    // decimls times 100, because they get saved in database as integers
+                    square.players[h].movementAmount = square.players[h].movementAmount*100;
+                    square.players[h].movementLeft = square.players[h].movementLeft*100;
+                    square.players[h].actionPoints = square.players[h].actionPoints*100;
                     players.push(square.players[h]);
-                    console.log("playericon: " + square.players[h].playerIcon);
                 }
             }
         }
@@ -1183,6 +1187,13 @@ export class MapDetailComponent implements OnInit {
                             players[j].id = playerResult[k]["id"];
                             if (this.resultCounter == players.length){ //save zones only when all players have gotten their database Id
                                 this.saveZonesOnPlayers();
+
+                                for (var h = 0 ; h<players.length ; h++){
+                                    // set back decimals that were multiplied by 100 to store in db.:
+                                    players[h].movementAmount = players[h].movementAmount/100;
+                                    players[h].movementLeft = players[h].movementLeft/100;
+                                    players[h].actionPoints = players[h].actionPoints/100;
+                                }                                
                             }
                         }
                     }
@@ -1366,7 +1377,13 @@ export class MapDetailComponent implements OnInit {
                 newPlayer.movementLeft = allPlayers[i]["movementLeft"];
                 newPlayer.attacksLeft = allPlayers[i]["attacksLeft"];
                 newPlayer.spellsLeft = allPlayers[i]["spellsLeft"];
+
+                // decimals devided by 100, because they get saved in database as integers*100
+                newPlayer.movementAmount = newPlayer.movementAmount/100;
+                newPlayer.movementLeft = newPlayer.movementLeft/100;
+                newPlayer.actionPoints = newPlayer.actionPoints/100;
                 newPlayer.setActionPointCosts();
+                console.log(newPlayer.name + " has moveLeft: " + newPlayer.movementLeft);
 
                 // newPlayer.playerIconUrl = allPlayers[i]["playerIconUrl"];
 
