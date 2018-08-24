@@ -19,11 +19,11 @@ export class Player{
     mapId:number;
 
 // character stats:
+    initiative:number;
     actionPoints:number;
     movementAmount:number;
     pointsPerYard:number;
     movementLeft:number;
-    initiative:number;
     attacksPerRound:number;
     pointsPerAttack:number;
     attacksLeft:number

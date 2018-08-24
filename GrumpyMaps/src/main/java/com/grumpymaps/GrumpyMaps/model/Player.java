@@ -26,10 +26,15 @@ public class Player implements Physical{
     private String name;
     private byte[] playerIcon;
     //private String playerIconUrl;
-    private int actionPoints;
-    private int movementAmount;
+
+    private int initiative;
+    private double actionPoints;
+    private double movementAmount;
+    private double movementLeft;
     private int attacksPerRound;
+    private int attacksLeft;
     private int spellsPerRound;
+    private int spellsLeft;
     private String type;
     private String color;
     private String activeColor;
@@ -124,10 +129,26 @@ public class Player implements Physical{
     // }
 
 	/**
+	* Returns value of initiative
+	* @return
+	*/
+	public int getInitiative() {
+		return initiative;
+	}
+
+	/**
+	* Sets new value of initiative
+	* @param
+	*/
+	public void setInitiative(int initiative) {
+		this.initiative = initiative;
+	}
+
+	/**
 	* Returns value of actionPoints
 	* @return
 	*/
-	public int getActionPoints() {
+	public double getActionPoints() {
 		return actionPoints;
 	}
 
@@ -135,7 +156,7 @@ public class Player implements Physical{
 	* Sets new value of actionPoints
 	* @param
 	*/
-	public void setActionPoints(int actionPoints) {
+	public void setActionPoints(double actionPoints) {
 		this.actionPoints = actionPoints;
 	}
 
@@ -143,7 +164,7 @@ public class Player implements Physical{
 	* Returns value of movementAmount
 	* @return
 	*/
-	public int getMovementAmount() {
+	public double getMovementAmount() {
 		return movementAmount;
 	}
 
@@ -151,8 +172,24 @@ public class Player implements Physical{
 	* Sets new value of movementAmount
 	* @param
 	*/
-	public void setMovementAmount(int movementAmount) {
+	public void setMovementAmount(double movementAmount) {
 		this.movementAmount = movementAmount;
+	}
+
+	/**
+	* Returns value of movementLeft
+	* @return
+	*/
+	public double getMovementLeft() {
+		return movementLeft;
+	}
+
+	/**
+	* Sets new value of movementLeft
+	* @param
+	*/
+	public void setMovementLeft(double movementLeft) {
+		this.movementLeft = movementLeft;
 	}
 
 	/**
@@ -172,6 +209,22 @@ public class Player implements Physical{
 	}
 
 	/**
+	* Returns value of attacksLeft
+	* @return
+	*/
+	public int getAttacksLeft() {
+		return attacksLeft;
+	}
+
+	/**
+	* Sets new value of attacksLeft
+	* @param
+	*/
+	public void setAttacksLeft(int attacksLeft) {
+		this.attacksLeft = attacksLeft;
+	}
+
+	/**
 	* Returns value of spellsPerRound
 	* @return
 	*/
@@ -185,6 +238,22 @@ public class Player implements Physical{
 	*/
 	public void setSpellsPerRound(int spellsPerRound) {
 		this.spellsPerRound = spellsPerRound;
+	}
+
+	/**
+	* Returns value of spellsLeft
+	* @return
+	*/
+	public int getSpellsLeft() {
+		return spellsLeft;
+	}
+
+	/**
+	* Sets new value of spellsLeft
+	* @param
+	*/
+	public void setSpellsLeft(int spellsLeft) {
+		this.spellsLeft = spellsLeft;
 	}
 
 	/**

@@ -1363,6 +1363,11 @@ export class MapDetailComponent implements OnInit {
                 )
                 newPlayer.realSquareId = allPlayers[i]["realSquareId"];
                 newPlayer.isSelected = allPlayers[i]["isSelected"];
+                newPlayer.movementLeft = allPlayers[i]["movementLeft"];
+                newPlayer.attacksLeft = allPlayers[i]["attacksLeft"];
+                newPlayer.spellsLeft = allPlayers[i]["spellsLeft"];
+                newPlayer.setActionPointCosts();
+
                 // newPlayer.playerIconUrl = allPlayers[i]["playerIconUrl"];
 
                 //console.log("players iconUrl is: " + newPlayer.playerIconUrl);
