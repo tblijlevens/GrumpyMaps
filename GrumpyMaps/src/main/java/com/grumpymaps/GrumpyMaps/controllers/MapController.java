@@ -88,7 +88,7 @@ public class MapController {
 	  @RequestMapping(value = "/squareZones", method = RequestMethod.POST)
 	  public  ArrayList<ZoneIds> createTileZone(@RequestBody ArrayList<TileZone> zones) {
 		  ArrayList<ZoneIds> zoneIds = new ArrayList<>();
-		  System.out.println("Saving " + zones.size() + " zones");
+		  System.out.println("Saving " + zones.size() + " tile zones");
 		  for (TileZone z : zones){
 			  TileZone retour = tilezoneService.save(z);
 			  zoneIds.add(new ZoneIds(retour.getId(), retour.getRealSquareId()));
@@ -111,7 +111,6 @@ public class MapController {
 		 for (Player p : players){
 			 System.out.println("- Character " + p.getName());
 			 Player retour = playerService.save(p);
-			 System.out.println("- image " + retour.getPlayerIcon());
 			 playerIds.add(new PlayerIds(retour.getId(), retour.getPlayerSquareId()));
 		 }
 		return playerIds;
@@ -121,7 +120,7 @@ public class MapController {
 	  @RequestMapping(value = "/charZones", method = RequestMethod.POST)
 	  public  ArrayList<ZoneIds> createCharZone(@RequestBody ArrayList<CharZone> zones) {
 		  ArrayList<ZoneIds> zoneIds = new ArrayList<>();
-		  System.out.println("Saving " + zones.size() + " zones");
+		  System.out.println("Saving " + zones.size() + " character zones");
 		  for (CharZone z : zones){
 			  CharZone retour = charzoneService.save(z);
 			  zoneIds.add(new ZoneIds(retour.getId(), retour.getRealCharId()));
@@ -157,6 +156,9 @@ public class MapController {
 	  public List<Player> findMapPlayers(@PathVariable("mapId") Integer mapId) {
 		  List<Player> mapPlayers = (List<Player>)playerService.findByMapId(mapId);
 		  System.out.println("Loading " + mapPlayers.size() + " characters for map " + mapId);
+		  for (Player p : mapPlayers){
+			  System.out.println("- Character " + p.getName());
+		  }
 	    return mapPlayers;
 	  }
 
