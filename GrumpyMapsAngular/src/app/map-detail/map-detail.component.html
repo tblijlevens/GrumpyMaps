@@ -505,7 +505,7 @@
                 <div *ngIf="mapsLoaded==true">
                     <label class="center-block"><b>Your maps:</b></label><br>
                     <span *ngFor="let name of allLoadedMapNames" [style.color]="" (click)="selectSaveMap(name)">
-                        {{name}}<br />
+                        {{name.split(": ")[1]}}<br />
                     </span>
                 </div>
             </div>
@@ -533,10 +533,10 @@
                 <div *ngIf="mapsLoaded==true">
                     <label class="center-block"><b>Your maps:</b></label><br>
                     <span *ngFor="let name of allLoadedMapNames" [style.color]="" (click)="selectLoadMap(name)">
-                        {{name}}<br />
+                        {{name.split(": ")[1]}}<br />
                     </span>
                     <br />
-                    <span><B>You selected map: {{selectedLoadMapidname}}</B></span>
+                    <span><B>You selected map: {{selectedLoadMapname}}</B></span>
                 </div>
             </div>
             <div class="modal-footer">

@@ -146,7 +146,7 @@ export class MapDetailComponent implements OnInit {
     allLoadedMapIds:number[];
     allLoadedMapNames:string[];
     selectedLoadMap:number;
-    selectedLoadMapidname:string;
+    selectedLoadMapname:string;
     resultCounter:number=0;
     obstructionMode:boolean=false;
     movementMode:boolean=false;
@@ -1253,7 +1253,7 @@ export class MapDetailComponent implements OnInit {
     selectLoadMap(idname:string){
         var id = +idname.split(": ")[0];
         this.selectedLoadMap = id;
-        this.selectedLoadMapidname = idname;
+        this.selectedLoadMapname = idname.split(": ")[1];
     }
 
     loadSelectedMap(){
