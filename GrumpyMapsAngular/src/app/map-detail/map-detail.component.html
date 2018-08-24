@@ -176,7 +176,7 @@
             <span class="mapOptionsBox"  ><!--*ngIf="rangeSquares.length!=0"-->
                 <span class="lead" style="font-weight:bold;">Tile options</span><br />
 
-                <div class="btn addObstruct" data-toggle="modal" data-target="#addModal" *ngIf="selectedSquares.length!=0">
+                <div class="btn addObstruct" data-toggle="modal" data-target="#addModal" *ngIf="selectedSquares.length!=0" (click)="loadAllCharacters()">
                     <mdb-icon class="buttonIcon" icon="plus"></mdb-icon><br />
                     <span class="buttonText">
                         Add<br />object
@@ -316,19 +316,22 @@
                     </div>
                     <!-- SELECT FROM DATABASE FORM -->
                     <div class="tab-pane fade" id="pills-database" role="tabpanel" aria-labelledby="pills-databse-tab">
-                        <form [formGroup]="getObjectForm">
-                            <div class="form-group" id="objectMap">
-                                <label class="center-block">Select Object:
-                                    <input class="form-control" formControlName="playerMovement" type="text">
-                                </label>
-                                <br>
-                                <label class="center-block">Object Amount:
-                                    <input formControlName="objectAmount" type="number">
-                                </label>
-                                <br>
-                            </div>
-                        </form>
+                        <div *ngIf="charsLoaded">
+                            <label class="center-block"><b>Your characters:</b></label><br>
+                            <span *ngFor="let char of allLoadedCharacters" style="cursor:pointer;" (click)="selectCharacter(char)">
+                                {{char.name}}<br />
+                            </span>
+                            <br />
+                            <span *ngIf="selectedLoadCharacter!=null"><B>You selected character: {{selectedLoadCharacter.name}}</B></span>
+                            <button type="button" class="btn btn-primary" (click)="addExistingCharacter()" data-dismiss="modal">Add character</button>
+                        </div>
+                        <div *ngIf="!charsLoaded">
+                            <span>
+                                Retreiving characters from database. Please wait...
+                            </span>
+                        </div>
                     </div>
+
                 </div>
             </div>
             <div class="modal-footer">

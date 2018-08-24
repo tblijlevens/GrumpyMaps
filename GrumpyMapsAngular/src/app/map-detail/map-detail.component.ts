@@ -148,6 +148,9 @@ export class MapDetailComponent implements OnInit {
     selectedLoadMap:number;
     selectedLoadMapname:string;
     mapExists:boolean=false;
+    charsLoaded:boolean=false;
+    allLoadedCharacters:Player[];
+    selectedLoadCharacter:Player;
     resultCounter:number=0;
     obstructionMode:boolean=false;
     movementMode:boolean=false;
@@ -953,6 +956,92 @@ export class MapDetailComponent implements OnInit {
         this.clearAllFields();
     }
 
+    loadAllCharacters(){
+        this.allLoadedCharacters = new Array();
+        this.dndMapService.findAllPlayers().subscribe(allPlayers => {
+            for (var i = 0 ; i < allPlayers.length ; i++){
+                this.allLoadedCharacters.push(allPlayers[i]);
+
+                // remove chars from the list that are already in the map:
+                for (var j = 0 ; j < this.allCharacters.length ; j++){
+                    if (this.allCharacters[j].id == allPlayers[i]["id"]){
+                        var index = this.allLoadedCharacters.indexOf(allPlayers[i]);
+                        this.allLoadedCharacters.splice(index, 1);
+                    }
+                }
+
+                //in the last iteration:
+                if (i==allPlayers.length-1){
+                    this.charsLoaded=true;
+                }
+            }
+        });
+    }
+
+    selectCharacter(char){
+        // create a player for each retreived player
+        var newChar = new Player(
+            char["id"],
+            char["playerSquareId"],
+            char["name"],
+            char["actionPoints"],
+            char["movementAmount"],
+            char["initiative"],
+            char["attacksPerRound"],
+            char["spellsPerRound"],
+            char["type"],
+            char["color"],
+            char["mapSquareId"],
+            char["mapHeightWidth"],
+            char["squareMapCoordinate"],
+            char["playerIcon"],
+            char["mapId"]
+        )
+        newChar.realSquareId = char["realSquareId"];
+        newChar.isSelected = char["isSelected"];
+        newChar.movementLeft = char["movementLeft"];
+        newChar.attacksLeft = char["attacksLeft"];
+        newChar.spellsLeft = char["spellsLeft"];
+
+        // decimals devided by 100, because they get saved in database as integers*100
+        newChar.movementAmount = newChar.movementAmount/100;
+        newChar.movementLeft = newChar.movementLeft/100;
+        newChar.actionPoints = newChar.actionPoints/100;
+        newChar.setActionPointCosts();
+
+        // newChar.playerIconUrl = allPlayers[i]["playerIconUrl"];
+
+        //console.log("players iconUrl is: " + newChar.playerIconUrl);
+        //
+        this.selectedLoadCharacter = newChar;
+        this.getCharZoneById(this.selectedLoadCharacter.id);
+    }
+
+    getCharZoneById(id:number){
+        this.dndMapService.getAllCharZonesById(id).subscribe(allZones => {
+            // create a zone for each retreived zone
+            for (var i = 0 ; i < allZones.length ; i++){
+                var newZone = {
+                    id: allZones[i]["id"],
+                    realCharId: allZones[i]["realCharId"],
+                    mapId: allZones[i]["mapId"],
+                    label:allZones[i]["label"],
+                    radius:allZones[i]["radius"],
+                    duration:allZones[i]["duration"]
+                };
+
+                this.selectedLoadCharacter.zones.push(newZone);
+            }
+        });
+    }
+
+    addExistingCharacter(){
+        this.selectedSquares[0].addPhysical(this.selectedLoadCharacter);
+        this.playerAdded(this.selectedLoadCharacter);
+        this.mapShareService.setPlayerZones();
+        this.selectedLoadCharacter=null;
+        this.allLoadedCharacters=new Array();
+    }
     clearAllFields(){
         this.createPlayerForm.get('playerName').setValue("");
         this.createPlayerForm.get('playerInitiative').setValue(15);
@@ -1445,8 +1534,6 @@ export class MapDetailComponent implements OnInit {
             this.rangeCutOffSquares = new Array();
             this.orderCharacters();
             this.getCharZones();
-
-
         });
     }
 

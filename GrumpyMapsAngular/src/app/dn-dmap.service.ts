@@ -63,10 +63,18 @@ getAllPlayers(mapId:number): Observable<Player[]>  {
     console.log("getting all players from map " + mapId);
     return <Observable<Player[]>>this.http.get('http://localhost:8080/players/'+mapId);
 }
+findAllPlayers(): Observable<Player[]>  {
+    console.log("getting all characters");
+    return <Observable<Player[]>>this.http.get('http://localhost:8080/players');
+}
 
 getAllCharZones(mapId:number): Observable<any[]>  {
     console.log("getting all charzones from map " + mapId);
     return <Observable<any[]>>this.http.get('http://localhost:8080/charZones/'+mapId);
+}
+getAllCharZonesById(charId:number): Observable<any[]>  {
+    console.log("getting all charzones for char " + charId);
+    return <Observable<any[]>>this.http.get('http://localhost:8080/charZones2/'+charId);
 }
 
 findPlayerByRealSquareId(sqId:number): Observable<Player>  {

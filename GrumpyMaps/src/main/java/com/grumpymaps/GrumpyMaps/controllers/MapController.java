@@ -161,12 +161,27 @@ public class MapController {
 		  }
 	    return mapPlayers;
 	  }
+	  @ResponseBody
+	  @RequestMapping(value = "/players", method = RequestMethod.GET)
+	  public List<Player> findAllCharacters() {
+		  System.out.println("Loading all characters");
+		return (List<Player>)playerService.findAll();
+	  }
+
 
 	  @ResponseBody
 	  @RequestMapping(value = "/charZones/{mapId}", method = RequestMethod.GET)
 	  public List<CharZone> findCharZones(@PathVariable("mapId") Integer mapId) {
 		  List<CharZone> charZones = (List<CharZone>)charzoneService.findByMapId(mapId);
 		  System.out.println("Loading " + charZones.size() + " character zones for map " + mapId);
+		  return charZones;
+	  }
+
+	  @ResponseBody
+	  @RequestMapping(value = "/charZones2/{charId}", method = RequestMethod.GET)
+	  public List<CharZone> findCharZonesById(@PathVariable("charId") Integer charId) {
+		  List<CharZone> charZones = (List<CharZone>)charzoneService.findByRealCharId(charId);
+		  System.out.println("Loading " + charZones.size() + " character zones for char " + charId);
 		  return charZones;
 	  }
 
