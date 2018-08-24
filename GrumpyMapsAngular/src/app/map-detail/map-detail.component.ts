@@ -812,6 +812,7 @@ export class MapDetailComponent implements OnInit {
         this.selectedPlayer.name = this.createPlayerForm.get('playerName').value;
         this.selectedPlayer.color = this.createPlayerForm.get('playerColor').value;
         this.selectedPlayer.initiative = this.createPlayerForm.get('playerInitiative').value;
+        this.selectedPlayer.actionPoints = 100;
         this.selectedPlayer.movementAmount = this.createPlayerForm.get('playerMovement').value;
         this.selectedPlayer.movementLeft = this.createPlayerForm.get('playerMovement').value;
         this.selectedPlayer.attacksPerRound = this.createPlayerForm.get('playerAttacks').value;
