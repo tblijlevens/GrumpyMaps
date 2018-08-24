@@ -11,7 +11,7 @@ import com.grumpymaps.GrumpyMaps.model.CharZone;
 public interface CharZoneService extends CrudRepository<CharZone, Long>{
 
     public List<CharZone> findByMapId(Integer mapId);
-    public void deleteByMapId(Long mapId);
+    public void deleteByMapId(int mapId);
 
 
 }

@@ -11,5 +11,6 @@ import com.grumpymaps.GrumpyMaps.model.TileZone;
 public interface TileZoneService extends CrudRepository<TileZone, Long>{
 
     public List<TileZone> findByMapId(Integer mapId);
+    public void deleteByMapId(int mapId);
 
 }

@@ -8,5 +8,7 @@ import com.grumpymaps.GrumpyMaps.model.DndMap;
 
 @Repository
 public interface MapService extends CrudRepository<DndMap, Long>{
+    public void deleteById(Long id);
+    public boolean existsById(long id);
 
 }

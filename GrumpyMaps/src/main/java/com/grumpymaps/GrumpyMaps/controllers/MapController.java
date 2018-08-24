@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.grumpymaps.GrumpyMaps.model.DndMap;
 import com.grumpymaps.GrumpyMaps.model.Square;
@@ -50,13 +51,23 @@ public class MapController {
 	    return "hoi";
 	  }
 
+	  @Transactional
 	  @ResponseBody
 	  @RequestMapping(value = "/dndmap", method = RequestMethod.POST)
 	  public  Long  createMap(@RequestBody DndMap dndMap) {
+
 		System.out.println("Saving map " + dndMap.getId());
 
-		charzoneService.deleteByMapId(dndMap.getId());
-		
+		int mapId = (int)dndMap.getId();
+
+		if (mapService.existsById(dndMap.getId())){
+			charzoneService.deleteByMapId(mapId);
+			tilezoneService.deleteByMapId(mapId);
+			playerService.deleteByMapId(mapId);
+			squareService.deleteByMapId(mapId);
+			mapService.deleteById(dndMap.getId());
+		}
+
 	    return mapService.save(dndMap).getId();
 	  }
 

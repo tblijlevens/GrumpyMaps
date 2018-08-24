@@ -11,4 +11,5 @@ import com.grumpymaps.GrumpyMaps.model.Square;
 public interface SquareService extends CrudRepository<Square, Long>{
 
     public List<Square> findByMapId(Integer mapId);
+    public void deleteByMapId(int mapId);
 }

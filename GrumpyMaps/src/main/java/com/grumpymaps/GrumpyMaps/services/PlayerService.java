@@ -12,5 +12,6 @@ public interface PlayerService extends CrudRepository<Player, Long>{
 
     public Player findByRealSquareId(Integer sqId);
     public List<Player> findByMapId(Integer mapId);
+    public void deleteByMapId(int mapId);
 
 }
