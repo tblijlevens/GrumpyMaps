@@ -706,6 +706,11 @@ export class MapDetailComponent implements OnInit {
         $('#hiddenClose').fadeOut(300);
     }
     attack() {
+        this.rangeSquares = new Array();
+        this.resetAllDistances();
+        this.movementMode = false;
+        this.chargeMode = false;
+
         if(this.selectedPlayer.isSelected ) {
             if(this.selectedPlayer.attacksLeft!=0){
                 if (this.dndMap.cutOffMechanic){
@@ -725,6 +730,11 @@ export class MapDetailComponent implements OnInit {
 
     }
     cast() {
+        this.rangeSquares = new Array();
+        this.resetAllDistances();
+        this.movementMode = false;
+        this.chargeMode = false;
+
         if(this.selectedPlayer.isSelected) {
             if(this.selectedPlayer.spellsLeft!=0){
                 if (this.dndMap.cutOffMechanic){
@@ -768,10 +778,12 @@ export class MapDetailComponent implements OnInit {
             }
         }
     }
-    addStasis(){
 
-    }
     addZonePlayer(){
+        this.rangeSquares = new Array();
+        this.resetAllDistances();
+        this.movementMode = false;
+        this.chargeMode = false;
         if(this.selectedPlayer.isSelected) {
             var label = this.addZonePlayerForm.get('zoneLabel').value;
             var radius = this.addZonePlayerForm.get('zoneRadius').value;
@@ -809,6 +821,11 @@ export class MapDetailComponent implements OnInit {
         this.createPlayerForm.get('playerSpells').setValue(this.selectedPlayer.spellsPerRound);
     }
     editCharacter(){
+        this.rangeSquares = new Array();
+        this.resetAllDistances();
+        this.movementMode = false;
+        this.chargeMode = false;
+
         this.selectedPlayer.name = this.createPlayerForm.get('playerName').value;
         this.selectedPlayer.color = this.createPlayerForm.get('playerColor').value;
         this.selectedPlayer.initiative = this.createPlayerForm.get('playerInitiative').value;
@@ -824,6 +841,11 @@ export class MapDetailComponent implements OnInit {
 
     }
     deleteObject() {
+        this.rangeSquares = new Array();
+        this.resetAllDistances();
+        this.movementMode = false;
+        this.chargeMode = false;
+        
         if(this.selectedPlayer.isSelected) {
             this.selectedSquare = this.getPlayerSquare(this.selectedPlayer);
             var index = this.allCharacters.indexOf(this.selectedPlayer);
