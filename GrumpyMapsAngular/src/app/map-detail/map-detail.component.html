@@ -499,13 +499,18 @@
             <div class="modal-body">
                 <form [formGroup]="saveForm">
                     <label class="center-block"><b>Map name:</b>
-                        <input class="form-control" formControlName="mapName" (change)="selectSaveMap(0)">
+                        <input class="form-control" formControlName="mapName" (input)="selectSaveMapInput(this.saveForm.get('mapName').value)">
                     </label>
                 </form>
                 <div *ngIf="mapsLoaded==true">
                     <label class="center-block"><b>Your maps:</b></label><br>
-                    <span *ngFor="let name of allLoadedMapNames" [style.color]="" (click)="selectSaveMap(name)">
+                    <span *ngFor="let name of allLoadedMapNames" [style.color]="" (click)="selectSaveMapClick(name)">
                         {{name.split(": ")[1]}}<br />
+                    </span>
+                </div>
+                <div *ngIf="mapExists">
+                    <span style="color:red;"><br />
+                        This will overwrite map: {{this.saveForm.get('mapName').value}}!
                     </span>
                 </div>
             </div>

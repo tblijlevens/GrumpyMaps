@@ -147,6 +147,7 @@ export class MapDetailComponent implements OnInit {
     allLoadedMapNames:string[];
     selectedLoadMap:number;
     selectedLoadMapname:string;
+    mapExists:boolean=false;
     resultCounter:number=0;
     obstructionMode:boolean=false;
     movementMode:boolean=false;
@@ -845,7 +846,7 @@ export class MapDetailComponent implements OnInit {
         this.resetAllDistances();
         this.movementMode = false;
         this.chargeMode = false;
-        
+
         if(this.selectedPlayer.isSelected) {
             this.selectedSquare = this.getPlayerSquare(this.selectedPlayer);
             var index = this.allCharacters.indexOf(this.selectedPlayer);
@@ -1089,14 +1090,11 @@ export class MapDetailComponent implements OnInit {
         $(".rowLetter").css({"line-height":rowHeight});
     }
 
-    selectSaveMap(idname){
+    selectSaveMapInput(name){
         this.dndMap.id = 0;
         this.dndMap.name = this.saveForm.get('mapName').value;
-        if(idname!=0){
-            this.dndMap.id = +idname.split(": ")[0];
-            this.dndMap.name = idname.split(": ")[1];
-            this.saveForm.get('mapName').setValue(this.dndMap.name);
-        }
+        this.dndMap.name = name;
+        this.mapExists=false;
 
         // check if name already exists and if so, overwrite that map instead of creating a new one. The alert will warn the user.
         for (var i = 0 ; i < this.allLoadedMapNames.length ; i++){
@@ -1104,9 +1102,28 @@ export class MapDetailComponent implements OnInit {
             var existingName = this.allLoadedMapNames[i].split(": ")[1];
             if (this.dndMap.name === existingName){
                 this.dndMap.id = existingId;
-                alert("This will overwrite the existing map '" + this.dndMap.name + "'.");
+                this.mapExists=true;
+            }
+            console.log(this.mapExists);
+        }
+    }
+
+    selectSaveMapClick(idname){
+        this.dndMap.id = +idname.split(": ")[0];
+        this.dndMap.name = idname.split(": ")[1];
+        this.saveForm.get('mapName').setValue(this.dndMap.name);
+
+        // check if name already exists and if so, overwrite that map instead of creating a new one. The alert will warn the user.
+        for (var i = 0 ; i < this.allLoadedMapNames.length ; i++){
+            var existingId = +this.allLoadedMapNames[i].split(": ")[0];
+            var existingName = this.allLoadedMapNames[i].split(": ")[1];
+            if (this.dndMap.name === existingName){
+                this.dndMap.id = existingId;
+                this.mapExists=true;
             }
         }
+        console.log(this.mapExists);
+
     }
     public saveMap() {
         // var date = new Date().toLocaleDateString();
@@ -1261,6 +1278,8 @@ export class MapDetailComponent implements OnInit {
 
 
     loadMap(){
+        this.saveForm.get('mapName').setValue("");
+        this.mapExists=false;
         this.allLoadedMapIds = new Array();
         this.allLoadedMapNames = new Array();
         this.dndMapService.findAllMaps().subscribe(allMaps => {
