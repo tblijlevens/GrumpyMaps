@@ -1193,7 +1193,7 @@ export class MapDetailComponent implements OnInit {
                                     players[h].movementAmount = players[h].movementAmount/100;
                                     players[h].movementLeft = players[h].movementLeft/100;
                                     players[h].actionPoints = players[h].actionPoints/100;
-                                }                                
+                                }
                             }
                         }
                     }
@@ -1383,7 +1383,6 @@ export class MapDetailComponent implements OnInit {
                 newPlayer.movementLeft = newPlayer.movementLeft/100;
                 newPlayer.actionPoints = newPlayer.actionPoints/100;
                 newPlayer.setActionPointCosts();
-                console.log(newPlayer.name + " has moveLeft: " + newPlayer.movementLeft);
 
                 // newPlayer.playerIconUrl = allPlayers[i]["playerIconUrl"];
 

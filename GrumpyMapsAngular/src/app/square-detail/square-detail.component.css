@@ -3,6 +3,7 @@ button {
 }
 .playerNameDetail{
     text-shadow: 0px 0px 2px black;
+    cursor: pointer;
 }
 .squaredetail{
     font-size:1.4vw;

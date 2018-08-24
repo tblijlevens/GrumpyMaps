@@ -32,6 +32,7 @@ mdb-icon{
 }
 .playerNameMap{
     text-shadow: 0px 0px 2px black;
+    cursor: pointer;
 }
 #mapSetup{
     background-image: url(../../assets/bg.jpg);
