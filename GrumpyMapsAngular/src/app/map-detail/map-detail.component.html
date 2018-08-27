@@ -182,10 +182,10 @@
                         Add<br />object
                     </span>
                 </div>
-                <div class="btn addObstruct" (click)="obstructSelection()" *ngIf="selectedSquares.length!=0">
-                    <mdb-icon class="buttonIcon" icon="eraser"></mdb-icon><br />
+                <div class="btn addObstruct" data-toggle="modal" data-target="#colorTileModal" *ngIf="selectedSquares.length!=0">
+                    <mdb-icon class="buttonIcon" icon="paint-brush"></mdb-icon><br />
                     <span class="buttonText">
-                        Obstruct
+                        Color
                     </span>
                 </div>
                 <div class="btn addObstruct" data-toggle="modal" data-target="#addZoneTileForm" *ngIf="selectedSquares.length!=0">
@@ -548,22 +548,22 @@
                 </div>
             </div>
             <div class="modal-footer" >
-                <div class="btn deleteEdit" style="background-color: rgba(143, 0, 0, 1);" data-toggle="modal" data-target="#deleteMapModal">
+                <div *ngIf="selectedLoadMapname!=null" class="btn deleteEdit" style="background-color: rgba(143, 0, 0, 1); left:-100px" data-toggle="modal" data-target="#deleteMapModal">
                     <mdb-icon class="buttonIcon" icon="trash"></mdb-icon><br />
                     <span class="buttonText">
                         Delete Map
+                    </span>
+                </div>
+                <div *ngIf="selectedLoadMapname!=null" class="btn deleteEdit" style="left:-100px" data-dismiss="modal" (click)="loadSelectedMap()">
+                    <mdb-icon class="buttonIcon" icon="folder"></mdb-icon><br />
+                    <span class="buttonText">
+                        Load Map
                     </span>
                 </div>
                 <div class="btn deleteEdit" data-dismiss="modal" style="background-color: rgba(97, 0, 143, 1);">
                     <mdb-icon class="buttonIcon" icon="close"></mdb-icon><br />
                     <span class="buttonText">
                         Close
-                    </span>
-                </div>
-                <div class="btn deleteEdit" data-dismiss="modal" (click)="loadSelectedMap()">
-                    <mdb-icon class="buttonIcon" icon="folder"></mdb-icon><br />
-                    <span class="buttonText">
-                        Load Map
                     </span>
                 </div>
 
