@@ -1488,6 +1488,7 @@ export class MapDetailComponent implements OnInit {
                 theSquare.numberofPlayers= mapSquares[i]["numberofPlayers"];
                 theSquare.obstructed= mapSquares[i]["obstructed"];
                 theSquare.hidden= mapSquares[i]["hidden"];
+                theSquare.color= mapSquares[i]["color"];
 
                 allMapSquares.push(theSquare);
             }
