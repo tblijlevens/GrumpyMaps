@@ -9,6 +9,7 @@ export class Square {
   currentDistance:number = 9999;
   mapHeightWidth: number;
   obstructed: boolean = false;
+  color:string = "rgba(0, 0, 0, 0.0)";
   inRange: boolean = false;
   mapId:number;
   players: Player[] = new Array();

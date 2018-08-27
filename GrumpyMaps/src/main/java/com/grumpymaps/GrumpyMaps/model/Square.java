@@ -25,6 +25,7 @@ public class Square implements Serializable{
     private String squareHeightWidth;
     private int squareSize;
     private boolean obstructed;
+    private String color;
     private int mapHeightWidth;
     private boolean inRange;
     private boolean hidden;
@@ -134,6 +135,23 @@ public class Square implements Serializable{
 	public void setObstructed(boolean obstructed) {
 		this.obstructed = obstructed;
 	}
+
+    /**
+    * Returns value of color
+    * @return
+    */
+    public String getColor() {
+        return color;
+    }
+
+    /**
+    * Sets new value of color
+    * @param
+    */
+    public void setColor(String color) {
+        this.color = color;
+    }
+
 
 	/**
 	* Returns value of mapHeightWidth

@@ -62,7 +62,7 @@ export class SquareComponent implements OnInit {
       this.multiSelect = multiSelect;
     //   if (!multiSelect){
           this.selectedSquares = new Array();
-          this.setObstructionStyle();
+          this.setTileStyle();
           this.setRangeSquareStyles();
     //   }
   }
@@ -71,7 +71,7 @@ export class SquareComponent implements OnInit {
   @Input() set _selectedSquares(selectedSquares:Square[]) {
       this.selectedSquares = selectedSquares;
       if (!this.multiSelect){
-          this.setObstructionStyle();
+          this.setTileStyle();
       }
      // if (this.selectedSquares.length!=0){
           this.setRangeSquareStyles();
@@ -79,7 +79,8 @@ export class SquareComponent implements OnInit {
   }
   @Input() set setStyles(setstyles:boolean){
       this.deselectAll(); // ExpressionChangedAfterItHasBeenCheckedError is not thrown in production
-      this.setObstructionStyle();
+
+      this.setTileStyle();
       this.setRangeSquareStyles();
   }
   distance:number=9999;
@@ -94,7 +95,7 @@ export class SquareComponent implements OnInit {
     this.squareStyles = {
       'width': this._squareHeightWidth
     }
-    this.setObstructionStyle();
+    this.setTileStyle();
 
   }
 
@@ -254,34 +255,15 @@ export class SquareComponent implements OnInit {
           this.allSquares[i].currentDistance=9999;
       }
   }
-  private setObstruction(){
-      var isObstructed = this.square.obstructed;
-      if (!isObstructed) {
-          this.square.obstructed = true;
-      }
-      else {
-          this.square.obstructed = false;
-      }
-      this.setObstructionStyle();
-  }
 
-  private setObstructionStyle(){
+  private setTileStyle(){
       // style squares if obstruct mode is on
       var isObstructed = this.square.obstructed;
-        if (isObstructed) {
-            this.squareStyles['background-color'] = 'rgba(8, 161, 0, 0)';
-            this.originalSquareColor = 'rgba(161, 0, 0, 0.35)';
-          this.squareStyles['background-color'] = this.originalSquareColor;
+      this.squareStyles['background-color'] = this.square.color;
+
         //   this.squareStyles['background'] = 'repeating-linear-gradient(          135deg, rgba(161, 0, 0, 0.6), rgba(161, 0, 0, 0.6) 8px, rgba(0, 0, 0, 0.0) 8px, rgba(0, 0, 0, 0.0) 16px)'
           //this.squareStyles['background'] = 'repeating-radial-gradient(circle, rgba(235, 199, 9, 0.6), rgba(235, 199, 9, 0.6) 5px, rgba(235, 199, 9, 0) 5px,  rgba(235, 199, 9, 0) 10px)'
-
-        }
-        else {
-            this.originalSquareColor = 'rgba(161, 0, 0, 0)';
-          this.squareStyles['background'] = "none";
-        }
     }
-
 
   public setRangeSquareStyles() {
       this.square.inRange = false;
@@ -298,19 +280,26 @@ export class SquareComponent implements OnInit {
     if (!this.square.obstructed && !this.selectedSquares.includes(this.square)) {
       if (this.square.inRange) {
           if (this.rangeCutOffSquares.includes(this.square)) {
-              this.originalSquareColor = 'rgba(0, 161, 161, 0.5)';
-              this.squareStyles['background-color'] = this.originalSquareColor;
+              if (this.square.color=="rgba(0, 0, 0, 0.0)"){
+                  this.squareStyles['background-color'] = 'rgba(0, 161, 161, 0.5)';
+              }
+              else {
+                  this.squareStyles['background-color'] = 'rgba(0, 35, 35, 1)';
+              }
           }
           else
           {
-              this.originalSquareColor = 'rgba(8, 161, 0, 0.5)';
-              this.squareStyles['background-color'] = this.originalSquareColor;
+              if (this.square.color=="rgba(0, 0, 0, 0.0)"){
+                  this.squareStyles['background-color'] = 'rgba(8, 161, 0, 0.5)';
+              }
+              else {
+                  this.squareStyles['background-color'] = 'rgba(8, 35, 0, 1)';
+              }
           }
 
       }
       else {
-          this.originalSquareColor = 'rgba(8, 161, 0, 0)';
-        this.squareStyles['background-color'] = this.originalSquareColor;
+        this.squareStyles['background-color'] = this.square.color;
 
       }
      // this.selectionStyles();
@@ -320,7 +309,12 @@ export class SquareComponent implements OnInit {
   selectionStyles(){
       for (var i = 0 ; i < this.selectedSquares.length ; i++){
           if (this.square.mapSquareId == this.selectedSquares[i].mapSquareId){
-              this.squareStyles['background-color'] = 'rgba(0, 112, 161, 0.6)';
+              if (this.square.color=="rgba(0, 0, 0, 0.0)"){
+                  this.squareStyles['background-color'] = 'rgba(0, 112, 161, 0.6)';
+              }
+              else {
+                  this.squareStyles['background-color'] = 'rgba(0, 112, 161, 1)';
+              }
           }
       }
   }
@@ -362,7 +356,12 @@ export class SquareComponent implements OnInit {
       if(this.selecting && this.multiSelect){
           this.addToSelection();
       }
-      this.squareStyles['background-color'] = 'rgba(0, 112, 161, 0.3)';
+      if (this.square.color=="rgba(0, 0, 0, 0.0)"){
+          this.squareStyles['background-color'] = 'rgba(0, 112, 161, 0.5)';
+      }
+      else {
+          this.squareStyles['background-color'] = 'rgba(0, 35, 45, 1)';
+      }
       this.selectionStyles();
       this.getTileDistance();
 
@@ -378,7 +377,7 @@ export class SquareComponent implements OnInit {
           this.setRangeSquareStyles();
 
           if (this.square.obstructed){
-              this.setObstructionStyle();
+              this.setTileStyle();
           }
           this.selectionStyles();
       }

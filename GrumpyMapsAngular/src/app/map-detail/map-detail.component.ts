@@ -126,6 +126,11 @@ export class MapDetailComponent implements OnInit {
         tileZoneColor: new FormControl(),
         zoneLabel: new FormControl()
     });
+    colorTileForm = new FormGroup({
+        selectAll: new FormControl(),
+        tileColor: new FormControl(),
+        obstructTile: new FormControl()
+    });
     radius:number;
     saveForm = new FormGroup({
         mapName: new FormControl()
@@ -203,6 +208,8 @@ export class MapDetailComponent implements OnInit {
         this.addZoneTileForm.get('zoneRadius').setValue(10);
         this.addZoneTileForm.get('zoneDuration').setValue(1);
         this.addZoneTileForm.get('tileZoneColor').setValue("#ffa100");
+
+        this.colorTileForm.get('tileColor').setValue("#000000");
 
         this.setRows();
         this.calculateMapFeet();
@@ -908,7 +915,38 @@ export class MapDetailComponent implements OnInit {
         let input = new FormData();
         input.append('image', this.imageForm.get('image').value);
         return input;
-      }
+    }
+
+    colorTiles(setOrRemove){
+        var color = "";
+        console.log(setOrRemove);
+        if (setOrRemove=="set"){
+             color = this.colorTileForm.get('tileColor').value;
+        }
+        else {
+            color = "rgba(0, 0, 0, 0.0)";
+        }
+        var obstruct = this.colorTileForm.get('obstructTile').value;
+        if (this.colorTileForm.get('selectAll').value){
+            this.selectedSquares = this.dndMap.squares;
+        }
+
+        for (var i = 0 ; i < this.selectedSquares.length ; i++){
+            if (obstruct){
+                this.selectedSquares[i].obstructed = true;
+                this.selectedSquares[i].color = color;
+            }
+            else{
+                this.selectedSquares[i].obstructed = false;
+                this.selectedSquares[i].color = color;
+            }
+        }
+        this.selectedSquares = new Array();
+
+        // make all squares set their styles:
+        this.setSquareStyles();
+        this.clearAllFields();
+    }
     obstructSelection(){
         for (var i = 0 ; i < this.selectedSquares.length ; i++){
             if (this.selectedSquares[i].obstructed ==false){
@@ -1057,6 +1095,10 @@ export class MapDetailComponent implements OnInit {
         this.addZoneTileForm.get('zoneRadius').setValue(10);
         this.addZoneTileForm.get('zoneDuration').setValue(1);
         this.addZoneTileForm.get('tileZoneColor').setValue("#ffa100");
+
+        this.colorTileForm.get('selectAll').setValue(false);
+        this.colorTileForm.get('tileColor').setValue("#000000");
+        this.colorTileForm.get('obstructTile').setValue(false);
 
     }
     nextTurn() {
