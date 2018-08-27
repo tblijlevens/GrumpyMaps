@@ -1369,7 +1369,7 @@ export class MapDetailComponent implements OnInit {
     deleteMap(){
 
         this.dndMapService.deleteMapById(this.selectedLoadMap).subscribe((mapName:string) => {
-            console.log("Map " + mapName + "was permanently removed from the database.");
+            console.log("Map " + mapName["name"] + " was permanently removed from the database.");
             this.loadMap();
         });
     }

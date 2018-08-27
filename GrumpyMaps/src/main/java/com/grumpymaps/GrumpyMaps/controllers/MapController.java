@@ -77,8 +77,9 @@ public class MapController {
 		String mapName = "";
 		if (mapService.existsById(mapId)){
 			DndMap map = mapService.findById(mapId);
-			mapName = map.getName();
-			System.out.println("Deleting map " + mapName);
+			mapName = "{\"name\":\""+map.getName()+"\"}";
+			System.out.println("Deleting map " + map.getName());
+
 			tilezoneService.deleteByMapId(mapId);
 			squareService.deleteByMapId(mapId);
 			mapService.deleteById(map.getId());
