@@ -547,9 +547,60 @@
                     <span><B>You selected map: {{selectedLoadMapname}}</B></span>
                 </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" (click)="loadSelectedMap()" data-dismiss="modal">Load map</button>
+            <div class="modal-footer" >
+                <div class="btn deleteEdit" style="background-color: rgba(143, 0, 0, 1);" data-toggle="modal" data-target="#deleteMapModal">
+                    <mdb-icon class="buttonIcon" icon="trash"></mdb-icon><br />
+                    <span class="buttonText">
+                        Delete Map
+                    </span>
+                </div>
+                <div class="btn deleteEdit" data-dismiss="modal" style="background-color: rgba(97, 0, 143, 1);">
+                    <mdb-icon class="buttonIcon" icon="close"></mdb-icon><br />
+                    <span class="buttonText">
+                        Close
+                    </span>
+                </div>
+                <div class="btn deleteEdit" data-dismiss="modal" (click)="loadSelectedMap()">
+                    <mdb-icon class="buttonIcon" icon="folder"></mdb-icon><br />
+                    <span class="buttonText">
+                        Load Map
+                    </span>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Delete map Modal -->
+<div class="modal fade" id="deleteMapModal" tabindex="-1" role="dialog" aria-labelledby="deleteMapModalLabel" aria-hidden="true">
+
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5>Are you sure?</h5>
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <label class="center-block"><b>Are you sure you want to delete map: {{selectedLoadMapname}}?</b></label><br>
+                </div>
+            </div>
+            <div class="modal-footer" >
+                <div class="btn deleteEdit" style="background-color: rgba(143, 0, 0, 1);" data-dismiss="modal" (click)="deleteMap()">
+                    <mdb-icon class="buttonIcon" icon="trash"></mdb-icon><br />
+                    <span class="buttonText">
+                        Delete Map
+                    </span>
+                </div>
+                <div class="btn deleteEdit" data-dismiss="modal" style="background-color: rgba(97, 0, 143, 1);">
+                    <mdb-icon class="buttonIcon" icon="close"></mdb-icon><br />
+                    <span class="buttonText">
+                        Cancel
+                    </span>
+                </div>
             </div>
         </div>
     </div>

@@ -48,6 +48,12 @@ findAllMaps(): Observable<DnDMap[]>  {
     return <Observable<DnDMap[]>>this.http.get('http://localhost:8080/dndmap');
 }
 
+deleteMapById(mapId:number) {
+    console.log("deleting map: " + mapId);
+    return <Observable<string>>this.http.delete('http://localhost:8080/dndmap/'+mapId);
+}
+
+
 
 getMapSquares(mapId:number): Observable<Square[]>  {
     console.log("getting all squares from map " + mapId);

@@ -71,6 +71,26 @@ public class MapController {
 	    return mapService.save(dndMap).getId();
 	  }
 
+	  @Transactional
+	  @ResponseBody
+	  @RequestMapping(value = "/dndmap/{mapId}", method = RequestMethod.DELETE)
+	  public  String  deleteMapById(@PathVariable("mapId") int mapId) {
+
+		String mapName = "";
+		if (mapService.existsById(mapId)){
+			DndMap map = mapService.findById(mapId);
+			mapName = map.getName();
+			System.out.println("Deleting map " + mapName);
+			charzoneService.deleteByMapId(mapId);
+			tilezoneService.deleteByMapId(mapId);
+			playerService.deleteByMapId(mapId);
+			squareService.deleteByMapId(mapId);
+			mapService.deleteById(map.getId());
+		}
+
+	    return mapName;
+	  }
+
 
 	  @ResponseBody
 	  @RequestMapping(value = "/squares", method = RequestMethod.POST)
