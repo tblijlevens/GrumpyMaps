@@ -180,6 +180,8 @@ export class MapDetailComponent implements OnInit {
     fileName;
     fileType;
     fileValue;
+    cutOffMechanic:boolean=false;
+    cutOffNumber:number;
     playerIdCreator: number = 1;
     playerIdGenerator:number=0;
     zoneIdCreator: number = 1;
@@ -330,6 +332,8 @@ export class MapDetailComponent implements OnInit {
     setCutOffRange(){
         this.dndMap.cutOffMechanic = this.mapForm.get('moveCutCheck').value;
         this.dndMap.cutOffNumber = +this.mapForm.get('moveCutRange').value/100;
+        this.cutOffMechanic = this.dndMap.cutOffMechanic;
+        this.cutOffNumber = this.dndMap.cutOffNumber;
     }
 
     public setMultiSelect(){
@@ -919,7 +923,6 @@ export class MapDetailComponent implements OnInit {
 
     colorTiles(setOrRemove){
         var color = "";
-        console.log(setOrRemove);
         if (setOrRemove=="set"){
              color = this.colorTileForm.get('tileColor').value;
         }
@@ -1235,7 +1238,6 @@ export class MapDetailComponent implements OnInit {
                 this.dndMap.id = existingId;
                 this.mapExists=true;
             }
-            console.log(this.mapExists);
         }
     }
 
@@ -1253,7 +1255,6 @@ export class MapDetailComponent implements OnInit {
                 this.mapExists=true;
             }
         }
-        console.log(this.mapExists);
 
     }
     public saveMap() {
@@ -1450,6 +1451,8 @@ export class MapDetailComponent implements OnInit {
                 this.dndMap.name = name;
                 this.dndMap.cutOffMechanic = cutOffMechanic
                 this.dndMap.cutOffNumber = cutOffNumber
+                this.cutOffMechanic = cutOffMechanic
+                this.cutOffNumber = cutOffNumber
                 this.mapForm.get('heightwidth').setValue(this.heightWidth);
                 this.mapForm.get('moveCutCheck').setValue(cutOffMechanic);
                 this.mapForm.get('moveCutRange').setValue(cutOffNumber*100);

@@ -129,7 +129,6 @@ export class SquareComponent implements OnInit {
           }
       }
       if (squareIdInRange) {
-
           //move player for that distance if freeMove is not on:
           if (!this.freeMove){
               if (this.cutOffMechanic){
