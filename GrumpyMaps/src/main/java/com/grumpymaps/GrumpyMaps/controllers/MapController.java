@@ -61,9 +61,7 @@ public class MapController {
 		int mapId = (int)dndMap.getId();
 
 		if (mapService.existsById(dndMap.getId())){
-			charzoneService.deleteByMapId(mapId);
 			tilezoneService.deleteByMapId(mapId);
-			playerService.deleteByMapId(mapId);
 			squareService.deleteByMapId(mapId);
 			mapService.deleteById(dndMap.getId());
 		}
@@ -81,9 +79,7 @@ public class MapController {
 			DndMap map = mapService.findById(mapId);
 			mapName = map.getName();
 			System.out.println("Deleting map " + mapName);
-			charzoneService.deleteByMapId(mapId);
 			tilezoneService.deleteByMapId(mapId);
-			playerService.deleteByMapId(mapId);
 			squareService.deleteByMapId(mapId);
 			mapService.deleteById(map.getId());
 		}
