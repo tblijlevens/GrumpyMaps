@@ -522,7 +522,7 @@ export class MapDetailComponent implements OnInit {
                 if (distance <= player.movementLeft){
                     //set the distance of the square:
                     allSquares[i].currentDistance = +distance.toFixed(1);
-                    if (!allSquares[i].obstructed){
+                    if (!allSquares[i].obstructed && allSquares[i].color == "rgba(0, 0, 0, 0.0)"){
                         moveRange.push(allSquares[i]);
                     }
                 }
@@ -543,7 +543,7 @@ export class MapDetailComponent implements OnInit {
         }
         for (var i = 0 ; i < this.rangeSquares.length ; i++){
             if (this.rangeSquares[i].currentDistance <= cutOffRange && this.selectedPlayer.movementLeft >= this.selectedPlayer.movementAmount*this.dndMap.cutOffNumber){
-                if (!this.rangeSquares[i].obstructed){
+                if (!this.rangeSquares[i].obstructed && this.rangeSquares[i].color== "rgba(0, 0, 0, 0.0)"){
                     cutOffSquares.push(this.rangeSquares[i]);
                 }
             }
