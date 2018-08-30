@@ -160,6 +160,7 @@ export class MapDetailComponent implements OnInit {
     obstructionMode:boolean=false;
     movementMode:boolean=false;
     freeMove:boolean=false;
+    disengageMode:boolean=false;
     chargeMode:boolean=false;
     rangeSquares:Square[] = new Array();
     rangeCutOffSquares:Square[] = new Array();
@@ -467,6 +468,10 @@ export class MapDetailComponent implements OnInit {
         }
         this.setSquareTextSize();
     }
+    showDisengageRange(player:Player){
+        this.rangeSquares = this.getDisengageRange(player, this.dndMap.squares);
+        this.setSquareTextSize();
+    }
     showChargeRange(player:Player){
         this.rangeSquares = this.getChargeRange(player, this.dndMap.squares);
         this.setSquareTextSize();
@@ -529,6 +534,57 @@ export class MapDetailComponent implements OnInit {
             }
         }
 
+        return moveRange;
+    }
+    getDisengageRange(player:Player, allSquares:Square[]){
+
+        var moveRange = new Array();
+
+        //get row and column of players current position coordinates:
+        var rowNumber = player.squareMapCoordinate.split(":")[0].charCodeAt(0);
+        var column = +player.squareMapCoordinate.split(":")[1];
+
+        // calculate distance of elligable tiles:
+        for (var i = 0 ; i < allSquares.length ; i++){
+            var targetRowNumber = allSquares[i].mapCoordinate.split(":")[0].charCodeAt(0);
+            var targetColumn = +allSquares[i].mapCoordinate.split(":")[1];
+
+            var rowDif = this.getDifference(rowNumber, targetRowNumber);
+            var colDif = this.getDifference(column, targetColumn);
+            var distance = 0;
+
+            // make selection of tiles to do calculations on smaller:
+            if (rowDif<=1 && colDif<=1){
+                if (rowDif == 0){
+                    distance = colDif*this.squareSize
+                }
+                if (colDif == 0 && rowDif!=0){
+                    distance = rowDif*this.squareSize
+                }
+
+                // when diagonal movement calc distance based on a^2+b^2=c^2
+                // just a diagonal line:
+                if (colDif == rowDif && colDif !=0){
+                    var squaredTileSize = Math.pow(this.squareSize,2);
+                    distance = colDif * Math.sqrt(squaredTileSize+squaredTileSize);
+                }
+
+                // combination of diagonal and vertical/horizontal line
+                if (colDif!=rowDif && colDif>0 && rowDif>0){
+                    var minimum = Math.min(colDif,rowDif);
+                    var maximum = Math.max(colDif,rowDif);
+                    var squaredTileSize = Math.pow(this.squareSize,2);
+                    var diagonal = minimum * Math.sqrt(squaredTileSize+squaredTileSize);
+                    var straight = (maximum-minimum)*this.squareSize;
+                    distance=diagonal+straight;
+                }
+
+                allSquares[i].currentDistance = +distance.toFixed(1);
+
+                // put in range tiles in the moveRange variable to return:
+                moveRange.push(allSquares[i]);
+            }
+        }
         return moveRange;
     }
     getCutOffRange(){
@@ -783,6 +839,21 @@ export class MapDetailComponent implements OnInit {
         }
     }
 
+    disengage() {
+        if(this.selectedPlayer.isSelected) {
+            if (this.selectedPlayer.movementLeft >= this.selectedPlayer.movementAmount/2){
+                this.resetAllDistances();
+                this.movementMode = true;
+                this.disengageMode = true;
+                this.showDisengageRange(this.selectedPlayer);
+                this.selectedSquare = this.getPlayerSquare(this.selectedPlayer);
+            }
+            else{
+                this.showMessage(this.selectedPlayer.name + " needs half movement amount to disengage.", "red", 1000);
+            }
+        }
+    }
+
     charge() {
         if(this.selectedPlayer.isSelected) {
             if (this.selectedPlayer.movementLeft == this.selectedPlayer.movementAmount){
@@ -793,7 +864,7 @@ export class MapDetailComponent implements OnInit {
                 this.selectedSquare = this.getPlayerSquare(this.selectedPlayer);
             }
             else{
-                this.showMessage(this.selectedPlayer.name + " does not have enough movement left to charge. Need full movement amount.", "red", 1500);
+                this.showMessage(this.selectedPlayer.name + " needs full movement amount to charge.", "red", 1000);
             }
         }
     }
@@ -1158,6 +1229,9 @@ export class MapDetailComponent implements OnInit {
     }
     public receiveFreeMove($event){
         this.freeMove = $event;
+    }
+    public receiveDisengageMode($event){
+        this.disengageMode = $event;
     }
     public receiveChargeMode($event){
         this.chargeMode = $event;
