@@ -30,7 +30,6 @@ public class Square implements Serializable{
     private boolean inRange;
     private boolean hidden;
 
-
     private Integer mapId;
 
     @Transient

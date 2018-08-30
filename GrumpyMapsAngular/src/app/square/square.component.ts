@@ -153,7 +153,7 @@ export class SquareComponent implements OnInit {
               this.selectedPlayer.spellsLeft=0;
               this.selectedPlayer.actionPoints=0;
               var advantageStasis={
-                  label:"advantage",
+                  label:"adv on att & +1ND",
                   radius:0,
                   duration:2
               }
