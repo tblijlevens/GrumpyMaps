@@ -23,21 +23,40 @@
                 <span class="characterOptionsBox"  *ngIf="selectedPlayer">
                     <span class="lead" style="font-weight:bold;">Character options</span><br />
 
-                    <div class="btn attackCastMove" (click)="attack()" *ngIf="selectedPlayer.attacksLeft!=0">
+                    <div class="btn attackCastMove" (click)="attack()" *ngIf="selectedPlayer.attacksLeft>0">
+                        <mdb-icon class="buttonIcon" icon="crosshairs"></mdb-icon><br />
+                        <span class="buttonText">
+                            Attack
+                        </span>
+                    </div>
+                    <div class="btn attackCastMove disabled" *ngIf="selectedPlayer.attacksLeft<=0">
                         <mdb-icon class="buttonIcon" icon="crosshairs"></mdb-icon><br />
                         <span class="buttonText">
                             Attack
                         </span>
                     </div>
 
-                    <div class="btn attackCastMove" (click)="cast()" *ngIf="selectedPlayer.spellsLeft!=0">
+                    <div class="btn attackCastMove" (click)="cast()" *ngIf="selectedPlayer.spellsLeft>0">
                         <mdb-icon class="buttonIcon" icon="magic"></mdb-icon><br />
                         <span class="buttonText">
                             Cast
                         </span>
                     </div>
 
-                    <div class="btn attackCastMove" (click)="moveCharacter()">
+                    <div class="btn attackCastMove disabled" *ngIf="selectedPlayer.spellsLeft<=0">
+                        <mdb-icon class="buttonIcon" icon="magic"></mdb-icon><br />
+                        <span class="buttonText">
+                            Cast
+                        </span>
+                    </div>
+
+                    <div class="btn attackCastMove" (click)="moveCharacter()" *ngIf="selectedPlayer.movementLeft>=squareSize">
+                        <mdb-icon class="buttonIcon" icon="arrows"></mdb-icon><br />
+                        <span class="buttonText">
+                            Move
+                        </span>
+                    </div>
+                    <div class="btn attackCastMove disabled" *ngIf="selectedPlayer.movementLeft<squareSize">
                         <mdb-icon class="buttonIcon" icon="arrows"></mdb-icon><br />
                         <span class="buttonText">
                             Move
@@ -51,8 +70,20 @@
                             Disengage
                         </span>
                     </div>
+                    <div class="btn deleteEdit disabled" *ngIf="selectedPlayer.movementLeft<squareSize">
+                        <mdb-icon class="buttonIcon" icon="level-up"></mdb-icon><br />
+                        <span class="buttonText">
+                            Disengage
+                        </span>
+                    </div>
 
                     <div class="btn deleteEdit" (click)="charge()" *ngIf="selectedPlayer.movementLeft==selectedPlayer.movementAmount">
+                        <mdb-icon class="buttonIcon" icon="mixcloud"></mdb-icon><br />
+                        <span class="buttonText">
+                            Charge
+                        </span>
+                    </div>
+                    <div class="btn deleteEdit disabled" *ngIf="selectedPlayer.movementLeft<selectedPlayer.movementAmount">
                         <mdb-icon class="buttonIcon" icon="mixcloud"></mdb-icon><br />
                         <span class="buttonText">
                             Charge
@@ -188,18 +219,39 @@
                         Add<br />object
                     </span>
                 </div>
+                <div class="btn addObstruct disabled" *ngIf="selectedSquares.length<=0">
+                    <mdb-icon class="buttonIcon" icon="plus"></mdb-icon><br />
+                    <span class="buttonText">
+                        Add<br />object
+                    </span>
+                </div>
+
                 <div class="btn addObstruct" data-toggle="modal" data-target="#colorTileModal" *ngIf="selectedSquares.length!=0">
                     <mdb-icon class="buttonIcon" icon="paint-brush"></mdb-icon><br />
                     <span class="buttonText">
                         Color
                     </span>
                 </div>
+                <div class="btn addObstruct disabled" *ngIf="selectedSquares.length<=0">
+                    <mdb-icon class="buttonIcon" icon="paint-brush"></mdb-icon><br />
+                    <span class="buttonText">
+                        Color
+                    </span>
+                </div>
+
                 <div class="btn addObstruct" data-toggle="modal" data-target="#addZoneTileForm" *ngIf="selectedSquares.length!=0">
                     <mdb-icon class="buttonDoubleIcon" icon="dot-circle-o"></mdb-icon>/<mdb-icon class="buttonDoubleIcon" icon="flag"></mdb-icon><br />
                     <span class="buttonText">
                         Zone/Flag
                     </span>
                 </div>
+                <div class="btn addObstruct disabled" *ngIf="selectedSquares.length<=0">
+                    <mdb-icon class="buttonDoubleIcon" icon="dot-circle-o"></mdb-icon>/<mdb-icon class="buttonDoubleIcon" icon="flag"></mdb-icon><br />
+                    <span class="buttonText">
+                        Zone/Flag
+                    </span>
+                </div>
+
                 <br />
                 <div class="btn addObstruct" id="multiSelect"(click)="setMultiSelect()">
                     <mdb-icon class="buttonIcon" icon="clone"></mdb-icon><br />
@@ -207,13 +259,21 @@
                         Multi<BR />select
                     </span>
                 </div>
+
                 <div class="btn addObstruct" id="showGrid" (click)="hideGrid()">
                     <mdb-icon class="buttonIcon" icon="th"></mdb-icon><br />
                     <span class="buttonText">
                         Show grid
                     </span>
                 </div>
+
                 <div class="btn addObstruct" (click)="toggleVisibility()" *ngIf="selectedSquares.length!=0">
+                    <mdb-icon class="buttonIcon" icon="eye"></mdb-icon><br />
+                    <span class="buttonText">
+                        Tile <br />visibility
+                    </span>
+                </div>
+                <div class="btn addObstruct disabled" *ngIf="selectedSquares.length<=0">
                     <mdb-icon class="buttonIcon" icon="eye"></mdb-icon><br />
                     <span class="buttonText">
                         Tile <br />visibility
