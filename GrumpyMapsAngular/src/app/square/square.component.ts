@@ -371,13 +371,11 @@ export class SquareComponent implements OnInit {
   deselectAll(){
       this.selectedSquaresEvent.emit(new Array());
       this.resetPlayer();
-      this.setSelectedPlayerEvent.emit(null);
       this.moveModeEvent.emit(false);
       this.freeMoveEvent.emit(false);
       this.chargeModeEvent.emit(false);
       this.setRangeSquaresEvent.emit(new Array());
       this.resetAllDistances();
-
   }
 
   // all the mouseevents below make multiSelecting possible
