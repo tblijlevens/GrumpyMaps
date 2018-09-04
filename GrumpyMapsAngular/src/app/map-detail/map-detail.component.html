@@ -583,10 +583,15 @@
                         <input class="form-control" formControlName="mapName" (input)="selectSaveMapInput(this.saveForm.get('mapName').value)">
                     </label>
                 </form>
-                <div *ngIf="mapsLoaded==true">
+                <div *ngIf="mapsLoaded">
                     <label class="center-block"><b>Your maps:</b></label><br>
                     <span *ngFor="let name of allLoadedMapNames" style="cursor:pointer;" (click)="selectSaveMapClick(name)">
                         {{name.split(": ")[1]}}<br />
+                    </span>
+                </div>
+                <div *ngIf="!mapsLoaded">
+                    <span>
+                        Retreiving maps from database. Please wait...
                     </span>
                 </div>
                 <div *ngIf="mapExists">
@@ -616,13 +621,18 @@
                 </button>
             </div>
             <div class="modal-body">
-                <div *ngIf="mapsLoaded==true">
+                <div *ngIf="mapsLoaded">
                     <label class="center-block"><b>Your maps:</b></label><br>
                     <span *ngFor="let name of allLoadedMapNames" style="cursor:pointer;" (click)="selectLoadMap(name)">
                         {{name.split(": ")[1]}}<br />
                     </span>
                     <br />
                     <span><B>You selected map: {{selectedLoadMapname}}</B></span>
+                </div>
+                <div *ngIf="!mapsLoaded">
+                    <span>
+                        Retreiving maps from database. Please wait...
+                    </span>
                 </div>
             </div>
             <div class="modal-footer" >
