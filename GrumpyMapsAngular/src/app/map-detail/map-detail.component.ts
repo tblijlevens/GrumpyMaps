@@ -527,7 +527,7 @@ export class MapDetailComponent implements OnInit {
                 if (distance <= player.movementLeft){
                     //set the distance of the square:
                     allSquares[i].currentDistance = +distance.toFixed(1);
-                    if (!allSquares[i].obstructed && allSquares[i].color == "rgba(0, 0, 0, 0.0)"){
+                    if (!allSquares[i].obstructed && !allSquares[i].fogged){
                         moveRange.push(allSquares[i]);
                     }
                 }
@@ -599,7 +599,7 @@ export class MapDetailComponent implements OnInit {
         }
         for (var i = 0 ; i < this.rangeSquares.length ; i++){
             if (this.rangeSquares[i].currentDistance <= cutOffRange && this.selectedPlayer.movementLeft >= this.selectedPlayer.movementAmount*this.dndMap.cutOffNumber){
-                if (!this.rangeSquares[i].obstructed && this.rangeSquares[i].color== "rgba(0, 0, 0, 0.0)"){
+                if (!this.rangeSquares[i].obstructed && !this.rangeSquares[i].fogged){
                     cutOffSquares.push(this.rangeSquares[i]);
                 }
             }
@@ -996,29 +996,19 @@ export class MapDetailComponent implements OnInit {
         return input;
     }
 
-    colorTiles(setOrRemove){
-        var color = "";
-        if (setOrRemove=="set"){
-             color = this.colorTileForm.get('tileColor').value;
+    fogTiles(){
+        var fogged = true;
+        if (this.selectedSquares[0].fogged) {
+            // make all squares transparent
+            fogged = false;
         }
-        else {
-            color = "rgba(0, 0, 0, 0.0)";
-        }
-        var obstruct = this.colorTileForm.get('obstructTile').value;
-        if (this.colorTileForm.get('selectAll').value){
+        if ((<KeyboardEvent>window.event).ctrlKey || (<KeyboardEvent>window.event).metaKey){
             this.selectedSquares = this.dndMap.squares;
         }
-
         for (var i = 0 ; i < this.selectedSquares.length ; i++){
-            if (obstruct){
-                this.selectedSquares[i].obstructed = true;
-                this.selectedSquares[i].color = color;
-            }
-            else{
-                this.selectedSquares[i].obstructed = false;
-                this.selectedSquares[i].color = color;
-            }
+            this.selectedSquares[i].fogged = fogged;
         }
+        
         this.selectedSquares = new Array();
 
         // make all squares set their styles:
@@ -1562,7 +1552,7 @@ export class MapDetailComponent implements OnInit {
                 theSquare.numberofPlayers= mapSquares[i]["numberofPlayers"];
                 theSquare.obstructed= mapSquares[i]["obstructed"];
                 theSquare.hidden= mapSquares[i]["hidden"];
-                theSquare.color= mapSquares[i]["color"];
+                theSquare.fogged= mapSquares[i]["fogged"];
 
                 allMapSquares.push(theSquare);
             }

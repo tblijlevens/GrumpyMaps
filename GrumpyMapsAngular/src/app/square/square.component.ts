@@ -277,9 +277,15 @@ export class SquareComponent implements OnInit {
   }
 
   private setTileStyle(){
-      // style squares if obstruct mode is on
-      var isObstructed = this.square.obstructed;
-      this.squareStyles['background-color'] = this.square.color;
+      if (this.square.fogged){
+          this.squareStyles['background-color'] = "rgba(153, 153, 153, 1)";
+          this.squareStyles['box-shadow'] = "0 0px 8px 8px #999999";
+      }
+      else {
+          this.squareStyles['background-color'] = "rgba(0, 0, 0, 0.0)";
+          this.squareStyles['box-shadow'] = "none";
+
+      }
 
     //   // Assuming a six character colour:
       //
@@ -314,7 +320,7 @@ export class SquareComponent implements OnInit {
     if (!this.square.obstructed && !this.selectedSquares.includes(this.square)) {
       if (this.square.inRange) {
           if (this.rangeCutOffSquares.includes(this.square)) {
-              if (this.square.color=="rgba(0, 0, 0, 0.0)"){
+              if (!this.square.fogged){
                   this.squareStyles['background-color'] = 'rgba(0, 161, 161, 0.5)';
               }
               else {
@@ -323,7 +329,7 @@ export class SquareComponent implements OnInit {
           }
           else
           {
-              if (this.square.color=="rgba(0, 0, 0, 0.0)"){
+              if (!this.square.fogged){
                   this.squareStyles['background-color'] = 'rgba(8, 161, 0, 0.5)';
               }
               else {
@@ -333,7 +339,9 @@ export class SquareComponent implements OnInit {
 
       }
       else {
-        this.squareStyles['background-color'] = this.square.color;
+          if (!this.square.fogged){
+              this.squareStyles['background-color'] = "rgba(0, 0, 0, 0.0)";
+          }
 
       }
      // this.selectionStyles();
@@ -343,7 +351,7 @@ export class SquareComponent implements OnInit {
   selectionStyles(){
       for (var i = 0 ; i < this.selectedSquares.length ; i++){
           if (this.square.mapSquareId == this.selectedSquares[i].mapSquareId){
-              if (this.square.color=="rgba(0, 0, 0, 0.0)"){
+              if (!this.square.fogged){
                   this.squareStyles['background-color'] = 'rgba(0, 112, 161, 0.6)';
               }
               else {
@@ -390,11 +398,11 @@ export class SquareComponent implements OnInit {
       if(this.selecting && this.multiSelect){
           this.addToSelection();
       }
-      if (this.square.color=="rgba(0, 0, 0, 0.0)"){
+      if (!this.square.fogged){
           this.squareStyles['background-color'] = 'rgba(0, 112, 161, 0.5)';
       }
       else {
-          this.squareStyles['background-color'] = 'rgba(0, 35, 45, 1)';
+          this.squareStyles['background-color'] = 'rgba(0, 112, 161, 1)';
       }
       this.selectionStyles();
       this.getTileDistance();
@@ -410,7 +418,7 @@ export class SquareComponent implements OnInit {
       if (!this.selecting){
           this.setRangeSquareStyles();
 
-          if (this.square.obstructed){
+          if (this.square.obstructed || this.square.fogged){
               this.setTileStyle();
           }
           this.selectionStyles();
