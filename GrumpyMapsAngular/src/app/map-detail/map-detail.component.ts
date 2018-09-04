@@ -94,7 +94,8 @@ export class MapDetailComponent implements OnInit {
         yards: new FormControl(),
         imageUrl: new FormControl(),
         moveCutCheck: new FormControl(),
-        moveCutRange: new FormControl()
+        moveCutRange: new FormControl(),
+        showGridCheck: new FormControl()
     });
     createPlayerForm = new FormGroup({
       playerName: new FormControl(),
@@ -198,6 +199,7 @@ export class MapDetailComponent implements OnInit {
         this.mapForm.get('yards').setValue(5);
         this.mapForm.get('moveCutCheck').setValue(false);
         this.mapForm.get('moveCutRange').setValue(50);
+        this.mapForm.get('showGridCheck').setValue(true);
         this.dndMap = new DnDMap(0, this.heightWidth, this.squareSize); //id zero cannot exist in databse, so it will generate a new unique id)
 
         this.createPlayerForm.get('playerColor').setValue("#ff0000");
@@ -350,16 +352,12 @@ export class MapDetailComponent implements OnInit {
     }
 
     public hideGrid() {
-        // var gridToggle = this.mapForm.get('gridToggle').value;
+        this.showGrid = this.mapForm.get('showGridCheck').value;
         if(this.showGrid){
-            this.showGrid=false;
-            this.squareBorderStyle= 'dotted 1px rgb(162, 162, 162, 0)';
-            $("#showGrid").css({"box-shadow":"none"})
+            this.squareBorderStyle= 'dotted 1px rgb(162, 162, 162, 0.7)';
         }
         else {
-            this.showGrid=true;
-            this.squareBorderStyle = 'dotted 1px rgb(162, 162, 162, 0.7)';
-            $("#showGrid").css({"box-shadow":"0 0 4px 2px #2A74F2"});
+            this.squareBorderStyle = 'dotted 1px rgb(162, 162, 162, 0)';
         }
     }
     toggleVisibility(){
@@ -1008,7 +1006,7 @@ export class MapDetailComponent implements OnInit {
         for (var i = 0 ; i < this.selectedSquares.length ; i++){
             this.selectedSquares[i].fogged = fogged;
         }
-        
+
         this.selectedSquares = new Array();
 
         // make all squares set their styles:

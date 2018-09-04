@@ -149,6 +149,14 @@
         <form [formGroup]="mapForm" >
             <input class="inputCustom legendYards" formControlName="yards" type="number" min="1" max="100" (change)="setSquareSize()" (click)="setSquareSize()" style="width:45px;height:25px;"> {{dndMap.squares[0].squareSize}} yards ({{squareFeet}} feet)
         </form>
+        <div id=showGrid>
+            <form [formGroup]="mapForm" >
+
+                <label class="center-block"><mdb-icon icon="th" style="color:black;"></mdb-icon>&nbsp;&nbsp;<b>Show grid: </b>
+                    <input class="checkCustom" type="checkbox" formControlName="showGridCheck"  (click)="hideGrid()" (change)="hideGrid()">
+                </label>
+            </form>
+        </div>
     </div>
     <div class="legend"></div>
     <div style="text-align:center;">
@@ -226,16 +234,16 @@
                     </span>
                 </div>
 
-                <div class="btn addObstruct" (click)="fogTiles()" *ngIf="selectedSquares.length!=0">
-                    <mdb-icon class="buttonIcon" icon="cloud"></mdb-icon><br />
+                <div class="btn addObstruct" (click)="obstructSelection()" *ngIf="selectedSquares.length!=0">
+                    <mdb-icon class="buttonIcon" icon="close"></mdb-icon><br />
                     <span class="buttonText">
-                        Fog
+                        Obstruct
                     </span>
                 </div>
                 <div class="btn addObstruct disabled" *ngIf="selectedSquares.length<=0">
-                    <mdb-icon class="buttonIcon" icon="cloud"></mdb-icon><br />
+                    <mdb-icon class="buttonIcon" icon="close"></mdb-icon><br />
                     <span class="buttonText">
-                        Fog
+                        Obstruct
                     </span>
                 </div>
 
@@ -260,10 +268,16 @@
                     </span>
                 </div>
 
-                <div class="btn addObstruct" id="showGrid" (click)="hideGrid()">
-                    <mdb-icon class="buttonIcon" icon="th"></mdb-icon><br />
+                <div class="btn addObstruct" (click)="fogTiles()" *ngIf="selectedSquares.length!=0">
+                    <mdb-icon class="buttonIcon" icon="cloud"></mdb-icon><br />
                     <span class="buttonText">
-                        Show grid
+                        Fog
+                    </span>
+                </div>
+                <div class="btn addObstruct disabled" *ngIf="selectedSquares.length<=0">
+                    <mdb-icon class="buttonIcon" icon="cloud"></mdb-icon><br />
+                    <span class="buttonText">
+                        Fog
                     </span>
                 </div>
 

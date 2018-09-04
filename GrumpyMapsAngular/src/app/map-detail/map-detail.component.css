@@ -417,7 +417,9 @@ input[type=number]{
 }
 
 #showGrid{
-    box-shadow: 0 0 4px 2px #2A74F2;
+    position: absolute;
+    top:5px;
+    right:0px;
 }
 .nextTurn{
     position: relative;

@@ -277,6 +277,12 @@ export class SquareComponent implements OnInit {
   }
 
   private setTileStyle(){
+      if (this.square.obstructed && !this.square.fogged){
+          this.squareStyles['background'] = 'repeating-linear-gradient(          135deg, rgba(161, 0, 0, 0.6), rgba(161, 0, 0, 0.6) 8px, rgba(0, 0, 0, 0.0) 8px, rgba(0, 0, 0, 0.0) 16px)';
+      }
+      else {
+          this.squareStyles['background'] = 'none';
+      }
       if (this.square.fogged){
           this.squareStyles['background-color'] = "rgba(153, 153, 153, 1)";
           this.squareStyles['box-shadow'] = "0 0px 8px 8px #999999";
