@@ -3,27 +3,29 @@
     <br />
 
     <ul>
-        <li *ngFor="let zone of square.zones">
-            <span class="links" (click)="clickTileZone(zone, square)">
-                <mdb-icon *ngIf="zone.radius!=0" class="buttonIcon" icon="dot-circle-o"></mdb-icon>
-                <mdb-icon *ngIf="zone.radius==0"class="buttonIcon" icon="flag"></mdb-icon> {{zone.label}}</span>:
+        <span *ngIf="!square.hidden">
+            <li *ngFor="let zone of square.zones">
+                <span class="links" (click)="clickTileZone(zone, square)">
+                    <mdb-icon *ngIf="zone.radius!=0" class="buttonIcon" icon="dot-circle-o"></mdb-icon>
+                    <mdb-icon *ngIf="zone.radius==0"class="buttonIcon" icon="flag"></mdb-icon> {{zone.label}}</span>:
 
-            <mdb-icon class="buttonIcon floatRight" icon="remove" (click)="removePlayerZone(zone, square)" alt="Remove Zone" title="Remove Zone"></mdb-icon> &nbsp;
-            <mdb-icon class="buttonIcon floatRight" icon="pencil"  (click)="setZoneValues(zone)" data-toggle="modal" data-target="#editTileZoneForm" alt="Edit Zone" title="Edit Zone"></mdb-icon>
+                    <mdb-icon class="buttonIcon floatRight" icon="remove" (click)="removePlayerZone(zone, square)" alt="Remove Zone" title="Remove Zone"></mdb-icon> &nbsp;
+                    <mdb-icon class="buttonIcon floatRight" icon="pencil"  (click)="setZoneValues(zone)" data-toggle="modal" data-target="#editTileZoneForm" alt="Edit Zone" title="Edit Zone"></mdb-icon>
 
-            <ul>
-                <li>
-                    Duration:
-                    <span *ngIf="zone.duration==-1">&#x221e; rnds</span>
-                    <span *ngIf="zone.duration==1">{{zone.duration}} rnd </span>
-                    <span *ngIf="zone.duration>1">{{zone.duration}} rnds </span>
+                    <ul>
+                        <li>
+                            Duration:
+                            <span *ngIf="zone.duration==-1">&#x221e; rnds</span>
+                            <span *ngIf="zone.duration==1">{{zone.duration}} rnd </span>
+                            <span *ngIf="zone.duration>1">{{zone.duration}} rnds </span>
+                        </li>
+                        <li *ngIf="zone.radius!=0">
+                            Radius:
+                            <span>{{zone.radius}} yards</span>
+                        </li>
+                    </ul>
                 </li>
-                <li *ngIf="zone.radius!=0">
-                    Radius:
-                    <span>{{zone.radius}} yards</span>
-                </li>
-            </ul>
-        </li>
+            </span>
 </ul>
 
     <!-- <span *ngFor="let square of selectedSquares"> {{square.mapCoordinate}}... </span><br /> -->

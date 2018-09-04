@@ -383,6 +383,7 @@ export class MapDetailComponent implements OnInit {
 
         // update zone sizes
         this.mapShareService.setPlayerZones();
+        this.mapShareService.setTileZones();
 
         // show a message:
         var message="";
