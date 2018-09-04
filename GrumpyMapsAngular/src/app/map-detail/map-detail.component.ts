@@ -1562,6 +1562,7 @@ export class MapDetailComponent implements OnInit {
             this.mapForm.get('yards').setValue(this.dndMap.squares[0].squareSize);
             this.setSquareSize();
             this.setRows();
+            this.setSquareStyles();
 
             this.getTileZones();
             this.getPlayers();
