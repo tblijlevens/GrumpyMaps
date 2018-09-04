@@ -581,7 +581,9 @@ export class MapDetailComponent implements OnInit {
                 allSquares[i].currentDistance = +distance.toFixed(1);
 
                 // put in range tiles in the moveRange variable to return:
-                moveRange.push(allSquares[i]);
+                if (!allSquares[i].obstructed && !allSquares[i].fogged){
+                    moveRange.push(allSquares[i]);
+                }
             }
         }
         return moveRange;
@@ -701,7 +703,9 @@ export class MapDetailComponent implements OnInit {
                 if (distance <= (player.movementAmount*1.5)){
                     //set the distance of the square:
                     allSquares[i].currentDistance = +distance.toFixed(1);
-                    moveRange.push(allSquares[i]);
+                    if (!allSquares[i].obstructed && !allSquares[i].fogged){
+                        moveRange.push(allSquares[i]);
+                    }
                 }
             }
         }
