@@ -288,7 +288,7 @@ export class SquareComponent implements OnInit {
           this.squareStyles['background-color'] = "rgba(153, 153, 153, 1)";
           this.squareStyles['box-shadow'] = "0 0px 5px 5px #999999";
       }
-      else {
+      else if (!this.selectedSquares.includes(this.square)){
           this.squareStyles['background-color'] = "rgba(0, 0, 0, 0.0)";
           this.squareStyles['box-shadow'] = "none";
 
@@ -384,11 +384,6 @@ export class SquareComponent implements OnInit {
           this.selecting=true;
           this.selectingEvent.emit(true);
       }
-      if (!this.multiSelect){
-          this.selectedSquares = new Array();
-          this.selectedSquares.push(this.square);
-          this.selectedSquaresEvent.emit(this.selectedSquares);
-      }
       if (this.selectedSquares.includes(this.square)){
           this.deselecting = true;
       }
@@ -396,6 +391,11 @@ export class SquareComponent implements OnInit {
           this.deselecting = false;
       }
       this.deselectingEvent.emit(this.deselecting);
+      if (!this.multiSelect){
+          this.selectedSquares = new Array();
+          this.selectedSquares.push(this.square);
+          this.selectedSquaresEvent.emit(this.selectedSquares);
+      }
       this.addToSelection();
       this.selectionStyles();
   }
@@ -420,6 +420,7 @@ export class SquareComponent implements OnInit {
 
   }
   mouseOutSquare(){
+
       if (!this.selecting){
           this.setRangeSquareStyles();
 
@@ -441,6 +442,7 @@ export class SquareComponent implements OnInit {
       else if (!this.deselecting){
           var allSquares = "";
           this.selectedSquares.push(this.square);
+
           for (var i = 0 ; i < this.selectedSquares.length ; i++){
               allSquares+= this.selectedSquares[i].mapCoordinate + " ";
           }
