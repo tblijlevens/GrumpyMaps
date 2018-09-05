@@ -182,7 +182,7 @@ export class MapDetailComponent implements OnInit {
     fileName;
     fileType;
     fileValue;
-    cutOffMechanic:boolean=false;
+    cutOffMechanic:boolean=true;
     cutOffNumber:number;
     playerIdCreator: number = 1;
     playerIdGenerator:number=0;
@@ -197,7 +197,7 @@ export class MapDetailComponent implements OnInit {
         this.loadMap();
         this.mapForm.get('heightwidth').setValue(10);
         this.mapForm.get('yards').setValue(5);
-        this.mapForm.get('moveCutCheck').setValue(false);
+        this.mapForm.get('moveCutCheck').setValue(true);
         this.mapForm.get('moveCutRange').setValue(50);
         this.mapForm.get('showGridCheck').setValue(true);
         this.dndMap = new DnDMap(0, this.heightWidth, this.squareSize); //id zero cannot exist in databse, so it will generate a new unique id)
@@ -219,6 +219,7 @@ export class MapDetailComponent implements OnInit {
         this.setRows();
         this.calculateMapFeet();
         this.setSizes();
+        this.setCutOffRange();
 
     }
 
