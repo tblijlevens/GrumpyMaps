@@ -417,6 +417,9 @@ export class MapDetailComponent implements OnInit {
             this.mapShareService.setSquare(playerSquare); //update active square in squareDetail via mapShareService
             this.showPlayerDot();
         }
+        if ((<KeyboardEvent>window.event).ctrlKey || (<KeyboardEvent>window.event).metaKey){
+            this.selectedPlayer.resetAllStats();
+        }
     }
 
     deselectAll(){
@@ -872,7 +875,17 @@ export class MapDetailComponent implements OnInit {
         }
     }
     consume(){
-
+        if(this.selectedPlayer.isSelected) {
+            if (this.selectedPlayer.movementLeft >= this.selectedPlayer.movementAmount*this.cutOffNumber){
+                this.resetAllDistances();
+                this.selectedSquare = this.getPlayerSquare(this.selectedPlayer);
+                this.selectedPlayer.halfRoundAction(this.cutOffNumber);
+                this.showMessage(this.selectedPlayer.name + " consumes something.", "black", 1000);
+            }
+            else{
+                this.showMessage(this.selectedPlayer.name + " does not have half a round left to consume something.", "red", 1000);
+            }
+        }
     }
     equip(){
 
@@ -890,6 +903,20 @@ export class MapDetailComponent implements OnInit {
             }
             else{
                 this.showMessage(this.selectedPlayer.name + " does not have a full round left to perform a full round action.", "red", 1000);
+            }
+        }
+    }
+    halfRoundAttack(){
+        if(this.selectedPlayer.isSelected) {
+            if (this.selectedPlayer.actions[0] != "attack" &&
+            this.selectedPlayer.movementLeft >= this.selectedPlayer.movementAmount*this.cutOffNumber){
+                this.resetAllDistances();
+                this.selectedSquare = this.getPlayerSquare(this.selectedPlayer);
+                this.selectedPlayer.halfRoundAttack(this.cutOffNumber);
+                this.showMessage(this.selectedPlayer.name + " performs a half round attack.", "black", 1000);
+            }
+            else{
+                this.showMessage(this.selectedPlayer.name + " does not have half a round or full attacks left to perform a half round attack", "red", 1000);
             }
         }
     }
