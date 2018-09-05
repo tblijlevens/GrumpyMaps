@@ -1080,12 +1080,17 @@ export class MapDetailComponent implements OnInit {
         this.clearAllFields();
     }
     obstructSelection(){
+        var obstruct = false;
+        if (this.selectedSquares[0].obstructed) {
+            // make all squares unobstructed
+            obstruct = true;
+        }
         for (var i = 0 ; i < this.selectedSquares.length ; i++){
-            if (this.selectedSquares[i].obstructed ==false){
-                this.selectedSquares[i].obstructed = true;
+            if (obstruct){
+                this.selectedSquares[i].obstructed = false;
             }
             else{
-                this.selectedSquares[i].obstructed = false;
+                this.selectedSquares[i].obstructed = true;
             }
         }
         this.selectedSquares = new Array();
