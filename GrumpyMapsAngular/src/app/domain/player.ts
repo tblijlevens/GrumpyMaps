@@ -135,7 +135,6 @@ export class Player{
     }
     movePlayerCutOff(yardsMoved:number, cutOffNumber:number){
         this.movementLeft -= yardsMoved;
-        this.actionPoints -= (yardsMoved*this.pointsPerYard);
 
         if (this.movementLeft < (this.movementAmount*cutOffNumber) || this.actions[0] == "attack" || this.actions[0] == "halfRoundAction"){ //moveleft is below half or first action was a (halfRound)attack or halfRoundAction
             this.attacksLeft = 0;
