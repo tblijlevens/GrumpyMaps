@@ -64,39 +64,53 @@
                     </div>
 
                     <br />
-                    <div class="btn deleteEdit" (click)="disengage()" *ngIf="selectedPlayer.movementLeft>=squareSize">
+                    <div class="btn deleteEdit" (click)="disengage()" *ngIf="selectedPlayer.movementLeft>=squareSize && this.selectedPlayer.movementLeft >= this.selectedPlayer.movementAmount*this.cutOffNumber">
                         <mdb-icon class="buttonIcon" icon="level-up"></mdb-icon><br />
                         <span class="buttonText">
                             Disengage
                         </span>
                     </div>
-                    <div class="btn deleteEdit disabled" *ngIf="selectedPlayer.movementLeft<squareSize">
+                    <div class="btn deleteEdit disabled" *ngIf="selectedPlayer.movementLeft<squareSize || this.selectedPlayer.movementLeft < this.selectedPlayer.movementAmount*this.cutOffNumber">
                         <mdb-icon class="buttonIcon" icon="level-up"></mdb-icon><br />
                         <span class="buttonText">
                             Disengage
                         </span>
                     </div>
 
-                    <div class="btn deleteEdit" (click)="charge()" *ngIf="selectedPlayer.movementLeft==selectedPlayer.movementAmount">
+                    <div class="btn attackCastMove" (click)="charge()" *ngIf="selectedPlayer.movementLeft==selectedPlayer.movementAmount">
                         <mdb-icon class="buttonIcon" icon="mixcloud"></mdb-icon><br />
                         <span class="buttonText">
                             Charge
                         </span>
                     </div>
-                    <div class="btn deleteEdit disabled" *ngIf="selectedPlayer.movementLeft<selectedPlayer.movementAmount">
+                    <div class="btn attackCastMove disabled" *ngIf="selectedPlayer.movementLeft<selectedPlayer.movementAmount">
                         <mdb-icon class="buttonIcon" icon="mixcloud"></mdb-icon><br />
                         <span class="buttonText">
                             Charge
                         </span>
                     </div>
-                    <div class="btn attackCastMove" data-toggle="modal" data-target="#deletePlayerModal">
+
+                    <div class="btn attackCastMove" (click)="consume()" *ngIf="selectedPlayer.movementLeft >= selectedPlayer.movementAmount*cutOffNumber">
                         <mdb-icon class="buttonIcon" icon="flask"></mdb-icon><br />
                         <span class="buttonText">
                             Consume
                         </span>
                     </div>
+                    <div class="btn attackCastMove disabled" *ngIf="selectedPlayer.movementLeft < selectedPlayer.movementAmount*cutOffNumber">
+                        <mdb-icon class="buttonIcon" icon="flask"></mdb-icon><br />
+                        <span class="buttonText">
+                            Consume
+                        </span>
+                    </div>
+
                     <br />
-                    <div class="btn deleteEdit" style="height: 48px;">
+                    <div class="btn deleteEdit" style="height: 48px;" (click)="equip()" *ngIf="selectedPlayer.movementLeft >= selectedPlayer.movementAmount*cutOffNumber">
+                        <mdb-icon class="buttonIcon" icon="hand-rock-o"></mdb-icon><br />
+                        <span class="buttonText">
+                            (Un)Equip
+                        </span>
+                    </div>
+                    <div class="btn deleteEdit disabled" style="height: 48px;" *ngIf="selectedPlayer.movementLeft < selectedPlayer.movementAmount*cutOffNumber">
                         <mdb-icon class="buttonIcon" icon="hand-rock-o"></mdb-icon><br />
                         <span class="buttonText">
                             (Un)Equip
@@ -116,7 +130,16 @@
                         </span>
                     </div>
 
-                    <div class="btn roundActions" data-toggle="modal" data-target="#deletePlayerModal">
+                    <div class="btn roundActions" (click)="halfRoundAttack()" *ngIf="this.selectedPlayer.actions[0] != 'attack' &&
+                    this.selectedPlayer.movementLeft >= this.selectedPlayer.movementAmount*this.cutOffNumber">
+                        <mdb-icon class="buttonIcon" icon="hourglass-end"></mdb-icon><br />
+                        <span class="buttonText">
+                            <!-- &#189; -->1/2 round<br />
+                            attack
+                        </span>
+                    </div>
+                    <div class="btn roundActions disabled" *ngIf="this.selectedPlayer.actions[0] == 'attack' ||
+                    this.selectedPlayer.movementLeft < this.selectedPlayer.movementAmount*this.cutOffNumber">
                         <mdb-icon class="buttonIcon" icon="hourglass-end"></mdb-icon><br />
                         <span class="buttonText">
                             <!-- &#189; -->1/2 round<br />

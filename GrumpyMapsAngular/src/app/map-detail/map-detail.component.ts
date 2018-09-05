@@ -847,7 +847,7 @@ export class MapDetailComponent implements OnInit {
 
     disengage() {
         if(this.selectedPlayer.isSelected) {
-            if (this.selectedPlayer.movementLeft >= this.selectedPlayer.movementAmount/2){
+            if (this.selectedPlayer.movementLeft >= this.selectedPlayer.movementAmount*this.cutOffNumber){
                 this.resetAllDistances();
                 this.movementMode = true;
                 this.disengageMode = true;
@@ -888,9 +888,20 @@ export class MapDetailComponent implements OnInit {
         }
     }
     equip(){
-
+        if(this.selectedPlayer.isSelected) {
+            if (this.selectedPlayer.movementLeft >= this.selectedPlayer.movementAmount*this.cutOffNumber){
+                this.resetAllDistances();
+                this.selectedSquare = this.getPlayerSquare(this.selectedPlayer);
+                this.selectedPlayer.halfRoundAction(this.cutOffNumber);
+                this.showMessage(this.selectedPlayer.name + " (un)equips something.", "black", 1000);
+            }
+            else{
+                this.showMessage(this.selectedPlayer.name + " does not have half a round left to (un)equip something.", "red", 1000);
+            }
+        }
     }
     fullRoundAction(){
+        console.log("cutOffNumber " + this.cutOffNumber);
         if(this.selectedPlayer.isSelected) {
             if (this.selectedPlayer.movementLeft == this.selectedPlayer.movementAmount &&
                 this.selectedPlayer.attacksLeft == this.selectedPlayer.attacksPerRound &&

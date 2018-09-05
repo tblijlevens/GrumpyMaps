@@ -51,11 +51,7 @@ export class Player{
         this.spellsPerRound = spellsPerRound;
         this.spellsLeft = spellsPerRound;
         this.type = type;
-        if(this.color != "#00ff00"){
         this.color = color;
-      } else {
-        this.color = "#00c40c";
-      }
         this.mapSquareId = mapSquareId;
         this.mapHeightWidth = mapHeightWidth;
         this.playerSquareId = playerSquareId;
@@ -98,37 +94,6 @@ export class Player{
         this.updateSpells();
     }
 
-
-    attackCutOff(cutOffNumber:number){
-        this.attacksLeft -= 1;
-        if (this.actions[0] != "move"){
-            this.movementLeft = this.movementAmount*cutOffNumber;
-        }
-        else {
-            this.movementLeft = 0;
-        }
-        this.actions.push("attack");
-
-    }
-    castCutOff(cutOffNumber:number){
-        this.spellsLeft -= 1;
-        if (this.actions[0] != "move"){
-            this.movementLeft = this.movementAmount*cutOffNumber;
-        }
-        else {
-            this.movementLeft = 0;
-        }
-        this.actions.push("attack");
-
-    }
-    movePlayerCutOff(yardsMoved:number, cutOffNumber:number){
-        this.movementLeft -= yardsMoved;
-        if (this.movementLeft < (this.movementAmount*cutOffNumber) || this.actions[0] == "attack"){
-            this.attacksLeft = 0;
-            this.spellsLeft = 0;
-        }
-        this.actions.push("move");
-    }
     updateAttacks(){
         this.attacksLeft = Math.floor((this.actionPoints/this.pointsPerAttack));
     }
@@ -139,11 +104,78 @@ export class Player{
         this.movementLeft = +(this.actionPoints/this.pointsPerYard).toFixed(1);
     }
 
+    attackCutOff(cutOffNumber:number){
+        this.attacksLeft -= 1;
+        this.actionPoints -= this.pointsPerAttack;
+        this.updateSpells();
+
+        if (this.actions.length == 0){ //this is the first action of the round
+            this.movementLeft = this.movementAmount*cutOffNumber;
+        }
+        if (this.actions[0] == "halfRoundAction" || this.actions[0] == "move"){ // this is not the first action and first action was not a (halfRound)attack
+            this.movementLeft = 0;
+        }
+
+        this.actions.push("attack");
+
+    }
+    castCutOff(cutOffNumber:number){
+        this.spellsLeft -= 1;
+        this.actionPoints -= this.pointsPerSpell;
+        this.updateAttacks();
+
+        if (this.actions.length == 0){ //this is the first action of the round
+            this.movementLeft = this.movementAmount*cutOffNumber;
+        }
+        if (this.actions[0] == "halfRoundAction" || this.actions[0] == "move"){ // this is not the first action and first action was not a (halfRound)attack
+            this.movementLeft = 0;
+        }
+        this.actions.push("attack");
+
+    }
+    movePlayerCutOff(yardsMoved:number, cutOffNumber:number){
+        this.movementLeft -= yardsMoved;
+        this.actionPoints -= (yardsMoved*this.pointsPerYard);
+
+        if (this.movementLeft < (this.movementAmount*cutOffNumber) || this.actions[0] == "attack" || this.actions[0] == "halfRoundAction"){ //moveleft is below half or first action was a (halfRound)attack or halfRoundAction
+            this.attacksLeft = 0;
+            this.spellsLeft = 0;
+        }
+        this.actions.push("move");
+    }
+
     useFullRound(){
         this.actionPoints=0;
         this.movementLeft = 0;
         this.attacksLeft = 0;
         this.spellsLeft = 0;
+    }
+
+    halfRoundAction(cutOffNumber:number){
+        if (this.actions.length == 0){ //this is the first action of the round
+            this.movementLeft = this.movementAmount*cutOffNumber;
+        }
+        if (this.actions[0] == "halfRoundAction" || this.actions[0] == "move" || this.actions[0] == "attack"){ // this is the second action
+            this.actionPoints=0;
+            this.movementLeft = 0;
+            this.attacksLeft = 0;
+            this.spellsLeft = 0;
+        }
+        this.actions.push("halfRoundAction");
+    }
+    halfRoundAttack(cutOffNumber:number){
+        if (this.actions.length == 0){ //this is the first action of the round
+            this.movementLeft = this.movementAmount*cutOffNumber;
+            this.attacksLeft = 0;
+            this.spellsLeft = 0;
+        }
+        if (this.actions[0] == "halfRoundAction" || this.actions[0] == "move"){ // this is the second action (first action can not be an attack)
+            this.actionPoints=0;
+            this.movementLeft = 0;
+            this.attacksLeft = 0;
+            this.spellsLeft = 0;
+        }
+        this.actions.push("attack");
     }
 
     resetAllStats(){

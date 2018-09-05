@@ -41,7 +41,7 @@
                     Move: {{player.movementLeft.toFixed(1)}} / {{player.movementAmount}}&nbsp; <span style="font-size:1vw;" *ngIf="!cutOffMechanic">({{player.pointsPerYard.toFixed(1)}} AP/yd)</span>
                 </li>
                 <li *ngIf="player.attacksPerRound!=0">
-                    Att: {{player.attacksLeft}} / {{player.attacksPerRound}}&nbsp; <span style="font-size:1vw;" *ngIf="!cutOffMechanic">({{player.pointsPerAttack.toFixed(1)}} AP/Att)</span>
+                    Attacks: {{player.attacksLeft}} / {{player.attacksPerRound}}&nbsp; <span style="font-size:1vw;" *ngIf="!cutOffMechanic">({{player.pointsPerAttack.toFixed(1)}} AP/Att)</span>
                 </li>
                 <li *ngIf="player.spellsPerRound!=0">
                     Spells: {{player.spellsLeft}} / {{player.spellsPerRound}}&nbsp; <span style="font-size:1vw;" *ngIf="!cutOffMechanic">({{player.pointsPerSpell.toFixed(1)}} AP/Sp)</span>
