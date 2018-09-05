@@ -8,7 +8,7 @@
             <div id="characters">
             <span class="lead" style="font-weight:bold;">Characters</span>
             <p>
-                <span *ngFor="let char of allCharacters" (click)="clickPlayer(char)">
+                <span *ngFor="let char of allCharacters" (click)="clickPlayer(char)" alt="CTRL+click me to reset my turn" title="CTRL+click me to reset my turn">
                     <span *ngIf="!getPlayerSquare(char).hidden">
                     &nbsp;<img width="50" src="{{char.playerIconUrl}}" /> &nbsp; &nbsp;
                         <span id="playerMap{{char.id}}" class="playerNameMap" [style.color]=char.color>{{char.name}}
@@ -50,7 +50,7 @@
                         </span>
                     </div>
 
-                    <div class="btn attackCastMove" (click)="moveCharacter()" *ngIf="selectedPlayer.movementLeft>=squareSize">
+                    <div class="btn attackCastMove" (click)="moveCharacter()" *ngIf="selectedPlayer.movementLeft>=squareSize" alt="CTRL+MOVE to freely move {{selectedPlayer.name}} anywhere on the map" title="CTRL+MOVE to freely move {{selectedPlayer.name}} anywhere on the map">
                         <mdb-icon class="buttonIcon" icon="arrows"></mdb-icon><br />
                         <span class="buttonText">
                             Move
@@ -148,11 +148,11 @@
                     </div>
 
                     <br />
-                    <mdb-icon icon="heartbeat" class="zoneEditDelete" data-toggle="modal" data-target="#addZonePlayerForm" size="2x"></mdb-icon>
+                    <mdb-icon icon="heartbeat" class="zoneEditDelete" data-toggle="modal" data-target="#addZonePlayerForm" size="2x" alt="Add a stasis or zone" title="Add a stasis or zone"></mdb-icon>
 
-                    <mdb-icon icon="trash" data-toggle="modal" data-target="#deletePlayerModal" class="zoneEditDelete" size="2x"></mdb-icon>
+                    <mdb-icon icon="trash" data-toggle="modal" data-target="#deletePlayerModal" class="zoneEditDelete" size="2x" alt="Delete character" title="Delete character"></mdb-icon>
 
-                    <mdb-icon icon="wrench" (click)="setCharacterValues()" data-toggle="modal" data-target="#editModal" class="zoneEditDelete" size="2x"></mdb-icon>
+                    <mdb-icon icon="wrench" (click)="setCharacterValues()" data-toggle="modal" data-target="#editModal" class="zoneEditDelete" size="2x" alt="Edit character" title="Edit character"></mdb-icon>
 
                 </span>
             </div>
@@ -314,7 +314,7 @@
                     </span>
                 </div>
 
-                <div class="btn addObstruct" (click)="fogTiles()" *ngIf="selectedSquares.length!=0">
+                <div class="btn addObstruct" (click)="fogTiles()" *ngIf="selectedSquares.length!=0" alt="Use CTRL+FOG to (de)fog the entire map" title="Use CTRL+FOG to (de)fog the entire map">
                     <mdb-icon class="buttonIcon" icon="cloud"></mdb-icon><br />
                     <span class="buttonText">
                         Fog
