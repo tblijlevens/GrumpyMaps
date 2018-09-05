@@ -20,7 +20,6 @@ mdb-icon{
     right: 15px;
     cursor: pointer;
     text-shadow: 0px 0px 5px black;
-
 }
 #collapse {
     position: absolute;
@@ -170,9 +169,9 @@ input[type=range]:focus::-ms-fill-upper {
     float:left;
 }
 .allCharacters{
-    height: -moz-calc(65% - 10px);
-    height: -webkit-calc(65% - 10px);
-    height: calc(65% - 10px);
+    height: -moz-calc(62% - 10px);
+    height: -webkit-calc(62% - 10px);
+    height: calc(62% - 10px);
     font-size:1.4vw;
 }
 #characters{
@@ -183,7 +182,7 @@ input[type=range]:focus::-ms-fill-upper {
 .characterOptions{
     position: relative;
     margin-top: 10px;
-    height: 35%;
+    height: 38%;
     width:100%;
 }
 #characterOptionsBox{
@@ -206,22 +205,32 @@ input[type=range]:focus::-ms-fill-upper {
     width: 50px;
     right:0px;
     top:0px;
+    margin-left: 3px;
+    margin-right: 3px;
     color: white;
     background-color: rgba(26, 143, 0, 1);
     font-size: 10px;
     display: inline-block;
 }
-.zoneEditDelete{
+.roundActions{
     position: relative;
     height: 48px;
     width: 53px;
     line-height: 12px;
     right:0px;
     top:0px;
+    margin-left: 3px;
+    margin-right: 3px;
     color: white;
     background-color: rgba(26, 143, 0, 1);
     font-size: 10px;
     display: inline-block;
+}
+.zoneEditDelete{
+    margin-left: 10px;
+    margin-right: 10px;
+    cursor: pointer;
+    text-shadow: 0px 0px 1px black;
 }
 .buttonIcon {
     position: absolute;
@@ -248,9 +257,11 @@ input[type=range]:focus::-ms-fill-upper {
 .deleteEdit{
     position: relative;
     height: 40px;
-    width: 70px;
+    width: 60px;
     right:0px;
     top:0px;
+    margin-left: 3px;
+    margin-right: 3px;
     color: white;
     background-color: rgba(26, 143, 0, 1);
     font-size: 10px;

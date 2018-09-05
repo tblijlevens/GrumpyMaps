@@ -21,7 +21,7 @@
         <div class="characterOptions contentBox">
             <div id="characterOptionsBox">
                 <span class="characterOptionsBox"  *ngIf="selectedPlayer">
-                    <span class="lead" style="font-weight:bold;">Character options</span><br />
+                    <span class="lead" style="font-weight:bold;">Character actions</span><br />
 
                     <div class="btn attackCastMove" (click)="attack()" *ngIf="selectedPlayer.attacksLeft>0">
                         <mdb-icon class="buttonIcon" icon="crosshairs"></mdb-icon><br />
@@ -89,25 +89,40 @@
                             Charge
                         </span>
                     </div>
+                    <div class="btn attackCastMove" data-toggle="modal" data-target="#deletePlayerModal">
+                        <mdb-icon class="buttonIcon" icon="flask"></mdb-icon><br />
+                        <span class="buttonText">
+                            Consume
+                        </span>
+                    </div>
                     <br />
-                    <div class="btn zoneEditDelete" data-toggle="modal" data-target="#addZonePlayerForm">
-                        <mdb-icon class="buttonDoubleIcon" icon="dot-circle-o" style="left:-5px;"></mdb-icon><mdb-icon class="buttonDoubleIcon" icon="heartbeat" style="left:-5px;"></mdb-icon><br />
+                    <div class="btn deleteEdit" style="height: 48px;">
+                        <mdb-icon class="buttonIcon" icon="hand-rock-o"></mdb-icon><br />
                         <span class="buttonText">
-                            Zone/<br />Stasis
+                            (Un)Equip
                         </span>
                     </div>
-                    <div class="btn zoneEditDelete" (click)="deleteObject()">
-                        <mdb-icon class="buttonIcon" icon="trash"></mdb-icon><br />
+                    <div class="btn roundActions" data-toggle="modal" data-target="#deletePlayerModal">
+                        <mdb-icon class="buttonIcon" icon="hourglass"></mdb-icon><br />
                         <span class="buttonText">
-                            Delete
+                            1 round<br />action
                         </span>
                     </div>
-                    <div class="btn zoneEditDelete" (click)="setCharacterValues()" data-toggle="modal" data-target="#editModal">
-                        <mdb-icon class="buttonIcon" icon="wrench"></mdb-icon><br />
+                    <div class="btn roundActions" data-toggle="modal" data-target="#deletePlayerModal">
+                        <mdb-icon class="buttonIcon" icon="hourglass-end"></mdb-icon><br />
                         <span class="buttonText">
-                            Edit
+                            <!-- &#189; -->1/2 round<br />
+                            attack
                         </span>
                     </div>
+
+                    <br />
+                    <mdb-icon icon="heartbeat" class="zoneEditDelete" data-toggle="modal" data-target="#addZonePlayerForm" size="2x"></mdb-icon>
+
+                    <mdb-icon icon="trash" data-toggle="modal" data-target="#deletePlayerModal" class="zoneEditDelete" size="2x"></mdb-icon>
+
+                    <mdb-icon icon="wrench" (click)="setCharacterValues()" data-toggle="modal" data-target="#editModal" class="zoneEditDelete" size="2x"></mdb-icon>
+
                 </span>
             </div>
 
@@ -681,6 +696,40 @@
                     <mdb-icon class="buttonIcon" icon="trash"></mdb-icon><br />
                     <span class="buttonText">
                         Delete Map
+                    </span>
+                </div>
+                <div class="btn deleteEdit" data-dismiss="modal" style="background-color: rgba(97, 0, 143, 1);">
+                    <mdb-icon class="buttonIcon" icon="close"></mdb-icon><br />
+                    <span class="buttonText">
+                        Cancel
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Delete player Modal -->
+<div class="modal fade" id="deletePlayerModal" tabindex="-1" role="dialog" aria-labelledby="deletePlayerModalLabel" aria-hidden="true">
+
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5>Are you sure?</h5>
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <label class="center-block" *ngIf="selectedPlayer"><b>Are you sure you want to delete character: {{selectedPlayer.name}}?</b></label><br>
+                </div>
+            </div>
+            <div class="modal-footer" >
+                <div class="btn deleteEdit" style="background-color: rgba(143, 0, 0, 1);" data-dismiss="modal" (click)="deleteObject()">
+                    <mdb-icon class="buttonIcon" icon="trash"></mdb-icon><br />
+                    <span class="buttonText">
+                        Delete
                     </span>
                 </div>
                 <div class="btn deleteEdit" data-dismiss="modal" style="background-color: rgba(97, 0, 143, 1);">
