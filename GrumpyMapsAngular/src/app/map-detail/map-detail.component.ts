@@ -212,7 +212,7 @@ export class MapDetailComponent implements OnInit {
         this.addZonePlayerForm.get('zoneDuration').setValue(1);
         this.addZoneTileForm.get('zoneRadius').setValue(10);
         this.addZoneTileForm.get('zoneDuration').setValue(1);
-        this.addZoneTileForm.get('tileZoneColor').setValue("#ffa100");
+        this.addZoneTileForm.get('tileZoneColor').setValue("#fbaaf5");
 
         this.colorTileForm.get('tileColor').setValue("#000000");
 
@@ -1225,7 +1225,7 @@ export class MapDetailComponent implements OnInit {
         this.addZonePlayerForm.get('zoneDuration').setValue(1);
         this.addZoneTileForm.get('zoneRadius').setValue(10);
         this.addZoneTileForm.get('zoneDuration').setValue(1);
-        this.addZoneTileForm.get('tileZoneColor').setValue("#ffa100");
+        this.addZoneTileForm.get('tileZoneColor').setValue("#fbaaf5");
 
         this.colorTileForm.get('selectAll').setValue(false);
         this.colorTileForm.get('tileColor').setValue("#000000");
