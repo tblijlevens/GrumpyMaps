@@ -871,7 +871,28 @@ export class MapDetailComponent implements OnInit {
             }
         }
     }
+    consume(){
 
+    }
+    equip(){
+
+    }
+    fullRoundAction(){
+        if(this.selectedPlayer.isSelected) {
+            if (this.selectedPlayer.movementLeft == this.selectedPlayer.movementAmount &&
+                this.selectedPlayer.attacksLeft == this.selectedPlayer.attacksPerRound &&
+                this.selectedPlayer.spellsLeft == this.selectedPlayer.spellsPerRound &&
+                this.selectedPlayer.actionPoints == 100){ // char has not done anything yet
+                this.resetAllDistances();
+                this.selectedSquare = this.getPlayerSquare(this.selectedPlayer);
+                this.selectedPlayer.useFullRound();
+                this.showMessage(this.selectedPlayer.name + " performs a full round action.", "black", 1000);
+            }
+            else{
+                this.showMessage(this.selectedPlayer.name + " does not have a full round left to perform a full round action.", "red", 1000);
+            }
+        }
+    }
     addZonePlayer(){
         this.rangeSquares = new Array();
         this.resetAllDistances();

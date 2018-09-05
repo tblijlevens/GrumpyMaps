@@ -102,12 +102,20 @@
                             (Un)Equip
                         </span>
                     </div>
-                    <div class="btn roundActions" data-toggle="modal" data-target="#deletePlayerModal">
+
+                    <div class="btn roundActions" (click)="fullRoundAction()" *ngIf="selectedPlayer.movementLeft == selectedPlayer.movementAmount && selectedPlayer.attacksLeft == selectedPlayer.attacksPerRound && selectedPlayer.spellsLeft == selectedPlayer.spellsPerRound && selectedPlayer.actionPoints == 100">
                         <mdb-icon class="buttonIcon" icon="hourglass"></mdb-icon><br />
                         <span class="buttonText">
                             1 round<br />action
                         </span>
                     </div>
+                    <div class="btn roundActions disabled" *ngIf="selectedPlayer.movementLeft != selectedPlayer.movementAmount || selectedPlayer.attacksLeft != selectedPlayer.attacksPerRound || selectedPlayer.spellsLeft != selectedPlayer.spellsPerRound || selectedPlayer.actionPoints != 100">
+                        <mdb-icon class="buttonIcon" icon="hourglass"></mdb-icon><br />
+                        <span class="buttonText">
+                            1 round<br />action
+                        </span>
+                    </div>
+
                     <div class="btn roundActions" data-toggle="modal" data-target="#deletePlayerModal">
                         <mdb-icon class="buttonIcon" icon="hourglass-end"></mdb-icon><br />
                         <span class="buttonText">

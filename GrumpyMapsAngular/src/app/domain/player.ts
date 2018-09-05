@@ -139,6 +139,13 @@ export class Player{
         this.movementLeft = +(this.actionPoints/this.pointsPerYard).toFixed(1);
     }
 
+    useFullRound(){
+        this.actionPoints=0;
+        this.movementLeft = 0;
+        this.attacksLeft = 0;
+        this.spellsLeft = 0;
+    }
+
     resetAllStats(){
         this.actionPoints=100;
         this.movementLeft = this.movementAmount;
