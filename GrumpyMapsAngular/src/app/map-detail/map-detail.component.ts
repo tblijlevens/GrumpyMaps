@@ -300,6 +300,7 @@ export class MapDetailComponent implements OnInit {
 
         this.setRows();
         this.calculateMapFeet();
+        this.setCutOffRange();
     }
     setSquareSize(){
         this.squareSize = +this.mapForm.get('yards').value;
