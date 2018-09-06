@@ -88,7 +88,6 @@ public class MapController {
 	    return mapName;
 	  }
 
-
 	  @ResponseBody
 	  @RequestMapping(value = "/squares", method = RequestMethod.POST)
 	  public  ArrayList<SquareIds> createSquare(@RequestBody ArrayList<Square> squares) {
@@ -178,6 +177,24 @@ public class MapController {
 		  }
 	    return mapPlayers;
 	  }
+
+	  @Transactional
+	  @ResponseBody
+	  @RequestMapping(value = "/players/{playerId}", method = RequestMethod.DELETE)
+	  public  String  deleteCharById(@PathVariable("playerId") int playerId) {
+
+		  String playerName = "";
+		  if (playerService.existsById(playerId)){
+			  Player player = playerService.findById(playerId);
+			  playerName = "{\"name\":\""+player.getName()+"\"}";
+			  System.out.println("Deleting player " + player.getName());
+
+			  charzoneService.deleteByRealCharId(playerId);
+			  playerService.deleteById(player.getId());
+		  }
+		  return playerName;
+	  }
+	  
 	  @ResponseBody
 	  @RequestMapping(value = "/players", method = RequestMethod.GET)
 	  public List<Player> findAllCharacters() {

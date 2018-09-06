@@ -150,7 +150,7 @@
                     <br />
                     <mdb-icon icon="heartbeat" class="zoneEditDelete" data-toggle="modal" data-target="#addZonePlayerForm" size="2x" alt="Add a stasis or zone" title="Add a stasis or zone"></mdb-icon>
 
-                    <mdb-icon icon="trash" data-toggle="modal" data-target="#deletePlayerModal" class="zoneEditDelete" size="2x" alt="Delete character" title="Delete character"></mdb-icon>
+                    <mdb-icon icon="trash" data-toggle="modal" data-target="#deletePlayerFromMap" class="zoneEditDelete" size="2x" alt="Delete character" title="Delete character"></mdb-icon>
 
                     <mdb-icon icon="wrench" (click)="setCharacterValues()" data-toggle="modal" data-target="#editModal" class="zoneEditDelete" size="2x" alt="Edit character" title="Edit character"></mdb-icon>
 
@@ -450,19 +450,50 @@
                             <br />
                             <span *ngIf="selectedLoadCharacter!=null"><B>You selected character: {{selectedLoadCharacter.name}}</B></span>
                             <br />
-                            <button type="button" class="btn btn-primary" (click)="addExistingCharacter()" data-dismiss="modal">Add character</button>
+
+                            <!-- <button type="button" class="btn btn-primary" (click)="addExistingCharacter()" data-dismiss="modal">Add character</button> -->
                         </div>
                         <div *ngIf="!charsLoaded">
                             <span>
                                 Retreiving characters from database. Please wait...
                             </span>
                         </div>
+                        <div *ngIf="selectedLoadCharacter!=null" class="btn deleteEdit"  style="width: 100px;" data-dismiss="modal" (click)="addExistingCharacter()">
+                            <mdb-icon class="buttonIcon" icon="folder"></mdb-icon> <br />
+                            <span class="buttonText">
+                                Load Character
+                            </span>
+                        </div>
+                        <div *ngIf="selectedLoadCharacter==null" class="btn deleteEdit disabled"  style="width: 100px;">
+                            <mdb-icon class="buttonIcon" icon="folder"></mdb-icon> <br />
+                            <span class="buttonText">
+                                Load Character
+                            </span>
+                        </div>
+
+                        <div *ngIf="selectedLoadCharacter!=null" class="btn deleteEdit" style="background-color: rgba(143, 0, 0, 1); width: 100px;" data-toggle="modal" data-target="#deleteCharFromDB">
+                            <mdb-icon class="buttonIcon" icon="trash"></mdb-icon><br />
+                            <span class="buttonText">
+                                Delete Character
+                            </span>
+                        </div>
+                        <div *ngIf="selectedLoadCharacter==null" class="btn deleteEdit disabled" style="background-color: rgba(143, 0, 0, 1); width: 100px;" data-toggle="modal" data-target="#deleteCharFromDB">
+                            <mdb-icon class="buttonIcon" icon="trash"></mdb-icon><br />
+                            <span class="buttonText">
+                                Delete Character
+                            </span>
+                        </div>
+
+
                     </div>
 
                 </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            <div class="btn deleteEdit" data-dismiss="modal" style="background-color: rgba(97, 0, 143, 1);">
+                <mdb-icon class="buttonIcon" icon="close"></mdb-icon><br />
+                <span class="buttonText">
+                    Cancel
+                </span>
             </div>
         </div>
     </div>
@@ -719,7 +750,7 @@
             </div>
             <div class="modal-body">
                 <div>
-                    <label class="center-block"><b>Are you sure you want to delete map: {{selectedLoadMapname}}?</b></label><br>
+                    <label class="center-block"><b>Are you sure you want to remove map '{{selectedLoadMapname}}' from the database? This is a permanent action.</b></label><br>
                 </div>
             </div>
             <div class="modal-footer" >
@@ -739,8 +770,8 @@
         </div>
     </div>
 </div>
-<!-- Delete player Modal -->
-<div class="modal fade" id="deletePlayerModal" tabindex="-1" role="dialog" aria-labelledby="deletePlayerModalLabel" aria-hidden="true">
+<!-- Delete player from map Modal -->
+<div class="modal fade" id="deletePlayerFromMap" tabindex="-1" role="dialog" aria-labelledby="deletePlayerFromMapLabel" aria-hidden="true">
 
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -758,6 +789,40 @@
             </div>
             <div class="modal-footer" >
                 <div class="btn deleteEdit" style="background-color: rgba(143, 0, 0, 1);" data-dismiss="modal" (click)="deleteObject()">
+                    <mdb-icon class="buttonIcon" icon="trash"></mdb-icon><br />
+                    <span class="buttonText">
+                        Delete
+                    </span>
+                </div>
+                <div class="btn deleteEdit" data-dismiss="modal" style="background-color: rgba(97, 0, 143, 1);">
+                    <mdb-icon class="buttonIcon" icon="close"></mdb-icon><br />
+                    <span class="buttonText">
+                        Cancel
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Delete char from database  Modal -->
+<div class="modal fade" id="deleteCharFromDB" tabindex="-1" role="dialog" aria-labelledby="deleteCharFromDBLabel" aria-hidden="true">
+
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5>Are you sure?</h5>
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <label class="center-block" *ngIf="selectedLoadCharacter">Are you sure you want to remove character '{{selectedLoadCharacter.name}}' from the database? This is a permanent action and means that this character <b>dissappears from all the maps</b> this character was in.</label><br>
+                </div>
+            </div>
+            <div class="modal-footer" >
+                <div class="btn deleteEdit" style="background-color: rgba(143, 0, 0, 1);" data-dismiss="modal" (click)="deleteChar()" (click)="loadAllCharacters()">
                     <mdb-icon class="buttonIcon" icon="trash"></mdb-icon><br />
                     <span class="buttonText">
                         Delete

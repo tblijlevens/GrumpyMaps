@@ -53,8 +53,6 @@ deleteMapById(mapId:number) {
     return <Observable<string>>this.http.delete('http://localhost:8080/dndmap/'+mapId);
 }
 
-
-
 getMapSquares(mapId:number): Observable<Square[]>  {
     console.log("getting all squares from map " + mapId);
     return <Observable<Square[]>>this.http.get('http://localhost:8080/square/'+mapId);
@@ -73,7 +71,10 @@ findAllPlayers(): Observable<Player[]>  {
     console.log("getting all characters");
     return <Observable<Player[]>>this.http.get('http://localhost:8080/players');
 }
-
+deleteCharById(charId:number) {
+    console.log("deleting char: " + charId);
+    return <Observable<string>>this.http.delete('http://localhost:8080/players/'+charId);
+}
 getAllCharZones(mapId:number): Observable<any[]>  {
     console.log("getting all charzones from map " + mapId);
     return <Observable<any[]>>this.http.get('http://localhost:8080/charZones/'+mapId);

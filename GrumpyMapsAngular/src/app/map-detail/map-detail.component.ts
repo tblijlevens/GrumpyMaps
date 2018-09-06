@@ -594,6 +594,7 @@ export class MapDetailComponent implements OnInit {
         return input;
     }
     loadAllCharacters(){
+        this.selectedLoadCharacter = null;
         this.allLoadedCharacters = new Array();
         this.dndMapService.findAllPlayers().subscribe(allPlayers => {
             for (var i = 0 ; i < allPlayers.length ; i++){
@@ -676,8 +677,10 @@ export class MapDetailComponent implements OnInit {
         this.selectedSquares[0].addPhysical(this.selectedLoadCharacter);
         this.playerAdded(this.selectedLoadCharacter);
         this.mapShareService.setPlayerZones();
-        this.selectedLoadCharacter=null;
         this.allLoadedCharacters=new Array();
+        this.charsLoaded = false;
+        this.selectedLoadCharacter=null;
+        this.loadAllCharacters();
     }
 
     clearAllFields(){
@@ -1605,6 +1608,13 @@ export class MapDetailComponent implements OnInit {
             this.dndMapService.deleteMapById(this.selectedLoadMap).subscribe((mapName:string) => {
                 console.log("Map " + mapName["name"] + " was permanently removed from the database.");
                 this.loadMap();
+            });
+        }
+        deleteChar(){
+
+            this.dndMapService.deleteCharById(this.selectedLoadCharacter.id).subscribe((charName:string) => {
+                console.log("Char " + charName["name"] + " was permanently removed from the database.");
+                this.loadAllCharacters();
             });
         }
         loadMap(){

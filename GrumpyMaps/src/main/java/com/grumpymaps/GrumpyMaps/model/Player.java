@@ -21,7 +21,7 @@ public class Player implements Physical{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
     private int playerSquareId;
     private String name;
     private byte[] playerIcon;

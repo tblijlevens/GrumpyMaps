@@ -11,7 +11,9 @@ import com.grumpymaps.GrumpyMaps.model.Player;
 public interface PlayerService extends CrudRepository<Player, Long>{
 
     public Player findByRealSquareId(Integer sqId);
+    public Player findById(long charId);
     public List<Player> findByMapId(Integer mapId);
-    public void deleteByMapId(int mapId);
+    public void deleteById(Long charId);
+    public boolean existsById(long charId);
 
 }
