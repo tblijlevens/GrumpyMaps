@@ -22,11 +22,13 @@ import com.grumpymaps.GrumpyMaps.model.TileZone;
 import com.grumpymaps.GrumpyMaps.model.CharZone;
 import com.grumpymaps.GrumpyMaps.model.PlayerIds;
 import com.grumpymaps.GrumpyMaps.model.Player;
+import com.grumpymaps.GrumpyMaps.model.PlayerSquareMatch;
 import com.grumpymaps.GrumpyMaps.services.MapService;
 import com.grumpymaps.GrumpyMaps.services.SquareService;
 import com.grumpymaps.GrumpyMaps.services.TileZoneService;
 import com.grumpymaps.GrumpyMaps.services.CharZoneService;
 import com.grumpymaps.GrumpyMaps.services.PlayerService;
+import com.grumpymaps.GrumpyMaps.services.PlayerSquareMatchService;
 
 @CrossOrigin(origins = "http://localhost:4200")
 // @CrossOrigin(origins = "http://www.umanise.nl")
@@ -43,6 +45,8 @@ public class MapController {
 	private CharZoneService charzoneService;
 	@Autowired
 	private PlayerService playerService;
+	@Autowired
+	private PlayerSquareMatchService psmService;
 
 
 	  @ResponseBody
@@ -63,6 +67,7 @@ public class MapController {
 		if (mapService.existsById(dndMap.getId())){
 			tilezoneService.deleteByMapId(mapId);
 			squareService.deleteByMapId(mapId);
+			psmService.deleteByMapId(mapId);
 			mapService.deleteById(dndMap.getId());
 		}
 
@@ -82,6 +87,7 @@ public class MapController {
 
 			tilezoneService.deleteByMapId(mapId);
 			squareService.deleteByMapId(mapId);
+			psmService.deleteByMapId(mapId);
 			mapService.deleteById(map.getId());
 		}
 
@@ -113,21 +119,32 @@ public class MapController {
 	  }
 
 	  @ResponseBody
-	  @RequestMapping(value = "/player", method = RequestMethod.POST)
-	  public  PlayerIds  createPlayer(@RequestBody Player player) {
-		  Player retour = playerService.save(player);
-  	  return new PlayerIds(retour.getId(), retour.getPlayerSquareId() );
-	  }
-
-	  @ResponseBody
 	  @RequestMapping(value = "/players", method = RequestMethod.POST)
 	  public  ArrayList<PlayerIds>  createPlayer(@RequestBody ArrayList<Player> players) {
 		  ArrayList<PlayerIds> playerIds = new ArrayList<>();
 		  System.out.println("Saving " + players.size() + " characters:");
 		 for (Player p : players){
 			 System.out.println("- Character " + p.getName());
-			 Player retour = playerService.save(p);
-			 playerIds.add(new PlayerIds(retour.getId(), retour.getPlayerSquareId()));
+			 boolean psmExists = false;
+			 if (psmService.existsByPlayerIdAndMapId(p.getId(), p.getMapId())){
+				 psmExists = true;
+				 System.out.println("a playersquarematch exists for this player on this map");
+			 }
+			 Player character = playerService.save(p);
+			 PlayerSquareMatch psm = null;
+			 if (psmExists) { // use existing psm ID so it gets overwritten
+				 psm = psmService.findByPlayerIdAndMapId(p.getId(), p.getMapId());
+				 psm.setPlayerId(character.getId());
+				 psm.setSquareId(character.getRealSquareId());
+				 psm.setSquareMapCoordinate(character.getSquareMapCoordinate());
+				 psm.setMapId(character.getMapId());
+			 }
+			 else { // use new psm which gets new unique ID
+				 psm = new PlayerSquareMatch(0, character.getId(), character.getRealSquareId(), character.getSquareMapCoordinate(), character.getMapId());
+			 }
+			 psmService.save(psm);
+
+			 playerIds.add(new PlayerIds(character.getId(), character.getPlayerSquareId()));
 		 }
 		return playerIds;
 	  }
@@ -169,11 +186,19 @@ public class MapController {
 
 	  @ResponseBody
 	  @RequestMapping(value = "/players/{mapId}", method = RequestMethod.GET)
-	  public List<Player> findMapPlayers(@PathVariable("mapId") Integer mapId) {
-		  List<Player> mapPlayers = (List<Player>)playerService.findByMapId(mapId);
+	  public List<Player> findMapPlayers(@PathVariable("mapId") long mapId) {
+		  List<Player> mapPlayers = new ArrayList<>();
+		  List<PlayerSquareMatch> psms = psmService.findByMapId(mapId);
+		  for (PlayerSquareMatch psm : psms){
+			  Player player = playerService.findById(psm.getPlayerId());
+			  player.setRealSquareId(psm.getSquareId());
+			  player.setSquareMapCoordinate(psm.getSquareMapCoordinate());
+			  mapPlayers.add(player);
+		  }
+
 		  System.out.println("Loading " + mapPlayers.size() + " characters for map " + mapId);
 		  for (Player p : mapPlayers){
-			  System.out.println("- Character " + p.getName());
+			  System.out.println("- Character " + p.getName() + " on " + p.getRealSquareId());
 		  }
 	    return mapPlayers;
 	  }
@@ -191,10 +216,12 @@ public class MapController {
 
 			  charzoneService.deleteByRealCharId(playerId);
 			  playerService.deleteById(player.getId());
+			  psmService.deleteByPlayerId(playerId);
+
 		  }
 		  return playerName;
 	  }
-	  
+
 	  @ResponseBody
 	  @RequestMapping(value = "/players", method = RequestMethod.GET)
 	  public List<Player> findAllCharacters() {

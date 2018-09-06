@@ -41,9 +41,9 @@ public class Player implements Physical{
     private Integer mapSquareId;
     private int mapHeightWidth;
     private boolean isSelected;
-    private Integer realSquareId;
+    private long realSquareId;
     private String squareMapCoordinate;
-    private int mapId;
+    private long mapId;
     @Transient
     private ArrayList<CharZone> zones;
 
@@ -358,7 +358,7 @@ public class Player implements Physical{
 	* Returns value of realSquareId
 	* @return
 	*/
-	public Integer getRealSquareId() {
+	public long getRealSquareId() {
 		return realSquareId;
 	}
 
@@ -366,7 +366,7 @@ public class Player implements Physical{
 	* Sets new value of realSquareId
 	* @param
 	*/
-	public void setRealSquareId(Integer realSquareId) {
+	public void setRealSquareId(long realSquareId) {
 		this.realSquareId = realSquareId;
 	}
 
@@ -391,7 +391,7 @@ public class Player implements Physical{
     	* Returns value of mapId
     	* @return
     	*/
-    	public int getMapId() {
+    	public long getMapId() {
     		return mapId;
     	}
 
@@ -399,7 +399,7 @@ public class Player implements Physical{
     	* Sets new value of mapId
     	* @param
     	*/
-    	public void setMapId(int mapId) {
+    	public void setMapId(long mapId) {
     		this.mapId = mapId;
     	}
 
