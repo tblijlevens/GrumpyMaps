@@ -12,7 +12,7 @@
             </div>
         </div>
 
-        <div id="zonesInSquare" *ngIf="square.zones.length!=0 && !square.hidden">
+        <div id="zonesInSquare" *ngIf="square.zones.length!=0 && !square.hidden && !square.fogged">
             <div *ngFor="let zoneObject of square.zones; index as i">
                 <div class="tileZone" *ngIf="zoneObject.radius!=0" id="tileZone{{square.mapSquareId}}{{i}}"></div>
                 <mdb-icon *ngIf="zoneObject.radius==0" class="flag" icon="flag"></mdb-icon>
