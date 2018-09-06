@@ -461,8 +461,14 @@ export class MapDetailComponent implements OnInit {
         // tgogle the squares hidden field:
         var madeVisible = "";
         var madeInvisible = "";
+
+        var hidden = false;
+        if (this.selectedSquares[0].hidden) {
+            // make all squares hidden
+            hidden = true;
+        }
         for (var i = 0 ; i < this.selectedSquares.length ; i++){
-            if (this.selectedSquares[i].hidden){
+            if (hidden){
                 this.selectedSquares[i].hidden=false;
                 if (madeVisible!=""){
                     madeVisible+= ", ";
@@ -486,14 +492,12 @@ export class MapDetailComponent implements OnInit {
         var message="";
         if (madeInvisible!=""){
             message+= "These tiles were made invisible. <B>Write these down</b>:<br>" + madeInvisible;
+            this.showInfoBox(message,"black");
         }
         if (madeVisible!=""){
-            if (madeInvisible!=""){
-                message+= "<br>";
-            }
             message+= "These tiles were made visible:<br>" + madeVisible;
+            this.showMessage(message,"black", 1000);
         }
-        this.showInfoBox(message,"black");
     }
     nextTurn() {
         for (var i = 0 ; i < this.allCharacters.length ; i++){
