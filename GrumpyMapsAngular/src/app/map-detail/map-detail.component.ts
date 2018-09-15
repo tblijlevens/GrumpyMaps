@@ -69,6 +69,7 @@ import { MapShareService } from '../map-share.service';
 import { DnDMap } from '../domain/dn-dmap'
 import { Square } from '../domain/square'
 import { Player } from '../domain/player'
+import { MapSettings } from '../domain/map-settings'
 
 import { SquareComponent } from '../square/square.component';
 import { SquareDetailComponent } from '../square-detail/square-detail.component';
@@ -194,7 +195,7 @@ export class MapDetailComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.loadMap();
+        this.loadMap(); //to wake up the server immediately
         this.mapForm.get('heightwidth').setValue(this.heightWidth);
         this.mapForm.get('yards').setValue(5);
         this.mapForm.get('moveCutCheck').setValue(true);
