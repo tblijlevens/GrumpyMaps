@@ -195,7 +195,7 @@ export class MapDetailComponent implements OnInit {
 
     ngOnInit() {
         this.loadMap();
-        this.mapForm.get('heightwidth').setValue(10);
+        this.mapForm.get('heightwidth').setValue(this.heightWidth);
         this.mapForm.get('yards').setValue(5);
         this.mapForm.get('moveCutCheck').setValue(true);
         this.mapForm.get('moveCutRange').setValue(50);
@@ -1930,6 +1930,21 @@ private setRowIndexLetter(nr:number){
         }
         case 25: {
             return "Y";
+        }
+        case 26: {
+            return "Z";
+        }
+        case 27: {
+            return "AA";
+        }
+        case 28: {
+            return "BB";
+        }
+        case 29: {
+            return "CC";
+        }
+        case 30: {
+            return "DD";
         }
     }
 }
