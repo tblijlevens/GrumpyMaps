@@ -30,6 +30,7 @@ public class Player implements Physical{
     private int initiative;
     private int actionPoints;
     private int movementAmount;
+    private int totalMovementAmount;
     private int movementLeft;
     private int attacksPerRound;
     private int attacksLeft;
@@ -160,6 +161,21 @@ public class Player implements Physical{
 		this.actionPoints = actionPoints;
 	}
 
+	/**
+	* Returns value of totalMovementAmount
+	* @return
+	*/
+	public int getTotalMovementAmount() {
+		return totalMovementAmount;
+	}
+
+	/**
+	* Sets new value of totalMovementAmount
+	* @param
+	*/
+	public void setTotalMovementAmount(int totalMovementAmount) {
+		this.totalMovementAmount = totalMovementAmount;
+	}
 	/**
 	* Returns value of movementAmount
 	* @return

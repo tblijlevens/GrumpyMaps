@@ -30,8 +30,8 @@ import com.grumpymaps.GrumpyMaps.services.CharZoneService;
 import com.grumpymaps.GrumpyMaps.services.PlayerService;
 import com.grumpymaps.GrumpyMaps.services.PlayerSquareMatchService;
 
-@CrossOrigin(origins = "http://localhost:4200")
-// @CrossOrigin(origins = "http://www.umanise.nl")
+// @CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "http://www.umanise.nl")
 @Controller
 public class MapController {
 

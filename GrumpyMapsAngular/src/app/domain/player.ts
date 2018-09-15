@@ -21,6 +21,7 @@ export class Player{
 // character stats:
     initiative:number;
     actionPoints:number;
+    totalMovementAmount:number;
     movementAmount:number;
     pointsPerYard:number;
     movementLeft:number;
@@ -38,12 +39,12 @@ export class Player{
 
     actions:any[] = new Array();
 
-    constructor(id, playerSquareId, name, actionPoints, movementAmount, initiative, attacksPerRound, spellsPerRound, type, color, mapSquareId, mapHeightWidth, squareMapCoordinate, playerIcon, mapId){
+    constructor(id, playerSquareId, name, actionPoints, totalMovementAmount, initiative, attacksPerRound, spellsPerRound, type, color, mapSquareId, mapHeightWidth, squareMapCoordinate, playerIcon, mapId){
         this.id = id;
         this.name = name;
         this.actionPoints = actionPoints;
-        this.movementAmount = movementAmount;
-        this.movementLeft = movementAmount;
+        this.totalMovementAmount = totalMovementAmount;
+        this.movementLeft = totalMovementAmount;
         this.initiative = initiative;
         this.isSelected = false;
         this.attacksPerRound = attacksPerRound;
@@ -58,8 +59,15 @@ export class Player{
         this.squareMapCoordinate = squareMapCoordinate;
         this.playerIcon = playerIcon;
         this.mapId = mapId;
+        this.setMovementAmount(1);
         this.setActionPointCosts();
         this.setActiveColor();
+    }
+    setMovementAmount(percentage){
+        this.movementAmount = percentage*this.totalMovementAmount;
+        if (this.movementLeft > this.movementAmount){
+            this.movementLeft = this.movementAmount;
+        }
     }
     setActionPointCosts(){
         this.pointsPerYard = +(this.actionPoints/this.movementAmount);
