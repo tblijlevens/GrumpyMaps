@@ -221,16 +221,16 @@ export class SquareComponent implements OnInit {
           var colDif = this.getDifference(column, targetColumn);
           var distance = 0;
           if (rowDif == 0){
-              distance = colDif*this.squareSize
+              distance = colDif*this.mapSettings.squareSize
           }
           if (colDif == 0 && rowDif!=0){
-              distance = rowDif*this.squareSize
+              distance = rowDif*this.mapSettings.squareSize
           }
 
           // when diagonal movement calc distance based on a^2+b^2=c^2
           // just a diagonal line:
           if (colDif == rowDif && colDif !=0){
-              var squaredTileSize = Math.pow(this.squareSize,2);
+              var squaredTileSize = Math.pow(this.mapSettings.squareSize,2);
               distance = colDif * Math.sqrt(squaredTileSize+squaredTileSize);
           }
 
@@ -238,9 +238,9 @@ export class SquareComponent implements OnInit {
           if (colDif!=rowDif && colDif>0 && rowDif>0){
               var minimum = Math.min(colDif,rowDif);
               var maximum = Math.max(colDif,rowDif);
-              var squaredTileSize = Math.pow(this.squareSize,2);
+              var squaredTileSize = Math.pow(this.mapSettings.squareSize,2);
               var diagonal = minimum * Math.sqrt(squaredTileSize+squaredTileSize);
-              var straight = (maximum-minimum)*this.squareSize;
+              var straight = (maximum-minimum)*this.mapSettings.squareSize;
               distance=diagonal+straight;
           }
           this.distance=+distance.toFixed(1);

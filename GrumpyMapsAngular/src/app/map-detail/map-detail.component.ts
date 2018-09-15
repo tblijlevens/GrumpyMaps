@@ -144,7 +144,6 @@ export class MapDetailComponent implements OnInit {
     mapBackground = {};
     legendSquare = {};
     squareScale: string = '10%';
-    squareSize:number = 5;
     heightWidth:number = 10;
     columnArray:number[] = new Array();
     rowArray:number[] = new Array();
@@ -203,7 +202,7 @@ export class MapDetailComponent implements OnInit {
         this.mapForm.get('moveCutRange').setValue(50);
         this.mapForm.get('showGridCheck').setValue(true);
         this.mapSettings = new MapSettings();
-        this.setMap();
+        this.setMap(10, 5);
 
         this.createPlayerForm.get('playerColor').setValue("#ff0000");
         this.createPlayerForm.get('playerInitiative').setValue(15);
@@ -232,10 +231,11 @@ export class MapDetailComponent implements OnInit {
         ////////////////////////     MAP SETUP    //////////////////////////
         ////////////////////////////////////////////////////////////////////
 
-    setMap(){
-        this.dndMap = new DnDMap(0, this.heightWidth, this.squareSize); //id zero cannot exist in database, so it will generate a new unique id)
+    setMap(heightWidth, squareSize){
+        this.dndMap = new DnDMap(0, heightWidth, squareSize); //id zero cannot exist in database, so it will generate a new unique id)
         this.mapSettings.dndMap = this.dndMap;
         this.mapSettings.allSquares = this.dndMap.squares;
+        this.mapSettings.squareSize = squareSize;
 
 
     }
@@ -311,7 +311,7 @@ export class MapDetailComponent implements OnInit {
             // alert("Map gridsize can't be bigger than 25x25. Therefore gridsize is set to 25x25.");
         }
 
-        this.setMap();
+        this.setMap(this.heightWidth, this.mapSettings.squareSize);
         var imageUrl = this.mapForm.get('imageUrl').value;
         this.dndMap.setImage(imageUrl);
 
@@ -320,11 +320,11 @@ export class MapDetailComponent implements OnInit {
         this.setCutOffRange();
     }
     setSquareSize(){
-        this.squareSize = +this.mapForm.get('yards').value;
-        this.mapForm.get('yards').setValue(this.squareSize);
+        this.mapSettings.squareSize = +this.mapForm.get('yards').value;
+        this.mapForm.get('yards').setValue(this.mapSettings.squareSize);
         var squares = this.dndMap.squares;
         for (var i = 0 ; i < squares.length ; i++){
-            squares[i].squareSize = this.squareSize;
+            squares[i].squareSize = this.mapSettings.squareSize;
         }
         this.calculateMapFeet();
         this.mapShareService.setTileZones();
@@ -1024,7 +1024,7 @@ export class MapDetailComponent implements OnInit {
 
         getMoveRange(player:Player, allSquares:Square[]){
             // calculate relativeMoveSpeed based on tile width
-            var relativeMoveSpeed = +(player.movementLeft/this.squareSize).toFixed(0);
+            var relativeMoveSpeed = +(player.movementLeft/this.mapSettings.squareSize).toFixed(0);
 
             var moveRange = new Array();
 
@@ -1045,16 +1045,16 @@ export class MapDetailComponent implements OnInit {
                 if (rowDif<=relativeMoveSpeed && colDif<=relativeMoveSpeed){
 
                     if (rowDif == 0){
-                        distance = colDif*this.squareSize
+                        distance = colDif*this.mapSettings.squareSize
                     }
                     if (colDif == 0 && rowDif!=0){
-                        distance = rowDif*this.squareSize
+                        distance = rowDif*this.mapSettings.squareSize
                     }
 
                     // when diagonal movement calc distance based on a^2+b^2=c^2
                     // just a diagonal line:
                     if (colDif == rowDif && colDif !=0){
-                        var squaredTileSize = Math.pow(this.squareSize,2);
+                        var squaredTileSize = Math.pow(this.mapSettings.squareSize,2);
                         distance = colDif * Math.sqrt(squaredTileSize+squaredTileSize);
                     }
 
@@ -1062,9 +1062,9 @@ export class MapDetailComponent implements OnInit {
                     if (colDif!=rowDif && colDif>0 && rowDif>0){
                         var minimum = Math.min(colDif,rowDif);
                         var maximum = Math.max(colDif,rowDif);
-                        var squaredTileSize = Math.pow(this.squareSize,2);
+                        var squaredTileSize = Math.pow(this.mapSettings.squareSize,2);
                         var diagonal = minimum * Math.sqrt(squaredTileSize+squaredTileSize);
-                        var straight = (maximum-minimum)*this.squareSize;
+                        var straight = (maximum-minimum)*this.mapSettings.squareSize;
                         distance=diagonal+straight;
                     }
 
@@ -1101,16 +1101,16 @@ export class MapDetailComponent implements OnInit {
                 // make selection of tiles to do calculations on smaller:
                 if (rowDif<=1 && colDif<=1){
                     if (rowDif == 0){
-                        distance = colDif*this.squareSize
+                        distance = colDif*this.mapSettings.squareSize
                     }
                     if (colDif == 0 && rowDif!=0){
-                        distance = rowDif*this.squareSize
+                        distance = rowDif*this.mapSettings.squareSize
                     }
 
                     // when diagonal movement calc distance based on a^2+b^2=c^2
                     // just a diagonal line:
                     if (colDif == rowDif && colDif !=0){
-                        var squaredTileSize = Math.pow(this.squareSize,2);
+                        var squaredTileSize = Math.pow(this.mapSettings.squareSize,2);
                         distance = colDif * Math.sqrt(squaredTileSize+squaredTileSize);
                     }
 
@@ -1118,9 +1118,9 @@ export class MapDetailComponent implements OnInit {
                     if (colDif!=rowDif && colDif>0 && rowDif>0){
                         var minimum = Math.min(colDif,rowDif);
                         var maximum = Math.max(colDif,rowDif);
-                        var squaredTileSize = Math.pow(this.squareSize,2);
+                        var squaredTileSize = Math.pow(this.mapSettings.squareSize,2);
                         var diagonal = minimum * Math.sqrt(squaredTileSize+squaredTileSize);
-                        var straight = (maximum-minimum)*this.squareSize;
+                        var straight = (maximum-minimum)*this.mapSettings.squareSize;
                         distance=diagonal+straight;
                     }
 
@@ -1171,16 +1171,16 @@ export class MapDetailComponent implements OnInit {
 
                 // make selection of tiles to do calculations on smaller:
                 if (rowDif == 0){
-                    distance = colDif*this.squareSize
+                    distance = colDif*this.mapSettings.squareSize
                 }
                 if (colDif == 0 && rowDif!=0){
-                    distance = rowDif*this.squareSize
+                    distance = rowDif*this.mapSettings.squareSize
                 }
 
                 // when diagonal movement calc distance based on a^2+b^2=c^2
                 // just a diagonal line:
                 if (colDif == rowDif && colDif !=0){
-                    var squaredTileSize = Math.pow(this.squareSize,2);
+                    var squaredTileSize = Math.pow(this.mapSettings.squareSize,2);
                     distance = colDif * Math.sqrt(squaredTileSize+squaredTileSize);
                 }
 
@@ -1188,9 +1188,9 @@ export class MapDetailComponent implements OnInit {
                 if (colDif!=rowDif && colDif>0 && rowDif>0){
                     var minimum = Math.min(colDif,rowDif);
                     var maximum = Math.max(colDif,rowDif);
-                    var squaredTileSize = Math.pow(this.squareSize,2);
+                    var squaredTileSize = Math.pow(this.mapSettings.squareSize,2);
                     var diagonal = minimum * Math.sqrt(squaredTileSize+squaredTileSize);
-                    var straight = (maximum-minimum)*this.squareSize;
+                    var straight = (maximum-minimum)*this.mapSettings.squareSize;
                     distance=diagonal+straight;
                 }
 
@@ -1201,7 +1201,7 @@ export class MapDetailComponent implements OnInit {
         }
         getChargeRange(player:Player, allSquares:Square[]){
             // calculate relativeMoveSpeed based on tile width
-            var relativeMoveSpeed = +((player.movementAmount*1.5)/this.squareSize).toFixed(0);
+            var relativeMoveSpeed = +((player.movementAmount*1.5)/this.mapSettings.squareSize).toFixed(0);
 
             var moveRange = new Array();
 
@@ -1222,16 +1222,16 @@ export class MapDetailComponent implements OnInit {
                 if (rowDif<=relativeMoveSpeed && colDif<=relativeMoveSpeed){
 
                     if (rowDif == 0){
-                        distance = colDif*this.squareSize
+                        distance = colDif*this.mapSettings.squareSize
                     }
                     if (colDif == 0 && rowDif!=0){
-                        distance = rowDif*this.squareSize
+                        distance = rowDif*this.mapSettings.squareSize
                     }
 
                     // when diagonal movement calc distance based on a^2+b^2=c^2
                     // just a diagonal line:
                     if (colDif == rowDif && colDif !=0){
-                        var squaredTileSize = Math.pow(this.squareSize,2);
+                        var squaredTileSize = Math.pow(this.mapSettings.squareSize,2);
                         distance = colDif * Math.sqrt(squaredTileSize+squaredTileSize);
                     }
 
@@ -1239,9 +1239,9 @@ export class MapDetailComponent implements OnInit {
                     if (colDif!=rowDif && colDif>0 && rowDif>0){
                         var minimum = Math.min(colDif,rowDif);
                         var maximum = Math.max(colDif,rowDif);
-                        var squaredTileSize = Math.pow(this.squareSize,2);
+                        var squaredTileSize = Math.pow(this.mapSettings.squareSize,2);
                         var diagonal = minimum * Math.sqrt(squaredTileSize+squaredTileSize);
-                        var straight = (maximum-minimum)*this.squareSize;
+                        var straight = (maximum-minimum)*this.mapSettings.squareSize;
                         distance=diagonal+straight;
                     }
 

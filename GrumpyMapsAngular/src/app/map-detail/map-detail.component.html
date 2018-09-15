@@ -50,13 +50,13 @@
                         </span>
                     </div>
 
-                    <div class="btn attackCastMove" (click)="moveCharacter()" *ngIf="selectedPlayer.movementLeft>=squareSize" alt="CTRL+MOVE to freely move {{selectedPlayer.name}} anywhere on the map" title="CTRL+MOVE to freely move {{selectedPlayer.name}} anywhere on the map">
+                    <div class="btn attackCastMove" (click)="moveCharacter()" *ngIf="selectedPlayer.movementLeft>=mapSettings.squareSize" alt="CTRL+MOVE to freely move {{selectedPlayer.name}} anywhere on the map" title="CTRL+MOVE to freely move {{selectedPlayer.name}} anywhere on the map">
                         <mdb-icon class="buttonIcon" icon="arrows"></mdb-icon><br />
                         <span class="buttonText">
                             Move
                         </span>
                     </div>
-                    <div class="btn attackCastMove disabled" *ngIf="selectedPlayer.movementLeft<squareSize">
+                    <div class="btn attackCastMove disabled" *ngIf="selectedPlayer.movementLeft<mapSettings.squareSize">
                         <mdb-icon class="buttonIcon" icon="arrows"></mdb-icon><br />
                         <span class="buttonText">
                             Move
@@ -64,13 +64,13 @@
                     </div>
 
                     <br />
-                    <div class="btn deleteEdit" (click)="disengage()" *ngIf="selectedPlayer.movementLeft>=squareSize && this.selectedPlayer.movementLeft >= this.selectedPlayer.movementAmount*this.cutOffNumber">
+                    <div class="btn deleteEdit" (click)="disengage()" *ngIf="selectedPlayer.movementLeft>=mapSettings.squareSize && this.selectedPlayer.movementLeft >= this.selectedPlayer.movementAmount*this.cutOffNumber">
                         <mdb-icon class="buttonIcon" icon="level-up"></mdb-icon><br />
                         <span class="buttonText">
                             Disengage
                         </span>
                     </div>
-                    <div class="btn deleteEdit disabled" *ngIf="selectedPlayer.movementLeft<squareSize || this.selectedPlayer.movementLeft < this.selectedPlayer.movementAmount*this.cutOffNumber">
+                    <div class="btn deleteEdit disabled" *ngIf="selectedPlayer.movementLeft<mapSettings.squareSize || this.selectedPlayer.movementLeft < this.selectedPlayer.movementAmount*this.cutOffNumber">
                         <mdb-icon class="buttonIcon" icon="level-up"></mdb-icon><br />
                         <span class="buttonText">
                             Disengage
@@ -193,7 +193,7 @@
     <div class="legend" [style.width]=dndMap.squares[0].squareHeightWidth></div>
     <div>
         <form [formGroup]="mapForm" >
-            <input class="inputCustom legendYards" formControlName="yards" type="number" min="1" max="100" (change)="setSquareSize()" (click)="setSquareSize()" style="width:45px;height:25px;"> {{dndMap.squares[0].squareSize}} yards ({{squareFeet}} feet)
+            <input class="inputCustom legendYards" formControlName="yards" type="number" min="1" max="100" (change)="setSquareSize()" (click)="setSquareSize()" style="width:45px;height:25px;"> {{mapSettings.squareSize}} yards ({{squareFeet}} feet)
         </form>
         <div id=showGrid>
             <form [formGroup]="mapForm" >
@@ -206,7 +206,7 @@
     </div>
     <div class="legend"></div>
     <div style="text-align:center;">
-        {{(dndMap.squares[0].squareSize) * heightWidth}} yards ({{mapFeet}} feet)
+        {{(mapSettings.squareSize) * heightWidth}} yards ({{mapFeet}} feet)
     </div>
 </div>
 
@@ -231,7 +231,7 @@
         <br>
         <label class="center-block"><b>Tile size in yards:  </b>
             <br />
-            <input class="inputCustom" formControlName="yards" type="number" min="1" max="100" (change)="setSquareSize()" (click)="setSquareSize()" style="width:65px;">&nbsp; {{dndMap.squares[0].squareSize}}x{{dndMap.squares[0].squareSize}} yd &nbsp;&nbsp;({{squareFeet}}x{{squareFeet}} ft)
+            <input class="inputCustom" formControlName="yards" type="number" min="1" max="100" (change)="setSquareSize()" (click)="setSquareSize()" style="width:65px;">&nbsp; {{mapSettings.squareSize}}x{{mapSettings.squareSize}} yd &nbsp;&nbsp;({{squareFeet}}x{{squareFeet}} ft)
         </label>
         <br>
         <br>
