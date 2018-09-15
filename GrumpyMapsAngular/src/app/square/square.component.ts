@@ -21,7 +21,6 @@ export class SquareComponent implements OnInit {
     @Input()  mapSettings:MapSettings;
     @Input()  square: Square;
     @Input()  squareSize: number;
-    @Input() allSquares:Square[] = new Array();
     @Input() squareIndex:number;
     @Input() rowIndexAsLetter:string;
     private _squareHeightWidth: string;
@@ -31,7 +30,6 @@ export class SquareComponent implements OnInit {
         this.setSquareMapCoordinates();
     }
     @Input() obstructionMode: boolean = false;
-    @Input() movementMode: boolean;
     @Output() moveModeEvent = new EventEmitter<boolean>();
     @Input() freeMove: boolean;
     @Output() freeMoveEvent = new EventEmitter<boolean>();
@@ -199,9 +197,9 @@ export class SquareComponent implements OnInit {
   }
   getPlayerSquare(){
       var playerSquare:Square=null;
-      for (var i = 0 ; i < this.allSquares.length ; i++){
-          if (this.allSquares[i].mapSquareId == this.selectedPlayer.mapSquareId){
-              playerSquare = this.allSquares[i];
+      for (var i = 0 ; i < this.mapSettings.allSquares.length ; i++){
+          if (this.mapSettings.allSquares[i].mapSquareId == this.selectedPlayer.mapSquareId){
+              playerSquare = this.mapSettings.allSquares[i];
           }
       }
       return playerSquare;
@@ -274,8 +272,8 @@ export class SquareComponent implements OnInit {
   }
 
   resetAllDistances(){
-      for (var i=0 ; i<this.allSquares.length ; i++){
-          this.allSquares[i].currentDistance=9999;
+      for (var i=0 ; i<this.mapSettings.allSquares.length ; i++){
+          this.mapSettings.allSquares[i].currentDistance=9999;
       }
   }
 

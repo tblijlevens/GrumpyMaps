@@ -202,8 +202,8 @@ export class MapDetailComponent implements OnInit {
         this.mapForm.get('moveCutCheck').setValue(true);
         this.mapForm.get('moveCutRange').setValue(50);
         this.mapForm.get('showGridCheck').setValue(true);
-        this.dndMap = new DnDMap(0, this.heightWidth, this.squareSize); //id zero cannot exist in database, so it will generate a new unique id)
         this.mapSettings = new MapSettings();
+        this.setMap();
 
         this.createPlayerForm.get('playerColor').setValue("#ff0000");
         this.createPlayerForm.get('playerInitiative').setValue(15);
@@ -232,6 +232,13 @@ export class MapDetailComponent implements OnInit {
         ////////////////////////     MAP SETUP    //////////////////////////
         ////////////////////////////////////////////////////////////////////
 
+    setMap(){
+        this.dndMap = new DnDMap(0, this.heightWidth, this.squareSize); //id zero cannot exist in database, so it will generate a new unique id)
+        this.mapSettings.dndMap = this.dndMap;
+        this.mapSettings.allSquares = this.dndMap.squares;
+
+
+    }
 
     setSizes(){
         // set three column widths:
@@ -304,7 +311,7 @@ export class MapDetailComponent implements OnInit {
             // alert("Map gridsize can't be bigger than 25x25. Therefore gridsize is set to 25x25.");
         }
 
-        this.dndMap = new DnDMap(0, this.heightWidth, this.squareSize); //id zero cannot exist in databse, so it will generate a new unique id)
+        this.setMap();
         var imageUrl = this.mapForm.get('imageUrl').value;
         this.dndMap.setImage(imageUrl);
 
