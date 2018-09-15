@@ -3,6 +3,8 @@ import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { Square } from '../domain/square';
 import { DnDMap } from '../domain/dn-dmap';
 import { Player } from '../domain/player';
+import { MapSettings } from '../domain/map-settings'
+
 import { MapDetailComponent } from '../map-detail/map-detail.component';
 import { SquareDetailComponent } from '../square-detail/square-detail.component';
 import { MapShareService } from '../map-share.service';
@@ -16,78 +18,79 @@ import * as $ from 'jquery';
 })
 export class SquareComponent implements OnInit {
 
-  @Input()  square: Square;
-  @Input()  squareSize: number;
-  @Input() allSquares:Square[] = new Array();
-  @Input() squareIndex:number;
-  @Input() rowIndexAsLetter:string;
-  private _squareHeightWidth: string;
-  @Input() set squareHeightWidth(squareHeightWidth: string) {
-      this._squareHeightWidth = squareHeightWidth;
-      this.squareStyles['width'] = squareHeightWidth;
-      this.setSquareMapCoordinates();
-  }
-  @Input() obstructionMode: boolean = false;
-  @Input() movementMode: boolean;
-  @Output() moveModeEvent = new EventEmitter<boolean>();
-  @Input() freeMove: boolean;
-  @Output() freeMoveEvent = new EventEmitter<boolean>();
-  @Input() disengageMode: boolean;
-  @Output() disengageModeEvent = new EventEmitter<boolean>();
-  @Input() chargeMode: boolean;
-  @Output() chargeModeEvent = new EventEmitter<boolean>();
-  @Output() setRangeSquaresEvent = new EventEmitter<number[]>();
-  _inRangeSquares: Square[] = new Array();
-  @Input() set inRangeSquares(squares: Square[]) {
-      this._inRangeSquares = squares;
-      this.setRangeSquareStyles();
-  }
- rangeCutOffSquares:Square[] = new Array();
- @Input() set _rangeCutOffSquares(squares: Square[]) {
-     this.rangeCutOffSquares = squares;
-     this.setRangeSquareStyles();
- }
-  squareStyles = {};
-  @Input() set _squareBorderStyles(squareBorderStyle: string) {
-      this.squareStyles['border'] = squareBorderStyle;
-  }
-  @Input() selectedPlayer: Player = null;
-  @Output() setSelectedPlayerEvent = new EventEmitter<Player>();
+    @Input()  mapSettings:MapSettings;
+    @Input()  square: Square;
+    @Input()  squareSize: number;
+    @Input() allSquares:Square[] = new Array();
+    @Input() squareIndex:number;
+    @Input() rowIndexAsLetter:string;
+    private _squareHeightWidth: string;
+    @Input() set squareHeightWidth(squareHeightWidth: string) {
+        this._squareHeightWidth = squareHeightWidth;
+        this.squareStyles['width'] = squareHeightWidth;
+        this.setSquareMapCoordinates();
+    }
+    @Input() obstructionMode: boolean = false;
+    @Input() movementMode: boolean;
+    @Output() moveModeEvent = new EventEmitter<boolean>();
+    @Input() freeMove: boolean;
+    @Output() freeMoveEvent = new EventEmitter<boolean>();
+    @Input() disengageMode: boolean;
+    @Output() disengageModeEvent = new EventEmitter<boolean>();
+    @Input() chargeMode: boolean;
+    @Output() chargeModeEvent = new EventEmitter<boolean>();
+    @Output() setRangeSquaresEvent = new EventEmitter<number[]>();
+    _inRangeSquares: Square[] = new Array();
+    @Input() set inRangeSquares(squares: Square[]) {
+        this._inRangeSquares = squares;
+        this.setRangeSquareStyles();
+    }
+    rangeCutOffSquares:Square[] = new Array();
+    @Input() set _rangeCutOffSquares(squares: Square[]) {
+        this.rangeCutOffSquares = squares;
+        this.setRangeSquareStyles();
+    }
+    squareStyles = {};
+    @Input() set _squareBorderStyles(squareBorderStyle: string) {
+        this.squareStyles['border'] = squareBorderStyle;
+    }
+    @Input() selectedPlayer: Player = null;
+    @Output() setSelectedPlayerEvent = new EventEmitter<Player>();
 
-  originalSquareColor:string = 'rgba(8, 161, 0, 0)';
-  @Output() selectingEvent = new EventEmitter<boolean>();
-  @Input() selecting:boolean;
-  @Output() deselectingEvent = new EventEmitter<boolean>();
-  @Input() deselecting:boolean;
-  private multiSelect:boolean;
-  @Input() set _multiSelect(multiSelect:boolean) {
-      this.multiSelect = multiSelect;
-    //   if (!multiSelect){
-          this.selectedSquares = new Array();
-          this.setTileStyle();
-          this.setRangeSquareStyles();
-    //   }
-  }
-  @Output() selectedSquaresEvent = new EventEmitter<Square[]>();
-  private selectedSquares:Square[] = new Array();
-  @Input() set _selectedSquares(selectedSquares:Square[]) {
-      this.selectedSquares = selectedSquares;
-      if (!this.multiSelect){
-          this.setTileStyle();
-      }
-     // if (this.selectedSquares.length!=0){
-          this.setRangeSquareStyles();
-     // }
-  }
-  @Input() set setStyles(setstyles:boolean){
-      this.deselectAll(); // ExpressionChangedAfterItHasBeenCheckedError is not thrown in production
+    originalSquareColor:string = 'rgba(8, 161, 0, 0)';
+    @Output() selectingEvent = new EventEmitter<boolean>();
+    @Input() selecting:boolean;
+    @Output() deselectingEvent = new EventEmitter<boolean>();
+    @Input() deselecting:boolean;
+    private multiSelect:boolean;
+    @Input() set _multiSelect(multiSelect:boolean) {
+        this.multiSelect = multiSelect;
+        //   if (!multiSelect){
+        this.selectedSquares = new Array();
+        this.setTileStyle();
+        this.setRangeSquareStyles();
+        //   }
+    }
+    @Output() selectedSquaresEvent = new EventEmitter<Square[]>();
+    private selectedSquares:Square[] = new Array();
+    @Input() set _selectedSquares(selectedSquares:Square[]) {
+        this.selectedSquares = selectedSquares;
+        if (!this.multiSelect){
+            this.setTileStyle();
+        }
+        // if (this.selectedSquares.length!=0){
+        this.setRangeSquareStyles();
+        // }
+    }
+    @Input() set setStyles(setstyles:boolean){
+        this.deselectAll(); // ExpressionChangedAfterItHasBeenCheckedError is not thrown in production
 
-      this.setTileStyle();
-      this.setRangeSquareStyles();
-  }
-  distance:number=9999;
-  @Input() cutOffMechanic:boolean=false;
-  @Input() cutOffNumber:number;
+        this.setTileStyle();
+        this.setRangeSquareStyles();
+    }
+    distance:number=9999;
+    @Input() cutOffMechanic:boolean=false;
+    @Input() cutOffNumber:number;
 
 
   constructor(private mapShareService: MapShareService) { }
@@ -105,7 +108,7 @@ export class SquareComponent implements OnInit {
     this.mapShareService.setSquare(this.square); //update active square in squareDetail via mapShareService
 
     // move an object from a square to a square if movementMode is on
-    if (this.movementMode) {
+    if (this.mapSettings.movementMode) {
         this.moveObject();
     }
     this.resetAllDistances();
