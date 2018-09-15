@@ -29,7 +29,6 @@ export class SquareComponent implements OnInit {
         this.squareStyles['width'] = squareHeightWidth;
         this.setSquareMapCoordinates();
     }
-    @Input() obstructionMode: boolean = false;
     @Output() moveModeEvent = new EventEmitter<boolean>();
     @Input() freeMove: boolean;
     @Output() freeMoveEvent = new EventEmitter<boolean>();

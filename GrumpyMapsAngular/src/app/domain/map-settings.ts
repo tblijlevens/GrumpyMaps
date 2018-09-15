@@ -9,7 +9,6 @@ export class MapSettings {
     allSquares:Square[];
     squareHeightWidth:string;
     squareSize:number;
-    obstructionMode:boolean;
     inRangeSquares:Square[];
     rangeCutOffSquares:Square[];
     movementMode:boolean;
