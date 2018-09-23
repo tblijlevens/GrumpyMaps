@@ -296,6 +296,7 @@ export class MapDetailComponent implements OnInit {
             // alert("Map gridsize can't be bigger than 25x25. Therefore gridsize is set to 25x25.");
         }
 
+
         this.setMap(this.heightWidth, this.mapSettings.squareSize);
         var imageUrl = this.mapForm.get('imageUrl').value;
         this.dndMap.setImage(imageUrl);

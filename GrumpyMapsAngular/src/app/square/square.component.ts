@@ -35,8 +35,6 @@ export class SquareComponent implements OnInit {
         this.squareStyles['border'] = squareBorderStyle;
     }
 
-    originalSquareColor:string = 'rgba(8, 161, 0, 0)';
-
     distance:number=9999;
 
   constructor(private mapShareService: MapShareService) { }
