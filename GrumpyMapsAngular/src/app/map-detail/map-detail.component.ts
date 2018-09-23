@@ -367,7 +367,7 @@ export class MapDetailComponent implements OnInit {
             this.multiSelect = true;
             $("#multiSelect").css({"box-shadow":"0 0 4px 2px #2A74F2"})
         }
-        this.selectedSquares = new Array();
+        this.mapSettings.selectedSquares = new Array();
     }
 
     public hideGrid() {
@@ -382,37 +382,37 @@ export class MapDetailComponent implements OnInit {
 
     obstructSelection(){
         var obstruct = false;
-        if (this.selectedSquares[0].obstructed) {
+        if (this.mapSettings.selectedSquares[0].obstructed) {
             // make all squares unobstructed
             obstruct = true;
         }
-        for (var i = 0 ; i < this.selectedSquares.length ; i++){
+        for (var i = 0 ; i < this.mapSettings.selectedSquares.length ; i++){
             if (obstruct){
-                this.selectedSquares[i].obstructed = false;
+                this.mapSettings.selectedSquares[i].obstructed = false;
             }
             else{
-                this.selectedSquares[i].obstructed = true;
+                this.mapSettings.selectedSquares[i].obstructed = true;
             }
         }
         // only set styles of the ones just changed...
-        this.mapSettings.setTiles(this.selectedSquares);
-        this.selectedSquares = new Array();
+        this.mapSettings.setTiles(this.mapSettings.selectedSquares);
+        this.mapSettings.selectedSquares = new Array();
 
     }
     fogTiles(){
         var fogged = true;
-        if (this.selectedSquares[0].fogged) {
+        if (this.mapSettings.selectedSquares[0].fogged) {
             // make all squares transparent
             fogged = false;
         }
         if ((<KeyboardEvent>window.event).ctrlKey || (<KeyboardEvent>window.event).metaKey){
-            this.selectedSquares = this.dndMap.squares;
+            this.mapSettings.selectedSquares = this.dndMap.squares;
         }
-        for (var i = 0 ; i < this.selectedSquares.length ; i++){
-            this.selectedSquares[i].fogged = fogged;
+        for (var i = 0 ; i < this.mapSettings.selectedSquares.length ; i++){
+            this.mapSettings.selectedSquares[i].fogged = fogged;
         }
-        this.mapSettings.setTiles(this.selectedSquares);
-        this.selectedSquares = new Array();
+        this.mapSettings.setTiles(this.mapSettings.selectedSquares);
+        this.mapSettings.selectedSquares = new Array();
 
         this.clearAllFields();
         this.mapShareService.setPlayerZones();
@@ -427,7 +427,7 @@ export class MapDetailComponent implements OnInit {
         var zoneObject:any ={};
 
 
-        for (var i = 0 ; i < this.selectedSquares.length ; i++){
+        for (var i = 0 ; i < this.mapSettings.selectedSquares.length ; i++){
             if (duration==0){
                 zoneObject ={
                     id: this.zoneIdGenerator--,
@@ -446,7 +446,7 @@ export class MapDetailComponent implements OnInit {
                     duration:duration
                 };
             }
-            this.selectedSquares[i].zones.push(zoneObject);
+            this.mapSettings.selectedSquares[i].zones.push(zoneObject);
         }
 
         this.mapShareService.setTileZones(); // sets the zone sizes in the correct position
@@ -457,24 +457,24 @@ export class MapDetailComponent implements OnInit {
         var madeInvisible = "";
 
         var hidden = false;
-        if (this.selectedSquares[0].hidden) {
+        if (this.mapSettings.selectedSquares[0].hidden) {
             // make all squares hidden
             hidden = true;
         }
-        for (var i = 0 ; i < this.selectedSquares.length ; i++){
+        for (var i = 0 ; i < this.mapSettings.selectedSquares.length ; i++){
             if (hidden){
-                this.selectedSquares[i].hidden=false;
+                this.mapSettings.selectedSquares[i].hidden=false;
                 if (madeVisible!=""){
                     madeVisible+= ", ";
                 }
-                madeVisible+=this.selectedSquares[i].mapCoordinate;
+                madeVisible+=this.mapSettings.selectedSquares[i].mapCoordinate;
             }
             else {
-                this.selectedSquares[i].hidden=true;
+                this.mapSettings.selectedSquares[i].hidden=true;
                 if (madeInvisible!=""){
                     madeInvisible+= ", ";
                 }
-                madeInvisible+=this.selectedSquares[i].mapCoordinate;
+                madeInvisible+=this.mapSettings.selectedSquares[i].mapCoordinate;
             }
         }
 
@@ -512,23 +512,23 @@ export class MapDetailComponent implements OnInit {
         const attacks = +this.createPlayerForm.get('playerAttacks').value;
         const spells = +this.createPlayerForm.get('playerSpells').value;
         const imageFormModel = this.prepareSave();
-        if (this.selectedSquares.length>1){
-            for (var i = 0 ; i < this.selectedSquares.length ; i++){
-                var player:Player = new Player(this.playerIdGenerator--, this.playerIdCreator++, name+" "+i, 100, movement, initiative, attacks, spells, "physical", color, this.selectedSquares[i].mapSquareId, this.selectedSquares[i].mapHeightWidth, this.selectedSquares[i].mapCoordinate, this.selectedFile, this.selectedSquares[i].mapId);
+        if (this.mapSettings.selectedSquares.length>1){
+            for (var i = 0 ; i < this.mapSettings.selectedSquares.length ; i++){
+                var player:Player = new Player(this.playerIdGenerator--, this.playerIdCreator++, name+" "+i, 100, movement, initiative, attacks, spells, "physical", color, this.mapSettings.selectedSquares[i].mapSquareId, this.mapSettings.selectedSquares[i].mapHeightWidth, this.mapSettings.selectedSquares[i].mapCoordinate, this.selectedFile, this.mapSettings.selectedSquares[i].mapId);
                 if (player.playerIcon!=null){
                     this.setPlayerIconUrl(player);
                 }
-                this.selectedSquares[i].addPhysical(player);
+                this.mapSettings.selectedSquares[i].addPhysical(player);
                 this.playerAdded(player);
             }
-            this.selectedSquares = new Array();
+            this.mapSettings.selectedSquares = new Array();
         }
         else{
-            var player:Player = new Player(this.playerIdGenerator--, this.playerIdCreator++, name, 100, movement, initiative, attacks, spells, "physical", color, this.selectedSquares[0].mapSquareId, this.selectedSquares[0].mapHeightWidth, this.selectedSquares[0].mapCoordinate, this.selectedFile, this.selectedSquares[0].mapId);
+            var player:Player = new Player(this.playerIdGenerator--, this.playerIdCreator++, name, 100, movement, initiative, attacks, spells, "physical", color, this.mapSettings.selectedSquares[0].mapSquareId, this.mapSettings.selectedSquares[0].mapHeightWidth, this.mapSettings.selectedSquares[0].mapCoordinate, this.selectedFile, this.mapSettings.selectedSquares[0].mapId);
             if (player.playerIcon!=null){
                 this.setPlayerIconUrl(player);
             }
-            this.selectedSquares[0].addPhysical(player);
+            this.mapSettings.selectedSquares[0].addPhysical(player);
             this.playerAdded(player);
         }
 
@@ -667,7 +667,7 @@ export class MapDetailComponent implements OnInit {
     }
 
     addExistingCharacter(){
-        this.selectedSquares[0].addPhysical(this.selectedLoadCharacter);
+        this.mapSettings.selectedSquares[0].addPhysical(this.selectedLoadCharacter);
         this.playerAdded(this.selectedLoadCharacter);
         this.mapShareService.setPlayerZones();
         this.allLoadedCharacters=new Array();
@@ -953,7 +953,9 @@ export class MapDetailComponent implements OnInit {
             this.resetAllDistances();
             this.deselectAllCharacters();
             this.setAllActiveColors();
-            this.selectedSquares = new Array();
+            var oldSelection:Square[] = this.mapSettings.selectedSquares;
+            this.mapSettings.selectedSquares = new Array();
+            this.setStyleOfOldSelection(oldSelection);
             this.mapSettings.selectedPlayer=null;
             this.mapSettings.movementMode = false;
             this.mapSettings.freeMove = false;
@@ -961,6 +963,11 @@ export class MapDetailComponent implements OnInit {
             this.mapSettings.disengageMode = false;
             this.mapSettings.setRange(new Array());
             this.mapSettings.setCutOffRange(new Array());
+        }
+        setStyleOfOldSelection(oldSelection){
+            for(var i=0;i<oldSelection.length;i++){
+                this.mapSettings.setRangeSquareStyles(oldSelection[i]);
+            }
         }
         resetAllDistances(){
             for (var i=0 ; i<this.dndMap.squares.length ; i++){
@@ -1001,7 +1008,7 @@ export class MapDetailComponent implements OnInit {
         }
         public setRangeSquareStyles(square:Square) {
 
-          if (!square.obstructed && !this.selectedSquares.includes(square)) {
+          if (!square.obstructed && !this.mapSettings.selectedSquares.includes(square)) {
             if (square.inRange) {
                 if (this.mapSettings.rangeCutOffSquares.includes(square)) {
                     if (!square.fogged){
@@ -1386,7 +1393,7 @@ export class MapDetailComponent implements OnInit {
             this.clickPlayer(player);
         }
         public receiveSelectedSquares($event){
-            this.selectedSquares = this.removeDuplicates($event);
+            this.mapSettings.selectedSquares = this.removeDuplicates($event);
         }
 
         private removeDuplicates(arr){
@@ -1400,7 +1407,7 @@ export class MapDetailComponent implements OnInit {
 
         resetSelectedSquares(){
             if (!this.multiSelect){
-                this.selectedSquares = new Array();
+                this.mapSettings.selectedSquares = new Array();
             }
         }
 

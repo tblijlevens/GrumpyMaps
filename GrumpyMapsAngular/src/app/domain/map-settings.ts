@@ -94,7 +94,6 @@ export class MapSettings {
         }
     }
     public setTileStyle(square:Square){
-        console.log("tileStyle");
         if (square.obstructed && !square.fogged){
             $("#squarecontainer"+square.mapSquareId).css({background:"repeating-linear-gradient(          135deg, rgba(161, 0, 0, 0.6), rgba(161, 0, 0, 0.6) 3px, rgba(0, 0, 0, 0.0) 3px, rgba(0, 0, 0, 0.0) 6px)"})
             //this.squareStyles['background'] = 'repeating-linear-gradient(          135deg, rgba(161, 0, 0, 0.6), rgba(161, 0, 0, 0.6) 8px, rgba(0, 0, 0, 0.0) 8px, rgba(0, 0, 0, 0.0) 16px)';

@@ -41,22 +41,11 @@ export class SquareComponent implements OnInit {
     @Input() set _multiSelect(multiSelect:boolean) {
         this.multiSelect = multiSelect;
         //   if (!multiSelect){
-        this.selectedSquares = new Array();
+        this.mapSettings.selectedSquares = new Array();
         this.setRangeSquareStyles();
         //   }
     }
-    @Output() selectedSquaresEvent = new EventEmitter<Square[]>();
-    private selectedSquares:Square[] = new Array();
-    @Input() set _selectedSquares(selectedSquares:Square[]) {
-        this.selectedSquares = selectedSquares;
-        this.mapSettings.selectedSquares = selectedSquares;
-        if (!this.multiSelect){
-            this.mapSettings.setTiles(selectedSquares);
-        }
-        // if (this.selectedSquares.length!=0){
-        this.setRangeSquareStyles();
-        // }
-    }
+
     distance:number=9999;
 
   constructor(private mapShareService: MapShareService) { }
@@ -258,7 +247,7 @@ export class SquareComponent implements OnInit {
           this.squareStyles['background-color'] = "rgba(153, 153, 153, 1)";
           this.squareStyles['box-shadow'] = "0 0px 5px 5px #999999";
       }
-      else if (!this.selectedSquares.includes(this.square)){
+      else if (!this.mapSettings.selectedSquares.includes(this.square)){
           this.squareStyles['background-color'] = "rgba(0, 0, 0, 0.0)";
           this.squareStyles['box-shadow'] = "none";
 
@@ -294,7 +283,7 @@ export class SquareComponent implements OnInit {
           }
       }
 
-    if (!this.square.obstructed && !this.selectedSquares.includes(this.square)) {
+    if (!this.square.obstructed && !this.mapSettings.selectedSquares.includes(this.square)) {
       if (this.square.inRange) {
           if (this.mapSettings.rangeCutOffSquares.includes(this.square)) {
               if (!this.square.fogged){
@@ -329,7 +318,7 @@ export class SquareComponent implements OnInit {
 
   }
   selectionStyles(){
-      if (this.selectedSquares.includes(this.square)){
+      if (this.mapSettings.selectedSquares.includes(this.square)){
           if (!this.square.fogged){
               this.squareStyles['background-color'] = 'rgba(0, 112, 161, 0.6)';
           }
@@ -341,7 +330,9 @@ export class SquareComponent implements OnInit {
   }
 
   deselectAll(){
-      this.selectedSquaresEvent.emit(new Array());
+      var oldSelection:Square[] = this.mapSettings.selectedSquares;
+      this.mapSettings.selectedSquares = new Array();
+      this.setStyleOfOldSelection(oldSelection);
       this.resetPlayer();
       this.mapSettings.movementMode = false;
       this.mapSettings.freeMove = false;
@@ -351,21 +342,30 @@ export class SquareComponent implements OnInit {
       this.resetAllDistances();
   }
 
+  setStyleOfOldSelection(oldSelection){
+      for(var i=0;i<oldSelection.length;i++){
+          this.mapSettings.setRangeSquareStyles(oldSelection[i]);
+      }
+  }
   // all the mouseevents below make multiSelecting possible
   mouseDownSquare($event){
       if (this.multiSelect){
           this.mapSettings.selecting = true;
       }
-      if (this.selectedSquares.includes(this.square)){
+      if (this.mapSettings.selectedSquares.includes(this.square)){
           this.mapSettings.deselecting = true;
       }
       else {
           this.mapSettings.deselecting = false;
       }
       if (!this.multiSelect){
-          this.selectedSquares = new Array();
-          this.selectedSquares.push(this.square);
-          this.selectedSquaresEvent.emit(this.selectedSquares);
+          var oldSelection:Square = this.mapSettings.selectedSquares[0];
+          this.mapSettings.selectedSquares = new Array();
+          this.mapSettings.selectedSquares.push(this.square);
+          if (oldSelection!=null){
+              this.mapSettings.setRangeSquareStyles(oldSelection);
+          }
+
       }
       this.addToSelection();
       this.selectionStyles();
@@ -386,8 +386,6 @@ export class SquareComponent implements OnInit {
   }
   mouseUpSquare(){
       this.mapSettings.selecting=false;
-      this.selectedSquaresEvent.emit(this.selectedSquares);
-
   }
   mouseOutSquare(){
 
@@ -404,19 +402,18 @@ export class SquareComponent implements OnInit {
 
   }
   addToSelection(){
-      if(this.mapSettings.deselecting && this.selectedSquares.includes(this.square)){
-          var index = this.selectedSquares.indexOf(this.square);
+      if(this.mapSettings.deselecting && this.mapSettings.selectedSquares.includes(this.square)){
+          var index = this.mapSettings.selectedSquares.indexOf(this.square);
           if (index > -1) {
-              this.selectedSquares.splice(index, 1);
+              this.mapSettings.selectedSquares.splice(index, 1);
           }
       }
       else if (!this.mapSettings.deselecting){
-          var allSquares = "";
-          this.selectedSquares.push(this.square);
-
-          for (var i = 0 ; i < this.selectedSquares.length ; i++){
-              allSquares+= this.selectedSquares[i].mapCoordinate + " ";
+          if (!this.mapSettings.selectedSquares.includes(this.square)){
+              this.mapSettings.selectedSquares.push(this.square);
           }
+
+
 
       }
   }

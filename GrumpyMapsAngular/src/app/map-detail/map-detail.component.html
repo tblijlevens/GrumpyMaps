@@ -181,7 +181,7 @@
         <div *ngFor="let j of rowArray" id="row_{{j}}" class="row" [style.height]=dndMap.squares[0].squareHeightWidth>
 
             <div class="square">
-                <app-square *ngFor="let square of dndMap.squares | slice:(j-1)*heightWidth:j*heightWidth; index as i" [mapSettings]=mapSettings [squareHeightWidth]=square.squareHeightWidth [square]=square [squareIndex]=i [rowIndexAsLetter]=setRowIndexLetter(j) [_squareBorderStyles]=squareBorderStyle [_selectedSquares]=selectedSquares [_multiSelect]=multiSelect (selectedSquaresEvent)="receiveSelectedSquares($event)" >
+                <app-square *ngFor="let square of dndMap.squares | slice:(j-1)*heightWidth:j*heightWidth; index as i" [mapSettings]=mapSettings [squareHeightWidth]=square.squareHeightWidth [square]=square [squareIndex]=i [rowIndexAsLetter]=setRowIndexLetter(j) [_squareBorderStyles]=squareBorderStyle [_multiSelect]=multiSelect >
                 </app-square>
             </div>
         </div>
@@ -258,7 +258,7 @@
 
 <div id="secondColumn" (click)="hideSettings()">
     <div class="squaredetailcontainer contentBox" id="squareDetails">
-        <app-square-detail [mapSettings]=mapSettings [_selectedSquares]=selectedSquares [_allCharacters]=allCharacters  (selectPlayerEvent)="receiveSelectedPlayer($event)"></app-square-detail>
+        <app-square-detail [mapSettings]=mapSettings [_allCharacters]=allCharacters  (selectPlayerEvent)="receiveSelectedPlayer($event)"></app-square-detail>
     </div>
 
     <div class="mapOptions contentBox">
@@ -266,39 +266,39 @@
             <span class="mapOptionsBox"  ><!--*ngIf="rangeSquares.length!=0"-->
                 <span class="lead" style="font-weight:bold;">Tile options</span><br />
 
-                <div class="btn addObstruct" data-toggle="modal" data-target="#addModal" *ngIf="selectedSquares.length!=0" (click)="loadAllCharacters()">
+                <div class="btn addObstruct" data-toggle="modal" data-target="#addModal" *ngIf="mapSettings.selectedSquares.length!=0" (click)="loadAllCharacters()">
                     <mdb-icon class="buttonIcon" icon="plus"></mdb-icon><br />
                     <span class="buttonText">
                         Add<br />object
                     </span>
                 </div>
-                <div class="btn addObstruct disabled" *ngIf="selectedSquares.length<=0">
+                <div class="btn addObstruct disabled" *ngIf="mapSettings.selectedSquares.length<=0">
                     <mdb-icon class="buttonIcon" icon="plus"></mdb-icon><br />
                     <span class="buttonText">
                         Add<br />object
                     </span>
                 </div>
 
-                <div class="btn addObstruct" (click)="obstructSelection()" *ngIf="selectedSquares.length!=0">
+                <div class="btn addObstruct" (click)="obstructSelection()" *ngIf="mapSettings.selectedSquares.length!=0">
                     <mdb-icon class="buttonIcon" icon="close"></mdb-icon><br />
                     <span class="buttonText">
                         Obstruct
                     </span>
                 </div>
-                <div class="btn addObstruct disabled" *ngIf="selectedSquares.length<=0">
+                <div class="btn addObstruct disabled" *ngIf="mapSettings.selectedSquares.length<=0">
                     <mdb-icon class="buttonIcon" icon="close"></mdb-icon><br />
                     <span class="buttonText">
                         Obstruct
                     </span>
                 </div>
 
-                <div class="btn addObstruct" data-toggle="modal" data-target="#addZoneTileForm" *ngIf="selectedSquares.length!=0">
+                <div class="btn addObstruct" data-toggle="modal" data-target="#addZoneTileForm" *ngIf="mapSettings.selectedSquares.length!=0">
                     <mdb-icon class="buttonDoubleIcon" icon="dot-circle-o"></mdb-icon>/<mdb-icon class="buttonDoubleIcon" icon="flag"></mdb-icon><br />
                     <span class="buttonText">
                         Zone/Flag
                     </span>
                 </div>
-                <div class="btn addObstruct disabled" *ngIf="selectedSquares.length<=0">
+                <div class="btn addObstruct disabled" *ngIf="mapSettings.selectedSquares.length<=0">
                     <mdb-icon class="buttonDoubleIcon" icon="dot-circle-o"></mdb-icon>/<mdb-icon class="buttonDoubleIcon" icon="flag"></mdb-icon><br />
                     <span class="buttonText">
                         Zone/Flag
@@ -313,26 +313,26 @@
                     </span>
                 </div>
 
-                <div class="btn addObstruct" (click)="fogTiles()" *ngIf="selectedSquares.length!=0" alt="Use CTRL+FOG to (de)fog the entire map" title="Use CTRL+FOG to (de)fog the entire map">
+                <div class="btn addObstruct" (click)="fogTiles()" *ngIf="mapSettings.selectedSquares.length!=0" alt="Use CTRL+FOG to (de)fog the entire map" title="Use CTRL+FOG to (de)fog the entire map">
                     <mdb-icon class="buttonIcon" icon="cloud"></mdb-icon><br />
                     <span class="buttonText">
                         Fog
                     </span>
                 </div>
-                <div class="btn addObstruct disabled" *ngIf="selectedSquares.length<=0">
+                <div class="btn addObstruct disabled" *ngIf="mapSettings.selectedSquares.length<=0">
                     <mdb-icon class="buttonIcon" icon="cloud"></mdb-icon><br />
                     <span class="buttonText">
                         Fog
                     </span>
                 </div>
 
-                <div class="btn addObstruct" (click)="toggleVisibility()" *ngIf="selectedSquares.length!=0">
+                <div class="btn addObstruct" (click)="toggleVisibility()" *ngIf="mapSettings.selectedSquares.length!=0">
                     <mdb-icon class="buttonIcon" icon="eye"></mdb-icon><br />
                     <span class="buttonText">
                         Tile <br />visibility
                     </span>
                 </div>
-                <div class="btn addObstruct disabled" *ngIf="selectedSquares.length<=0">
+                <div class="btn addObstruct disabled" *ngIf="mapSettings.selectedSquares.length<=0">
                     <mdb-icon class="buttonIcon" icon="eye"></mdb-icon><br />
                     <span class="buttonText">
                         Tile <br />visibility

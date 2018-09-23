@@ -21,7 +21,7 @@ export class SquareDetailComponent implements OnInit {
     private selectedSquares:Square[] = new Array();
     @Input() set _selectedSquares(selectedSquares: Square[]) {
         this.square = selectedSquares[0];
-        this.selectedSquares = selectedSquares;
+        this.mapSettings.selectedSquares = selectedSquares;
     }
     @Output() selectPlayerEvent = new EventEmitter<Player>();
 
@@ -48,9 +48,9 @@ export class SquareDetailComponent implements OnInit {
 
     ngOnInit() {
         this.mapShareService.squareUpdated.subscribe(square => {
-            if (this.selectedSquares.length==0){
-                this.selectedSquares = new Array();
-                this.selectedSquares.push(square);
+            if (this.mapSettings.selectedSquares.length==0){
+                this.mapSettings.selectedSquares = new Array();
+                this.mapSettings.selectedSquares.push(square);
             }
             this.square =square;
         });
