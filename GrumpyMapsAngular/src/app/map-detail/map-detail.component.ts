@@ -163,7 +163,6 @@ export class MapDetailComponent implements OnInit {
     mapFeet:number;
     squareFeet:number;
     showGrid:boolean=true;
-    multiSelect:boolean=false;
 
     selectedSquares:Square[] = new Array();
     selectedSquare:Square;
@@ -359,15 +358,15 @@ export class MapDetailComponent implements OnInit {
     ////////////////////////////////////////////////////////////////////
 
     public setMultiSelect(){
-        if (this.multiSelect){
-            this.multiSelect = false;
+        if (this.mapSettings.multiSelect){
+            this.mapSettings.multiSelect = false;
             $("#multiSelect").css({"box-shadow":"none"})
         }
         else {
-            this.multiSelect = true;
+            this.mapSettings.multiSelect = true;
             $("#multiSelect").css({"box-shadow":"0 0 4px 2px #2A74F2"})
         }
-        this.mapSettings.selectedSquares = new Array();
+        this.resetSelectedSquares();
     }
 
     public hideGrid() {
@@ -396,7 +395,7 @@ export class MapDetailComponent implements OnInit {
         }
         // only set styles of the ones just changed...
         this.mapSettings.setTiles(this.mapSettings.selectedSquares);
-        this.mapSettings.selectedSquares = new Array();
+        this.resetSelectedSquares();
 
     }
     fogTiles(){
@@ -412,7 +411,7 @@ export class MapDetailComponent implements OnInit {
             this.mapSettings.selectedSquares[i].fogged = fogged;
         }
         this.mapSettings.setTiles(this.mapSettings.selectedSquares);
-        this.mapSettings.selectedSquares = new Array();
+        this.resetSelectedSquares();
 
         this.clearAllFields();
         this.mapShareService.setPlayerZones();
@@ -521,7 +520,7 @@ export class MapDetailComponent implements OnInit {
                 this.mapSettings.selectedSquares[i].addPhysical(player);
                 this.playerAdded(player);
             }
-            this.mapSettings.selectedSquares = new Array();
+            this.resetSelectedSquares();
         }
         else{
             var player:Player = new Player(this.playerIdGenerator--, this.playerIdCreator++, name, 100, movement, initiative, attacks, spells, "physical", color, this.mapSettings.selectedSquares[0].mapSquareId, this.mapSettings.selectedSquares[0].mapHeightWidth, this.mapSettings.selectedSquares[0].mapCoordinate, this.selectedFile, this.mapSettings.selectedSquares[0].mapId);
@@ -953,9 +952,7 @@ export class MapDetailComponent implements OnInit {
             this.resetAllDistances();
             this.deselectAllCharacters();
             this.setAllActiveColors();
-            var oldSelection:Square[] = this.mapSettings.selectedSquares;
-            this.mapSettings.selectedSquares = new Array();
-            this.setStyleOfOldSelection(oldSelection);
+            this.resetSelectedSquares();
             this.mapSettings.selectedPlayer=null;
             this.mapSettings.movementMode = false;
             this.mapSettings.freeMove = false;
@@ -964,7 +961,13 @@ export class MapDetailComponent implements OnInit {
             this.mapSettings.setRange(new Array());
             this.mapSettings.setCutOffRange(new Array());
         }
-        setStyleOfOldSelection(oldSelection){
+        resetSelectedSquares(){
+            // if (!this.mapSettings.multiSelect){
+            //     this.resetSelectedSquares();
+            // }
+            var oldSelection:Square[] = this.mapSettings.selectedSquares;
+            this.mapSettings.selectedSquares = new Array();
+            // set style of old selection
             for(var i=0;i<oldSelection.length;i++){
                 this.mapSettings.setRangeSquareStyles(oldSelection[i]);
             }
@@ -1401,14 +1404,6 @@ export class MapDetailComponent implements OnInit {
                 return index == self.indexOf(elem);
             });
             return unique_array;
-        }
-
-
-
-        resetSelectedSquares(){
-            if (!this.multiSelect){
-                this.mapSettings.selectedSquares = new Array();
-            }
         }
 
         ////////////////////////////////////////////////////////////////////

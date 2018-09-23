@@ -181,7 +181,7 @@
         <div *ngFor="let j of rowArray" id="row_{{j}}" class="row" [style.height]=dndMap.squares[0].squareHeightWidth>
 
             <div class="square">
-                <app-square *ngFor="let square of dndMap.squares | slice:(j-1)*heightWidth:j*heightWidth; index as i" [mapSettings]=mapSettings [squareHeightWidth]=square.squareHeightWidth [square]=square [squareIndex]=i [rowIndexAsLetter]=setRowIndexLetter(j) [_squareBorderStyles]=squareBorderStyle [_multiSelect]=multiSelect >
+                <app-square *ngFor="let square of dndMap.squares | slice:(j-1)*heightWidth:j*heightWidth; index as i" [mapSettings]=mapSettings [squareHeightWidth]=square.squareHeightWidth [square]=square [squareIndex]=i [rowIndexAsLetter]=setRowIndexLetter(j) [_squareBorderStyles]=squareBorderStyle >
                 </app-square>
             </div>
         </div>

@@ -37,15 +37,6 @@ export class SquareComponent implements OnInit {
 
     originalSquareColor:string = 'rgba(8, 161, 0, 0)';
 
-    private multiSelect:boolean;
-    @Input() set _multiSelect(multiSelect:boolean) {
-        this.multiSelect = multiSelect;
-        //   if (!multiSelect){
-        this.mapSettings.selectedSquares = new Array();
-        this.setRangeSquareStyles();
-        //   }
-    }
-
     distance:number=9999;
 
   constructor(private mapShareService: MapShareService) { }
@@ -349,7 +340,7 @@ export class SquareComponent implements OnInit {
   }
   // all the mouseevents below make multiSelecting possible
   mouseDownSquare($event){
-      if (this.multiSelect){
+      if (this.mapSettings.multiSelect){
           this.mapSettings.selecting = true;
       }
       if (this.mapSettings.selectedSquares.includes(this.square)){
@@ -358,7 +349,7 @@ export class SquareComponent implements OnInit {
       else {
           this.mapSettings.deselecting = false;
       }
-      if (!this.multiSelect){
+      if (!this.mapSettings.multiSelect){
           var oldSelection:Square = this.mapSettings.selectedSquares[0];
           this.mapSettings.selectedSquares = new Array();
           this.mapSettings.selectedSquares.push(this.square);
@@ -371,7 +362,7 @@ export class SquareComponent implements OnInit {
       this.selectionStyles();
   }
   mouseOverSquare(){
-      if(this.mapSettings.selecting && this.multiSelect){
+      if(this.mapSettings.selecting && this.mapSettings.multiSelect){
           this.addToSelection();
       }
       if (!this.square.fogged){
