@@ -182,7 +182,7 @@
 
             <div class="square">
                 <app-square *ngFor="let square of dndMap.squares | slice:(j-1)*heightWidth:j*heightWidth; index as i" [mapSettings]=mapSettings [squareHeightWidth]=square.squareHeightWidth [square]=square [squareIndex]=i [rowIndexAsLetter]=setRowIndexLetter(j) [_squareBorderStyles]=squareBorderStyle [_selectedSquares]=selectedSquares [_multiSelect]=multiSelect [setStyles]=setStyles (selectedSquaresEvent)="receiveSelectedSquares($event)" >
-                </app-square> <!--[inRangeSquares]=rangeSquares [_rangeCutOffSquares]=rangeCutOffSquares-->
+                </app-square> 
             </div>
         </div>
 

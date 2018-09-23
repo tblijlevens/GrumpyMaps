@@ -39,6 +39,19 @@ export class MapSettings {
             this.setRangeSquareStyles(this.rangeSquares[i]);
         }
     }
+    public setCutOffRange(rangeCutOffSquares:Square[]){
+        //set styles of the previous rangeSquares:
+        for (var i = 0 ; i< this.rangeCutOffSquares.length ; i++){
+            this.rangeCutOffSquares[i].inRange=false;
+            this.setRangeSquareStyles(this.rangeCutOffSquares[i]);
+        }
+
+        this.rangeCutOffSquares = rangeCutOffSquares;
+        //set styles of the new rangeSquares:
+        for (var i = 0 ; i< this.rangeCutOffSquares.length ; i++){
+            this.setRangeSquareStyles(this.rangeCutOffSquares[i]);
+        }
+    }
 
     public setRangeSquareStyles(square:Square) {
 

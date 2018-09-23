@@ -159,8 +159,6 @@ export class MapDetailComponent implements OnInit {
     allLoadedCharacters:Player[];
     selectedLoadCharacter:Player;
     resultCounter:number=0;
-    rangeSquares:Square[] = new Array();
-    rangeCutOffSquares:Square[] = new Array();
     squareBorderStyle = {};
     mapFeet:number;
     squareFeet:number;
@@ -966,7 +964,7 @@ export class MapDetailComponent implements OnInit {
             this.mapSettings.chargeMode = false;
             this.mapSettings.disengageMode = false;
             this.mapSettings.setRange(new Array());
-            this.rangeCutOffSquares = new Array();
+            this.mapSettings.setCutOffRange(new Array());
         }
         resetAllDistances(){
             for (var i=0 ; i<this.dndMap.squares.length ; i++){
@@ -999,7 +997,7 @@ export class MapDetailComponent implements OnInit {
             else{
                 this.mapSettings.setRange(this.getMoveRange(player, this.dndMap.squares));
                 if (this.mapSettings.cutOffMechanic){
-                    this.rangeCutOffSquares = this.getCutOffRange();
+                    this.mapSettings.setCutOffRange(this.getCutOffRange());
                 }
 
             }
@@ -1009,7 +1007,7 @@ export class MapDetailComponent implements OnInit {
 
           if (!square.obstructed && !this.selectedSquares.includes(square)) {
             if (square.inRange) {
-                if (this.rangeCutOffSquares.includes(square)) {
+                if (this.mapSettings.rangeCutOffSquares.includes(square)) {
                     if (!square.fogged){
                     //   this.squareStyles['background-color'] = 'rgba(0, 161, 161, 0.5)';
                       $("#squarecontainer"+square.mapSquareId).css({"backgroundColor":"rgba(0, 161, 161, 0.5)"});
@@ -1379,11 +1377,6 @@ export class MapDetailComponent implements OnInit {
         ////////////////////////////////////////////////////////////////////
 
 
-        public receiveRangeSquares($event){
-            this.mapSettings.setRange($event);
-            this.rangeCutOffSquares = new Array();
-        }
-
         public playerAdded(player){
             this.allCharacters.push(player);
             this.orderCharacters();
@@ -1406,9 +1399,7 @@ export class MapDetailComponent implements OnInit {
             });
             return unique_array;
         }
-        public receiveSetStyles($event){
-            this.setStyles = $event;
-        }
+
         private setSquareStyles(){
             if (this.setStyles){
                 this.setStyles=false;
@@ -1808,7 +1799,7 @@ getPlayers(){
             this.allCharacters.push(newPlayer);
         }
         this.mapSettings.setRange(new Array());
-        this.rangeCutOffSquares = new Array();
+        this.mapSettings.setCutOffRange(new Array());
         this.orderCharacters();
         this.getCharZones();
     });
@@ -1867,7 +1858,7 @@ findPlayerByRealSquareId(sqId:number){
             if (mapSquares[i].id == player.realSquareId){
                 mapSquares[i].addPhysical(player);
                 this.mapSettings.setRange(new Array());
-                this.rangeCutOffSquares = new Array();
+                this.mapSettings.setCutOffRange(Array());
             }
         }
 

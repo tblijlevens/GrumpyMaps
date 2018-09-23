@@ -22,7 +22,6 @@ export class SquareComponent implements OnInit {
     @Input()  square: Square;
     @Input() squareIndex:number;
     @Input() rowIndexAsLetter:string;
-    @Output() setPrevRangeStylesEvent = new EventEmitter<boolean>();
 
     private _squareHeightWidth: string;
     @Input() set squareHeightWidth(squareHeightWidth: string) {
@@ -31,11 +30,6 @@ export class SquareComponent implements OnInit {
         this.setSquareMapCoordinates();
     }
 
-    rangeCutOffSquares:Square[] = new Array();
-    @Input() set _rangeCutOffSquares(squares: Square[]) {
-        this.rangeCutOffSquares = squares;
-        this.setRangeSquareStyles();
-    }
     squareStyles = {};
     @Input() set _squareBorderStyles(squareBorderStyle: string) {
         this.squareStyles['border'] = squareBorderStyle;
@@ -309,7 +303,7 @@ export class SquareComponent implements OnInit {
 
     if (!this.square.obstructed && !this.selectedSquares.includes(this.square)) {
       if (this.square.inRange) {
-          if (this.rangeCutOffSquares.includes(this.square)) {
+          if (this.mapSettings.rangeCutOffSquares.includes(this.square)) {
               if (!this.square.fogged){
                 this.squareStyles['background-color'] = 'rgba(0, 161, 161, 0.5)';
                 // $("#squarecontainer"+this.square.mapCoordinate).css({"backgroundColor":"#b96611"});
@@ -361,7 +355,6 @@ export class SquareComponent implements OnInit {
       this.mapSettings.chargeMode = false;
       this.mapSettings.disengageMode = false;
       this.mapSettings.setRange(new Array());
-      this.setPrevRangeStylesEvent.emit(true);
       this.resetAllDistances();
   }
 
