@@ -143,8 +143,7 @@ export class MapDetailComponent implements OnInit {
     mapSettings:MapSettings;
     mapBackground = {};
     legendSquare = {};
-    squareScale: string = '10%';
-    heightWidth:number = 35;
+    heightWidth:number = 25;
     columnArray:number[] = new Array();
     rowArray:number[] = new Array();
     rowArrayLetters:string[] = new Array();
@@ -190,7 +189,7 @@ export class MapDetailComponent implements OnInit {
         this.mapForm.get('moveCutRange').setValue(50);
         this.mapForm.get('showGridCheck').setValue(true);
         this.mapSettings = new MapSettings();
-        this.setMap(35, 5);
+        this.setMap(this.heightWidth, 5);
 
         this.createPlayerForm.get('playerColor').setValue("#ff0000");
         this.createPlayerForm.get('playerInitiative').setValue(15);
@@ -224,8 +223,6 @@ export class MapDetailComponent implements OnInit {
         this.mapSettings.dndMap = this.dndMap;
         this.mapSettings.allSquares = this.dndMap.squares;
         this.mapSettings.squareSize = squareSize;
-
-
     }
 
     setSizes(){
@@ -294,8 +291,8 @@ export class MapDetailComponent implements OnInit {
 
     public setMapHeightWidth() {
         this.heightWidth = +this.mapForm.get('heightwidth').value;
-        if (this.heightWidth > 25) {
-            this.heightWidth = 25;
+        if (this.heightWidth > 45) {
+            this.heightWidth = 45;
             // alert("Map gridsize can't be bigger than 25x25. Therefore gridsize is set to 25x25.");
         }
 
