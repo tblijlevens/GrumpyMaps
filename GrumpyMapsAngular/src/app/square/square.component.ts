@@ -44,9 +44,7 @@ export class SquareComponent implements OnInit {
     @Input() set _squareBorderStyles(squareBorderStyle: string) {
         this.squareStyles['border'] = squareBorderStyle;
     }
-    @Input() selectedPlayer: Player = null;
-    @Output() setSelectedPlayerEvent = new EventEmitter<Player>();
-
+    
     originalSquareColor:string = 'rgba(8, 161, 0, 0)';
     @Output() selectingEvent = new EventEmitter<boolean>();
     @Input() selecting:boolean;
@@ -110,10 +108,10 @@ export class SquareComponent implements OnInit {
   }
 
   resetPlayer(){
-      if (this.selectedPlayer!=null){
-          this.selectedPlayer.isSelected = false;
-          this.selectedPlayer.setActiveColor();
-          this.setSelectedPlayerEvent.emit(null);
+      if (this.mapSettings.selectedPlayer!=null){
+          this.mapSettings.selectedPlayer.isSelected = false;
+          this.mapSettings.selectedPlayer.setActiveColor();
+          this.mapSettings.selectedPlayer = null;
       }
   }
   private moveObject(){
@@ -130,56 +128,56 @@ export class SquareComponent implements OnInit {
               // use the right move mechanic
               if (this.cutOffMechanic){
                   if (this.mapSettings.disengageMode){
-                      this.selectedPlayer.movePlayerCutOff(this.selectedPlayer.movementAmount/2, this.cutOffNumber);
+                      this.mapSettings.selectedPlayer.movePlayerCutOff(this.mapSettings.selectedPlayer.movementAmount/2, this.cutOffNumber);
                   }
                   else {
-                      this.selectedPlayer.movePlayerCutOff(this.square.currentDistance, this.cutOffNumber);
+                      this.mapSettings.selectedPlayer.movePlayerCutOff(this.square.currentDistance, this.cutOffNumber);
                   }
 
               }
               else{ // not cutOff mechanic
                   if (this.mapSettings.disengageMode){
-                      this.selectedPlayer.movePlayer(this.selectedPlayer.movementAmount/2);
+                      this.mapSettings.selectedPlayer.movePlayer(this.mapSettings.selectedPlayer.movementAmount/2);
                   }
                   else {
-                      this.selectedPlayer.movePlayer(this.square.currentDistance);
+                      this.mapSettings.selectedPlayer.movePlayer(this.square.currentDistance);
                   }
               }
           }
 
           //remove object from old square
           var oldSquare = this.getPlayerSquare();
-          oldSquare.removePhysical(this.selectedPlayer.id);
+          oldSquare.removePhysical(this.mapSettings.selectedPlayer.id);
 
           // add object to this square:
-          this.square.addPhysical(this.selectedPlayer);
+          this.square.addPhysical(this.mapSettings.selectedPlayer);
 
           //show message it moved.
           if (this.mapSettings.chargeMode){
-              this.selectedPlayer.movementLeft=0;
-              this.selectedPlayer.attacksLeft=0;
-              this.selectedPlayer.spellsLeft=0;
-              this.selectedPlayer.actionPoints=0;
+              this.mapSettings.selectedPlayer.movementLeft=0;
+              this.mapSettings.selectedPlayer.attacksLeft=0;
+              this.mapSettings.selectedPlayer.spellsLeft=0;
+              this.mapSettings.selectedPlayer.actionPoints=0;
               var advantageStasis={
                   label:"adv on att & +1ND",
                   radius:0,
                   duration:2
               }
-              this.selectedPlayer.zones.push(advantageStasis);
-              this.showMessage(this.selectedPlayer.name + " charges " + this.square.currentDistance + " yards! " + this.selectedPlayer.name + " is done for this turn, but gains advantage next turn.", "black", 3000 );
+              this.mapSettings.selectedPlayer.zones.push(advantageStasis);
+              this.showMessage(this.mapSettings.selectedPlayer.name + " charges " + this.square.currentDistance + " yards! " + this.mapSettings.selectedPlayer.name + " is done for this turn, but gains advantage next turn.", "black", 3000 );
           }
           else{
               if (this.mapSettings.disengageMode){
-                  this.showMessage(this.selectedPlayer.name + " disengages " + this.square.currentDistance + " yards but uses up " + this.selectedPlayer.movementAmount/2 + " yards of movement.", "black", 800 );
+                  this.showMessage(this.mapSettings.selectedPlayer.name + " disengages " + this.square.currentDistance + " yards but uses up " + this.mapSettings.selectedPlayer.movementAmount/2 + " yards of movement.", "black", 800 );
               }
               else {
-                  this.showMessage(this.selectedPlayer.name + " moves " + this.square.currentDistance + " yards!", "black", 500 );
+                  this.showMessage(this.mapSettings.selectedPlayer.name + " moves " + this.square.currentDistance + " yards!", "black", 500 );
               }
           }
 
       }
       else { // show message it can't move there
-         this.showMessage(this.selectedPlayer.name + " can't move there.", "red", 500 );
+         this.showMessage(this.mapSettings.selectedPlayer.name + " can't move there.", "red", 500 );
       }
       this.mapShareService.setPlayerZones(); // makes the playerZones move with the character
       this.mapSettings.movementMode =false;
@@ -190,7 +188,7 @@ export class SquareComponent implements OnInit {
   getPlayerSquare(){
       var playerSquare:Square=null;
       for (var i = 0 ; i < this.mapSettings.allSquares.length ; i++){
-          if (this.mapSettings.allSquares[i].mapSquareId == this.selectedPlayer.mapSquareId){
+          if (this.mapSettings.allSquares[i].mapSquareId == this.mapSettings.selectedPlayer.mapSquareId){
               playerSquare = this.mapSettings.allSquares[i];
           }
       }
@@ -201,10 +199,10 @@ export class SquareComponent implements OnInit {
   }
 
   getTileDistance(){
-      if (this.selectedPlayer!=null){
+      if (this.mapSettings.selectedPlayer!=null){
           //get row and column of players current position coordinates:
-          var rowNumber = this.selectedPlayer.squareMapCoordinate.split(":")[0].charCodeAt(0);
-          var column = +this.selectedPlayer.squareMapCoordinate.split(":")[1];
+          var rowNumber = this.mapSettings.selectedPlayer.squareMapCoordinate.split(":")[0].charCodeAt(0);
+          var column = +this.mapSettings.selectedPlayer.squareMapCoordinate.split(":")[1];
 
           var targetRowNumber = this.square.mapCoordinate.split(":")[0].charCodeAt(0);
           var targetColumn = +this.square.mapCoordinate.split(":")[1];

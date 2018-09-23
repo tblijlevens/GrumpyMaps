@@ -15,7 +15,7 @@ export class MapSettings {
     freeMove:boolean;
     disengageMode:boolean;
     chargeMode:boolean;
-    selectedPlayer:Player;
+    selectedPlayer:Player=null;
     cutOffMechanic:boolean;
     cutOffNumber:number;
     selectedSquares:Square[];

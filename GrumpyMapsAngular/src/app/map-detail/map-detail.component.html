@@ -20,43 +20,43 @@
         </div>
         <div class="characterOptions contentBox">
             <div id="characterOptionsBox">
-                <span class="characterOptionsBox"  *ngIf="selectedPlayer">
+                <span class="characterOptionsBox"  *ngIf="mapSettings.selectedPlayer">
                     <span class="lead" style="font-weight:bold;">Character actions</span><br />
 
-                    <div class="btn attackCastMove" (click)="attack()" *ngIf="selectedPlayer.attacksLeft>0">
+                    <div class="btn attackCastMove" (click)="attack()" *ngIf="mapSettings.selectedPlayer.attacksLeft>0">
                         <mdb-icon class="buttonIcon" icon="crosshairs"></mdb-icon><br />
                         <span class="buttonText">
                             Attack
                         </span>
                     </div>
-                    <div class="btn attackCastMove disabled" *ngIf="selectedPlayer.attacksLeft<=0">
+                    <div class="btn attackCastMove disabled" *ngIf="mapSettings.selectedPlayer.attacksLeft<=0">
                         <mdb-icon class="buttonIcon" icon="crosshairs"></mdb-icon><br />
                         <span class="buttonText">
                             Attack
                         </span>
                     </div>
 
-                    <div class="btn attackCastMove" (click)="cast()" *ngIf="selectedPlayer.spellsLeft>0">
+                    <div class="btn attackCastMove" (click)="cast()" *ngIf="mapSettings.selectedPlayer.spellsLeft>0">
                         <mdb-icon class="buttonIcon" icon="magic"></mdb-icon><br />
                         <span class="buttonText">
                             Cast
                         </span>
                     </div>
 
-                    <div class="btn attackCastMove disabled" *ngIf="selectedPlayer.spellsLeft<=0">
+                    <div class="btn attackCastMove disabled" *ngIf="mapSettings.selectedPlayer.spellsLeft<=0">
                         <mdb-icon class="buttonIcon" icon="magic"></mdb-icon><br />
                         <span class="buttonText">
                             Cast
                         </span>
                     </div>
 
-                    <div class="btn attackCastMove" (click)="moveCharacter()" *ngIf="selectedPlayer.movementLeft>=mapSettings.squareSize" alt="CTRL+MOVE to freely move {{selectedPlayer.name}} anywhere on the map" title="CTRL+MOVE to freely move {{selectedPlayer.name}} anywhere on the map">
+                    <div class="btn attackCastMove" (click)="moveCharacter()" *ngIf="mapSettings.selectedPlayer.movementLeft>=mapSettings.squareSize" alt="CTRL+MOVE to freely move {{mapSettings.selectedPlayer.name}} anywhere on the map" title="CTRL+MOVE to freely move {{mapSettings.selectedPlayer.name}} anywhere on the map">
                         <mdb-icon class="buttonIcon" icon="arrows"></mdb-icon><br />
                         <span class="buttonText">
                             Move
                         </span>
                     </div>
-                    <div class="btn attackCastMove disabled" *ngIf="selectedPlayer.movementLeft<mapSettings.squareSize">
+                    <div class="btn attackCastMove disabled" *ngIf="mapSettings.selectedPlayer.movementLeft<mapSettings.squareSize">
                         <mdb-icon class="buttonIcon" icon="arrows"></mdb-icon><br />
                         <span class="buttonText">
                             Move
@@ -64,39 +64,39 @@
                     </div>
 
                     <br />
-                    <div class="btn deleteEdit" (click)="disengage()" *ngIf="selectedPlayer.movementLeft>=mapSettings.squareSize && this.selectedPlayer.movementLeft >= this.selectedPlayer.movementAmount*this.cutOffNumber">
+                    <div class="btn deleteEdit" (click)="disengage()" *ngIf="mapSettings.selectedPlayer.movementLeft>=mapSettings.squareSize && this.mapSettings.selectedPlayer.movementLeft >= this.mapSettings.selectedPlayer.movementAmount*this.cutOffNumber">
                         <mdb-icon class="buttonIcon" icon="level-up"></mdb-icon><br />
                         <span class="buttonText">
                             Disengage
                         </span>
                     </div>
-                    <div class="btn deleteEdit disabled" *ngIf="selectedPlayer.movementLeft<mapSettings.squareSize || this.selectedPlayer.movementLeft < this.selectedPlayer.movementAmount*this.cutOffNumber">
+                    <div class="btn deleteEdit disabled" *ngIf="mapSettings.selectedPlayer.movementLeft<mapSettings.squareSize || this.mapSettings.selectedPlayer.movementLeft < this.mapSettings.selectedPlayer.movementAmount*this.cutOffNumber">
                         <mdb-icon class="buttonIcon" icon="level-up"></mdb-icon><br />
                         <span class="buttonText">
                             Disengage
                         </span>
                     </div>
 
-                    <div class="btn attackCastMove" (click)="charge()" *ngIf="selectedPlayer.movementLeft==selectedPlayer.movementAmount">
+                    <div class="btn attackCastMove" (click)="charge()" *ngIf="mapSettings.selectedPlayer.movementLeft==mapSettings.selectedPlayer.movementAmount">
                         <mdb-icon class="buttonIcon" icon="mixcloud"></mdb-icon><br />
                         <span class="buttonText">
                             Charge
                         </span>
                     </div>
-                    <div class="btn attackCastMove disabled" *ngIf="selectedPlayer.movementLeft<selectedPlayer.movementAmount">
+                    <div class="btn attackCastMove disabled" *ngIf="mapSettings.selectedPlayer.movementLeft<mapSettings.selectedPlayer.movementAmount">
                         <mdb-icon class="buttonIcon" icon="mixcloud"></mdb-icon><br />
                         <span class="buttonText">
                             Charge
                         </span>
                     </div>
 
-                    <div class="btn attackCastMove" (click)="consume()" *ngIf="selectedPlayer.movementLeft >= selectedPlayer.movementAmount*cutOffNumber">
+                    <div class="btn attackCastMove" (click)="consume()" *ngIf="mapSettings.selectedPlayer.movementLeft >= mapSettings.selectedPlayer.movementAmount*cutOffNumber">
                         <mdb-icon class="buttonIcon" icon="flask"></mdb-icon><br />
                         <span class="buttonText">
                             Consume
                         </span>
                     </div>
-                    <div class="btn attackCastMove disabled" *ngIf="selectedPlayer.movementLeft < selectedPlayer.movementAmount*cutOffNumber">
+                    <div class="btn attackCastMove disabled" *ngIf="mapSettings.selectedPlayer.movementLeft < mapSettings.selectedPlayer.movementAmount*cutOffNumber">
                         <mdb-icon class="buttonIcon" icon="flask"></mdb-icon><br />
                         <span class="buttonText">
                             Consume
@@ -104,42 +104,42 @@
                     </div>
 
                     <br />
-                    <div class="btn deleteEdit" style="height: 48px;" (click)="equip()" *ngIf="selectedPlayer.movementLeft >= selectedPlayer.movementAmount*cutOffNumber">
+                    <div class="btn deleteEdit" style="height: 48px;" (click)="equip()" *ngIf="mapSettings.selectedPlayer.movementLeft >= mapSettings.selectedPlayer.movementAmount*cutOffNumber">
                         <mdb-icon class="buttonIcon" icon="hand-rock-o"></mdb-icon><br />
                         <span class="buttonText">
                             (Un)Equip
                         </span>
                     </div>
-                    <div class="btn deleteEdit disabled" style="height: 48px;" *ngIf="selectedPlayer.movementLeft < selectedPlayer.movementAmount*cutOffNumber">
+                    <div class="btn deleteEdit disabled" style="height: 48px;" *ngIf="mapSettings.selectedPlayer.movementLeft < mapSettings.selectedPlayer.movementAmount*cutOffNumber">
                         <mdb-icon class="buttonIcon" icon="hand-rock-o"></mdb-icon><br />
                         <span class="buttonText">
                             (Un)Equip
                         </span>
                     </div>
 
-                    <div class="btn roundActions" (click)="fullRoundAction()" *ngIf="selectedPlayer.movementLeft == selectedPlayer.movementAmount && selectedPlayer.attacksLeft == selectedPlayer.attacksPerRound && selectedPlayer.spellsLeft == selectedPlayer.spellsPerRound && selectedPlayer.actionPoints == 100">
+                    <div class="btn roundActions" (click)="fullRoundAction()" *ngIf="mapSettings.selectedPlayer.movementLeft == mapSettings.selectedPlayer.movementAmount && mapSettings.selectedPlayer.attacksLeft == mapSettings.selectedPlayer.attacksPerRound && mapSettings.selectedPlayer.spellsLeft == mapSettings.selectedPlayer.spellsPerRound && mapSettings.selectedPlayer.actionPoints == 100">
                         <mdb-icon class="buttonIcon" icon="hourglass"></mdb-icon><br />
                         <span class="buttonText">
                             1 round<br />action
                         </span>
                     </div>
-                    <div class="btn roundActions disabled" *ngIf="selectedPlayer.movementLeft != selectedPlayer.movementAmount || selectedPlayer.attacksLeft != selectedPlayer.attacksPerRound || selectedPlayer.spellsLeft != selectedPlayer.spellsPerRound || selectedPlayer.actionPoints != 100">
+                    <div class="btn roundActions disabled" *ngIf="mapSettings.selectedPlayer.movementLeft != mapSettings.selectedPlayer.movementAmount || mapSettings.selectedPlayer.attacksLeft != mapSettings.selectedPlayer.attacksPerRound || mapSettings.selectedPlayer.spellsLeft != mapSettings.selectedPlayer.spellsPerRound || mapSettings.selectedPlayer.actionPoints != 100">
                         <mdb-icon class="buttonIcon" icon="hourglass"></mdb-icon><br />
                         <span class="buttonText">
                             1 round<br />action
                         </span>
                     </div>
 
-                    <div class="btn roundActions" (click)="halfRoundAttack()" *ngIf="this.selectedPlayer.actions[0] != 'attack' &&
-                    this.selectedPlayer.movementLeft >= this.selectedPlayer.movementAmount*this.cutOffNumber">
+                    <div class="btn roundActions" (click)="halfRoundAttack()" *ngIf="mapSettings.selectedPlayer.actions[0] != 'attack' &&
+                    mapSettings.selectedPlayer.movementLeft >= mapSettings.selectedPlayer.movementAmount*this.cutOffNumber">
                         <mdb-icon class="buttonIcon" icon="hourglass-end"></mdb-icon><br />
                         <span class="buttonText">
                             <!-- &#189; -->1/2 round<br />
                             attack
                         </span>
                     </div>
-                    <div class="btn roundActions disabled" *ngIf="this.selectedPlayer.actions[0] == 'attack' ||
-                    this.selectedPlayer.movementLeft < this.selectedPlayer.movementAmount*this.cutOffNumber">
+                    <div class="btn roundActions disabled" *ngIf="mapSettings.selectedPlayer.actions[0] == 'attack' ||
+                    mapSettings.selectedPlayer.movementLeft < mapSettings.selectedPlayer.movementAmount*this.cutOffNumber">
                         <mdb-icon class="buttonIcon" icon="hourglass-end"></mdb-icon><br />
                         <span class="buttonText">
                             <!-- &#189; -->1/2 round<br />
@@ -181,8 +181,8 @@
         <div *ngFor="let j of rowArray" id="row_{{j}}" class="row" [style.height]=dndMap.squares[0].squareHeightWidth>
 
             <div class="square">
-                <app-square *ngFor="let square of dndMap.squares | slice:(j-1)*heightWidth:j*heightWidth; index as i" [mapSettings]=mapSettings [squareHeightWidth]=square.squareHeightWidth [square]=square [squareSize]=squareSize [squareIndex]=i [rowIndexAsLetter]=setRowIndexLetter(j) [inRangeSquares]=rangeSquares [_rangeCutOffSquares]=rangeCutOffSquares [selectedPlayer]=selectedPlayer [cutOffMechanic]=cutOffMechanic [cutOffNumber]=cutOffNumber [_squareBorderStyles]=squareBorderStyle [_selectedSquares]=selectedSquares [selecting]=selecting [deselecting]=deselecting [_multiSelect]=multiSelect [setStyles]=setStyles   (setRangeSquaresEvent)="receiveRangeSquares($event)" (selectedSquaresEvent)="receiveSelectedSquares($event)"
-                (selectingEvent)="receiveSelecting($event)" (deselectingEvent)="receiveDeselecting($event)" (setSelectedPlayerEvent)="receiveSelectedPlayer($event)" >
+                <app-square *ngFor="let square of dndMap.squares | slice:(j-1)*heightWidth:j*heightWidth; index as i" [mapSettings]=mapSettings [squareHeightWidth]=square.squareHeightWidth [square]=square [squareSize]=squareSize [squareIndex]=i [rowIndexAsLetter]=setRowIndexLetter(j) [inRangeSquares]=rangeSquares [_rangeCutOffSquares]=rangeCutOffSquares  [cutOffMechanic]=cutOffMechanic [cutOffNumber]=cutOffNumber [_squareBorderStyles]=squareBorderStyle [_selectedSquares]=selectedSquares [selecting]=selecting [deselecting]=deselecting [_multiSelect]=multiSelect [setStyles]=setStyles   (setRangeSquaresEvent)="receiveRangeSquares($event)" (selectedSquaresEvent)="receiveSelectedSquares($event)"
+                (selectingEvent)="receiveSelecting($event)" (deselectingEvent)="receiveDeselecting($event)">
                 </app-square>
             </div>
         </div>
@@ -259,7 +259,7 @@
 
 <div id="secondColumn" (click)="hideSettings()">
     <div class="squaredetailcontainer contentBox" id="squareDetails">
-        <app-square-detail [allSquares]=dndMap.squares [squareSize]=squareSize [cutOffMechanic]=cutOffMechanic [_selectedSquares]=selectedSquares [_allCharacters]=allCharacters [selectedPlayer]=selectedPlayer (selectPlayerEvent)="receiveSelectedPlayer($event)"></app-square-detail>
+        <app-square-detail [mapSettings]=mapSettings [cutOffMechanic]=cutOffMechanic [_selectedSquares]=selectedSquares [_allCharacters]=allCharacters  (selectPlayerEvent)="receiveSelectedPlayer($event)"></app-square-detail>
     </div>
 
     <div class="mapOptions contentBox">
@@ -784,7 +784,7 @@
             </div>
             <div class="modal-body">
                 <div>
-                    <label class="center-block" *ngIf="selectedPlayer"><b>Are you sure you want to delete character: {{selectedPlayer.name}}?</b></label><br>
+                    <label class="center-block" *ngIf="mapSettings.selectedPlayer"><b>Are you sure you want to delete character: {{mapSettings.selectedPlayer.name}}?</b></label><br>
                 </div>
             </div>
             <div class="modal-footer" >
