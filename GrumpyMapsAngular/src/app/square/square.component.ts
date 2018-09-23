@@ -42,7 +42,6 @@ export class SquareComponent implements OnInit {
         this.multiSelect = multiSelect;
         //   if (!multiSelect){
         this.selectedSquares = new Array();
-        this.setTileStyle();
         this.setRangeSquareStyles();
         //   }
     }
@@ -50,18 +49,13 @@ export class SquareComponent implements OnInit {
     private selectedSquares:Square[] = new Array();
     @Input() set _selectedSquares(selectedSquares:Square[]) {
         this.selectedSquares = selectedSquares;
+        this.mapSettings.selectedSquares = selectedSquares;
         if (!this.multiSelect){
-            this.setTileStyle();
+            this.mapSettings.setTiles(selectedSquares);
         }
         // if (this.selectedSquares.length!=0){
         this.setRangeSquareStyles();
         // }
-    }
-    @Input() set setStyles(setstyles:boolean){
-        this.deselectAll(); // ExpressionChangedAfterItHasBeenCheckedError is not thrown in production
-
-        this.setTileStyle();
-        this.setRangeSquareStyles();
     }
     distance:number=9999;
 
@@ -72,8 +66,6 @@ export class SquareComponent implements OnInit {
     this.squareStyles = {
       'width': this._squareHeightWidth
     }
-    this.setTileStyle();
-
   }
 
   selectSquare() {
@@ -254,6 +246,7 @@ export class SquareComponent implements OnInit {
   }
 
   private setTileStyle(){
+      console.log("tileStyle");
       if (this.square.obstructed && !this.square.fogged){
           this.squareStyles['background'] = 'repeating-linear-gradient(          135deg, rgba(161, 0, 0, 0.6), rgba(161, 0, 0, 0.6) 8px, rgba(0, 0, 0, 0.0) 8px, rgba(0, 0, 0, 0.0) 16px)';
       }
@@ -403,7 +396,7 @@ export class SquareComponent implements OnInit {
           this.mapSettings.setRangeSquareStyles(this.square)
 
           if (this.square.obstructed || this.square.fogged){
-              this.setTileStyle();
+              this.mapSettings.setTileStyle(this.square);
           }
           this.selectionStyles();
       }

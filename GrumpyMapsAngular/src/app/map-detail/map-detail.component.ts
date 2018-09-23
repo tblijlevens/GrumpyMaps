@@ -169,7 +169,6 @@ export class MapDetailComponent implements OnInit {
     selectedSquare:Square;
     selectedFile: File;
     allCharacters:Player[] = new Array();
-    setStyles:boolean = false;
     iconUrl;
     fileName;
     fileType;
@@ -395,10 +394,10 @@ export class MapDetailComponent implements OnInit {
                 this.selectedSquares[i].obstructed = true;
             }
         }
+        // only set styles of the ones just changed...
+        this.mapSettings.setTiles(this.selectedSquares);
         this.selectedSquares = new Array();
 
-        // make all squares set their styles:
-        this.setSquareStyles();
     }
     fogTiles(){
         var fogged = true;
@@ -412,11 +411,9 @@ export class MapDetailComponent implements OnInit {
         for (var i = 0 ; i < this.selectedSquares.length ; i++){
             this.selectedSquares[i].fogged = fogged;
         }
-
+        this.mapSettings.setTiles(this.selectedSquares);
         this.selectedSquares = new Array();
 
-        // make all squares set their styles:
-        this.setSquareStyles();
         this.clearAllFields();
         this.mapShareService.setPlayerZones();
         this.mapShareService.setTileZones();
@@ -525,7 +522,6 @@ export class MapDetailComponent implements OnInit {
                 this.playerAdded(player);
             }
             this.selectedSquares = new Array();
-            this.setSquareStyles();
         }
         else{
             var player:Player = new Player(this.playerIdGenerator--, this.playerIdCreator++, name, 100, movement, initiative, attacks, spells, "physical", color, this.selectedSquares[0].mapSquareId, this.selectedSquares[0].mapHeightWidth, this.selectedSquares[0].mapCoordinate, this.selectedFile, this.selectedSquares[0].mapId);
@@ -1400,14 +1396,7 @@ export class MapDetailComponent implements OnInit {
             return unique_array;
         }
 
-        private setSquareStyles(){
-            if (this.setStyles){
-                this.setStyles=false;
-            }
-            else{
-                this.setStyles=true;
-            }
-        }
+
 
         resetSelectedSquares(){
             if (!this.multiSelect){
@@ -1709,7 +1698,7 @@ export class MapDetailComponent implements OnInit {
                 this.mapForm.get('yards').setValue(this.dndMap.squares[0].squareSize);
                 this.setSquareSize();
                 this.setRows();
-                this.setSquareStyles();
+                this.mapSettings.setTiles(this.dndMap.squares); //set all fog and obstruction styles
 
                 this.getTileZones();
                 this.getPlayers();
