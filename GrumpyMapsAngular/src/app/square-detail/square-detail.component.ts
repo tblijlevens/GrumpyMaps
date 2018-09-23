@@ -67,7 +67,7 @@ export class SquareDetailComponent implements OnInit {
     }
 
     setPlayerZoneSize(player:Player){
-        var squareSize = +$("#squarecontainer").css("height").split("px")[0];
+        var squareSize = +$("#squarecontainer1").css("height").split("px")[0];
         var playerDotSize = +$("#playerDot"+player.id).css("height").split("px")[0];
         for (var i = 0 ; i < player.zones.length ; i++){
             var label = player.zones[i].label;

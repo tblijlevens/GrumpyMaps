@@ -22,18 +22,15 @@ export class SquareComponent implements OnInit {
     @Input()  square: Square;
     @Input() squareIndex:number;
     @Input() rowIndexAsLetter:string;
+    @Output() setPrevRangeStylesEvent = new EventEmitter<boolean>();
+
     private _squareHeightWidth: string;
     @Input() set squareHeightWidth(squareHeightWidth: string) {
         this._squareHeightWidth = squareHeightWidth;
         this.squareStyles['width'] = squareHeightWidth;
         this.setSquareMapCoordinates();
     }
-    @Output() setRangeSquaresEvent = new EventEmitter<number[]>();
-    _inRangeSquares: Square[] = new Array();
-    @Input() set inRangeSquares(squares: Square[]) {
-        this._inRangeSquares = squares;
-        this.setRangeSquareStyles();
-    }
+
     rangeCutOffSquares:Square[] = new Array();
     @Input() set _rangeCutOffSquares(squares: Square[]) {
         this.rangeCutOffSquares = squares;
@@ -95,7 +92,7 @@ export class SquareComponent implements OnInit {
     this.resetAllDistances();
 
     // after moving the rangeSquares is always set to nothing so it stops showing range
-    this.setRangeSquaresEvent.emit(new Array());
+    this.mapSettings.setRange(new Array());
     this.resetPlayer();
 
   }
@@ -109,8 +106,8 @@ export class SquareComponent implements OnInit {
   }
   private moveObject(){
       var squareIdInRange = false;
-      for (var i = 0; i < this._inRangeSquares.length; i++) {
-          if (this._inRangeSquares[i].mapSquareId == this.square.mapSquareId) {
+      for (var i = 0; i < this.mapSettings.rangeSquares.length; i++) {
+          if (this.mapSettings.rangeSquares[i].mapSquareId == this.square.mapSquareId) {
               squareIdInRange = true;
           }
       }
@@ -174,6 +171,8 @@ export class SquareComponent implements OnInit {
       }
       this.mapShareService.setPlayerZones(); // makes the playerZones move with the character
       this.mapSettings.movementMode =false;
+      this.mapSettings.setRange(new Array());
+
       this.mapSettings.freeMove = false;
       this.mapSettings.disengageMode = false;
       this.mapSettings.chargeMode = false;
@@ -299,9 +298,9 @@ export class SquareComponent implements OnInit {
   public setRangeSquareStyles() {
       this.square.inRange = false;
 
-      if (this._inRangeSquares.length!=0){
-          for(var i=0;i<this._inRangeSquares.length;i++){
-              if (this._inRangeSquares[i].mapSquareId == this.square.mapSquareId){
+      if (this.mapSettings.rangeSquares.length!=0){
+          for(var i=0;i<this.mapSettings.rangeSquares.length;i++){
+              if (this.mapSettings.rangeSquares[i].mapSquareId == this.square.mapSquareId){
                   this.square.inRange = true;
 
               }
@@ -312,19 +311,22 @@ export class SquareComponent implements OnInit {
       if (this.square.inRange) {
           if (this.rangeCutOffSquares.includes(this.square)) {
               if (!this.square.fogged){
-                  this.squareStyles['background-color'] = 'rgba(0, 161, 161, 0.5)';
+                this.squareStyles['background-color'] = 'rgba(0, 161, 161, 0.5)';
+                // $("#squarecontainer"+this.square.mapCoordinate).css({"backgroundColor":"#b96611"});
               }
               else {
-                  this.squareStyles['background-color'] = 'rgba(0, 35, 35, 1)';
+                this.squareStyles['background-color'] = 'rgba(0, 35, 35, 1)';
+                // $("#squarecontainer"+this.square.mapCoordinate).css({"backgroundColor":"rgba(0, 35, 35, 1)"});
               }
           }
-          else
-          {
+          else {
               if (!this.square.fogged){
-                  this.squareStyles['background-color'] = 'rgba(8, 161, 0, 0.5)';
+                this.squareStyles['background-color'] = 'rgba(8, 161, 0, 0.5)';
+                // $("#squarecontainer"+this.square.mapCoordinate).css({"backgroundColor":"rgba(8, 161, 0, 0.5)"});
               }
               else {
-                  this.squareStyles['background-color'] = 'rgba(8, 35, 0, 1)';
+                this.squareStyles['background-color'] = 'rgba(8, 35, 0, 1)';
+                // $("#squarecontainer"+this.square.mapCoordinate).css({"backgroundColor":"rgba(8, 35, 0, 1)"});
               }
           }
 
@@ -340,16 +342,15 @@ export class SquareComponent implements OnInit {
 
   }
   selectionStyles(){
-      for (var i = 0 ; i < this.selectedSquares.length ; i++){
-          if (this.square.mapSquareId == this.selectedSquares[i].mapSquareId){
-              if (!this.square.fogged){
-                  this.squareStyles['background-color'] = 'rgba(0, 112, 161, 0.6)';
-              }
-              else {
-                  this.squareStyles['background-color'] = 'rgba(0, 112, 161, 1)';
-              }
+      if (this.selectedSquares.includes(this.square)){
+          if (!this.square.fogged){
+              this.squareStyles['background-color'] = 'rgba(0, 112, 161, 0.6)';
+          }
+          else {
+              this.squareStyles['background-color'] = 'rgba(0, 112, 161, 1)';
           }
       }
+
   }
 
   deselectAll(){
@@ -359,7 +360,8 @@ export class SquareComponent implements OnInit {
       this.mapSettings.freeMove = false;
       this.mapSettings.chargeMode = false;
       this.mapSettings.disengageMode = false;
-      this.setRangeSquaresEvent.emit(new Array());
+      this.mapSettings.setRange(new Array());
+      this.setPrevRangeStylesEvent.emit(true);
       this.resetAllDistances();
   }
 
@@ -404,7 +406,8 @@ export class SquareComponent implements OnInit {
   mouseOutSquare(){
 
       if (!this.mapSettings.selecting){
-          this.setRangeSquareStyles();
+        //   this.setRangeSquareStyles();
+          this.mapSettings.setRangeSquareStyles(this.square)
 
           if (this.square.obstructed || this.square.fogged){
               this.setTileStyle();

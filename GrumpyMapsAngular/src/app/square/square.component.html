@@ -1,4 +1,4 @@
-<div id="squarecontainer" class="square noselect" [ngStyle]="squareStyles" (click)=selectSquare() (mousedown)="mouseDownSquare($event)" (mouseup)="mouseUpSquare()"   (mouseover)="mouseOverSquare()" (mouseout)="mouseOutSquare()" (contextmenu)="deselectAll()">
+<div id="squarecontainer{{square.mapSquareId}}" class="square noselect" [ngStyle]="squareStyles" (click)=selectSquare() (mousedown)="mouseDownSquare($event)" (mouseup)="mouseUpSquare()"   (mouseover)="mouseOverSquare()" (mouseout)="mouseOutSquare()" (contextmenu)="deselectAll()">
 
     <span class="squareTexts">
         <span class="coordinates" *ngIf="square.currentDistance!=9999 && !square.fogged">{{square.mapCoordinate}}<br></span>

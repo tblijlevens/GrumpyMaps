@@ -9,8 +9,8 @@ export class MapSettings {
     allSquares:Square[];
     squareHeightWidth:string;
     squareSize:number;
-    inRangeSquares:Square[];
-    rangeCutOffSquares:Square[];
+    rangeSquares:Square[] = new Array();
+    rangeCutOffSquares:Square[] = new Array();
     movementMode:boolean;
     freeMove:boolean;
     disengageMode:boolean;
@@ -18,7 +18,7 @@ export class MapSettings {
     selectedPlayer:Player=null;
     cutOffMechanic:boolean;
     cutOffNumber:number;
-    selectedSquares:Square[];
+    selectedSquares:Square[] = new Array();
     selecting:boolean;
     deselecting:boolean;
     multiSelect:boolean;
@@ -26,5 +26,53 @@ export class MapSettings {
     constructor() {
     }
 
+    public setRange(rangeSquares:Square[]){
+        //set styles of the previous rangeSquares:
+        for (var i = 0 ; i< this.rangeSquares.length ; i++){
+            this.rangeSquares[i].inRange=false;
+            this.setRangeSquareStyles(this.rangeSquares[i]);
+        }
+
+        this.rangeSquares = rangeSquares;
+        //set styles of the new rangeSquares:
+        for (var i = 0 ; i< this.rangeSquares.length ; i++){
+            this.setRangeSquareStyles(this.rangeSquares[i]);
+        }
+    }
+
+    public setRangeSquareStyles(square:Square) {
+
+      if (!square.obstructed && !this.selectedSquares.includes(square)) {
+        if (square.inRange) {
+            if (this.rangeCutOffSquares.includes(square)) {
+                if (!square.fogged){
+                //   this.squareStyles['background-color'] = 'rgba(0, 161, 161, 0.5)';
+                  $("#squarecontainer"+square.mapSquareId).css({"backgroundColor":"rgba(0, 161, 161, 0.5)"});
+                }
+                else {
+                //   this.squareStyles['background-color'] = 'rgba(0, 35, 35, 1)';
+                  $("#squarecontainer"+square.mapSquareId).css({"backgroundColor":"rgba(0, 35, 35, 1)"});
+                }
+            }
+            else {
+                if (!square.fogged){
+                //   this.squareStyles['background-color'] = 'rgba(8, 161, 0, 0.5)';
+                  $("#squarecontainer"+square.mapSquareId).css({"backgroundColor":"rgba(8, 161, 0, 0.5)"});
+                }
+                else {
+                //   this.squareStyles['background-color'] = 'rgba(8, 35, 0, 1)';
+                  $("#squarecontainer"+square.mapSquareId).css({"backgroundColor":"rgba(8, 35, 0, 1)"});
+                }
+            }
+        }
+        else {
+            if (!square.fogged){
+                //this.squareStyles['background-color'] = "rgba(0, 0, 0, 0.0)";
+                $("#squarecontainer"+square.mapSquareId).css({"backgroundColor":"rgba(0, 0, 0, 0.0)"});
+            }
+        }
+       // this.selectionStyles();
+      }
+    }
 
 }
