@@ -42,9 +42,8 @@
 }
 .distanceMouseOver{
     position: absolute;
+    top: -10px;
     width:100%;
-    bottom:2%;
-    display: grid;
     pointer-events: none;
 }
 #objectsInSquare{

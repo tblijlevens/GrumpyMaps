@@ -1005,7 +1005,7 @@ export class MapDetailComponent implements OnInit {
                 }
 
             }
-            this.setSquareTextSize();
+            //this.setSquareTextSize();
         }
         public setRangeSquareStyles(square:Square) {
 
