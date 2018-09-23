@@ -29,13 +29,6 @@ export class SquareComponent implements OnInit {
         this.squareStyles['width'] = squareHeightWidth;
         this.setSquareMapCoordinates();
     }
-    @Output() moveModeEvent = new EventEmitter<boolean>();
-    @Input() freeMove: boolean;
-    @Output() freeMoveEvent = new EventEmitter<boolean>();
-    @Input() disengageMode: boolean;
-    @Output() disengageModeEvent = new EventEmitter<boolean>();
-    @Input() chargeMode: boolean;
-    @Output() chargeModeEvent = new EventEmitter<boolean>();
     @Output() setRangeSquaresEvent = new EventEmitter<number[]>();
     _inRangeSquares: Square[] = new Array();
     @Input() set inRangeSquares(squares: Square[]) {
@@ -132,11 +125,11 @@ export class SquareComponent implements OnInit {
       }
       if (squareIdInRange) {
           //move player for that distance if freeMove is not on:
-          if (!this.freeMove){
+          if (!this.mapSettings.freeMove){
 
               // use the right move mechanic
               if (this.cutOffMechanic){
-                  if (this.disengageMode){
+                  if (this.mapSettings.disengageMode){
                       this.selectedPlayer.movePlayerCutOff(this.selectedPlayer.movementAmount/2, this.cutOffNumber);
                   }
                   else {
@@ -145,7 +138,7 @@ export class SquareComponent implements OnInit {
 
               }
               else{ // not cutOff mechanic
-                  if (this.disengageMode){
+                  if (this.mapSettings.disengageMode){
                       this.selectedPlayer.movePlayer(this.selectedPlayer.movementAmount/2);
                   }
                   else {
@@ -162,7 +155,7 @@ export class SquareComponent implements OnInit {
           this.square.addPhysical(this.selectedPlayer);
 
           //show message it moved.
-          if (this.chargeMode){
+          if (this.mapSettings.chargeMode){
               this.selectedPlayer.movementLeft=0;
               this.selectedPlayer.attacksLeft=0;
               this.selectedPlayer.spellsLeft=0;
@@ -176,7 +169,7 @@ export class SquareComponent implements OnInit {
               this.showMessage(this.selectedPlayer.name + " charges " + this.square.currentDistance + " yards! " + this.selectedPlayer.name + " is done for this turn, but gains advantage next turn.", "black", 3000 );
           }
           else{
-              if (this.disengageMode){
+              if (this.mapSettings.disengageMode){
                   this.showMessage(this.selectedPlayer.name + " disengages " + this.square.currentDistance + " yards but uses up " + this.selectedPlayer.movementAmount/2 + " yards of movement.", "black", 800 );
               }
               else {
@@ -189,10 +182,10 @@ export class SquareComponent implements OnInit {
          this.showMessage(this.selectedPlayer.name + " can't move there.", "red", 500 );
       }
       this.mapShareService.setPlayerZones(); // makes the playerZones move with the character
-      this.moveModeEvent.emit(false);
-      this.freeMoveEvent.emit(false);
-      this.disengageModeEvent.emit(false);
-      this.chargeModeEvent.emit(false);
+      this.mapSettings.movementMode =false;
+      this.mapSettings.freeMove = false;
+      this.mapSettings.disengageMode = false;
+      this.mapSettings.chargeMode = false;
   }
   getPlayerSquare(){
       var playerSquare:Square=null;
@@ -371,9 +364,10 @@ export class SquareComponent implements OnInit {
   deselectAll(){
       this.selectedSquaresEvent.emit(new Array());
       this.resetPlayer();
-      this.moveModeEvent.emit(false);
-      this.freeMoveEvent.emit(false);
-      this.chargeModeEvent.emit(false);
+      this.mapSettings.movementMode = false;
+      this.mapSettings.freeMove = false;
+      this.mapSettings.chargeMode = false;
+      this.mapSettings.disengageMode = false;
       this.setRangeSquaresEvent.emit(new Array());
       this.resetAllDistances();
   }

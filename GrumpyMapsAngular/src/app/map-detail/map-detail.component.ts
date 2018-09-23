@@ -144,7 +144,7 @@ export class MapDetailComponent implements OnInit {
     mapBackground = {};
     legendSquare = {};
     squareScale: string = '10%';
-    heightWidth:number = 10;
+    heightWidth:number = 35;
     columnArray:number[] = new Array();
     rowArray:number[] = new Array();
     rowArrayLetters:string[] = new Array();
@@ -159,11 +159,6 @@ export class MapDetailComponent implements OnInit {
     allLoadedCharacters:Player[];
     selectedLoadCharacter:Player;
     resultCounter:number=0;
-    obstructionMode:boolean=false;
-    movementMode:boolean=false;
-    freeMove:boolean=false;
-    disengageMode:boolean=false;
-    chargeMode:boolean=false;
     rangeSquares:Square[] = new Array();
     rangeCutOffSquares:Square[] = new Array();
     selectedPlayer:Player=null;
@@ -202,7 +197,7 @@ export class MapDetailComponent implements OnInit {
         this.mapForm.get('moveCutRange').setValue(50);
         this.mapForm.get('showGridCheck').setValue(true);
         this.mapSettings = new MapSettings();
-        this.setMap(10, 5);
+        this.setMap(35, 5);
 
         this.createPlayerForm.get('playerColor').setValue("#ff0000");
         this.createPlayerForm.get('playerInitiative').setValue(15);
@@ -726,7 +721,7 @@ export class MapDetailComponent implements OnInit {
         this.rangeSquares = new Array();
         this.resetAllDistances();
         this.mapSettings.movementMode = false;
-        this.chargeMode = false;
+        this.mapSettings.chargeMode = false;
 
         if(this.selectedPlayer.isSelected ) {
             if(this.selectedPlayer.attacksLeft!=0){
@@ -750,7 +745,7 @@ export class MapDetailComponent implements OnInit {
         this.rangeSquares = new Array();
         this.resetAllDistances();
         this.mapSettings.movementMode = false;
-        this.chargeMode = false;
+        this.mapSettings.chargeMode = false;
 
         if(this.selectedPlayer.isSelected) {
             if(this.selectedPlayer.spellsLeft!=0){
@@ -772,9 +767,9 @@ export class MapDetailComponent implements OnInit {
         if(this.selectedPlayer.isSelected) {
             this.resetAllDistances();
             this.mapSettings.movementMode = true;
-            this.chargeMode = false;
+            this.mapSettings.chargeMode = false;
             if ((<KeyboardEvent>window.event).ctrlKey || (<KeyboardEvent>window.event).metaKey){
-                this.freeMove=true
+                this.mapSettings.freeMove=true
             }
             this.showRange(this.selectedPlayer);
             this.selectedSquare = this.getPlayerSquare(this.selectedPlayer);
@@ -786,7 +781,7 @@ export class MapDetailComponent implements OnInit {
             if (this.selectedPlayer.movementLeft >= this.selectedPlayer.movementAmount*this.cutOffNumber){
                 this.resetAllDistances();
                 this.mapSettings.movementMode = true;
-                this.disengageMode = true;
+                this.mapSettings.disengageMode = true;
                 this.showDisengageRange(this.selectedPlayer);
                 this.selectedSquare = this.getPlayerSquare(this.selectedPlayer);
             }
@@ -801,7 +796,7 @@ export class MapDetailComponent implements OnInit {
             if (this.selectedPlayer.movementLeft == this.selectedPlayer.movementAmount){
                 this.resetAllDistances();
                 this.mapSettings.movementMode = true;
-                this.chargeMode = true;
+                this.mapSettings.chargeMode = true;
                 this.showChargeRange(this.selectedPlayer);
                 this.selectedSquare = this.getPlayerSquare(this.selectedPlayer);
             }
@@ -871,7 +866,7 @@ export class MapDetailComponent implements OnInit {
             this.rangeSquares = new Array();
             this.resetAllDistances();
             this.mapSettings.movementMode = false;
-            this.chargeMode = false;
+            this.mapSettings.chargeMode = false;
             if(this.selectedPlayer.isSelected) {
                 var label = this.addZonePlayerForm.get('zoneLabel').value;
                 var radius = this.addZonePlayerForm.get('zoneRadius').value;
@@ -912,7 +907,7 @@ export class MapDetailComponent implements OnInit {
             this.rangeSquares = new Array();
             this.resetAllDistances();
             this.mapSettings.movementMode = false;
-            this.chargeMode = false;
+            this.mapSettings.chargeMode = false;
 
             this.selectedPlayer.name = this.createPlayerForm.get('playerName').value;
             this.selectedPlayer.color = this.createPlayerForm.get('playerColor').value;
@@ -932,7 +927,7 @@ export class MapDetailComponent implements OnInit {
             this.rangeSquares = new Array();
             this.resetAllDistances();
             this.mapSettings.movementMode = false;
-            this.chargeMode = false;
+            this.mapSettings.chargeMode = false;
 
             if(this.selectedPlayer.isSelected) {
                 this.selectedSquare = this.getPlayerSquare(this.selectedPlayer);
@@ -972,8 +967,9 @@ export class MapDetailComponent implements OnInit {
             this.selectedSquares = new Array();
             this.selectedPlayer=null;
             this.mapSettings.movementMode = false;
-            this.freeMove = false;
-            this.chargeMode = false;
+            this.mapSettings.freeMove = false;
+            this.mapSettings.chargeMode = false;
+            this.mapSettings.disengageMode = false;
             this.rangeSquares = new Array();
             this.rangeCutOffSquares = new Array();
         }
@@ -1002,7 +998,7 @@ export class MapDetailComponent implements OnInit {
             return playerSquare;
         }
         showRange(player:Player){
-            if (this.freeMove){
+            if (this.mapSettings.freeMove){
                 this.rangeSquares = this.getMoveRangeFree(player, this.dndMap.squares);
             }
             else{
@@ -1344,19 +1340,6 @@ export class MapDetailComponent implements OnInit {
         /////////////////    RECEIVE FROM OTHER COMPONENTS    //////////////
         ////////////////////////////////////////////////////////////////////
 
-
-        public receiveMoveMode($event){
-            this.mapSettings.movementMode = $event;
-        }
-        public receiveFreeMove($event){
-            this.freeMove = $event;
-        }
-        public receiveDisengageMode($event){
-            this.disengageMode = $event;
-        }
-        public receiveChargeMode($event){
-            this.chargeMode = $event;
-        }
         public receiveRangeSquares($event){
             this.rangeSquares = $event;
             this.rangeCutOffSquares = new Array();
