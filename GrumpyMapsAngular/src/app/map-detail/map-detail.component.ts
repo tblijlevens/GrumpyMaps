@@ -166,8 +166,7 @@ export class MapDetailComponent implements OnInit {
     squareFeet:number;
     showGrid:boolean=true;
     multiSelect:boolean=false;
-    selecting:boolean=false;
-    deselecting:boolean=false;
+
     selectedSquares:Square[] = new Array();
     selectedSquare:Square;
     selectedFile: File;
@@ -177,8 +176,7 @@ export class MapDetailComponent implements OnInit {
     fileName;
     fileType;
     fileValue;
-    cutOffMechanic:boolean=true;
-    cutOffNumber:number;
+
     playerIdCreator: number = 1;
     playerIdGenerator:number=0;
     zoneIdCreator: number = 1;
@@ -346,10 +344,8 @@ export class MapDetailComponent implements OnInit {
     }
 
     setCutOffRange(){
-        this.dndMap.cutOffMechanic = this.mapForm.get('moveCutCheck').value;
-        this.dndMap.cutOffNumber = +this.mapForm.get('moveCutRange').value/100;
-        this.cutOffMechanic = this.dndMap.cutOffMechanic;
-        this.cutOffNumber = this.dndMap.cutOffNumber;
+        this.mapSettings.cutOffMechanic = this.mapForm.get('moveCutCheck').value;
+        this.mapSettings.cutOffNumber = +this.mapForm.get('moveCutRange').value/100;
     }
 
         // public toggleFullScreen() {
@@ -724,8 +720,8 @@ export class MapDetailComponent implements OnInit {
 
         if(this.mapSettings.selectedPlayer.isSelected ) {
             if(this.mapSettings.selectedPlayer.attacksLeft!=0){
-                if (this.dndMap.cutOffMechanic){
-                    this.mapSettings.selectedPlayer.attackCutOff(this.dndMap.cutOffNumber);
+                if (this.mapSettings.cutOffMechanic){
+                    this.mapSettings.selectedPlayer.attackCutOff(this.mapSettings.cutOffNumber);
                 }
                 else{
                     this.mapSettings.selectedPlayer.attack()
@@ -748,8 +744,8 @@ export class MapDetailComponent implements OnInit {
 
         if(this.mapSettings.selectedPlayer.isSelected) {
             if(this.mapSettings.selectedPlayer.spellsLeft!=0){
-                if (this.dndMap.cutOffMechanic){
-                    this.mapSettings.selectedPlayer.castCutOff(this.dndMap.cutOffNumber);
+                if (this.mapSettings.cutOffMechanic){
+                    this.mapSettings.selectedPlayer.castCutOff(this.mapSettings.cutOffNumber);
                 }
                 else{
                     this.mapSettings.selectedPlayer.cast()
@@ -777,7 +773,7 @@ export class MapDetailComponent implements OnInit {
 
     disengage() {
         if(this.mapSettings.selectedPlayer.isSelected) {
-            if (this.mapSettings.selectedPlayer.movementLeft >= this.mapSettings.selectedPlayer.movementAmount*this.cutOffNumber){
+            if (this.mapSettings.selectedPlayer.movementLeft >= this.mapSettings.selectedPlayer.movementAmount*this.mapSettings.cutOffNumber){
                 this.resetAllDistances();
                 this.mapSettings.movementMode = true;
                 this.mapSettings.disengageMode = true;
@@ -806,10 +802,10 @@ export class MapDetailComponent implements OnInit {
     }
     consume(){
         if(this.mapSettings.selectedPlayer.isSelected) {
-            if (this.mapSettings.selectedPlayer.movementLeft >= this.mapSettings.selectedPlayer.movementAmount*this.cutOffNumber){
+            if (this.mapSettings.selectedPlayer.movementLeft >= this.mapSettings.selectedPlayer.movementAmount*this.mapSettings.cutOffNumber){
                 this.resetAllDistances();
                 this.selectedSquare = this.getPlayerSquare(this.mapSettings.selectedPlayer);
-                this.mapSettings.selectedPlayer.halfRoundAction(this.cutOffNumber);
+                this.mapSettings.selectedPlayer.halfRoundAction(this.mapSettings.cutOffNumber);
                 this.showMessage(this.mapSettings.selectedPlayer.name + " consumes something.", "black", 1000);
             }
             else{
@@ -819,10 +815,10 @@ export class MapDetailComponent implements OnInit {
     }
     equip(){
         if(this.mapSettings.selectedPlayer.isSelected) {
-            if (this.mapSettings.selectedPlayer.movementLeft >= this.mapSettings.selectedPlayer.movementAmount*this.cutOffNumber){
+            if (this.mapSettings.selectedPlayer.movementLeft >= this.mapSettings.selectedPlayer.movementAmount*this.mapSettings.cutOffNumber){
                 this.resetAllDistances();
                 this.selectedSquare = this.getPlayerSquare(this.mapSettings.selectedPlayer);
-                this.mapSettings.selectedPlayer.halfRoundAction(this.cutOffNumber);
+                this.mapSettings.selectedPlayer.halfRoundAction(this.mapSettings.cutOffNumber);
                 this.showMessage(this.mapSettings.selectedPlayer.name + " (un)equips something.", "black", 1000);
             }
             else{
@@ -831,7 +827,7 @@ export class MapDetailComponent implements OnInit {
         }
     }
     fullRoundAction(){
-        console.log("cutOffNumber " + this.cutOffNumber);
+        console.log("cutOffNumber " + this.mapSettings.cutOffNumber);
         if(this.mapSettings.selectedPlayer.isSelected) {
             if (this.mapSettings.selectedPlayer.movementLeft == this.mapSettings.selectedPlayer.movementAmount &&
                 this.mapSettings.selectedPlayer.attacksLeft == this.mapSettings.selectedPlayer.attacksPerRound &&
@@ -850,10 +846,10 @@ export class MapDetailComponent implements OnInit {
         halfRoundAttack(){
             if(this.mapSettings.selectedPlayer.isSelected) {
                 if (this.mapSettings.selectedPlayer.actions[0] != "attack" &&
-                this.mapSettings.selectedPlayer.movementLeft >= this.mapSettings.selectedPlayer.movementAmount*this.cutOffNumber){
+                this.mapSettings.selectedPlayer.movementLeft >= this.mapSettings.selectedPlayer.movementAmount*this.mapSettings.cutOffNumber){
                     this.resetAllDistances();
                     this.selectedSquare = this.getPlayerSquare(this.mapSettings.selectedPlayer);
-                    this.mapSettings.selectedPlayer.halfRoundAttack(this.cutOffNumber);
+                    this.mapSettings.selectedPlayer.halfRoundAttack(this.mapSettings.cutOffNumber);
                     this.showMessage(this.mapSettings.selectedPlayer.name + " performs a half round attack.", "black", 1000);
                 }
                 else{
@@ -1002,7 +998,7 @@ export class MapDetailComponent implements OnInit {
             }
             else{
                 this.rangeSquares = this.getMoveRange(player, this.dndMap.squares);
-                if (this.dndMap.cutOffMechanic){
+                if (this.mapSettings.cutOffMechanic){
                     this.rangeCutOffSquares = this.getCutOffRange();
                 }
             }
@@ -1131,7 +1127,7 @@ export class MapDetailComponent implements OnInit {
         }
         getCutOffRange(){
             var cutOffSquares = new Array();
-            var cutOffRange = this.mapSettings.selectedPlayer.movementAmount*this.dndMap.cutOffNumber;
+            var cutOffRange = this.mapSettings.selectedPlayer.movementAmount*this.mapSettings.cutOffNumber;
             if (this.mapSettings.selectedPlayer.movementLeft != this.mapSettings.selectedPlayer.movementAmount && this.mapSettings.selectedPlayer.movementLeft >= cutOffRange){
                 var alreadyMoved = this.mapSettings.selectedPlayer.movementAmount - this.mapSettings.selectedPlayer.movementLeft;
                 cutOffRange -= alreadyMoved;
@@ -1140,7 +1136,7 @@ export class MapDetailComponent implements OnInit {
                 cutOffRange = 0;
             }
             for (var i = 0 ; i < this.rangeSquares.length ; i++){
-                if (this.rangeSquares[i].currentDistance <= cutOffRange && this.mapSettings.selectedPlayer.movementLeft >= this.mapSettings.selectedPlayer.movementAmount*this.dndMap.cutOffNumber){
+                if (this.rangeSquares[i].currentDistance <= cutOffRange && this.mapSettings.selectedPlayer.movementLeft >= this.mapSettings.selectedPlayer.movementAmount*this.mapSettings.cutOffNumber){
                     if (!this.rangeSquares[i].obstructed && !this.rangeSquares[i].fogged){
                         cutOffSquares.push(this.rangeSquares[i]);
                     }
@@ -1376,13 +1372,6 @@ export class MapDetailComponent implements OnInit {
             else{
                 this.setStyles=true;
             }
-        }
-        public receiveDeselecting($event){
-            this.deselecting = $event;
-        }
-
-        public receiveSelecting($event){
-            this.selecting = $event;
         }
 
         resetSelectedSquares(){
@@ -1641,10 +1630,8 @@ export class MapDetailComponent implements OnInit {
 
                     this.dndMap = new DnDMap(this.selectedLoadMap,this.heightWidth, 5);
                     this.dndMap.name = name;
-                    this.dndMap.cutOffMechanic = cutOffMechanic
-                    this.dndMap.cutOffNumber = cutOffNumber
-                    this.cutOffMechanic = cutOffMechanic
-                    this.cutOffNumber = cutOffNumber
+                    this.mapSettings.cutOffMechanic = cutOffMechanic
+                    this.mapSettings.cutOffNumber = cutOffNumber
                     this.mapForm.get('heightwidth').setValue(this.heightWidth);
                     this.mapForm.get('moveCutCheck').setValue(cutOffMechanic);
                     this.mapForm.get('moveCutRange').setValue(cutOffNumber*100);

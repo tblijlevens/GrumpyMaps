@@ -44,12 +44,9 @@ export class SquareComponent implements OnInit {
     @Input() set _squareBorderStyles(squareBorderStyle: string) {
         this.squareStyles['border'] = squareBorderStyle;
     }
-    
+
     originalSquareColor:string = 'rgba(8, 161, 0, 0)';
-    @Output() selectingEvent = new EventEmitter<boolean>();
-    @Input() selecting:boolean;
-    @Output() deselectingEvent = new EventEmitter<boolean>();
-    @Input() deselecting:boolean;
+
     private multiSelect:boolean;
     @Input() set _multiSelect(multiSelect:boolean) {
         this.multiSelect = multiSelect;
@@ -77,9 +74,6 @@ export class SquareComponent implements OnInit {
         this.setRangeSquareStyles();
     }
     distance:number=9999;
-    @Input() cutOffMechanic:boolean=false;
-    @Input() cutOffNumber:number;
-
 
   constructor(private mapShareService: MapShareService) { }
 
@@ -126,12 +120,12 @@ export class SquareComponent implements OnInit {
           if (!this.mapSettings.freeMove){
 
               // use the right move mechanic
-              if (this.cutOffMechanic){
+              if (this.mapSettings.cutOffMechanic){
                   if (this.mapSettings.disengageMode){
-                      this.mapSettings.selectedPlayer.movePlayerCutOff(this.mapSettings.selectedPlayer.movementAmount/2, this.cutOffNumber);
+                      this.mapSettings.selectedPlayer.movePlayerCutOff(this.mapSettings.selectedPlayer.movementAmount/2, this.mapSettings.cutOffNumber);
                   }
                   else {
-                      this.mapSettings.selectedPlayer.movePlayerCutOff(this.square.currentDistance, this.cutOffNumber);
+                      this.mapSettings.selectedPlayer.movePlayerCutOff(this.square.currentDistance, this.mapSettings.cutOffNumber);
                   }
 
               }
@@ -373,16 +367,14 @@ export class SquareComponent implements OnInit {
   // all the mouseevents below make multiSelecting possible
   mouseDownSquare($event){
       if (this.multiSelect){
-          this.selecting=true;
-          this.selectingEvent.emit(true);
+          this.mapSettings.selecting = true;
       }
       if (this.selectedSquares.includes(this.square)){
-          this.deselecting = true;
+          this.mapSettings.deselecting = true;
       }
       else {
-          this.deselecting = false;
+          this.mapSettings.deselecting = false;
       }
-      this.deselectingEvent.emit(this.deselecting);
       if (!this.multiSelect){
           this.selectedSquares = new Array();
           this.selectedSquares.push(this.square);
@@ -392,7 +384,7 @@ export class SquareComponent implements OnInit {
       this.selectionStyles();
   }
   mouseOverSquare(){
-      if(this.selecting && this.multiSelect){
+      if(this.mapSettings.selecting && this.multiSelect){
           this.addToSelection();
       }
       if (!this.square.fogged){
@@ -406,14 +398,13 @@ export class SquareComponent implements OnInit {
 
   }
   mouseUpSquare(){
-      this.selecting=false;
-      this.selectingEvent.emit(false);
+      this.mapSettings.selecting=false;
       this.selectedSquaresEvent.emit(this.selectedSquares);
 
   }
   mouseOutSquare(){
 
-      if (!this.selecting){
+      if (!this.mapSettings.selecting){
           this.setRangeSquareStyles();
 
           if (this.square.obstructed || this.square.fogged){
@@ -425,13 +416,13 @@ export class SquareComponent implements OnInit {
 
   }
   addToSelection(){
-      if(this.deselecting && this.selectedSquares.includes(this.square)){
+      if(this.mapSettings.deselecting && this.selectedSquares.includes(this.square)){
           var index = this.selectedSquares.indexOf(this.square);
           if (index > -1) {
               this.selectedSquares.splice(index, 1);
           }
       }
-      else if (!this.deselecting){
+      else if (!this.mapSettings.deselecting){
           var allSquares = "";
           this.selectedSquares.push(this.square);
 
