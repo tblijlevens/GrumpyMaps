@@ -20,7 +20,6 @@ export class SquareComponent implements OnInit {
 
     @Input()  mapSettings:MapSettings;
     @Input()  square: Square;
-    @Input()  squareSize: number;
     @Input() squareIndex:number;
     @Input() rowIndexAsLetter:string;
     private _squareHeightWidth: string;
