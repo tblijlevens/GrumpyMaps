@@ -104,10 +104,14 @@ export class MapSettings {
         }
 
         if (square.fogged){
+            var tileHeight = +$("#squarecontainer1").css('height').split("px")[0];
+            var shadowwidth = tileHeight*0.2;
+            var shadow = "0 0px " + shadowwidth + "px " + shadowwidth + "px #999999";
 
+            console.log( tileHeight);
             $("#squarecontainer"+square.mapSquareId).css({
                 backgroundColor:"rgba(153, 153, 153, 1)",
-                boxShadow: "0 0px 5px 5px #999999"});
+                boxShadow: shadow});
                 // this.squareStyles['background-color'] = "rgba(153, 153, 153, 1)";
                 // this.squareStyles['box-shadow'] = "0 0px 5px 5px #999999";
         }

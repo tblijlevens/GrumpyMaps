@@ -262,90 +262,91 @@ export class SquareComponent implements OnInit {
           this.mapSettings.allSquares[i].currentDistance=9999;
       }
   }
+  //
+  // private setTileStyle(){
+  //     console.log("tileStyle");
+  //     if (this.square.obstructed && !this.square.fogged){
+  //         this.squareStyles['background'] = 'repeating-linear-gradient(          135deg, rgba(161, 0, 0, 0.6), rgba(161, 0, 0, 0.6) 8px, rgba(0, 0, 0, 0.0) 8px, rgba(0, 0, 0, 0.0) 16px)';
+  //     }
+  //     else {
+  //         this.squareStyles['background'] = 'none';
+  //     }
+  //
+  //     if (this.square.fogged){
+  //
+  //         this.squareStyles['background-color'] = "rgba(153, 153, 153, 1)";
+  //         this.squareStyles['box-shadow'] = "0 0px 5px 5px #999999";
+  //     }
+  //     else if (!this.mapSettings.selectedSquares.includes(this.square)){
+  //         this.squareStyles['background-color'] = "rgba(0, 0, 0, 0.0)";
+  //         this.squareStyles['box-shadow'] = "none";
+  //
+  //     }
+  //
+  //   //   // Assuming a six character colour:
+  //     //
+  //   //   var c = c.substring(1);      // strip #
+  //   //   var rgb = parseInt(c, 16);   // convert rrggbb to decimal
+  //   //   var r = (rgb >> 16) & 0xff;  // extract red
+  //   //   var g = (rgb >>  8) & 0xff;  // extract green
+  //   //   var b = (rgb >>  0) & 0xff;  // extract blue
+  //   //
+  //   //   var luma = 0.2126 * r + 0.7152 * g + 0.0722 * b; // per ITU-R BT.709
+  //   //
+  //   //   if (luma < 40) {
+  //   //       // make text white
+  //   //   }
+  //
+  //       //   this.squareStyles['background'] = 'repeating-linear-gradient(          135deg, rgba(161, 0, 0, 0.6), rgba(161, 0, 0, 0.6) 8px, rgba(0, 0, 0, 0.0) 8px, rgba(0, 0, 0, 0.0) 16px)'
+  //         //this.squareStyles['background'] = 'repeating-radial-gradient(circle, rgba(235, 199, 9, 0.6), rgba(235, 199, 9, 0.6) 5px, rgba(235, 199, 9, 0) 5px,  rgba(235, 199, 9, 0) 10px)'
+  //   }
 
-  private setTileStyle(){
-      console.log("tileStyle");
-      if (this.square.obstructed && !this.square.fogged){
-          this.squareStyles['background'] = 'repeating-linear-gradient(          135deg, rgba(161, 0, 0, 0.6), rgba(161, 0, 0, 0.6) 8px, rgba(0, 0, 0, 0.0) 8px, rgba(0, 0, 0, 0.0) 16px)';
-      }
-      else {
-          this.squareStyles['background'] = 'none';
-      }
-
-      if (this.square.fogged){
-          this.squareStyles['background-color'] = "rgba(153, 153, 153, 1)";
-          this.squareStyles['box-shadow'] = "0 0px 5px 5px #999999";
-      }
-      else if (!this.mapSettings.selectedSquares.includes(this.square)){
-          this.squareStyles['background-color'] = "rgba(0, 0, 0, 0.0)";
-          this.squareStyles['box-shadow'] = "none";
-
-      }
-
-    //   // Assuming a six character colour:
-      //
-    //   var c = c.substring(1);      // strip #
-    //   var rgb = parseInt(c, 16);   // convert rrggbb to decimal
-    //   var r = (rgb >> 16) & 0xff;  // extract red
-    //   var g = (rgb >>  8) & 0xff;  // extract green
-    //   var b = (rgb >>  0) & 0xff;  // extract blue
-    //
-    //   var luma = 0.2126 * r + 0.7152 * g + 0.0722 * b; // per ITU-R BT.709
-    //
-    //   if (luma < 40) {
-    //       // make text white
-    //   }
-
-        //   this.squareStyles['background'] = 'repeating-linear-gradient(          135deg, rgba(161, 0, 0, 0.6), rgba(161, 0, 0, 0.6) 8px, rgba(0, 0, 0, 0.0) 8px, rgba(0, 0, 0, 0.0) 16px)'
-          //this.squareStyles['background'] = 'repeating-radial-gradient(circle, rgba(235, 199, 9, 0.6), rgba(235, 199, 9, 0.6) 5px, rgba(235, 199, 9, 0) 5px,  rgba(235, 199, 9, 0) 10px)'
-    }
-
-  public setRangeSquareStyles() {
-      this.square.inRange = false;
-
-      if (this.mapSettings.rangeSquares.length!=0){
-          for(var i=0;i<this.mapSettings.rangeSquares.length;i++){
-              if (this.mapSettings.rangeSquares[i].mapSquareId == this.square.mapSquareId){
-                  this.square.inRange = true;
-
-              }
-          }
-      }
-
-    if (!this.square.obstructed && !this.mapSettings.selectedSquares.includes(this.square)) {
-      if (this.square.inRange) {
-          if (this.mapSettings.rangeCutOffSquares.includes(this.square)) {
-              if (!this.square.fogged){
-                this.squareStyles['background-color'] = 'rgba(0, 161, 161, 0.5)';
-                // $("#squarecontainer"+this.square.mapCoordinate).css({"backgroundColor":"#b96611"});
-              }
-              else {
-                this.squareStyles['background-color'] = 'rgba(0, 35, 35, 1)';
-                // $("#squarecontainer"+this.square.mapCoordinate).css({"backgroundColor":"rgba(0, 35, 35, 1)"});
-              }
-          }
-          else {
-              if (!this.square.fogged){
-                this.squareStyles['background-color'] = 'rgba(8, 161, 0, 0.5)';
-                // $("#squarecontainer"+this.square.mapCoordinate).css({"backgroundColor":"rgba(8, 161, 0, 0.5)"});
-              }
-              else {
-                this.squareStyles['background-color'] = 'rgba(8, 35, 0, 1)';
-                // $("#squarecontainer"+this.square.mapCoordinate).css({"backgroundColor":"rgba(8, 35, 0, 1)"});
-              }
-          }
-
-      }
-      else {
-          if (!this.square.fogged){
-              this.squareStyles['background-color'] = "rgba(0, 0, 0, 0.0)";
-          }
-
-      }
-     // this.selectionStyles();
-    }
-
-  }
+  // public setRangeSquareStyles() {
+  //     this.square.inRange = false;
+  //
+  //     if (this.mapSettings.rangeSquares.length!=0){
+  //         for(var i=0;i<this.mapSettings.rangeSquares.length;i++){
+  //             if (this.mapSettings.rangeSquares[i].mapSquareId == this.square.mapSquareId){
+  //                 this.square.inRange = true;
+  //
+  //             }
+  //         }
+  //     }
+  //
+  //   if (!this.square.obstructed && !this.mapSettings.selectedSquares.includes(this.square)) {
+  //     if (this.square.inRange) {
+  //         if (this.mapSettings.rangeCutOffSquares.includes(this.square)) {
+  //             if (!this.square.fogged){
+  //               this.squareStyles['background-color'] = 'rgba(0, 161, 161, 0.5)';
+  //               // $("#squarecontainer"+this.square.mapCoordinate).css({"backgroundColor":"#b96611"});
+  //             }
+  //             else {
+  //               this.squareStyles['background-color'] = 'rgba(0, 35, 35, 1)';
+  //               // $("#squarecontainer"+this.square.mapCoordinate).css({"backgroundColor":"rgba(0, 35, 35, 1)"});
+  //             }
+  //         }
+  //         else {
+  //             if (!this.square.fogged){
+  //               this.squareStyles['background-color'] = 'rgba(8, 161, 0, 0.5)';
+  //               // $("#squarecontainer"+this.square.mapCoordinate).css({"backgroundColor":"rgba(8, 161, 0, 0.5)"});
+  //             }
+  //             else {
+  //               this.squareStyles['background-color'] = 'rgba(8, 35, 0, 1)';
+  //               // $("#squarecontainer"+this.square.mapCoordinate).css({"backgroundColor":"rgba(8, 35, 0, 1)"});
+  //             }
+  //         }
+  //
+  //     }
+  //     else {
+  //         if (!this.square.fogged){
+  //             this.squareStyles['background-color'] = "rgba(0, 0, 0, 0.0)";
+  //         }
+  //
+  //     }
+  //    // this.selectionStyles();
+  //   }
+  //
+  // }
   selectionStyles(){
       if (this.mapSettings.selectedSquares.includes(this.square)){
           if (!this.square.fogged){
