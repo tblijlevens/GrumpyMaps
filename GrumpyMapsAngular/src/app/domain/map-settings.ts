@@ -104,11 +104,11 @@ export class MapSettings {
         }
 
         if (square.fogged){
+            // console.log("setting fog styles for: " + square.mapCoordinate + " id: " + square.mapSquareId);
             var tileHeight = +$("#squarecontainer1").css('height').split("px")[0];
             var shadowwidth = tileHeight*0.2;
             var shadow = "0 0px " + shadowwidth + "px " + shadowwidth + "px #999999";
 
-            console.log( tileHeight);
             $("#squarecontainer"+square.mapSquareId).css({
                 backgroundColor:"rgba(153, 153, 153, 1)",
                 boxShadow: shadow});

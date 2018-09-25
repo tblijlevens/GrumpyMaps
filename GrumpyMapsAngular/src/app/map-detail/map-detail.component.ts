@@ -176,6 +176,7 @@ export class MapDetailComponent implements OnInit {
     playerIdGenerator:number=0;
     zoneIdCreator: number = 1;
     zoneIdGenerator:number=0;
+    countClick:number=0;
 
     constructor(private dndMapService: DnDMapService, private mapShareService: MapShareService, private fb: FormBuilder) {
         this.createImageForm();
@@ -189,7 +190,7 @@ export class MapDetailComponent implements OnInit {
         this.mapForm.get('moveCutRange').setValue(50);
         this.mapForm.get('showGridCheck').setValue(true);
         this.mapSettings = new MapSettings();
-        this.setMap(this.heightWidth, 5);
+        this.setMap(0, this.heightWidth, 5);
 
         this.createPlayerForm.get('playerColor').setValue("#ff0000");
         this.createPlayerForm.get('playerInitiative').setValue(15);
@@ -218,8 +219,8 @@ export class MapDetailComponent implements OnInit {
         ////////////////////////     MAP SETUP    //////////////////////////
         ////////////////////////////////////////////////////////////////////
 
-    setMap(heightWidth, squareSize){
-        this.dndMap = new DnDMap(0, heightWidth, squareSize); //id zero cannot exist in database, so it will generate a new unique id)
+    setMap(id, heightWidth, squareSize){
+        this.dndMap = new DnDMap(id, heightWidth, squareSize); //id zero cannot exist in database, so it will generate a new unique id)
         this.mapSettings.dndMap = this.dndMap;
         this.mapSettings.allSquares = this.dndMap.squares;
         this.mapSettings.squareSize = squareSize;
@@ -267,7 +268,6 @@ export class MapDetailComponent implements OnInit {
             top: mapHeight,
             left: mapPos.left
         });
-
     }
     toggleSettings(){
         $("#mapSetup").toggle( 500 );
@@ -297,7 +297,7 @@ export class MapDetailComponent implements OnInit {
         }
 
 
-        this.setMap(this.heightWidth, this.mapSettings.squareSize);
+        this.setMap(0, this.heightWidth, this.mapSettings.squareSize);
         var imageUrl = this.mapForm.get('imageUrl').value;
         this.dndMap.setImage(imageUrl);
 
@@ -1411,6 +1411,7 @@ export class MapDetailComponent implements OnInit {
 
             var rowHeight = $(".rowLetter").css("height");
             $(".rowLetter").css({"line-height":rowHeight});
+
         }
 
         selectSaveMapInput(name){
@@ -1643,7 +1644,7 @@ export class MapDetailComponent implements OnInit {
                     var cutOffMechanic = this.allLoadedMapsResult[i]["cutOffMechanic"];
                     var cutOffNumber = this.allLoadedMapsResult[i]["cutOffNumber"];
 
-                    this.dndMap = new DnDMap(this.selectedLoadMap,this.heightWidth, 5);
+                    this.setMap(this.selectedLoadMap,this.heightWidth, 5);
                     this.dndMap.name = name;
                     this.mapSettings.cutOffMechanic = cutOffMechanic
                     this.mapSettings.cutOffNumber = cutOffNumber
@@ -1658,11 +1659,14 @@ export class MapDetailComponent implements OnInit {
             }
 
             this.getMapSquares();
+            this.mapSettings.setTiles(this.mapSettings.allSquares); //set all fog and obstruction styles
+
         }
 
         getMapSquares(){
             this.dndMapService.getMapSquares(this.selectedLoadMap).subscribe(mapSquares => {
                 var allMapSquares: Square[] = new Array();
+
                 for (var i = 0 ; i < mapSquares.length ; i++){
                     var theSquare = new Square(
                         mapSquares[i]["id"],
@@ -1681,30 +1685,33 @@ export class MapDetailComponent implements OnInit {
                     theSquare.fogged= mapSquares[i]["fogged"];
 
                     allMapSquares.push(theSquare);
+
                 }
 
                 allMapSquares = allMapSquares.sort((a, b) => a.mapSquareId < b.mapSquareId ? -1 : a.mapSquareId > b.mapSquareId ? 1 : 0);
 
                 this.dndMap.squares = allMapSquares;
+                this.mapSettings.allSquares = this.dndMap.squares;
                 this.mapForm.get('yards').setValue(this.dndMap.squares[0].squareSize);
                 this.setSquareSize();
                 this.setRows();
-                this.mapSettings.setTiles(this.dndMap.squares); //set all fog and obstruction styles
 
                 this.getTileZones();
                 this.getPlayers();
 
-                /*for (var i = 0 ; i < this.dndMap.squares.length ; i++){
-                if(this.dndMap.squares[i].numberofPlayers>0){
-                //TODO forloop to go through all players
-                var sqId = this.dndMap.squares[i].id;
-                this.findPlayerByRealSquareId(sqId);
-            }
-        }*/
-        this.showMessage("Loading... Succes!", "black", 1000);
-    });
-}
+                this.showMessage("Loading... Succes!", "black", 1000);
+                console.log("hello? ");
+                this.mapSettings.setTiles(this.mapSettings.allSquares);
+                this.countClick=0; // workaround to set tile styles after they are loaded, see setTyleStyles()
 
+            });
+        }
+setTileStyles(){
+    if(this.countClick<2){
+        this.countClick++;
+        this.mapSettings.setTiles(this.mapSettings.allSquares);
+    }
+}
 getTileZones(){
     this.dndMapService.getAllSquareZones(this.selectedLoadMap).subscribe(allZones => {
         // create a zone for each retreived zone
@@ -1783,6 +1790,7 @@ getPlayers(){
         this.orderCharacters();
         this.getCharZones();
     });
+
 }
 
 
