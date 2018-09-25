@@ -304,6 +304,7 @@ export class MapDetailComponent implements OnInit {
         this.setRows();
         this.calculateMapFeet();
         this.setCutOffRange();
+        this.setCoordinateTextSize()
     }
     setSquareSize(){
         this.mapSettings.squareSize = +this.mapForm.get('yards').value;
@@ -751,6 +752,7 @@ export class MapDetailComponent implements OnInit {
     }
     moveCharacter() {
         if(this.mapSettings.selectedPlayer.isSelected) {
+            this.clickPlayer(this.mapSettings.selectedPlayer);
             this.resetAllDistances();
             this.mapSettings.movementMode = true;
             this.mapSettings.chargeMode = false;
@@ -764,6 +766,7 @@ export class MapDetailComponent implements OnInit {
 
     disengage() {
         if(this.mapSettings.selectedPlayer.isSelected) {
+            this.clickPlayer(this.mapSettings.selectedPlayer);
             if (this.mapSettings.selectedPlayer.movementLeft >= this.mapSettings.selectedPlayer.movementAmount*this.mapSettings.cutOffNumber){
                 this.resetAllDistances();
                 this.mapSettings.movementMode = true;
@@ -779,6 +782,7 @@ export class MapDetailComponent implements OnInit {
 
     charge() {
         if(this.mapSettings.selectedPlayer.isSelected) {
+            this.clickPlayer(this.mapSettings.selectedPlayer);
             if (this.mapSettings.selectedPlayer.movementLeft == this.mapSettings.selectedPlayer.movementAmount){
                 this.resetAllDistances();
                 this.mapSettings.movementMode = true;
@@ -1007,43 +1011,7 @@ export class MapDetailComponent implements OnInit {
             }
             //this.setSquareTextSize();
         }
-        public setRangeSquareStyles(square:Square) {
 
-          if (!square.obstructed && !this.mapSettings.selectedSquares.includes(square)) {
-            if (square.inRange) {
-                if (this.mapSettings.rangeCutOffSquares.includes(square)) {
-                    if (!square.fogged){
-                    //   this.squareStyles['background-color'] = 'rgba(0, 161, 161, 0.5)';
-                      $("#squarecontainer"+square.mapSquareId).css({"backgroundColor":"rgba(0, 161, 161, 0.5)"});
-                    }
-                    else {
-                    //   this.squareStyles['background-color'] = 'rgba(0, 35, 35, 1)';
-                      $("#squarecontainer"+square.mapSquareId).css({"backgroundColor":"rgba(0, 35, 35, 1)"});
-                    }
-                }
-                else {
-                    if (!square.fogged){
-                    //   this.squareStyles['background-color'] = 'rgba(8, 161, 0, 0.5)';
-                      $("#squarecontainer"+square.mapSquareId).css({"backgroundColor":"rgba(8, 161, 0, 0.5)"});
-                    }
-                    else {
-                    //   this.squareStyles['background-color'] = 'rgba(8, 35, 0, 1)';
-                      $("#squarecontainer"+square.mapSquareId).css({"backgroundColor":"rgba(8, 35, 0, 1)"});
-                    }
-                }
-
-            }
-            else {
-                if (!square.fogged){
-                    //this.squareStyles['background-color'] = "rgba(0, 0, 0, 0.0)";
-                    $("#squarecontainer"+square.mapSquareId).css({"backgroundColor":"rgba(0, 0, 0, 0.0)"});
-                }
-
-            }
-           // this.selectionStyles();
-          }
-
-        }
         showDisengageRange(player:Player){
             this.mapSettings.setRange(this.getDisengageRange(player, this.dndMap.squares));
             this.setSquareTextSize();
@@ -1322,6 +1290,29 @@ export class MapDetailComponent implements OnInit {
                     }
                 }
             }
+        }
+        setCoordinateTextSize(){
+            $("#columnNumbers").css({"font-size":"1vw"});
+            if (this.heightWidth > 26) {
+                $("#columnNumbers").css({"font-size":"0.9vw"});
+                if (this.heightWidth > 33) {
+                    $("#columnNumbers").css({"font-size":"0.8vw"});
+                    if (this.heightWidth > 38) {
+                        $("#columnNumbers").css({"font-size":"0.7vw"});
+                    }
+                }
+            }
+            $("#rowLetters").css({"font-size":"1vw"});
+            if (this.heightWidth > 26) {
+                $("#rowLetters").css({"font-size":"0.9vw"});
+                if (this.heightWidth > 33) {
+                    $("#rowLetters").css({"font-size":"0.8vw"});
+                    if (this.heightWidth > 38) {
+                        $("#rowLetters").css({"font-size":"0.7vw"});
+                    }
+                }
+            }
+            this.setSizes();
         }
         showMessage(message:string, color:string, duration:number){
 
