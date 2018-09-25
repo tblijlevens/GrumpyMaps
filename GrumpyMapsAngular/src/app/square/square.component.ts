@@ -21,7 +21,8 @@ export class SquareComponent implements OnInit {
     @Input()  mapSettings:MapSettings;
     @Input()  square: Square;
     @Input() squareIndex:number;
-    @Input() rowIndexAsLetter:string;
+    //@Input() rowIndexAsLetter:string;
+    @Input() rowIndex:number;
 
     private _squareHeightWidth: string;
     @Input() set squareHeightWidth(squareHeightWidth: string) {
@@ -44,6 +45,7 @@ export class SquareComponent implements OnInit {
     this.squareStyles = {
       'width': this._squareHeightWidth
     }
+    this.setSquareMapCoordinates();
   }
 
   selectSquare() {
@@ -157,20 +159,20 @@ export class SquareComponent implements OnInit {
   getTileDistance(){
       if (this.mapSettings.selectedPlayer!=null){
           //get row and column of players current position coordinates:
-          var rowNumber = this.mapSettings.selectedPlayer.squareMapCoordinate.split(":")[0].charCodeAt(0);
+          var rowNumber = this.mapSettings.selectedPlayer.squareMapCoordinate.split(":")[0];
           var column = +this.mapSettings.selectedPlayer.squareMapCoordinate.split(":")[1];
 
-          var targetRowNumber = this.square.mapCoordinate.split(":")[0].charCodeAt(0);
+          var targetRowNumber = this.square.mapCoordinate.split(":")[0];
           var targetColumn = +this.square.mapCoordinate.split(":")[1];
 
-          var rowDif = this.getDifference(rowNumber, targetRowNumber);
-          var colDif = this.getDifference(column, targetColumn);
+          var rowDif = Math.abs(this.getDifference(rowNumber, targetRowNumber));
+          var colDif = Math.abs(this.getDifference(column, targetColumn));
           var distance = 0;
           if (rowDif == 0){
-              distance = colDif*this.mapSettings.squareSize
+              distance = colDif*this.mapSettings.squareSize;
           }
           if (colDif == 0 && rowDif!=0){
-              distance = rowDif*this.mapSettings.squareSize
+              distance = rowDif*this.mapSettings.squareSize;
           }
 
           // when diagonal movement calc distance based on a^2+b^2=c^2
@@ -192,6 +194,44 @@ export class SquareComponent implements OnInit {
           this.distance=+distance.toFixed(1);
       }
   }
+  // getTileDistance(){
+  //     if (this.mapSettings.selectedPlayer!=null){
+  //         //get row and column of players current position coordinates:
+  //         var rowNumber = this.mapSettings.selectedPlayer.squareMapCoordinate.split(":")[0].charCodeAt(0);
+  //         var column = +this.mapSettings.selectedPlayer.squareMapCoordinate.split(":")[1];
+  //
+  //         var targetRowNumber = this.square.mapCoordinate.split(":")[0].charCodeAt(0);
+  //         var targetColumn = +this.square.mapCoordinate.split(":")[1];
+  //
+  //         var rowDif = this.getDifference(rowNumber, targetRowNumber);
+  //         var colDif = this.getDifference(column, targetColumn);
+  //         var distance = 0;
+  //         if (rowDif == 0){
+  //             distance = colDif*this.mapSettings.squareSize
+  //         }
+  //         if (colDif == 0 && rowDif!=0){
+  //             distance = rowDif*this.mapSettings.squareSize
+  //         }
+  //
+  //         // when diagonal movement calc distance based on a^2+b^2=c^2
+  //         // just a diagonal line:
+  //         if (colDif == rowDif && colDif !=0){
+  //             var squaredTileSize = Math.pow(this.mapSettings.squareSize,2);
+  //             distance = colDif * Math.sqrt(squaredTileSize+squaredTileSize);
+  //         }
+  //
+  //         // combination of diagonal and vertical/horizontal line
+  //         if (colDif!=rowDif && colDif>0 && rowDif>0){
+  //             var minimum = Math.min(colDif,rowDif);
+  //             var maximum = Math.max(colDif,rowDif);
+  //             var squaredTileSize = Math.pow(this.mapSettings.squareSize,2);
+  //             var diagonal = minimum * Math.sqrt(squaredTileSize+squaredTileSize);
+  //             var straight = (maximum-minimum)*this.mapSettings.squareSize;
+  //             distance=diagonal+straight;
+  //         }
+  //         this.distance=+distance.toFixed(1);
+  //     }
+  // }
 
   showMessage(message:string, color:string, duration:number){
 
@@ -409,7 +449,7 @@ export class SquareComponent implements OnInit {
 
 
   private setSquareMapCoordinates(){
-      this.square.mapCoordinate = this.rowIndexAsLetter+":"+ (this.squareIndex+1);
+      this.square.mapCoordinate = this.rowIndex+":"+ (this.squareIndex+1);
   }
 
 }

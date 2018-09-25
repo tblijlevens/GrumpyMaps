@@ -146,7 +146,7 @@ export class MapDetailComponent implements OnInit {
     heightWidth:number = 25;
     columnArray:number[] = new Array();
     rowArray:number[] = new Array();
-    rowArrayLetters:string[] = new Array();
+    rowArrayLetters:number[] = new Array();
     mapsLoaded=false;
     allLoadedMapsResult;
     allLoadedMapIds:number[];
@@ -1060,16 +1060,16 @@ export class MapDetailComponent implements OnInit {
             var moveRange = new Array();
 
             //get row and column of players current position coordinates:
-            var rowNumber = player.squareMapCoordinate.split(":")[0].charCodeAt(0);
+            var rowNumber = player.squareMapCoordinate.split(":")[0];
             var column = +player.squareMapCoordinate.split(":")[1];
 
             // calculate distance of elligable tiles:
             for (var i = 0 ; i < allSquares.length ; i++){
-                var targetRowNumber = allSquares[i].mapCoordinate.split(":")[0].charCodeAt(0);
+                var targetRowNumber = allSquares[i].mapCoordinate.split(":")[0];
                 var targetColumn = +allSquares[i].mapCoordinate.split(":")[1];
 
-                var rowDif = this.getDifference(rowNumber, targetRowNumber);
-                var colDif = this.getDifference(column, targetColumn);
+                var rowDif = Math.abs(this.getDifference(rowNumber, targetRowNumber));
+                var colDif = Math.abs(this.getDifference(column, targetColumn));
                 var distance = 0;
 
                 // make selection of tiles to do calculations on smaller:
@@ -1118,16 +1118,16 @@ export class MapDetailComponent implements OnInit {
             var moveRange = new Array();
 
             //get row and column of players current position coordinates:
-            var rowNumber = player.squareMapCoordinate.split(":")[0].charCodeAt(0);
+            var rowNumber = player.squareMapCoordinate.split(":")[0];
             var column = +player.squareMapCoordinate.split(":")[1];
 
             // calculate distance of elligable tiles:
             for (var i = 0 ; i < allSquares.length ; i++){
-                var targetRowNumber = allSquares[i].mapCoordinate.split(":")[0].charCodeAt(0);
+                var targetRowNumber = allSquares[i].mapCoordinate.split(":")[0];
                 var targetColumn = +allSquares[i].mapCoordinate.split(":")[1];
 
-                var rowDif = this.getDifference(rowNumber, targetRowNumber);
-                var colDif = this.getDifference(column, targetColumn);
+                var rowDif = Math.abs(this.getDifference(rowNumber, targetRowNumber));
+                var colDif = Math.abs(this.getDifference(column, targetColumn));
                 var distance = 0;
 
                 // make selection of tiles to do calculations on smaller:
@@ -1191,16 +1191,16 @@ export class MapDetailComponent implements OnInit {
             var moveRange = new Array();
 
             //get row and column of players current position coordinates:
-            var rowNumber = player.squareMapCoordinate.split(":")[0].charCodeAt(0);
+            var rowNumber = player.squareMapCoordinate.split(":")[0];
             var column = +player.squareMapCoordinate.split(":")[1];
 
             // calculate distance of elligable tiles:
             for (var i = 0 ; i < allSquares.length ; i++){
-                var targetRowNumber = allSquares[i].mapCoordinate.split(":")[0].charCodeAt(0);
+                var targetRowNumber = allSquares[i].mapCoordinate.split(":")[0];
                 var targetColumn = +allSquares[i].mapCoordinate.split(":")[1];
 
-                var rowDif = this.getDifference(rowNumber, targetRowNumber);
-                var colDif = this.getDifference(column, targetColumn);
+                var rowDif = Math.abs(this.getDifference(rowNumber, targetRowNumber));
+                var colDif = Math.abs(this.getDifference(column, targetColumn));
                 var distance = 0;
 
                 // make selection of tiles to do calculations on smaller:
@@ -1241,16 +1241,16 @@ export class MapDetailComponent implements OnInit {
             var moveRange = new Array();
 
             //get row and column of players current position coordinates:
-            var rowNumber = player.squareMapCoordinate.split(":")[0].charCodeAt(0);
+            var rowNumber = player.squareMapCoordinate.split(":")[0];
             var column = +player.squareMapCoordinate.split(":")[1];
 
             // calculate distance of elligable tiles:
             for (var i = 0 ; i < allSquares.length ; i++){
-                var targetRowNumber = allSquares[i].mapCoordinate.split(":")[0].charCodeAt(0);
+                var targetRowNumber = allSquares[i].mapCoordinate.split(":")[0];
                 var targetColumn = +allSquares[i].mapCoordinate.split(":")[1];
 
-                var rowDif = this.getDifference(rowNumber, targetRowNumber);
-                var colDif = this.getDifference(column, targetColumn);
+                var rowDif = Math.abs(this.getDifference(rowNumber, targetRowNumber));
+                var colDif = Math.abs(this.getDifference(column, targetColumn));
                 var distance = 0;
 
                 // make selection of tiles to do calculations on smaller:
@@ -1414,7 +1414,7 @@ export class MapDetailComponent implements OnInit {
             this.columnArray = new Array();
             for (var i = 0 ; i< this.heightWidth ; i++){
                 this.rowArray.push(i+1);
-                this.rowArrayLetters.push(this.setRowIndexLetter(i+1));
+                this.rowArrayLetters.push(i+1);
                 this.columnArray.push(i+1);
             }
 
@@ -1947,6 +1947,57 @@ private setRowIndexLetter(nr:number){
         }
         case 30: {
             return "DD";
+        }
+        case 31: {
+            return "EE";
+        }
+        case 32: {
+            return "FF";
+        }
+        case 33: {
+            return "GG";
+        }
+        case 34: {
+            return "HH";
+        }
+        case 35: {
+            return "II";
+        }
+        case 36: {
+            return "JJ";
+        }
+        case 37: {
+            return "KK";
+        }
+        case 38: {
+            return "LL";
+        }
+        case 39: {
+            return "MM";
+        }
+        case 40: {
+            return "NN";
+        }
+        case 41: {
+            return "OO";
+        }
+        case 42: {
+            return "PP";
+        }
+        case 43: {
+            return "QQ";
+        }
+        case 44: {
+            return "RR";
+        }
+        case 45: {
+            return "SS";
+        }
+        case 46: {
+            return "TT";
+        }
+        case 47: {
+            return "UU";
         }
     }
 }
