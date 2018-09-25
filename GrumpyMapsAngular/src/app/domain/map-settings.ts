@@ -111,13 +111,12 @@ export class MapSettings {
                 // this.squareStyles['background-color'] = "rgba(153, 153, 153, 1)";
                 // this.squareStyles['box-shadow'] = "0 0px 5px 5px #999999";
         }
-        else if (!this.selectedSquares.includes(square)){
+        else{
             $("#squarecontainer"+square.mapSquareId).css({
                 backgroundColor:"rgba(0, 0, 0, 0)",
                 boxShadow: "none"});
                 // this.squareStyles['background-color'] = "rgba(0, 0, 0, 0.0)";
                 // this.squareStyles['box-shadow'] = "none";
-
         }
 
     }
