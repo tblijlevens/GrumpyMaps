@@ -1700,18 +1700,18 @@ export class MapDetailComponent implements OnInit {
                 this.getPlayers();
 
                 this.showMessage("Loading... Succes!", "black", 1000);
-                console.log("hello? ");
-                this.mapSettings.setTiles(this.mapSettings.allSquares);
-                this.countClick=0; // workaround to set tile styles after they are loaded, see setTyleStyles()
 
+                this.countClick=0; // on the first click after loading stuff should be set right as a fix when sizes didn't update right
             });
         }
-setTileStyles(){
-    if(this.countClick<2){
-        this.countClick++;
-        this.mapSettings.setTiles(this.mapSettings.allSquares);
-    }
-}
+
+        setTileStyles(){
+            if(this.countClick<2){
+                this.countClick++;
+                this.mapSettings.setTiles(this.mapSettings.allSquares);
+                this.setCoordinateTextSize();
+            }
+        }
 getTileZones(){
     this.dndMapService.getAllSquareZones(this.selectedLoadMap).subscribe(allZones => {
         // create a zone for each retreived zone
@@ -1733,8 +1733,11 @@ getTileZones(){
                     allSquares[j].zones.push(newZone);
                     this.mapShareService.setTileZones();
                 }
+
+
             }
         }
+        this.setTileStyles() // set tile styles, coordinate text size and all sizes after loading a map
     });
 }
 

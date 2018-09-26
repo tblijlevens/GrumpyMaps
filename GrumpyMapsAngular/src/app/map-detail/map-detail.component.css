@@ -294,7 +294,7 @@ input[type=range]:focus::-ms-fill-upper {
     position: absolute;
     font-size: 1.1vw;
     top: 2px;   /*same as .mapContainer border-width*/
-    margin-left: 11px;
+    margin-left: 8px;
     height: 400px;
     width: 13px;
     text-align: center;
