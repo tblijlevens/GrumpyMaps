@@ -1322,6 +1322,14 @@ export class MapDetailComponent implements OnInit {
             var mapPos = $(".mapcontainer").position();
 
             $('#infoBox').html(message);
+
+            // when loading, cover whole map with infoBox (because fog comes delayed)
+            if (message === "Loading..." || message === "Loading... Succes!"){
+                $("#infoBox").css({"width":mapHeight, "min-height":mapHeight});
+            }
+            else {
+                $("#infoBox").css({"width":mapHeight-40, "min-height":50});
+            }
             var infoBoxHeight = +$("#infoBox").css('height').split("px")[0];
             var infoBoxWidth = +$("#infoBox").css('width').split("px")[0];
             $("#infoBox").css({
@@ -1336,6 +1344,7 @@ export class MapDetailComponent implements OnInit {
 
             $('#infoBox').fadeIn(500).delay(duration).fadeOut(500);
             $('#hiddenClose').fadeIn(500).delay(duration).fadeOut(500);
+
         }
         showInfoBox(message:string, color:string){
             var mapHeightPX = $(".mapcontainer").css('height');
@@ -1344,6 +1353,13 @@ export class MapDetailComponent implements OnInit {
             var mapPos = $(".mapcontainer").position();
 
             $('#infoBox').html(message);
+            // when loading, cover whole map with infoBox (because fog comes delayed)
+            if (message === "Loading..." || message === "Loading... Succes!"){
+                $("#infoBox").css({"width":mapHeight, "min-height":mapHeight});
+            }
+            else {
+                $("#infoBox").css({"width":mapHeight-40, "min-height":50});
+            }
             var infoBoxHeight = +$("#infoBox").css('height').split("px")[0];
             var infoBoxWidth = +$("#infoBox").css('width').split("px")[0];
             $("#infoBox").css({
@@ -1357,10 +1373,12 @@ export class MapDetailComponent implements OnInit {
             });
             $('#infoBox').fadeIn(500);
             $('#hiddenClose').fadeIn(500);
+
         }
         hideInfoBox(){
             $('#infoBox').fadeOut(300);
             $('#hiddenClose').fadeOut(300);
+
         }
 
 
@@ -1635,6 +1653,7 @@ export class MapDetailComponent implements OnInit {
         }
 
         loadSelectedMap(){
+
             this.showInfoBox("Loading...", "black");
             for (var i=0 ; i< this.allLoadedMapsResult.length ; i++){
                 if (this.selectedLoadMap == this.allLoadedMapsResult[i]["id"]){
