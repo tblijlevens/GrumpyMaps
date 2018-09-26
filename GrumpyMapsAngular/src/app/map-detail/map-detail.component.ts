@@ -341,6 +341,8 @@ export class MapDetailComponent implements OnInit {
     setCutOffRange(){
         this.mapSettings.cutOffMechanic = this.mapForm.get('moveCutCheck').value;
         this.mapSettings.cutOffNumber = +this.mapForm.get('moveCutRange').value/100;
+        this.dndMap.cutOffMechanic = this.mapForm.get('moveCutCheck').value;
+        this.dndMap.cutOffNumber = +this.mapForm.get('moveCutRange').value/100;
     }
 
         // public toggleFullScreen() {
